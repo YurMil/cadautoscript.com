@@ -1,0 +1,14 @@
+<svg viewBox="0 0 1000 707" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="arch-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#424242;stop-opacity:0.1" />
+            <stop offset="100%" style="stop-color:#757575;stop-opacity:0.15" />
+        </linearGradient>
+    </defs>
+    <rect width="1000" height="707" fill="#fafafa" />
+    <rect width="1000" height="707" fill="url(#arch-grad)" />
+    <rect x="100" y="200" width="150" height="400" fill="none" stroke="#616161" stroke-width="1.5" opacity="0.2" />
+    <rect x="300" y="150" width="200" height="450" fill="none" stroke="#757575" stroke-width="1.5" opacity="0.15" />
+    <rect x="550" y="180" width="180" height="420" fill="none" stroke="#616161" stroke-width="1.5" opacity="0.2" />
+    <rect x="780" y="220" width="150" height="380" fill="none" stroke="#757575" stroke-width="1.5" opacity="0.15" />
+</svg>
