@@ -106,6 +106,7 @@ const config: Config = {
         {to: '/blog', label: 'Blog', position: 'left'},
         {to: '/mini-games', label: 'Mini Games', position: 'left'},
         {type: 'custom-search', position: 'right'},
+        {type: 'custom-support-button', position: 'right'},
         {type: 'custom-navbar-auth', position: 'right'},
       ],
     },

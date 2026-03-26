@@ -1,0 +1,87 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.42rem;
+  min-height: 2.22rem;
+  padding: 0.42rem 0.82rem;
+  border-radius: 999px;
+  border: 1px solid rgba(133, 242, 222, 0.26);
+  background: linear-gradient(180deg, rgba(11, 26, 28, 0.96), rgba(8, 19, 21, 0.92));
+  color: #f6fffd;
+  font-size: 0.84rem;
+  font-weight: 650;
+  line-height: 1.1;
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: inset 0 0 0 1px rgba(133, 242, 222, 0.08), 0 10px 20px rgba(5, 10, 25, 0.16);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, filter 0.2s ease;
+}
+
+.button:hover {
+  color: #f6fffd;
+  text-decoration: none;
+  border-color: rgba(133, 242, 222, 0.4);
+  box-shadow: inset 0 0 0 1px rgba(133, 242, 222, 0.14), 0 14px 26px rgba(5, 10, 25, 0.22);
+  transform: translateY(-1px);
+  filter: brightness(1.04);
+}
+
+.button:focus-visible {
+  outline: 2px solid rgba(100, 255, 218, 0.72);
+  outline-offset: 2px;
+}
+
+.supportIcon {
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 auto;
+  overflow: visible;
+}
+
+.compact {
+  min-height: 2rem;
+  padding: 0.34rem 0.7rem;
+  gap: 0.36rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.01em;
+}
+
+.compact .supportIcon {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+
+.iconWrap {
+  transform-origin: 32px 32px;
+  transition: transform 0.25s ease, filter 0.25s ease;
+}
+
+.button:hover .iconWrap {
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+.button:hover .heartCore {
+  filter: url(#support-softGlow);
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.06);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+html[data-theme='light'] .button {
+  color: #0f172a;
+  background: linear-gradient(180deg, rgba(241, 255, 251, 0.98), rgba(222, 252, 245, 0.96));
+  border-color: rgba(21, 146, 119, 0.22);
+  box-shadow: inset 0 0 0 1px rgba(21, 146, 119, 0.08), 0 10px 20px rgba(15, 23, 42, 0.08);
+}

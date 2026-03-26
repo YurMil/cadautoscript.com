@@ -3,6 +3,7 @@ import Link from '@docusaurus/Link';
 import Layout from '@theme/Layout';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import {utilities} from '@site/src/data/utilities';
+import SupportSection from '@site/src/components/Support/SupportSection';
 import {useAuthModal} from '@site/src/contexts/AuthModalContext';
 import {useAuthStatus} from '@site/src/hooks/useAuthStatus';
 import {useUtilitiesAccess} from '@site/src/hooks/useUtilitiesAccess';
@@ -150,6 +151,8 @@ export default function Home(): ReactNode {
             </Link>
           </div>
         </section>
+
+        <SupportSection />
       </main>
     </Layout>
   );
