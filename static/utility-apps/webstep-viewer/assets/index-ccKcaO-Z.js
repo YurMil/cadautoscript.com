@@ -1,4 +1,4 @@
-import{g as C}from"./index-SIrU-5rk.js";const h=t=>{let n="";for(let e=0;e<t.length;e+=32768){const i=t.subarray(e,e+32768);n+=String.fromCharCode(...i)}return btoa(n)},p=t=>{const n=new Uint8Array(t.buffer,t.byteOffset,t.byteLength);return t instanceof Float32Array?{kind:"f32",length:t.length,base64:h(n)}:t instanceof Uint16Array?{kind:"u16",length:t.length,base64:h(n)}:{kind:"u32",length:t.length,base64:h(n)}},b=(t,n)=>{var a;for(const e of t){if(e.id===n)return e;if((a=e.children)!=null&&a.length){const i=b(e.children,n);if(i)return i}}return null},S=t=>({id:t.id,name:t.name||"",technicalName:t.technicalName,customName:t.customName,meshId:t.meshId,visible:t.visible!==!1,properties:t.properties?{...t.properties}:void 0,children:(t.children||[]).map(S)}),M=(t,n)=>{t.meshId&&n.add(t.meshId),t.children.forEach(a=>M(a,n))},R=t=>{let n=0,a=0;const e=i=>{var r;if((r=i.children)!=null&&r.length){n+=1,i.children.forEach(e);return}a+=1};return e(t),{assemblies:n,parts:a}},P=t=>{var n;return((n=t.customName)==null?void 0:n.trim())||t.name||t.technicalName||t.id||"Component"},I=(t,n)=>{var e;const a=new Set;for(const i of t){const r=n[i];if(r){if(r.isSolid){a.add(r.id);continue}r.parentMeshId&&((e=n[r.parentMeshId])!=null&&e.isSolid)&&a.add(r.parentMeshId)}}return a};class m extends Error{}const T=({tree:t,rootNodeId:n,fileName:a,objects:e})=>{if(!t.length)throw new m("No model loaded");const i=b(t,n)||t[0];if(!i)throw new m("Node not found in assembly tree");const r=S(i),l=new Set;M(r,l);const A=I(l,e),c=[];if(A.forEach(_=>{const s=e[_];if(!(s!=null&&s.isSolid))return;const u=C(_),o=u==null?void 0:u.geometry;if(!(o!=null&&o.positions)||o.positions.length===0)return;const d={id:s.id,name:s.name||s.id,color:s.color||[.6,.6,.6],position:s.position||[0,0,0],rotation:s.rotation||[0,0,0],scale:s.scale||[1,1,1],visible:s.visible!==!1,transparent:!!s.transparent,opacity:typeof s.opacity=="number"?s.opacity:s.transparent?.25:1,properties:s.properties?{...s.properties}:void 0,geometry:{positions:p(o.positions)}};if(o.normals&&o.normals.length>0&&(d.geometry.normals=p(o.normals)),o.indices&&o.indices.length>0){const E=o.indices instanceof Uint16Array?o.indices:new Uint32Array(o.indices.buffer,o.indices.byteOffset,o.indices.length);d.geometry.indices=p(E)}c.push(d)}),!c.length)throw new m("No renderable solid geometry found for selected node");const x=R(r),v=P(r);return{title:a||v,exportedAt:new Date().toISOString(),rootNodeId:r.id,rootNodeName:v,tree:r,meshes:c,stats:{assemblies:x.assemblies,parts:x.parts,meshes:c.length}}},L=`/**
+import{g as R}from"./index-Cpnw4F0t.js";var x={version:"0.0.2",commit:"585cbf8014a8",builtAt:"2026-03-27T19:00:26.394Z"};const v=t=>{let n="";for(let e=0;e<t.length;e+=32768){const i=t.subarray(e,e+32768);n+=String.fromCharCode(...i)}return btoa(n)},_=t=>{const n=new Uint8Array(t.buffer,t.byteOffset,t.byteLength);return t instanceof Float32Array?{kind:"f32",length:t.length,base64:v(n)}:t instanceof Uint16Array?{kind:"u16",length:t.length,base64:v(n)}:{kind:"u32",length:t.length,base64:v(n)}},M=(t,n)=>{var a;for(const e of t){if(e.id===n)return e;if((a=e.children)!=null&&a.length){const i=M(e.children,n);if(i)return i}}return null},T=t=>({id:t.id,name:t.name||"",technicalName:t.technicalName,customName:t.customName,meshId:t.meshId,visible:t.visible!==!1,properties:t.properties?{...t.properties}:void 0,children:(t.children||[]).map(T)}),w=(t,n)=>{t.meshId&&n.add(t.meshId),t.children.forEach(a=>w(a,n))},P=t=>{let n=0,a=0;const e=i=>{var r;if((r=i.children)!=null&&r.length){n+=1,i.children.forEach(e);return}a+=1};return e(t),{assemblies:n,parts:a}},I=t=>{var n;return((n=t.customName)==null?void 0:n.trim())||t.name||t.technicalName||t.id||"Component"},L=(t,n)=>{var e;const a=new Set;for(const i of t){const r=n[i];if(r){if(r.isSolid){a.add(r.id);continue}r.parentMeshId&&((e=n[r.parentMeshId])!=null&&e.isSolid)&&a.add(r.parentMeshId)}}return a};class y extends Error{}const A=({tree:t,rootNodeId:n,fileName:a,objects:e})=>{if(!t.length)throw new y("No model loaded");const i=M(t,n)||t[0];if(!i)throw new y("Node not found in assembly tree");const r=T(i),p=new Set;w(r,p);const h=L(p,e),l=[];if(h.forEach(d=>{const s=e[d];if(!(s!=null&&s.isSolid))return;const f=R(d),o=f==null?void 0:f.geometry;if(!(o!=null&&o.positions)||o.positions.length===0)return;const g={id:s.id,name:s.name||s.id,color:s.color||[.6,.6,.6],position:s.position||[0,0,0],rotation:s.rotation||[0,0,0],scale:s.scale||[1,1,1],visible:s.visible!==!1,transparent:!!s.transparent,opacity:typeof s.opacity=="number"?s.opacity:s.transparent?.25:1,properties:s.properties?{...s.properties}:void 0,geometry:{positions:_(o.positions)}};if(o.normals&&o.normals.length>0&&(g.geometry.normals=_(o.normals)),o.indices&&o.indices.length>0){const C=o.indices instanceof Uint16Array?o.indices:new Uint32Array(o.indices.buffer,o.indices.byteOffset,o.indices.length);g.geometry.indices=_(C)}l.push(g)}),!l.length)throw new y("No renderable solid geometry found for selected node");const m=P(r),u=I(r);return{title:a||u,exportedAt:new Date().toISOString(),buildInfo:{version:x.version,commit:x.commit,builtAt:x.builtAt},rootNodeId:r.id,rootNodeName:u,tree:r,meshes:l,stats:{assemblies:m.assemblies,parts:m.parts,meshes:l.length}}},D=`/**
  * @license
  * Copyright 2010-2024 Three.js Authors
  * SPDX-License-Identifier: MIT
@@ -53030,7 +53030,7 @@ if ( typeof window !== 'undefined' ) {
 }
 
 export { ACESFilmicToneMapping, AddEquation, AddOperation, AdditiveAnimationBlendMode, AdditiveBlending, AgXToneMapping, AlphaFormat, AlwaysCompare, AlwaysDepth, AlwaysStencilFunc, AmbientLight, AnimationAction, AnimationClip, AnimationLoader, AnimationMixer, AnimationObjectGroup, AnimationUtils, ArcCurve, ArrayCamera, ArrowHelper, AttachedBindMode, Audio, AudioAnalyser, AudioContext, AudioListener, AudioLoader, AxesHelper, BackSide, BasicDepthPacking, BasicShadowMap, BatchedMesh, Bone, BooleanKeyframeTrack, Box2, Box3, Box3Helper, BoxGeometry, BoxHelper, BufferAttribute, BufferGeometry, BufferGeometryLoader, ByteType, Cache, Camera, CameraHelper, CanvasTexture, CapsuleGeometry, CatmullRomCurve3, CineonToneMapping, CircleGeometry, ClampToEdgeWrapping, Clock, Color, ColorKeyframeTrack, ColorManagement, CompressedArrayTexture, CompressedCubeTexture, CompressedTexture, CompressedTextureLoader, ConeGeometry, ConstantAlphaFactor, ConstantColorFactor, CubeCamera, CubeReflectionMapping, CubeRefractionMapping, CubeTexture, CubeTextureLoader, CubeUVReflectionMapping, CubicBezierCurve, CubicBezierCurve3, CubicInterpolant, CullFaceBack, CullFaceFront, CullFaceFrontBack, CullFaceNone, Curve, CurvePath, CustomBlending, CustomToneMapping, CylinderGeometry, Cylindrical, Data3DTexture, DataArrayTexture, DataTexture, DataTextureLoader, DataUtils, DecrementStencilOp, DecrementWrapStencilOp, DefaultLoadingManager, DepthFormat, DepthStencilFormat, DepthTexture, DetachedBindMode, DirectionalLight, DirectionalLightHelper, DiscreteInterpolant, DisplayP3ColorSpace, DodecahedronGeometry, DoubleSide, DstAlphaFactor, DstColorFactor, DynamicCopyUsage, DynamicDrawUsage, DynamicReadUsage, EdgesGeometry, EllipseCurve, EqualCompare, EqualDepth, EqualStencilFunc, EquirectangularReflectionMapping, EquirectangularRefractionMapping, Euler, EventDispatcher, ExtrudeGeometry, FileLoader, Float16BufferAttribute, Float32BufferAttribute, FloatType, Fog, FogExp2, FramebufferTexture, FrontSide, Frustum, GLBufferAttribute, GLSL1, GLSL3, GreaterCompare, GreaterDepth, GreaterEqualCompare, GreaterEqualDepth, GreaterEqualStencilFunc, GreaterStencilFunc, GridHelper, Group, HalfFloatType, HemisphereLight, HemisphereLightHelper, IcosahedronGeometry, ImageBitmapLoader, ImageLoader, ImageUtils, IncrementStencilOp, IncrementWrapStencilOp, InstancedBufferAttribute, InstancedBufferGeometry, InstancedInterleavedBuffer, InstancedMesh, Int16BufferAttribute, Int32BufferAttribute, Int8BufferAttribute, IntType, InterleavedBuffer, InterleavedBufferAttribute, Interpolant, InterpolateDiscrete, InterpolateLinear, InterpolateSmooth, InvertStencilOp, KeepStencilOp, KeyframeTrack, LOD, LatheGeometry, Layers, LessCompare, LessDepth, LessEqualCompare, LessEqualDepth, LessEqualStencilFunc, LessStencilFunc, Light, LightProbe, Line, Line3, LineBasicMaterial, LineCurve, LineCurve3, LineDashedMaterial, LineLoop, LineSegments, LinearDisplayP3ColorSpace, LinearFilter, LinearInterpolant, LinearMipMapLinearFilter, LinearMipMapNearestFilter, LinearMipmapLinearFilter, LinearMipmapNearestFilter, LinearSRGBColorSpace, LinearToneMapping, LinearTransfer, Loader, LoaderUtils, LoadingManager, LoopOnce, LoopPingPong, LoopRepeat, LuminanceAlphaFormat, LuminanceFormat, MOUSE, Material, MaterialLoader, MathUtils, Matrix3, Matrix4, MaxEquation, Mesh, MeshBasicMaterial, MeshDepthMaterial, MeshDistanceMaterial, MeshLambertMaterial, MeshMatcapMaterial, MeshNormalMaterial, MeshPhongMaterial, MeshPhysicalMaterial, MeshStandardMaterial, MeshToonMaterial, MinEquation, MirroredRepeatWrapping, MixOperation, MultiplyBlending, MultiplyOperation, NearestFilter, NearestMipMapLinearFilter, NearestMipMapNearestFilter, NearestMipmapLinearFilter, NearestMipmapNearestFilter, NeutralToneMapping, NeverCompare, NeverDepth, NeverStencilFunc, NoBlending, NoColorSpace, NoToneMapping, NormalAnimationBlendMode, NormalBlending, NotEqualCompare, NotEqualDepth, NotEqualStencilFunc, NumberKeyframeTrack, Object3D, ObjectLoader, ObjectSpaceNormalMap, OctahedronGeometry, OneFactor, OneMinusConstantAlphaFactor, OneMinusConstantColorFactor, OneMinusDstAlphaFactor, OneMinusDstColorFactor, OneMinusSrcAlphaFactor, OneMinusSrcColorFactor, OrthographicCamera, P3Primaries, PCFShadowMap, PCFSoftShadowMap, PMREMGenerator, Path, PerspectiveCamera, Plane, PlaneGeometry, PlaneHelper, PointLight, PointLightHelper, Points, PointsMaterial, PolarGridHelper, PolyhedronGeometry, PositionalAudio, PropertyBinding, PropertyMixer, QuadraticBezierCurve, QuadraticBezierCurve3, Quaternion, QuaternionKeyframeTrack, QuaternionLinearInterpolant, RED_GREEN_RGTC2_Format, RED_RGTC1_Format, REVISION, RGBADepthPacking, RGBAFormat, RGBAIntegerFormat, RGBA_ASTC_10x10_Format, RGBA_ASTC_10x5_Format, RGBA_ASTC_10x6_Format, RGBA_ASTC_10x8_Format, RGBA_ASTC_12x10_Format, RGBA_ASTC_12x12_Format, RGBA_ASTC_4x4_Format, RGBA_ASTC_5x4_Format, RGBA_ASTC_5x5_Format, RGBA_ASTC_6x5_Format, RGBA_ASTC_6x6_Format, RGBA_ASTC_8x5_Format, RGBA_ASTC_8x6_Format, RGBA_ASTC_8x8_Format, RGBA_BPTC_Format, RGBA_ETC2_EAC_Format, RGBA_PVRTC_2BPPV1_Format, RGBA_PVRTC_4BPPV1_Format, RGBA_S3TC_DXT1_Format, RGBA_S3TC_DXT3_Format, RGBA_S3TC_DXT5_Format, RGBFormat, RGB_BPTC_SIGNED_Format, RGB_BPTC_UNSIGNED_Format, RGB_ETC1_Format, RGB_ETC2_Format, RGB_PVRTC_2BPPV1_Format, RGB_PVRTC_4BPPV1_Format, RGB_S3TC_DXT1_Format, RGFormat, RGIntegerFormat, RawShaderMaterial, Ray, Raycaster, Rec709Primaries, RectAreaLight, RedFormat, RedIntegerFormat, ReinhardToneMapping, RenderTarget, RepeatWrapping, ReplaceStencilOp, ReverseSubtractEquation, RingGeometry, SIGNED_RED_GREEN_RGTC2_Format, SIGNED_RED_RGTC1_Format, SRGBColorSpace, SRGBTransfer, Scene, ShaderChunk, ShaderLib, ShaderMaterial, ShadowMaterial, Shape, ShapeGeometry, ShapePath, ShapeUtils, ShortType, Skeleton, SkeletonHelper, SkinnedMesh, Source, Sphere, SphereGeometry, Spherical, SphericalHarmonics3, SplineCurve, SpotLight, SpotLightHelper, Sprite, SpriteMaterial, SrcAlphaFactor, SrcAlphaSaturateFactor, SrcColorFactor, StaticCopyUsage, StaticDrawUsage, StaticReadUsage, StereoCamera, StreamCopyUsage, StreamDrawUsage, StreamReadUsage, StringKeyframeTrack, SubtractEquation, SubtractiveBlending, TOUCH, TangentSpaceNormalMap, TetrahedronGeometry, Texture, TextureLoader, TorusGeometry, TorusKnotGeometry, Triangle, TriangleFanDrawMode, TriangleStripDrawMode, TrianglesDrawMode, TubeGeometry, UVMapping, Uint16BufferAttribute, Uint32BufferAttribute, Uint8BufferAttribute, Uint8ClampedBufferAttribute, Uniform, UniformsGroup, UniformsLib, UniformsUtils, UnsignedByteType, UnsignedInt248Type, UnsignedInt5999Type, UnsignedIntType, UnsignedShort4444Type, UnsignedShort5551Type, UnsignedShortType, VSMShadowMap, Vector2, Vector3, Vector4, VectorKeyframeTrack, VideoTexture, WebGL3DRenderTarget, WebGLArrayRenderTarget, WebGLCoordinateSystem, WebGLCubeRenderTarget, WebGLMultipleRenderTargets, WebGLRenderTarget, WebGLRenderer, WebGLUtils, WebGPUCoordinateSystem, WireframeGeometry, WrapAroundEnding, ZeroCurvatureEnding, ZeroFactor, ZeroSlopeEnding, ZeroStencilOp, createCanvasElement };
-`,D=`import {
+`,U=`import {
 	EventDispatcher,
 	MOUSE,
 	Quaternion,
@@ -54562,7 +54562,7 @@ class OrbitControls extends EventDispatcher {
 }
 
 export { OrbitControls };
-`,U=t=>{let n="";for(let e=0;e<t.length;e+=32768){const i=t.subarray(e,e+32768);n+=String.fromCharCode(...i)}return btoa(n)},f=t=>U(new TextEncoder().encode(t)),g=t=>t.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;"),w=t=>{const n=f(JSON.stringify(t)),a=f(L),e=f(D),i=g(t.title||"Standalone 3D Viewer"),r=g(new Date(t.exportedAt).toLocaleString()),l=`${t.stats.assemblies} assemblies | ${t.stats.parts} parts | ${t.stats.meshes} meshes`;return`<!doctype html>
+`,B=t=>{let n="";for(let e=0;e<t.length;e+=32768){const i=t.subarray(e,e+32768);n+=String.fromCharCode(...i)}return btoa(n)},b=t=>B(new TextEncoder().encode(t)),c=t=>t.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;"),E=t=>{var u,d,s;const n=b(JSON.stringify(t)),a=b(D),e=b(U),i=c(t.title||"Standalone 3D Viewer"),r=c(new Date(t.exportedAt).toLocaleString()),p=c(((u=t.buildInfo)==null?void 0:u.version)||"unknown"),h=c(((d=t.buildInfo)==null?void 0:d.commit)||"unknown"),l=c((s=t.buildInfo)!=null&&s.builtAt?new Date(t.buildInfo.builtAt).toLocaleString():"unknown"),m=`${t.stats.assemblies} assemblies | ${t.stats.parts} parts | ${t.stats.meshes} meshes`;return`<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -54584,8 +54584,14 @@ export { OrbitControls };
       #sidebar { border-right: 1px solid var(--border); background: linear-gradient(180deg, rgba(20, 32, 56, 0.96), rgba(13, 22, 42, 0.96)); display: grid; grid-template-rows: auto auto auto minmax(0, 1fr) auto; min-height: 0; }
       #titleBox { padding: 14px 16px; border-bottom: 1px solid var(--border); }
       #titleBox h1 { margin: 0; font-size: 17px; line-height: 1.2; font-weight: 600; letter-spacing: 0.2px; }
-      #meta { margin-top: 6px; font-size: 12px; color: var(--muted); }
-      #toolbar { padding: 10px 12px; display: flex; gap: 8px; border-bottom: 1px solid var(--border); }
+      #meta { margin-top: 6px; font-size: 12px; color: var(--muted); line-height: 1.45; }
+      .meta-build {
+        display: block;
+        margin-top: 4px;
+        font-size: 11px;
+        color: #b8c6e6;
+      }
+      #toolbar { padding: 10px 12px; display: flex; flex-wrap: wrap; gap: 8px; border-bottom: 1px solid var(--border); }
       .btn {
         border: 1px solid var(--border);
         background: #1a2644;
@@ -54596,6 +54602,17 @@ export { OrbitControls };
         cursor: pointer;
       }
       .btn:hover { border-color: #3d4d76; background: #223258; }
+      .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+      .btn.active {
+        border-color: rgba(96, 165, 250, 0.78);
+        background: linear-gradient(180deg, #2c6be0 0%, #1f4ea8 100%);
+        color: #f8fbff;
+        box-shadow: 0 0 0 1px rgba(96, 165, 250, 0.12) inset;
+      }
+      .btn.compact {
+        padding: 5px 8px;
+        font-size: 11px;
+      }
       #stats { padding: 8px 14px; border-bottom: 1px solid var(--border); font-size: 12px; color: var(--muted); }
       #treeWrap { overflow: auto; min-height: 0; padding: 8px; }
       .tree-node { border-radius: 8px; margin-bottom: 2px; }
@@ -54654,6 +54671,138 @@ export { OrbitControls };
       }
       #viewer { position: relative; min-width: 0; min-height: 0; }
       canvas { width: 100%; height: 100%; display: block; background: linear-gradient(to bottom, #171f3a 0%, #10172f 100%); }
+      #measurePanel {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        width: min(320px, calc(100% - 24px));
+        max-height: calc(100% - 24px);
+        overflow: auto;
+        display: none;
+        padding: 12px;
+        border-radius: 12px;
+        border: 1px solid rgba(93, 115, 170, 0.56);
+        background: rgba(8, 14, 27, 0.92);
+        box-shadow: 0 18px 42px rgba(0, 0, 0, 0.36);
+        backdrop-filter: blur(12px);
+      }
+      #measurePanel.visible { display: block; }
+      .measure-panel-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+      }
+      .measure-panel-title {
+        font-size: 13px;
+        font-weight: 600;
+        color: #eff5ff;
+      }
+      .measure-note {
+        margin-top: 8px;
+        padding: 8px 10px;
+        border-radius: 10px;
+        border: 1px solid rgba(96, 165, 250, 0.24);
+        background: rgba(59, 130, 246, 0.12);
+        color: #c9dcff;
+        font-size: 11px;
+        line-height: 1.45;
+      }
+      .measure-fields {
+        display: grid;
+        gap: 10px;
+        margin-top: 10px;
+      }
+      .measure-field {
+        display: grid;
+        gap: 6px;
+      }
+      .measure-field span {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--muted);
+      }
+      .measure-field select {
+        width: 100%;
+        border: 1px solid rgba(74, 92, 135, 0.7);
+        background: rgba(13, 21, 40, 0.96);
+        color: var(--text);
+        border-radius: 8px;
+        padding: 7px 9px;
+        font-size: 12px;
+      }
+      #measureStatus {
+        margin-top: 10px;
+        font-size: 12px;
+        line-height: 1.45;
+        color: #dfe9ff;
+      }
+      .measure-status-muted {
+        color: var(--muted);
+      }
+      .measure-status-error {
+        color: #fda4af;
+      }
+      #measureInstructions {
+        margin: 8px 0 0;
+        padding-left: 18px;
+        color: #c5d4f6;
+        font-size: 12px;
+        line-height: 1.5;
+      }
+      #measureInstructions li + li {
+        margin-top: 4px;
+      }
+      .measure-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 10px;
+      }
+      .measure-list {
+        display: grid;
+        gap: 8px;
+        margin-top: 12px;
+      }
+      .measure-empty {
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .measure-item {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 8px 10px;
+        border-radius: 10px;
+        border: 1px solid rgba(74, 90, 132, 0.62);
+        background: rgba(18, 27, 49, 0.84);
+      }
+      .measure-item-value {
+        font-size: 13px;
+        font-weight: 600;
+        color: #f7c66a;
+      }
+      .measure-item-meta {
+        margin-top: 4px;
+        font-size: 11px;
+        color: var(--muted);
+      }
+      .measure-remove {
+        border: 1px solid rgba(82, 97, 140, 0.65);
+        background: rgba(13, 20, 37, 0.95);
+        color: #d7e4ff;
+        border-radius: 8px;
+        padding: 4px 8px;
+        font-size: 11px;
+        cursor: pointer;
+      }
+      .measure-remove:hover {
+        border-color: rgba(248, 113, 113, 0.72);
+        color: #ffd1d1;
+        background: rgba(95, 27, 37, 0.45);
+      }
       #help {
         position: absolute;
         left: 12px;
@@ -54701,6 +54850,11 @@ export { OrbitControls };
       @media (max-width: 780px) {
         #app { grid-template-columns: 1fr; grid-template-rows: minmax(0, 0.48fr) minmax(0, 0.52fr); }
         #sidebar { border-right: none; border-bottom: 1px solid var(--border); }
+        #measurePanel {
+          left: 12px;
+          right: 12px;
+          width: auto;
+        }
       }
     </style>
   </head>
@@ -54709,15 +54863,19 @@ export { OrbitControls };
       <aside id="sidebar">
         <div id="titleBox">
           <h1>${i}</h1>
-          <div id="meta">Standalone export • ${r}</div>
+          <div id="meta">
+            Standalone export • ${r}
+            <span class="meta-build">Build v${p} • ${h} • ${l}</span>
+          </div>
         </div>
         <div id="toolbar">
           <button class="btn" id="fitBtn">Fit</button>
           <button class="btn" id="showAllBtn">Show all</button>
           <button class="btn" id="expandAllBtn">Expand all</button>
           <button class="btn" id="collapseAllBtn">Collapse</button>
+          <button class="btn" id="measureBtn">Measure</button>
         </div>
-        <div id="stats">${g(l)}</div>
+        <div id="stats">${c(m)}</div>
         <div id="treeWrap"></div>
         <div id="info">
           <h2>Selection</h2>
@@ -54726,6 +54884,41 @@ export { OrbitControls };
       </aside>
       <main id="viewer">
         <canvas id="gl"></canvas>
+        <section id="measurePanel">
+          <div class="measure-panel-head">
+            <div class="measure-panel-title">Measurements</div>
+            <button class="btn compact" id="resetMeasureDraftBtn">Reset picks</button>
+          </div>
+          <div class="measure-note">Approximate values are computed from the triangulated geometry embedded in this standalone HTML export.</div>
+          <div class="measure-fields">
+            <label class="measure-field">
+              <span>Mode</span>
+              <select id="measureTypeSelect">
+                <option value="edge-length">Length of edge</option>
+                <option value="radius">Radius from 3 points</option>
+                <option value="diameter">Diameter from 3 points</option>
+                <option value="face-distance">Distance between faces</option>
+                <option value="points">Distance between points</option>
+                <option value="face-angle">Angle between faces</option>
+              </select>
+            </label>
+            <label class="measure-field">
+              <span>Units</span>
+              <select id="measureUnitSelect">
+                <option value="mm">mm</option>
+                <option value="cm">cm</option>
+                <option value="m">m</option>
+                <option value="in">in</option>
+              </select>
+            </label>
+          </div>
+          <div id="measureStatus"></div>
+          <ul id="measureInstructions"></ul>
+          <div class="measure-actions">
+            <button class="btn compact" id="clearMeasurementsBtn">Clear all</button>
+          </div>
+          <div id="measurementList" class="measure-list"></div>
+        </section>
         <div id="help">LMB: Select • Ctrl+LMB: Multi-select • RMB: Context menu • Wheel: Zoom</div>
       </main>
     </div>
@@ -54779,10 +54972,20 @@ export { OrbitControls };
       const canvas = document.getElementById('gl');
       const treeWrap = document.getElementById('treeWrap');
       const infoBox = document.getElementById('infoBox');
+      const helpEl = document.getElementById('help');
       const fitBtn = document.getElementById('fitBtn');
       const showAllBtn = document.getElementById('showAllBtn');
       const expandAllBtn = document.getElementById('expandAllBtn');
       const collapseAllBtn = document.getElementById('collapseAllBtn');
+      const measureBtn = document.getElementById('measureBtn');
+      const measurePanel = document.getElementById('measurePanel');
+      const measureTypeSelect = document.getElementById('measureTypeSelect');
+      const measureUnitSelect = document.getElementById('measureUnitSelect');
+      const measureStatusEl = document.getElementById('measureStatus');
+      const measureInstructionsEl = document.getElementById('measureInstructions');
+      const measurementListEl = document.getElementById('measurementList');
+      const resetMeasureDraftBtn = document.getElementById('resetMeasureDraftBtn');
+      const clearMeasurementsBtn = document.getElementById('clearMeasurementsBtn');
       const contextMenuEl = document.getElementById('contextMenu');
 
       const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
@@ -54933,6 +55136,639 @@ export { OrbitControls };
         return ids;
       };
 
+      scene.updateMatrixWorld(true);
+
+      const getBoundsForMeshIds = (meshIds) => {
+        const box = new THREE.Box3();
+        let hasBounds = false;
+
+        meshIds.forEach((meshId) => {
+          const actor = meshActors.get(meshId);
+          if (!actor) return;
+          const mesh = actor.mesh;
+          mesh.updateWorldMatrix(true, false);
+          if (!mesh.geometry.boundingBox) {
+            mesh.geometry.computeBoundingBox();
+          }
+          const localBox = mesh.geometry.boundingBox;
+          if (!localBox) return;
+
+          const worldBox = localBox.clone();
+          worldBox.applyMatrix4(mesh.matrixWorld);
+          if (!hasBounds) {
+            box.copy(worldBox);
+            hasBounds = true;
+          } else {
+            box.union(worldBox);
+          }
+        });
+
+        if (!hasBounds || box.isEmpty()) return null;
+        return box;
+      };
+
+      const allMeshBounds = getBoundsForMeshIds(getAllSolidMeshIds());
+      const allMeshSize = allMeshBounds ? allMeshBounds.getSize(new THREE.Vector3()) : new THREE.Vector3(1, 1, 1);
+      const allMeshMaxDim = Math.max(allMeshSize.x, allMeshSize.y, allMeshSize.z, 1);
+      const measurementBaseScale = clamp(allMeshMaxDim * 0.005, 0.2, 12);
+      const measurementSnapThreshold = clamp(allMeshMaxDim * 0.002, 0.05, 16);
+      const measurementClickMoveThresholdSq = 100;
+      const measurementTypeLabels = {
+        points: 'Distance between points',
+        'edge-length': 'Length of edge',
+        radius: 'Radius from 3 points',
+        diameter: 'Diameter from 3 points',
+        'face-distance': 'Distance between faces',
+        'face-angle': 'Angle between faces'
+      };
+      const measurementInstructions = {
+        points: [
+          'Click the first point on the geometry.',
+          'Click the second point to measure the distance.'
+        ],
+        'edge-length': [
+          'Click near an edge on the mesh.',
+          'The closest visible triangle edge will be measured.'
+        ],
+        radius: [
+          'Pick 3 points on the same circular edge or arc.',
+          'The radius is reconstructed from those picks.'
+        ],
+        diameter: [
+          'Pick 3 points on the same circular edge or arc.',
+          'The diameter is reconstructed from those picks.'
+        ],
+        'face-distance': [
+          'Click the first face.',
+          'Click the second face to measure normal distance.'
+        ],
+        'face-angle': [
+          'Click the first face.',
+          'Click the second face to measure the angle.'
+        ]
+      };
+      const measurementPickCounts = {
+        points: { points: 2, faces: 0 },
+        'edge-length': { points: 0, faces: 0 },
+        radius: { points: 3, faces: 0 },
+        diameter: { points: 3, faces: 0 },
+        'face-distance': { points: 0, faces: 2 },
+        'face-angle': { points: 0, faces: 2 }
+      };
+      const measurementLengthFactors = {
+        mm: 1,
+        cm: 0.1,
+        m: 0.001,
+        in: 1 / 25.4
+      };
+      const snapColors = {
+        vertex: 0x60a5fa,
+        edge: 0xfbbf24,
+        face: 0x34d399
+      };
+      const measurementLayer = new THREE.Group();
+      measurementLayer.name = 'MeasurementLayer';
+      scene.add(measurementLayer);
+      const measurementPreviewLayer = new THREE.Group();
+      measurementPreviewLayer.name = 'MeasurementPreviewLayer';
+      scene.add(measurementPreviewLayer);
+
+      let measurementMode = false;
+      let measurementType = 'points';
+      let measurementUnit = 'mm';
+      let measurementDraft = { points: [], faces: [] };
+      let measurements = [];
+      let activeSnap = null;
+      let measurementFeedback = '';
+      let pendingMeasurePointer = null;
+
+      const createEmptyMeasurementDraft = () => ({
+        points: [],
+        faces: []
+      });
+
+      const makeMeasurementId = () => {
+        return 'measure-' + Date.now() + '-' + Math.random().toString(16).slice(2, 6);
+      };
+
+      const getMeasurementSnapPreference = (type) => {
+        if (type === 'points' || type === 'radius' || type === 'diameter') return 'vertex';
+        if (type === 'edge-length') return 'edge';
+        if (type === 'face-distance' || type === 'face-angle') return 'face';
+        return 'any';
+      };
+
+      const isSameVector = (a, b) => {
+        if (!a || !b) return false;
+        return a.distanceToSquared(b) < 1e-10;
+      };
+
+      const isSameSnap = (left, right) => {
+        if (left === right) return true;
+        if (!left || !right) return false;
+        const normalsMatch = (!left.normal && !right.normal) || (left.normal && right.normal && isSameVector(left.normal, right.normal));
+        return left.type === right.type && normalsMatch && isSameVector(left.position, right.position);
+      };
+
+      const disposeMaterial = (material) => {
+        if (!material) return;
+        if (material.map) material.map.dispose();
+        material.dispose();
+      };
+
+      const disposeObject = (object) => {
+        object.traverse((child) => {
+          if (child.geometry) child.geometry.dispose();
+          if (Array.isArray(child.material)) {
+            child.material.forEach(disposeMaterial);
+          } else {
+            disposeMaterial(child.material);
+          }
+        });
+      };
+
+      const clearGroup = (group) => {
+        while (group.children.length) {
+          const child = group.children[0];
+          group.remove(child);
+          disposeObject(child);
+        }
+      };
+
+      const getMeasurementVisualScale = (value) => {
+        if (!Number.isFinite(value) || value <= 0) return measurementBaseScale;
+        return clamp(value * 0.16, measurementBaseScale * 0.85, measurementBaseScale * 2.5);
+      };
+
+      const makeMeasurementSphere = (position, color, scaleFactor = 0.24) => {
+        const sphere = new THREE.Mesh(
+          new THREE.SphereGeometry(Math.max(measurementBaseScale * scaleFactor, 0.04), 18, 18),
+          new THREE.MeshBasicMaterial({
+            color,
+            depthTest: false,
+            depthWrite: false
+          })
+        );
+        sphere.position.copy(position);
+        sphere.renderOrder = 1000;
+        return sphere;
+      };
+
+      const makeMeasurementLine = (start, end, color) => {
+        const geometry = new THREE.BufferGeometry();
+        geometry.setAttribute(
+          'position',
+          new THREE.BufferAttribute(
+            new Float32Array([
+              start.x, start.y, start.z,
+              end.x, end.y, end.z
+            ]),
+            3
+          )
+        );
+        const line = new THREE.Line(
+          geometry,
+          new THREE.LineBasicMaterial({
+            color,
+            transparent: true,
+            opacity: 0.98,
+            depthTest: false,
+            depthWrite: false
+          })
+        );
+        line.renderOrder = 999;
+        return line;
+      };
+
+      const drawRoundedRect = (context, x, y, width, height, radius) => {
+        context.beginPath();
+        context.moveTo(x + radius, y);
+        context.lineTo(x + width - radius, y);
+        context.quadraticCurveTo(x + width, y, x + width, y + radius);
+        context.lineTo(x + width, y + height - radius);
+        context.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+        context.lineTo(x + radius, y + height);
+        context.quadraticCurveTo(x, y + height, x, y + height - radius);
+        context.lineTo(x, y + radius);
+        context.quadraticCurveTo(x, y, x + radius, y);
+        context.closePath();
+      };
+
+      const makeMeasurementLabelSprite = (text, scale) => {
+        const spriteCanvas = document.createElement('canvas');
+        const context = spriteCanvas.getContext('2d');
+        if (!context) {
+          const fallback = new THREE.Sprite(new THREE.SpriteMaterial({
+            color: 0xf7c66a,
+            depthTest: false,
+            depthWrite: false
+          }));
+          fallback.scale.set(scale, scale * 0.35, 1);
+          fallback.renderOrder = 1001;
+          return fallback;
+        }
+        const fontSize = 42;
+        const paddingX = 24;
+        const paddingY = 16;
+        const font = '600 ' + String(fontSize) + 'px "Segoe UI", Arial, sans-serif';
+        context.font = font;
+        const metrics = context.measureText(text);
+        const textWidth = Math.ceil(metrics.width);
+        spriteCanvas.width = textWidth + paddingX * 2;
+        spriteCanvas.height = fontSize + paddingY * 2;
+        context.font = font;
+        context.textAlign = 'center';
+        context.textBaseline = 'middle';
+        context.fillStyle = 'rgba(5, 12, 23, 0.86)';
+        context.strokeStyle = 'rgba(125, 150, 202, 0.46)';
+        context.lineWidth = 3;
+        drawRoundedRect(context, 1.5, 1.5, spriteCanvas.width - 3, spriteCanvas.height - 3, 18);
+        context.fill();
+        context.stroke();
+        context.fillStyle = '#f7c66a';
+        context.fillText(text, spriteCanvas.width / 2, spriteCanvas.height / 2);
+        const texture = new THREE.CanvasTexture(spriteCanvas);
+        texture.colorSpace = THREE.SRGBColorSpace;
+        const material = new THREE.SpriteMaterial({
+          map: texture,
+          transparent: true,
+          depthTest: false,
+          depthWrite: false
+        });
+        const sprite = new THREE.Sprite(material);
+        const aspect = spriteCanvas.width / spriteCanvas.height;
+        const height = Math.max(scale * 1.15, measurementBaseScale * 1.1);
+        sprite.scale.set(height * aspect, height, 1);
+        sprite.renderOrder = 1001;
+        return sprite;
+      };
+
+      const formatMeasurementValue = (measurement) => {
+        if (measurement.type === 'face-angle') {
+          return measurement.value.toFixed(2) + ' deg';
+        }
+        const factor = measurementLengthFactors[measurementUnit] || 1;
+        return (measurement.value * factor).toFixed(2) + ' ' + measurementUnit;
+      };
+
+      const renderMeasurementStatus = () => {
+        measureStatusEl.innerHTML = '';
+        const modeLine = document.createElement('div');
+        modeLine.textContent = measurementMode
+          ? 'Measure mode is active. Click geometry in the viewer.'
+          : 'Measure mode is paused. Existing measurements remain visible.';
+        measureStatusEl.appendChild(modeLine);
+
+        const pickConfig = measurementPickCounts[measurementType];
+        const progressTotal = pickConfig.points > 0 ? pickConfig.points : pickConfig.faces;
+        const progressValue = pickConfig.points > 0 ? measurementDraft.points.length : measurementDraft.faces.length;
+        const progressLine = document.createElement('div');
+        progressLine.className = 'measure-status-muted';
+        progressLine.textContent = progressTotal > 0
+          ? 'Picked: ' + String(progressValue) + '/' + String(progressTotal)
+          : 'Single click measurement';
+        measureStatusEl.appendChild(progressLine);
+
+        if (measurementMode && activeSnap) {
+          const snapLine = document.createElement('div');
+          snapLine.className = 'measure-status-muted';
+          snapLine.textContent = 'Snap: ' + activeSnap.type;
+          measureStatusEl.appendChild(snapLine);
+        }
+
+        if (measurementFeedback) {
+          const feedbackLine = document.createElement('div');
+          feedbackLine.className = 'measure-status-error';
+          feedbackLine.textContent = measurementFeedback;
+          measureStatusEl.appendChild(feedbackLine);
+        }
+      };
+
+      const renderMeasurementInstructions = () => {
+        measureInstructionsEl.innerHTML = '';
+        measurementInstructions[measurementType].forEach((line) => {
+          const item = document.createElement('li');
+          item.textContent = line;
+          measureInstructionsEl.appendChild(item);
+        });
+      };
+
+      const renderMeasurementList = () => {
+        measurementListEl.innerHTML = '';
+        if (!measurements.length) {
+          const empty = document.createElement('div');
+          empty.className = 'measure-empty';
+          empty.textContent = 'No measurements yet.';
+          measurementListEl.appendChild(empty);
+          return;
+        }
+
+        measurements.forEach((measurement, index) => {
+          const item = document.createElement('div');
+          item.className = 'measure-item';
+
+          const content = document.createElement('div');
+          const valueEl = document.createElement('div');
+          valueEl.className = 'measure-item-value';
+          valueEl.textContent = formatMeasurementValue(measurement);
+          content.appendChild(valueEl);
+
+          const metaEl = document.createElement('div');
+          metaEl.className = 'measure-item-meta';
+          metaEl.textContent = measurementTypeLabels[measurement.type] + ' #' + String(index + 1);
+          content.appendChild(metaEl);
+
+          const removeButton = document.createElement('button');
+          removeButton.type = 'button';
+          removeButton.className = 'measure-remove';
+          removeButton.textContent = 'Delete';
+          removeButton.addEventListener('click', () => {
+            measurements = measurements.filter((entry) => entry.id !== measurement.id);
+            renderMeasurementPanel();
+            syncMeasurementVisualization();
+          });
+
+          item.appendChild(content);
+          item.appendChild(removeButton);
+          measurementListEl.appendChild(item);
+        });
+      };
+
+      const updateHelpText = () => {
+        helpEl.textContent = measurementMode
+          ? 'Measure: Click geometry • Drag: Orbit • RMB: Context menu • Wheel: Zoom'
+          : 'LMB: Select • Ctrl+LMB: Multi-select • RMB: Context menu • Wheel: Zoom';
+      };
+
+      const renderMeasurementPanel = () => {
+        const panelVisible = measurementMode || measurements.length > 0;
+        measurePanel.classList.toggle('visible', panelVisible);
+        measureBtn.classList.toggle('active', measurementMode);
+        measureTypeSelect.value = measurementType;
+        measureUnitSelect.value = measurementUnit;
+        resetMeasureDraftBtn.disabled = measurementDraft.points.length === 0 && measurementDraft.faces.length === 0;
+        clearMeasurementsBtn.disabled = measurements.length === 0;
+        canvas.style.cursor = measurementMode ? 'crosshair' : '';
+        renderMeasurementStatus();
+        renderMeasurementInstructions();
+        renderMeasurementList();
+        updateHelpText();
+      };
+
+      const setMeasurementDraft = (draft) => {
+        measurementDraft = {
+          points: draft.points ? draft.points.map((point) => point.clone()) : [],
+          faces: draft.faces ? draft.faces.map((face) => ({
+            point: face.point.clone(),
+            normal: face.normal.clone()
+          })) : []
+        };
+        renderMeasurementPanel();
+        syncMeasurementPreview();
+      };
+
+      const clearMeasurementDraft = () => {
+        measurementDraft = createEmptyMeasurementDraft();
+        measurementFeedback = '';
+        renderMeasurementPanel();
+        syncMeasurementPreview();
+      };
+
+      const addMeasurement = (measurement) => {
+        measurements = measurements.concat([measurement]);
+        measurementDraft = createEmptyMeasurementDraft();
+        measurementFeedback = '';
+        renderMeasurementPanel();
+        syncMeasurementVisualization();
+        syncMeasurementPreview();
+      };
+
+      const clearMeasurements = () => {
+        measurements = [];
+        measurementDraft = createEmptyMeasurementDraft();
+        measurementFeedback = '';
+        renderMeasurementPanel();
+        syncMeasurementVisualization();
+        syncMeasurementPreview();
+      };
+
+      const setMeasurementMode = (enabled) => {
+        measurementMode = !!enabled;
+        measurementFeedback = '';
+        pendingMeasurePointer = null;
+        if (!measurementMode) {
+          activeSnap = null;
+          measurementDraft = createEmptyMeasurementDraft();
+        }
+        renderMeasurementPanel();
+        syncMeasurementPreview();
+      };
+
+      const setMeasurementType = (type) => {
+        measurementType = type;
+        measurementFeedback = '';
+        setMeasurementDraft(createEmptyMeasurementDraft());
+      };
+
+      const setMeasurementUnit = (unit) => {
+        measurementUnit = unit;
+        renderMeasurementPanel();
+        syncMeasurementVisualization();
+      };
+
+      function syncMeasurementVisualization() {
+        clearGroup(measurementLayer);
+
+        measurements.forEach((measurement) => {
+          const group = new THREE.Group();
+          const color = measurement.type === 'face-angle' ? 0xf97316 : 0x3b82f6;
+          const visualScale = getMeasurementVisualScale(measurement.value);
+
+          if (measurement.point1 && measurement.point2 && measurement.type !== 'face-angle') {
+            group.add(makeMeasurementLine(measurement.point1, measurement.point2, color));
+          }
+
+          if (measurement.point1) {
+            group.add(makeMeasurementSphere(measurement.point1, color));
+          }
+          if (measurement.point2) {
+            group.add(makeMeasurementSphere(measurement.point2, color));
+          }
+
+          if (measurement.type === 'face-angle' && measurement.point1 && measurement.point2 && measurement.normal1 && measurement.normal2) {
+            const normal1End = measurement.point1.clone().add(measurement.normal1.clone().normalize().multiplyScalar(visualScale));
+            const normal2End = measurement.point2.clone().add(measurement.normal2.clone().normalize().multiplyScalar(visualScale));
+            group.add(makeMeasurementLine(measurement.point1, normal1End, color));
+            group.add(makeMeasurementLine(measurement.point2, normal2End, color));
+          }
+
+          if (measurement.center) {
+            group.add(makeMeasurementSphere(measurement.center, 0xf7c66a, 0.18));
+          }
+
+          const labelPoint = measurement.center
+            ? measurement.center.clone()
+            : measurement.point1 && measurement.point2
+              ? measurement.point1.clone().add(measurement.point2).multiplyScalar(0.5)
+              : measurement.point1
+                ? measurement.point1.clone()
+                : new THREE.Vector3();
+          labelPoint.y += visualScale * 0.22;
+          const label = makeMeasurementLabelSprite(formatMeasurementValue(measurement), visualScale);
+          label.position.copy(labelPoint);
+          group.add(label);
+
+          measurementLayer.add(group);
+        });
+      }
+
+      function syncMeasurementPreview() {
+        clearGroup(measurementPreviewLayer);
+
+        if (!measurementMode) return;
+
+        measurementDraft.points.forEach((point, index) => {
+          measurementPreviewLayer.add(makeMeasurementSphere(point, 0x93c5fd, 0.2));
+          if (index > 0) {
+            measurementPreviewLayer.add(makeMeasurementLine(measurementDraft.points[index - 1], point, 0x60a5fa));
+          }
+        });
+
+        measurementDraft.faces.forEach((face) => {
+          measurementPreviewLayer.add(makeMeasurementSphere(face.point, 0xfb7185, 0.22));
+          const normalEnd = face.point.clone().add(face.normal.clone().normalize().multiplyScalar(measurementBaseScale));
+          measurementPreviewLayer.add(makeMeasurementLine(face.point, normalEnd, 0xfb7185));
+        });
+
+        if (activeSnap) {
+          measurementPreviewLayer.add(makeMeasurementSphere(activeSnap.position, snapColors[activeSnap.type] || 0xffffff, 0.2));
+          if (activeSnap.normal && (measurementType === 'face-distance' || measurementType === 'face-angle' || activeSnap.type === 'face')) {
+            const hoverNormalEnd = activeSnap.position.clone().add(activeSnap.normal.clone().normalize().multiplyScalar(measurementBaseScale * 0.8));
+            measurementPreviewLayer.add(makeMeasurementLine(activeSnap.position, hoverNormalEnd, snapColors[activeSnap.type] || 0xffffff));
+          }
+          if (measurementType === 'points' && measurementDraft.points.length === 1) {
+            measurementPreviewLayer.add(makeMeasurementLine(measurementDraft.points[0], activeSnap.position, 0x60a5fa));
+          }
+        }
+      }
+
+      const getWorldNormalFromIntersection = (mesh, intersection) => {
+        if (!intersection.face) return new THREE.Vector3(0, 1, 0);
+        const normalMatrix = new THREE.Matrix3().getNormalMatrix(mesh.matrixWorld);
+        return intersection.face.normal.clone().applyMatrix3(normalMatrix).normalize();
+      };
+
+      const getTriangleVerticesFromIntersection = (mesh, intersection) => {
+        if (!intersection.face) return null;
+        const geometry = mesh.geometry;
+        const positionAttr = geometry.getAttribute('position');
+        if (!positionAttr) return null;
+        const v0 = new THREE.Vector3().fromBufferAttribute(positionAttr, intersection.face.a);
+        const v1 = new THREE.Vector3().fromBufferAttribute(positionAttr, intersection.face.b);
+        const v2 = new THREE.Vector3().fromBufferAttribute(positionAttr, intersection.face.c);
+        mesh.localToWorld(v0);
+        mesh.localToWorld(v1);
+        mesh.localToWorld(v2);
+        return [v0, v1, v2];
+      };
+
+      const distancePointToSegment = (point, start, end) => {
+        const delta = end.clone().sub(start);
+        const denom = delta.lengthSq();
+        if (denom <= 1e-12) return point.distanceTo(start);
+        const t = clamp(point.clone().sub(start).dot(delta) / denom, 0, 1);
+        const closest = start.clone().add(delta.multiplyScalar(t));
+        return point.distanceTo(closest);
+      };
+
+      const getClosestEdgeData = (mesh, intersection, point) => {
+        const vertices = getTriangleVerticesFromIntersection(mesh, intersection);
+        if (!vertices) return null;
+        const edges = [
+          [vertices[0], vertices[1]],
+          [vertices[1], vertices[2]],
+          [vertices[2], vertices[0]]
+        ];
+        let best = null;
+        edges.forEach((edge) => {
+          const line = new THREE.Line3(edge[0], edge[1]);
+          const closest = new THREE.Vector3();
+          line.closestPointToPoint(point, true, closest);
+          const distance = point.distanceTo(closest);
+          if (!best || distance < best.distance) {
+            best = {
+              start: edge[0].clone(),
+              end: edge[1].clone(),
+              closest,
+              distance
+            };
+          }
+        });
+        return best;
+      };
+
+      const getSnapFromIntersection = (intersection, prefer = 'any') => {
+        if (!intersection || !(intersection.object instanceof THREE.Mesh)) return null;
+        const mesh = intersection.object;
+        const vertices = getTriangleVerticesFromIntersection(mesh, intersection);
+        if (!vertices) return null;
+        const point = intersection.point.clone();
+        const faceNormal = getWorldNormalFromIntersection(mesh, intersection);
+
+        if (prefer === 'vertex' || prefer === 'any') {
+          let bestVertex = vertices[0];
+          let bestDistance = point.distanceTo(vertices[0]);
+          for (let i = 1; i < vertices.length; i += 1) {
+            const distance = point.distanceTo(vertices[i]);
+            if (distance < bestDistance) {
+              bestDistance = distance;
+              bestVertex = vertices[i];
+            }
+          }
+          if (bestDistance <= measurementSnapThreshold) {
+            return { position: bestVertex.clone(), type: 'vertex', normal: faceNormal.clone() };
+          }
+        }
+
+        if (prefer === 'edge' || prefer === 'any') {
+          const edge = getClosestEdgeData(mesh, intersection, point);
+          if (edge && edge.distance <= measurementSnapThreshold) {
+            return { position: edge.closest.clone(), type: 'edge', normal: faceNormal.clone() };
+          }
+        }
+
+        return { position: point, type: 'face', normal: faceNormal.clone() };
+      };
+
+      const circleFromPoints = (p1, p2, p3) => {
+        const v1 = p2.clone().sub(p1);
+        const v2 = p3.clone().sub(p1);
+        const cross = v1.clone().cross(v2);
+        const denom = 2 * cross.lengthSq();
+        if (denom < 1e-10) return null;
+        const v1Sq = v1.lengthSq();
+        const v2Sq = v2.lengthSq();
+        const term1 = cross.clone().cross(v1).multiplyScalar(v2Sq);
+        const term2 = v2.clone().cross(cross).multiplyScalar(v1Sq);
+        const center = p1.clone().add(term1.add(term2).divideScalar(denom));
+        const radius = center.distanceTo(p1);
+        if (!Number.isFinite(radius)) return null;
+        return { center, radius };
+      };
+
+      function updateActiveSnap(nextSnap) {
+        if (isSameSnap(activeSnap, nextSnap)) return;
+        activeSnap = nextSnap
+          ? {
+              position: nextSnap.position.clone(),
+              type: nextSnap.type,
+              normal: nextSnap.normal ? nextSnap.normal.clone() : null
+            }
+          : null;
+        renderMeasurementStatus();
+        syncMeasurementPreview();
+      }
+
       const syncTreeVisibilityFromMeshes = () => {
         const walk = (node) => {
           if (node.children && node.children.length) {
@@ -55007,30 +55843,9 @@ export { OrbitControls };
       };
 
       const fitCameraToMeshIds = (meshIds) => {
-        const box = new THREE.Box3();
-        let hasBounds = false;
-
-        meshIds.forEach((meshId) => {
-          const actor = meshActors.get(meshId);
-          if (!actor) return;
-          const mesh = actor.mesh;
-          if (!mesh.geometry.boundingBox) {
-            mesh.geometry.computeBoundingBox();
-          }
-          const localBox = mesh.geometry.boundingBox;
-          if (!localBox) return;
-
-          const worldBox = localBox.clone();
-          worldBox.applyMatrix4(mesh.matrixWorld);
-          if (!hasBounds) {
-            box.copy(worldBox);
-            hasBounds = true;
-          } else {
-            box.union(worldBox);
-          }
-        });
-
-        if (!hasBounds || box.isEmpty()) return;
+        scene.updateMatrixWorld(true);
+        const box = getBoundsForMeshIds(meshIds);
+        if (!box) return;
 
         const center = box.getCenter(new THREE.Vector3());
         const size = box.getSize(new THREE.Vector3());
@@ -55229,7 +56044,7 @@ export { OrbitControls };
         }
       };
 
-      const pickVisibleMeshIdAt = (clientX, clientY) => {
+      const pickVisibleIntersectionAt = (clientX, clientY) => {
         const rect = canvas.getBoundingClientRect();
         if (rect.width <= 0 || rect.height <= 0) return null;
 
@@ -55242,9 +56057,159 @@ export { OrbitControls };
           if (mesh.visible !== false) targets.push(mesh);
         });
 
-        const hit = raycaster.intersectObjects(targets, false)[0];
+        const hit = raycaster.intersectObjects(targets, false).find((entry) => entry.object instanceof THREE.Mesh) || null;
+        return hit;
+      };
+
+      const pickVisibleMeshIdAt = (clientX, clientY) => {
+        const hit = pickVisibleIntersectionAt(clientX, clientY);
         if (!hit || !hit.object || !hit.object.userData) return null;
         return hit.object.userData.meshId || null;
+      };
+
+      function handleMeasurementPick(intersection) {
+        if (!(intersection.object instanceof THREE.Mesh)) return;
+        const mesh = intersection.object;
+        const snap = activeSnap || getSnapFromIntersection(intersection, getMeasurementSnapPreference(measurementType));
+        if (!snap) return;
+
+        measurementFeedback = '';
+
+        const meshId = mesh.userData ? mesh.userData.meshId : null;
+        const nodeId = meshId ? meshIdToNodeId.get(meshId) || null : null;
+        if (nodeId) {
+          selectNode(nodeId, false);
+        }
+
+        if (measurementType === 'edge-length') {
+          const edge = getClosestEdgeData(mesh, intersection, snap.position);
+          if (!edge) return;
+          addMeasurement({
+            id: makeMeasurementId(),
+            type: 'edge-length',
+            value: edge.start.distanceTo(edge.end),
+            point1: edge.start.clone(),
+            point2: edge.end.clone(),
+            timestamp: Date.now()
+          });
+          return;
+        }
+
+        if (measurementType === 'face-distance' || measurementType === 'face-angle') {
+          const nextFaces = measurementDraft.faces.concat([{
+            point: intersection.point.clone(),
+            normal: (snap.normal || new THREE.Vector3(0, 1, 0)).clone()
+          }]);
+
+          if (nextFaces.length < 2) {
+            setMeasurementDraft({
+              points: [],
+              faces: nextFaces
+            });
+            return;
+          }
+
+          const face1 = nextFaces[0];
+          const face2 = nextFaces[1];
+          const normal1 = face1.normal.clone().normalize();
+          const normal2 = face2.normal.clone().normalize();
+
+          if (measurementType === 'face-distance') {
+            const delta = face2.point.clone().sub(face1.point);
+            const signed = delta.dot(normal1);
+            const projectedPoint = face1.point.clone().add(normal1.clone().multiplyScalar(signed));
+            addMeasurement({
+              id: makeMeasurementId(),
+              type: 'face-distance',
+              value: Math.abs(signed),
+              point1: face1.point.clone(),
+              point2: projectedPoint,
+              normal1: face1.normal.clone(),
+              normal2: face2.normal.clone(),
+              timestamp: Date.now()
+            });
+            return;
+          }
+
+          addMeasurement({
+            id: makeMeasurementId(),
+            type: 'face-angle',
+            value: THREE.MathUtils.radToDeg(normal1.angleTo(normal2)),
+            point1: face1.point.clone(),
+            point2: face2.point.clone(),
+            normal1: face1.normal.clone(),
+            normal2: face2.normal.clone(),
+            timestamp: Date.now()
+          });
+          return;
+        }
+
+        const nextPoints = measurementDraft.points.concat([snap.position.clone()]);
+
+        if (measurementType === 'points') {
+          if (nextPoints.length < 2) {
+            setMeasurementDraft({
+              points: nextPoints,
+              faces: []
+            });
+            return;
+          }
+
+          addMeasurement({
+            id: makeMeasurementId(),
+            type: 'points',
+            value: nextPoints[0].distanceTo(nextPoints[1]),
+            point1: nextPoints[0].clone(),
+            point2: nextPoints[1].clone(),
+            timestamp: Date.now()
+          });
+          return;
+        }
+
+        if (measurementType === 'radius' || measurementType === 'diameter') {
+          if (nextPoints.length < 3) {
+            setMeasurementDraft({
+              points: nextPoints,
+              faces: []
+            });
+            return;
+          }
+
+          const circle = circleFromPoints(nextPoints[0], nextPoints[1], nextPoints[2]);
+          if (!circle) {
+            measurementFeedback = 'Unable to derive a circle from these picks. Choose 3 points on the same arc.';
+            measurementDraft = createEmptyMeasurementDraft();
+            renderMeasurementPanel();
+            syncMeasurementPreview();
+            return;
+          }
+
+          const pointOnCircle = nextPoints[0].clone();
+          const oppositePoint = circle.center.clone().multiplyScalar(2).sub(pointOnCircle);
+          addMeasurement({
+            id: makeMeasurementId(),
+            type: measurementType,
+            value: measurementType === 'radius' ? circle.radius : circle.radius * 2,
+            point1: measurementType === 'radius' ? circle.center.clone() : pointOnCircle.clone(),
+            point2: measurementType === 'radius' ? pointOnCircle.clone() : oppositePoint.clone(),
+            point3: nextPoints[1].clone(),
+            center: circle.center.clone(),
+            timestamp: Date.now()
+          });
+        }
+      }
+
+      const updateMeasurementHover = (clientX, clientY) => {
+        if (!measurementMode) {
+          updateActiveSnap(null);
+          return;
+        }
+        const intersection = pickVisibleIntersectionAt(clientX, clientY);
+        if (!intersection) {
+          updateActiveSnap(null);
+          return;
+        }
+        updateActiveSnap(getSnapFromIntersection(intersection, getMeasurementSnapPreference(measurementType)));
       };
 
       const closeContextMenu = () => {
@@ -55485,6 +56450,27 @@ export { OrbitControls };
         treeWrap.appendChild(renderNode(payload.tree, 0));
       }
 
+      measureBtn.addEventListener('click', () => {
+        closeContextMenu();
+        setMeasurementMode(!measurementMode);
+      });
+
+      measureTypeSelect.addEventListener('change', (event) => {
+        setMeasurementType(event.target.value);
+      });
+
+      measureUnitSelect.addEventListener('change', (event) => {
+        setMeasurementUnit(event.target.value);
+      });
+
+      resetMeasureDraftBtn.addEventListener('click', () => {
+        clearMeasurementDraft();
+      });
+
+      clearMeasurementsBtn.addEventListener('click', () => {
+        clearMeasurements();
+      });
+
       fitBtn.addEventListener('click', () => fitCameraToVisible());
 
       showAllBtn.addEventListener('click', () => {
@@ -55527,6 +56513,17 @@ export { OrbitControls };
 
         closeContextMenu();
 
+        if (measurementMode) {
+          pendingMeasurePointer = {
+            pointerId: event.pointerId,
+            startX: event.clientX,
+            startY: event.clientY,
+            moved: false
+          };
+          updateMeasurementHover(event.clientX, event.clientY);
+          return;
+        }
+
         const meshId = pickVisibleMeshIdAt(event.clientX, event.clientY);
         if (!meshId) {
           if (!(event.ctrlKey || event.metaKey)) {
@@ -55539,6 +56536,53 @@ export { OrbitControls };
         if (!nodeId) return;
 
         selectNode(nodeId, !!(event.ctrlKey || event.metaKey));
+      });
+
+      canvas.addEventListener('pointermove', (event) => {
+        if (pendingMeasurePointer && pendingMeasurePointer.pointerId === event.pointerId) {
+          const dx = event.clientX - pendingMeasurePointer.startX;
+          const dy = event.clientY - pendingMeasurePointer.startY;
+          if ((dx * dx) + (dy * dy) > measurementClickMoveThresholdSq) {
+            pendingMeasurePointer.moved = true;
+          }
+        }
+
+        if (measurementMode) {
+          updateMeasurementHover(event.clientX, event.clientY);
+        }
+      });
+
+      canvas.addEventListener('pointerup', (event) => {
+        if (!pendingMeasurePointer || pendingMeasurePointer.pointerId !== event.pointerId) {
+          return;
+        }
+
+        const pointerState = pendingMeasurePointer;
+        pendingMeasurePointer = null;
+
+        if (!measurementMode || event.button !== 0 || pointerState.moved) {
+          return;
+        }
+
+        const intersection = pickVisibleIntersectionAt(event.clientX, event.clientY);
+        if (!intersection) {
+          updateActiveSnap(null);
+          return;
+        }
+
+        handleMeasurementPick(intersection);
+        updateMeasurementHover(event.clientX, event.clientY);
+      });
+
+      canvas.addEventListener('pointercancel', () => {
+        pendingMeasurePointer = null;
+      });
+
+      canvas.addEventListener('pointerleave', () => {
+        pendingMeasurePointer = null;
+        if (measurementMode) {
+          updateActiveSnap(null);
+        }
       });
 
       canvas.addEventListener('contextmenu', (event) => {
@@ -55574,6 +56618,16 @@ export { OrbitControls };
         if (contextMenuOpen) closeContextMenu();
       });
 
+      window.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+          if (contextMenuOpen) closeContextMenu();
+          if (measurementMode) {
+            clearMeasurementDraft();
+            updateActiveSnap(null);
+          }
+        }
+      });
+
       const animate = () => {
         controls.update();
         renderer.render(scene, camera);
@@ -55583,8 +56637,11 @@ export { OrbitControls };
       syncTreeVisibilityFromMeshes();
       renderTree();
       updateInfo();
+      renderMeasurementPanel();
+      syncMeasurementVisualization();
+      syncMeasurementPreview();
       fitCameraToVisible();
       animate();
     <\/script>
   </body>
-</html>`},y=t=>t.replace(/[^\w.\-]+/g,"_").replace(/_+/g,"_").replace(/^_+|_+$/g,""),B=(t,n,a="text/html;charset=utf-8")=>{const e=new Blob([t],{type:a}),i=URL.createObjectURL(e),r=document.createElement("a");r.href=i,r.download=n,r.style.visibility="hidden",document.body.appendChild(r),r.click(),document.body.removeChild(r),URL.revokeObjectURL(i)},F=t=>{const n=T({tree:t.tree,rootNodeId:t.rootNodeId,fileName:t.fileName,objects:t.objects});return w(n)},O=t=>{const n=T({tree:t.tree,rootNodeId:t.rootNodeId,fileName:t.fileName,objects:t.objects}),a=w(n),e=`${y(n.rootNodeName||"model")}_viewer.html`,i=y(t.outputName||e)||"model_viewer.html",r=i.toLowerCase().endsWith(".html")?i:`${i}.html`;return B(a,r),r};export{m as StandaloneExportError,F as exportStandaloneHtmlViewer,O as exportStandaloneHtmlViewerAndDownload};
+</html>`},S=t=>t.replace(/[^\w.\-]+/g,"_").replace(/_+/g,"_").replace(/^_+|_+$/g,""),N=(t,n,a="text/html;charset=utf-8")=>{const e=new Blob([t],{type:a}),i=URL.createObjectURL(e),r=document.createElement("a");r.href=i,r.download=n,r.style.visibility="hidden",document.body.appendChild(r),r.click(),document.body.removeChild(r),URL.revokeObjectURL(i)},O=t=>{const n=A({tree:t.tree,rootNodeId:t.rootNodeId,fileName:t.fileName,objects:t.objects});return E(n)},z=t=>{const n=A({tree:t.tree,rootNodeId:t.rootNodeId,fileName:t.fileName,objects:t.objects}),a=E(n),e=`${S(n.rootNodeName||"model")}_viewer.html`,i=S(t.outputName||e)||"model_viewer.html",r=i.toLowerCase().endsWith(".html")?i:`${i}.html`;return N(a,r),r};export{y as StandaloneExportError,O as exportStandaloneHtmlViewer,z as exportStandaloneHtmlViewerAndDownload};
