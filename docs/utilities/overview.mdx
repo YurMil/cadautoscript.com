@@ -37,7 +37,9 @@ Each calculator below launches the same standalone page machinists already use. 
 
 ## Versioning & telemetry
 
-- Utilities are static builds under static/utilities/*. Update the React/Vite project, drop the bundle here, commit, and push.
+- Most standalone utility bundles live under `static/utility-apps/*`.
+- Shared shell assets stay under `static/utilities/*`.
+- Update the source project, refresh the bundle in the matching directory, then commit and push.
 - Include a concise changelog in the docs whenever a calculator or macro changes behavior.
 - Use browser devtools or custom logging endpoints if you need telemetry-nothing tracks usage by default.
 
