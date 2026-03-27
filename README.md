@@ -148,7 +148,8 @@ cadautoscript.com/
 │   ├── theme/                   # Docusaurus theme overrides
 │   └── utils/                   # Helper functions
 ├── static/
-│   ├── utilities/               # Utility shell assets (CSS/JS)
+│   ├── utilities/               # Shared utility shell assets (CSS/JS)
+│   ├── utility-apps/            # Standalone embedded utility builds
 │   ├── mini-games/              # Game static assets
 │   ├── img/                     # Images and icons
 │   └── vendor/                  # Third-party libraries
@@ -160,7 +161,7 @@ cadautoscript.com/
 ├── sidebars.ts                  # Documentation sidebar structure
 ├── tailwind.config.js           # Tailwind CSS configuration
 ├── tsconfig.json                # TypeScript configuration
-└── vercel.json                  # Vercel deployment settings
+└── vercel.json                  # Optional Vercel-compatible settings
 ```
 
 ---
@@ -256,7 +257,7 @@ cadautoscript.com/
 
 ## Deployment
 
-The site deploys to [Vercel](https://vercel.com/) with automatic builds on push to `main`.
+The repository's checked-in deployment workflow publishes the site to GitHub Pages on pushes to `main`.
 
 ### Manual Deployment
 
@@ -292,7 +293,7 @@ AUTH_REDIRECT_URL=http://localhost:3000/auth/callback
 1. Add utility metadata to `src/data/utilities.ts`
 2. Create page route in `src/pages/utilities/`
 3. Add documentation in `docs/utilities/`
-4. Place static assets in `static/utilities/` if needed
+4. Place standalone build assets in `static/utility-apps/<slug>/` if needed
 
 ---
 

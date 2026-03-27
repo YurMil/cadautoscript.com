@@ -30,7 +30,8 @@ All utilities are bundled as static assets and expect a Chromium-based browser (
 3. **Edit content**
    - Markdown pages live under `docs/`
    - React components live under `src/`
-   - Static calculators live under `static/utilities/`
+   - Standalone utility bundles live under `static/utility-apps/`
+   - Shared utility shell assets live under `static/utilities/`
 
 Docusaurus hot reloads changes instantly. When you're ready to publish, run `npm run build` and deploy the `build/` output to GitHub Pages.
 

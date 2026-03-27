@@ -16,7 +16,7 @@ MDX pages can host interactive utilities in several ways:
 />
 ```
 
-Use this when a calculator lives entirely inside `static/utilities/*`.
+Use this when a calculator ships as a standalone bundle under `static/utility-apps/<slug>/app.html`.
 
 ## 2. Wrap as a React component
 
