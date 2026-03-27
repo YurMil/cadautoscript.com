@@ -32,3 +32,19 @@
 .lockedLink {
   color: #ffbe73;
 }
+
+:global(html[data-theme='light']) .notice {
+  color: var(--light-warning-text);
+  background: var(--light-warning-bg);
+  border-color: var(--light-warning-border);
+}
+
+:global(html[data-theme='light']) .lockPill {
+  background: var(--light-warning-bg);
+  color: var(--light-warning-text);
+  border-color: var(--light-warning-border);
+}
+
+:global(html[data-theme='light']) .lockedLink {
+  color: #b45309;
+}

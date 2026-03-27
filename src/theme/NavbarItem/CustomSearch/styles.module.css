@@ -110,3 +110,47 @@
   color: #94a3b8;
   margin: 1rem 0;
 }
+
+:global(html[data-theme='light']) .backdrop {
+  background: rgba(15, 23, 42, 0.38);
+}
+
+:global(html[data-theme='light']) .dialog {
+  background: var(--light-surface-strong);
+  border-color: var(--card-border);
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.18);
+  color: var(--light-text);
+}
+
+:global(html[data-theme='light']) .input {
+  background: var(--light-surface-muted);
+  border-color: var(--card-border);
+  color: var(--light-text);
+}
+
+:global(html[data-theme='light']) .closeButton {
+  color: var(--light-text-muted);
+  border-color: var(--card-border);
+}
+
+:global(html[data-theme='light']) .resultItem {
+  background: rgba(241, 245, 255, 0.9);
+  border-color: transparent;
+  color: var(--light-text);
+}
+
+:global(html[data-theme='light']) .resultItem:hover {
+  border-color: var(--light-accent-border);
+  background: rgba(232, 239, 255, 0.92);
+}
+
+:global(html[data-theme='light']) .description,
+:global(html[data-theme='light']) .empty {
+  color: var(--light-text-soft);
+}
+
+:global(html[data-theme='light']) .tag {
+  color: var(--light-text-muted);
+  border-color: var(--card-border);
+  background: rgba(255, 255, 255, 0.68);
+}

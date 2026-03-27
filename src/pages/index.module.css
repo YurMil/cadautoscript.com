@@ -185,3 +185,49 @@
     padding: 1.25rem;
   }
 }
+
+:global(html[data-theme='light']) .hero,
+:global(html[data-theme='light']) .utilitySection,
+:global(html[data-theme='light']) .docsSection {
+  background: var(--light-surface);
+  border-color: var(--card-border);
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+}
+
+:global(html[data-theme='light']) .eyebrow,
+:global(html[data-theme='light']) .heroStats span,
+:global(html[data-theme='light']) .subtle {
+  color: var(--light-text-soft);
+}
+
+:global(html[data-theme='light']) .hero p,
+:global(html[data-theme='light']) .featureList {
+  color: var(--light-text-muted);
+}
+
+:global(html[data-theme='light']) .utilityCard {
+  border-color: var(--card-border);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(243, 247, 255, 0.94));
+  box-shadow: 0 14px 36px rgba(15, 23, 42, 0.08);
+}
+
+:global(html[data-theme='light']) .lockHint {
+  color: var(--light-warning-text);
+}
+
+:global(html[data-theme='light']) .lockIcon,
+:global(html[data-theme='light']) .lockBadge {
+  background: var(--light-warning-bg);
+  color: var(--light-warning-text);
+  border-color: var(--light-warning-border);
+}
+
+:global(html[data-theme='light']) .lockedAction {
+  background: linear-gradient(90deg, rgba(249, 115, 22, 0.14), rgba(255, 237, 213, 0.92));
+  color: var(--light-text);
+  border-color: var(--light-warning-border);
+}
+
+:global(html[data-theme='light']) .utilityCardLocked::after {
+  background: linear-gradient(160deg, rgba(249, 115, 22, 0.08), rgba(255, 255, 255, 0));
+}

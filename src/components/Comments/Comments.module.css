@@ -311,3 +311,86 @@
     padding: 0.35rem 0.6rem;
   }
 }
+
+:global(html[data-theme='light']) .container {
+  background: var(--light-surface);
+  box-shadow: 0 14px 36px rgba(15, 23, 42, 0.08);
+}
+
+:global(html[data-theme='light']) .eyebrow,
+:global(html[data-theme='light']) .muted,
+:global(html[data-theme='light']) .meta,
+:global(html[data-theme='light']) .richInput:empty:before,
+:global(html[data-theme='light']) .replyButton {
+  color: var(--light-text-soft);
+}
+
+:global(html[data-theme='light']) .alert {
+  background: var(--light-danger-bg);
+  border-color: var(--light-danger-border);
+  color: var(--light-danger-text);
+}
+
+:global(html[data-theme='light']) .avatar {
+  background: linear-gradient(145deg, rgba(33, 92, 255, 0.12), rgba(100, 255, 218, 0.12));
+  color: var(--light-text);
+}
+
+:global(html[data-theme='light']) .body,
+:global(html[data-theme='light']) .quote,
+:global(html[data-theme='light']) .pickerButton,
+:global(html[data-theme='light']) .richInput,
+:global(html[data-theme='light']) .form textarea {
+  background: rgba(248, 250, 255, 0.92);
+  border-color: var(--card-border);
+}
+
+:global(html[data-theme='light']) .author,
+:global(html[data-theme='light']) .quote strong,
+:global(html[data-theme='light']) .replyButton:hover {
+  color: var(--light-text);
+}
+
+:global(html[data-theme='light']) .dot {
+  color: #64748b;
+}
+
+:global(html[data-theme='light']) .notice {
+  color: var(--light-warning-text);
+}
+
+:global(html[data-theme='light']) .pickerButton:hover {
+  border-color: var(--light-accent-border);
+}
+
+:global(html[data-theme='light']) .pickerPopover {
+  background: var(--light-surface-strong);
+  border-color: var(--card-border);
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.14);
+}
+
+:global(html[data-theme='light']) .richInput:focus {
+  outline: 2px solid rgba(33, 92, 255, 0.28);
+}
+
+:global(html[data-theme='light']) .quote {
+  border-left-color: rgba(33, 92, 255, 0.45);
+}
+
+:global(html[data-theme='light']) .quote p {
+  color: var(--light-text-muted);
+}
+
+:global(html[data-theme='light']) .replyBadge {
+  background: rgba(33, 92, 255, 0.08);
+  border-color: var(--light-accent-border);
+  color: #1d4ed8;
+}
+
+:global(html[data-theme='light']) .actionLink {
+  color: #1d4ed8;
+}
+
+:global(html[data-theme='light']) .actionLink:hover {
+  color: #173fb3;
+}

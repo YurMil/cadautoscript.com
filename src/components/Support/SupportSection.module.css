@@ -46,3 +46,17 @@
     width: 100%;
   }
 }
+
+:global(html[data-theme='light']) .section {
+  background: var(--light-surface);
+  border-color: var(--card-border);
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+}
+
+:global(html[data-theme='light']) .eyebrow {
+  color: var(--light-text-soft);
+}
+
+:global(html[data-theme='light']) .description {
+  color: var(--light-text-muted);
+}

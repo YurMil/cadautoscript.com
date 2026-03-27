@@ -220,3 +220,65 @@
   justify-content: flex-end;
   gap: 0.5rem;
 }
+
+:global(html[data-theme='light']) .subtle,
+:global(html[data-theme='light']) .table th,
+:global(html[data-theme='light']) .muted,
+:global(html[data-theme='light']) .toolbar {
+  color: var(--light-text-soft);
+}
+
+:global(html[data-theme='light']) .tabActive {
+  background: rgba(33, 92, 255, 0.1);
+  color: #1d4ed8;
+}
+
+:global(html[data-theme='light']) .panel {
+  background: var(--light-surface);
+  box-shadow: 0 14px 36px rgba(15, 23, 42, 0.08);
+}
+
+:global(html[data-theme='light']) .avatar {
+  color: var(--light-text);
+}
+
+:global(html[data-theme='light']) .deleteBtn,
+:global(html[data-theme='light']) .alert {
+  background: var(--light-danger-bg);
+  border-color: var(--light-danger-border);
+  color: var(--light-danger-text);
+}
+
+:global(html[data-theme='light']) .roleSelect,
+:global(html[data-theme='light']) .primaryBtn,
+:global(html[data-theme='light']) .secondaryBtn,
+:global(html[data-theme='light']) .input {
+  background: rgba(248, 250, 255, 0.92);
+  border-color: var(--card-border);
+  color: var(--light-text);
+}
+
+:global(html[data-theme='light']) .alertSuccess {
+  background: var(--light-success-bg);
+  border-color: var(--light-success-border);
+  color: var(--light-success-text);
+}
+
+:global(html[data-theme='light']) .primaryBtn {
+  background: linear-gradient(135deg, rgba(33, 92, 255, 0.14), rgba(219, 234, 254, 0.92));
+  border-color: var(--light-accent-border);
+}
+
+:global(html[data-theme='light']) .primaryBtn:hover,
+:global(html[data-theme='light']) .secondaryBtn:hover {
+  box-shadow: 0 10px 22px rgba(15, 23, 42, 0.12);
+}
+
+:global(html[data-theme='light']) .modalBackdrop {
+  background: rgba(15, 23, 42, 0.35);
+}
+
+:global(html[data-theme='light']) .modal {
+  background: var(--light-surface-strong);
+  box-shadow: 0 22px 50px rgba(15, 23, 42, 0.16);
+}

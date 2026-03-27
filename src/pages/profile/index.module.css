@@ -323,3 +323,81 @@
     height: 64px;
   }
 }
+
+:global(html[data-theme='light']) .panel {
+  background: radial-gradient(circle at 20% 20%, rgba(33, 92, 255, 0.08), transparent 55%),
+    var(--light-surface);
+  box-shadow: 0 20px 46px rgba(15, 23, 42, 0.1);
+}
+
+:global(html[data-theme='light']) .avatarFallback {
+  color: var(--light-text);
+}
+
+:global(html[data-theme='light']) .eyebrow,
+:global(html[data-theme='light']) .subtle,
+:global(html[data-theme='light']) .loading,
+:global(html[data-theme='light']) .hint,
+:global(html[data-theme='light']) .label,
+:global(html[data-theme='light']) .inlineNotice {
+  color: var(--light-text-soft);
+}
+
+:global(html[data-theme='light']) .alertError {
+  background: var(--light-danger-bg);
+  border-color: var(--light-danger-border);
+  color: var(--light-danger-text);
+}
+
+:global(html[data-theme='light']) .alertSuccess {
+  background: var(--light-success-bg);
+  border-color: var(--light-success-border);
+  color: var(--light-success-text);
+}
+
+:global(html[data-theme='light']) .field input,
+:global(html[data-theme='light']) .field textarea,
+:global(html[data-theme='light']) .detailRow,
+:global(html[data-theme='light']) .workspaceToggle,
+:global(html[data-theme='light']) .tile {
+  background: rgba(248, 250, 255, 0.92);
+  border-color: var(--card-border);
+}
+
+:global(html[data-theme='light']) .field input:focus,
+:global(html[data-theme='light']) .field textarea:focus {
+  outline: 2px solid rgba(33, 92, 255, 0.28);
+}
+
+:global(html[data-theme='light']) .badgeAdmin {
+  background: var(--light-danger-bg);
+  color: var(--light-danger-text);
+  border-color: var(--light-danger-border);
+}
+
+:global(html[data-theme='light']) .badgeAuthor {
+  background: rgba(33, 92, 255, 0.1);
+  color: #1d4ed8;
+  border-color: var(--light-accent-border);
+}
+
+:global(html[data-theme='light']) .badgeUser {
+  background: rgba(148, 163, 184, 0.12);
+  color: var(--light-text-muted);
+  border-color: rgba(100, 116, 139, 0.24);
+}
+
+:global(html[data-theme='light']) .workspaceOpen {
+  background: rgba(33, 92, 255, 0.08);
+  border-color: var(--light-accent-border);
+}
+
+:global(html[data-theme='light']) .workspaceCurtain {
+  border-color: var(--card-border);
+  background: rgba(255, 255, 255, 0.76);
+}
+
+:global(html[data-theme='light']) .tile:hover {
+  border-color: var(--light-accent-border);
+  background: linear-gradient(135deg, rgba(33, 92, 255, 0.1), rgba(255, 255, 255, 0.9));
+}
