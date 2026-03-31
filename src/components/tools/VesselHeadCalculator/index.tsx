@@ -7,6 +7,7 @@ import EdgePrepDetail from './components/EdgePrepDetail';
 import HeadVisualizer from './components/HeadVisualizer';
 import NozzleManager from './components/NozzleManager';
 import PrintReport from './components/PrintReport';
+import StepExportPanel from './components/StepExportPanel';
 
 export default function VesselHeadCalculator() {
   const [showReport, setShowReport] = useState(false);
@@ -63,6 +64,7 @@ export default function VesselHeadCalculator() {
           <div className="lg:col-span-4 space-y-6">
             <ConfigPanel onOpenEdgePrep={handleOpenEdgePrep} />
             <NozzleManager />
+            <StepExportPanel />
           </div>
 
           <div className="lg:col-span-8 flex flex-col gap-6">

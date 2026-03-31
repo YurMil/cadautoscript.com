@@ -1,6 +1,6 @@
 ---
 title: Dished End (Vessel Head) Calculator
-description: Calculate geometry, blank diameter, and weight for Torispherical and Ellipsoidal heads (DIN 28011, DIN 28013, SS 895) with nozzle configuration and QC reports.
+description: Calculate geometry, blank diameter, and weight for Torispherical and Ellipsoidal heads (DIN 28011, DIN 28013, SS 895) with nozzle configuration, QC reports, and 3D STEP export.
 slug: /utilities/pressure-vessel-dished-end-calc
 image: /img/og/utilities/pressure-vessel-dished-end-calc.png
 keywords:
@@ -17,7 +17,7 @@ import Head from '@docusaurus/Head';
 
 # Dished End (Vessel Head) Calculator
 
-Calculate geometry, blank diameter, and weight for Torispherical and Ellipsoidal heads (DIN 28011, DIN 28013, SS 895) with nozzle configuration and QC reports.
+Calculate geometry, blank diameter, and weight for Torispherical and Ellipsoidal heads (DIN 28011, DIN 28013, SS 895) with nozzle configuration, QC reports, and browser-based 3D STEP export.
 
 <a className="button button--primary" href="/utilities/pressure-vessel-dished-end-calc/" data-nobrokenlinkcheck>Open utility</a>
 
@@ -31,14 +31,15 @@ Calculate geometry, blank diameter, and weight for Torispherical and Ellipsoidal
   "name": "Dished End (Vessel Head) Calculator",
   "applicationCategory": "EngineeringApplication",
   "operatingSystem": "Web",
-  "description": "Calculate geometry, blank diameter, and weight for Torispherical and Ellipsoidal heads (DIN 28011, DIN 28013, SS 895) with nozzle configuration and QC reports.",
+  "description": "Calculate geometry, blank diameter, and weight for Torispherical and Ellipsoidal heads (DIN 28011, DIN 28013, SS 895) with nozzle configuration, QC reports, and browser-based 3D STEP export.",
   "url": "https://cadautoscript.com/utilities/pressure-vessel-dished-end-calc/",
   "image": "https://cadautoscript.com/img/og/utilities/pressure-vessel-dished-end-calc.png",
   "featureList": [
     "Automatic geometry calculation (R, r, h1, h2)",
     "Blank diameter estimation",
     "Nozzle positioning visualizer",
-    "Printable Manufacturing QC Report"
+    "Printable Manufacturing QC Report",
+    "3D STEP export for vessel heads"
   ],
   "mainEntityOfPage": "https://cadautoscript.com/docs/utilities/pressure-vessel-dished-end-calc",
   "offers": {
@@ -100,13 +101,14 @@ Calculate geometry, blank diameter, and weight for Torispherical and Ellipsoidal
 </Head>
 
 ## What it does
-Instant calculation of pressure vessel head geometry, weight, and volume. It generates a visual profile including nozzle positions and produces a printable "Manufacturing Report" with expected tolerances for quality control.
+Instant calculation of pressure vessel head geometry, weight, and volume. It generates a visual profile including nozzle positions, exports a matching 3D STEP model, and produces a printable "Manufacturing Report" with expected tolerances for quality control.
 
 ## When to use it (and when not to)
 **Use it when:**
 - You need to estimate the weight and blank diameter for material ordering.
 - You want to visualize nozzle positions relative to the head curvature.
 - You need a quick QC sheet with standard tolerances (DIN 28005-1) for the shop floor.
+- You want a browser-side 3D STEP file of the configured head for downstream CAD work.
 
 **Avoid it when:**
 - You are designing ASME 2:1 Ellipsoidal heads (unless the geometry matches the provided DIN/SS presets manually).
@@ -128,6 +130,7 @@ Instant calculation of pressure vessel head geometry, weight, and volume. It gen
 | Geometry (H, h2, R, r) | Numeric | Full height, crown height, dish radius, and knuckle radius calculations. |
 | Weight & Volume | Numeric | Estimated finished weight and internal volume. |
 | Blank Diameter | Numeric | Theoretical flat plate diameter required for forming. |
+| 3D STEP model | STEP | Exports the configured vessel head geometry as a browser-generated 3D file. |
 | QC Report | PDF/Print | A formatted sheet with nominal values and blank fields for actual measurements. |
 
 ## How to use
@@ -135,7 +138,8 @@ Instant calculation of pressure vessel head geometry, weight, and volume. It gen
 2. Enter the Outer Diameter (Da), Thickness (s), and Straight Flange (h1).
 3. Configure the material and edge preparation (bevel angle/root face) if needed.
 4. (Optional) Add nozzles by specifying size (e.g., DN50) and offset from center.
-5. Click "QC Report (PDF)" to generate the printable manufacturing sheet.
+5. Download the 3D STEP model when you need the current head as a CAD file.
+6. Click "QC Report (PDF)" to generate the printable manufacturing sheet.
 
 **Example dataset:** Standard: DIN 28011, Da: 1000 mm, s: 8 mm, h1: 25 mm, Material: P265GH.
 - Expected output: Total Height (H) calculated, weight estimation (~25kg), and a visual profile showing the dish radius and knuckle radius.
@@ -158,6 +162,7 @@ Instant calculation of pressure vessel head geometry, weight, and volume. It gen
 - [Embedding Calculators](./embedding-calculators)
 
 ## Changelog
+- Added browser-based 3D STEP export for vessel heads.
 - **v0.1.3b**: Added QC Report generation, nozzle configuration, and edge prep visualization.
 - Initial release.
 

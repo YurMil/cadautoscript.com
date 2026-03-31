@@ -164,6 +164,7 @@ export default function BlindFlangeCalculator() {
   }, [geometryMode, autoCustomDims, input]);
 
   const result = useMemo(() => calculateBlindFlange(calcInput), [calcInput]);
+  const exportResult = customResult?.result ?? result;
 
   useEffect(() => {
     if (result) {
@@ -183,21 +184,21 @@ export default function BlindFlangeCalculator() {
   }, [geometryMode, standardResult, dn]);
 
   useEffect(() => {
-    if (!result) return;
+    if (!exportResult) return;
     if (isUserDefined) return;
-    const gasketId = result.gasketId ?? customNozzleId ?? dn;
-    const gasketOd = result.gasketOd ?? gasketId + 20;
+    const gasketId = exportResult.gasketId ?? customNozzleId ?? dn;
+    const gasketOd = exportResult.gasketOd ?? gasketId + 20;
     setDesignConfig({
-      outerDiameter: result.dims.D,
-      thickness: result.recommendedThickness,
-      boltCircle: result.dims.k,
-      boltCount: result.dims.bolts,
-      boltSize: result.dims.size,
-      boltHoleDiameter: result.dims.d2,
+      outerDiameter: exportResult.dims.D,
+      thickness: exportResult.recommendedThickness,
+      boltCircle: exportResult.dims.k,
+      boltCount: exportResult.dims.bolts,
+      boltSize: exportResult.dims.size,
+      boltHoleDiameter: exportResult.dims.d2,
       gasketId,
       gasketOd,
     });
-  }, [result, isUserDefined, customNozzleId, dn]);
+  }, [exportResult, isUserDefined, customNozzleId, dn]);
 
   const handleGeometryModeChange = (mode: GeometryMode) => {
     if (mode === geometryMode) return;
@@ -266,8 +267,6 @@ export default function BlindFlangeCalculator() {
     if (isUser) setIsUserDefined(true);
   }, []);
 
-  const exportResult = customResult?.result ?? result;
-
   return (
     <div className="min-h-full bg-slate-950 text-slate-100">
       <div className="mx-auto max-w-6xl px-4 py-6 lg:px-8 lg:py-10">
@@ -287,6 +286,10 @@ export default function BlindFlangeCalculator() {
           <ExportActions
             input={input}
             result={exportResult}
+            stepBaseResult={result}
+            stepCustomResult={customResult?.result ?? null}
+            designConfig={designConfig}
+            gasketFacing={gasketFacing}
             manualCheckResult={manualCheckResult}
             targetPN={calculatedPn}
             customDebug={customResult?.debug}

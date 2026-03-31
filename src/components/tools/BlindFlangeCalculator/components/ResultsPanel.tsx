@@ -69,8 +69,9 @@ export default function ResultsPanel({
       setViewMode('manual');
       return;
     }
+    onManualResultChange?.(null);
     setViewMode('auto');
-  }, [result?.dims?.D, input.geometryMode, isUserDefined]);
+  }, [result?.dims?.D, input.geometryMode, isUserDefined, onManualResultChange]);
 
   if (result && boltFail) {
     return (
@@ -139,6 +140,7 @@ export default function ResultsPanel({
                   onClick={() => {
                     if (mode === 'auto' && fallbackConfig) {
                       onDesignConfigChange?.(fallbackConfig, false);
+                      onManualResultChange?.(null);
                     }
                     setViewMode(mode);
                   }}

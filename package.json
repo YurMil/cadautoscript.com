@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "CAD AutoScript documentation and utility catalog powered by Docusaurus.",
   "private": true,
+  "packageManager": "pnpm@10.33.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/biosxxx/cadautoscript.com.git"
@@ -25,7 +26,9 @@
   "dependencies": {
     "@dimforge/rapier3d-compat": "^0.14.0",
     "@docusaurus/core": "3.9.2",
+    "@docusaurus/plugin-content-blog": "3.9.2",
     "@docusaurus/preset-classic": "3.9.2",
+    "@docusaurus/theme-common": "3.9.2",
     "@mdx-js/mdx": "^3.1.1",
     "@mdx-js/react": "^3.0.0",
     "@monaco-editor/react": "^4.7.0",
@@ -57,14 +60,15 @@
     "replicad": "^0.20.5",
     "replicad-opencascadejs": "^0.20.2",
     "three": "^0.182.0",
+    "three-stdlib": "2.36.1",
     "uuid": "^13.0.0",
     "zustand": "^5.0.9"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.2.1",
     "@docusaurus/module-type-aliases": "3.9.2",
     "@docusaurus/tsconfig": "3.9.2",
     "@docusaurus/types": "3.9.2",
+    "@tailwindcss/postcss": "^4.2.1",
     "@types/react": "^19.2.13",
     "@types/react-dom": "^19.2.3",
     "gh-pages": "^6.3.0",

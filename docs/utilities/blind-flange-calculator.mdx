@@ -1,6 +1,6 @@
 ---
 title: Blind Flange Calculator
-description: Calculate EN 13445-3 blind flange thickness with automatic EN 1092-1 PN selection and a weight estimate.
+description: Calculate EN 13445-3 blind flange thickness with automatic EN 1092-1 PN selection, weight estimate, and browser-based 3D STEP export.
 slug: /utilities/blind-flange-calculator
 keywords:
   - blind flange
@@ -15,7 +15,7 @@ import Head from '@docusaurus/Head';
 
 # Blind Flange Calculator
 
-Auto-select the PN class from EN 1092-1, calculate minimum thickness per EN 13445-3, and get a standard plate recommendation.
+Auto-select the PN class from EN 1092-1, calculate minimum thickness per EN 13445-3, and generate a matching 3D STEP model directly in the browser.
 
 <a className="button button--primary" href="/utilities/blind-flange-calculator/" data-nobrokenlinkcheck>Open utility</a>
 
@@ -27,12 +27,13 @@ Auto-select the PN class from EN 1092-1, calculate minimum thickness per EN 1344
   "name": "Blind Flange Calculator",
   "applicationCategory": "EngineeringApplication",
   "operatingSystem": "Web",
-  "description": "Auto-select the PN class from EN 1092-1, calculate minimum thickness per EN 13445-3, and recommend a standard plate thickness for blind flanges.",
+  "description": "Auto-select the PN class from EN 1092-1, calculate minimum thickness per EN 13445-3, recommend a standard plate thickness for blind flanges, and export a matching 3D STEP model.",
   "url": "https://cadautoscript.com/utilities/blind-flange-calculator/",
   "featureList": [
 "Automatic PN selection",
 "Minimum and recommended thickness",
-"Bolt circle data and weight estimate"
+"Bolt circle data and weight estimate",
+"3D STEP export for configured blind flanges"
   ],
   "mainEntityOfPage": "https://cadautoscript.com/docs/utilities/blind-flange-calculator",
   "offers": {
@@ -94,13 +95,14 @@ Auto-select the PN class from EN 1092-1, calculate minimum thickness per EN 1344
 </Head>
 
 ## What it does
-Select a DN, set operating and test pressures, temperature, and material grade. The tool uses EN 1092-1 flange dimensions and EN 13445-3 stress checks to compute minimum thickness and a recommended standard plate thickness.
+Select a DN, set operating and test pressures, temperature, and material grade. The tool uses EN 1092-1 flange dimensions and EN 13445-3 stress checks to compute minimum thickness, recommend a standard plate thickness, and export a matching 3D STEP model for the active flange configuration.
 
 ## When to use it (and when not to)
 **Use it when:**
 - You need a fast preliminary blind flange thickness for EN 13445 projects.
 - You want an automatic PN lookup instead of manual table checks.
 - You need a quick weight estimate for procurement or handling plans.
+- You want a simple browser-side 3D STEP model for the current flange geometry.
 
 **Avoid it when:**
 - You need a fully certified calculation pack or third-party verification.
@@ -124,12 +126,14 @@ Select a DN, set operating and test pressures, temperature, and material grade. 
 | Minimum thickness | mm | From EN 13445-3 with corrosion allowance shown separately. |
 | PN class and bolt data | On-screen | Includes bolt count, size, and bolt circle. |
 | Weight estimate | kg | Based on flange OD, thickness, and material density. |
+| 3D STEP model | STEP | Exports the configured blind flange body and bolt-hole pattern. |
 
 ## How to use
 1. Choose DN and enter operating pressure.
 2. Confirm or override test pressure.
 3. Select temperature, material, and corrosion allowance.
 4. Read the recommended thickness, PN class, and bolt details.
+5. Use the STEP export action when you need a matching 3D model of the current flange geometry.
 
 **Example dataset:** DN 100, operating pressure 10 bar, test pressure 14 bar, temperature 20 C, material P265GH, corrosion 1 mm.
 - Expected output: Recommended thickness and PN class with bolt size and weight estimate.
@@ -153,6 +157,7 @@ Select a DN, set operating and test pressures, temperature, and material grade. 
 - [Pipe Cutter Visualizer](./pipe-cutter)
 
 ## Changelog
+- Added browser-based 3D STEP export for configured blind flanges.
 - Initial documentation.
 
 ## Feedback / bug report
