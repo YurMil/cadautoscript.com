@@ -1,14 +1,42 @@
 import type {HeadCadConfig, HeadDerivedGeometry, HeadSectionGeometry} from '../types/cad-types';
+import {calculateGeometry} from '../../utils';
 
 const toRadians = (degrees: number) => (degrees * Math.PI) / 180;
 
+const EPSILON = 1e-6;
+
+const solveCrownRadiusForDishHeight = (
+  shellRadius: number,
+  knuckleRadius: number,
+  dishHeight: number,
+) => {
+  const shellToKnuckleOffset = shellRadius - knuckleRadius;
+  const dishHeightAboveKnuckleCenter = dishHeight - knuckleRadius;
+
+  if (shellToKnuckleOffset <= EPSILON || dishHeightAboveKnuckleCenter <= EPSILON) {
+    throw new Error('Head dish height is invalid for the selected diameter and knuckle radius.');
+  }
+
+  return (
+    knuckleRadius +
+    (shellToKnuckleOffset ** 2 + dishHeightAboveKnuckleCenter ** 2) /
+      (2 * dishHeightAboveKnuckleCenter)
+  );
+};
+
 const getStandardGeometry = (config: HeadCadConfig) => {
-  const crownFactor = config.standard === 'DIN28013' ? 0.8 : 1.0;
   const knuckleFactor = config.standard === 'DIN28013' ? 0.154 : 0.1;
+  const targetDishHeight = calculateGeometry(config).totalHeight - config.straightFlange;
+  const shellRadiusOuter = config.diameterOuter / 2;
+  const knuckleRadiusOuter = config.diameterOuter * knuckleFactor;
 
   return {
-    crownRadiusOuter: config.diameterOuter * crownFactor,
-    knuckleRadiusOuter: config.diameterOuter * knuckleFactor,
+    crownRadiusOuter: solveCrownRadiusForDishHeight(
+      shellRadiusOuter,
+      knuckleRadiusOuter,
+      targetDishHeight,
+    ),
+    knuckleRadiusOuter,
   };
 };
 

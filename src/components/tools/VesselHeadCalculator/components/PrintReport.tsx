@@ -3,9 +3,9 @@ import clsx from 'clsx';
 import {Download, Info, X} from 'lucide-react';
 import {APP_VERSION} from '../constants';
 import {useVesselHeadStore} from '../store';
-import {calculateGeometry, getDimensionFontSize, getNozzleDiameter} from '../utils';
+import {calculateGeometry, getNozzleDiameter} from '../utils';
 import EdgePrepPreview from './EdgePrepPreview';
-import {HeadProfile} from './HeadVisualizer';
+import {buildHeadDrawingModel, getDrawingFontSize, HeadProfile} from './HeadVisualizer';
 
 const loadScript = (src: string, globalKey: string) =>
   new Promise<void>((resolve, reject) => {
@@ -55,6 +55,48 @@ const formatMaterial = (material: string) =>
     .replace(/\s+/g, '-')
     .replace(/[^A-Za-z0-9-]/g, '');
 
+const inlineComputedStyles = (sourceNode: Element, targetNode: Element) => {
+  const computedStyle = window.getComputedStyle(sourceNode);
+
+  for (let index = 0; index < computedStyle.length; index += 1) {
+    const propertyName = computedStyle[index];
+    const propertyValue = computedStyle.getPropertyValue(propertyName);
+    const propertyPriority = computedStyle.getPropertyPriority(propertyName);
+    const isUnsupportedValue =
+      propertyValue.includes('oklch(') || propertyValue.includes('oklab(') || propertyValue.includes('color-mix(');
+
+    if (propertyName.startsWith('--') || isUnsupportedValue) {
+      continue;
+    }
+
+    if (targetNode instanceof HTMLElement || targetNode instanceof SVGElement) {
+      targetNode.style.setProperty(propertyName, propertyValue, propertyPriority);
+    }
+  }
+
+  const sourceChildren = Array.from(sourceNode.children);
+  const targetChildren = Array.from(targetNode.children);
+  sourceChildren.forEach((child, index) => {
+    const targetChild = targetChildren[index];
+    if (targetChild) {
+      inlineComputedStyles(child, targetChild);
+    }
+  });
+};
+
+const prepareHtml2CanvasClone = (sourceRoot: HTMLElement, clonedDocument: Document) => {
+  const clonedRoot = clonedDocument.querySelector('[data-pdf-report-root="true"]');
+  if (!clonedRoot) {
+    return;
+  }
+
+  inlineComputedStyles(sourceRoot, clonedRoot);
+  clonedDocument.querySelectorAll('style, link[rel="stylesheet"]').forEach((node) => node.remove());
+  if (clonedDocument.body) {
+    clonedDocument.body.style.background = '#ffffff';
+  }
+};
+
 export default function PrintReport({isVisible, onClose}: PrintReportProps) {
   const config = useVesselHeadStore((state) => state.config);
   const nozzles = useVesselHeadStore((state) => state.nozzles);
@@ -62,17 +104,12 @@ export default function PrintReport({isVisible, onClose}: PrintReportProps) {
   const [isDownloading, setIsDownloading] = useState(false);
 
   const calculated = useMemo(() => calculateGeometry(config), [config]);
-
-  const screenViewBoxSize = config.diameterOuter * 1.5;
-  const center = screenViewBoxSize / 2;
-  const printPaddingX = config.diameterOuter * 0.25;
-  const printPaddingY = config.diameterOuter * 0.2;
-  const printWidth = config.diameterOuter + printPaddingX * 2;
-  const printHeight = calculated.totalHeight + printPaddingY * 2;
-  const printMinX = center - printWidth / 2;
-  const printMinY = center - calculated.totalHeight / 2 - printPaddingY;
-  const printViewBox = `${printMinX} ${printMinY} ${printWidth} ${printHeight}`;
-  const printFontSize = getDimensionFontSize(config.diameterOuter);
+  const printFontSize = getDrawingFontSize(config.diameterOuter);
+  const drawing = useMemo(
+    () => buildHeadDrawingModel(config, printFontSize),
+    [config, printFontSize],
+  );
+  const printViewBox = `0 0 ${drawing.layout.width} ${drawing.layout.height}`;
 
   const handleDownload = async () => {
     if (!reportRef.current || isDownloading) {
@@ -96,6 +133,11 @@ export default function PrintReport({isVisible, onClose}: PrintReportProps) {
         scale: 2,
         useCORS: true,
         logging: false,
+        onclone: (clonedDocument: Document) => {
+          if (reportRef.current) {
+            prepareHtml2CanvasClone(reportRef.current, clonedDocument);
+          }
+        },
       });
 
       const pdf = new jspdf.jsPDF({orientation: 'p', unit: 'mm', format: 'a4', compress: true});
@@ -157,7 +199,7 @@ export default function PrintReport({isVisible, onClose}: PrintReportProps) {
         </div>
       </div>
 
-      <div ref={reportRef} className="max-w-[210mm] mx-auto bg-white min-h-[290mm]">
+      <div ref={reportRef} data-pdf-report-root="true" className="max-w-[210mm] mx-auto bg-white min-h-[290mm]">
         <div className="border-b-2 border-black pb-4 mb-6 flex justify-between items-end">
           <div>
             <h1 className="text-3xl font-bold uppercase tracking-wider">Manufacturing Report</h1>
@@ -219,12 +261,17 @@ export default function PrintReport({isVisible, onClose}: PrintReportProps) {
 
         <div className="mb-6 border border-gray-300 rounded-sm p-4 flex justify-center h-80">
           <svg viewBox={printViewBox} className="h-full w-auto">
-            <line x1={center} y1={printMinY} x2={center} y2={printMinY + printHeight} stroke="#ccc" strokeDasharray="5,5" />
-            <line x1={printMinX} y1={center} x2={printMinX + printWidth} y2={center} stroke="#ccc" strokeDasharray="5,5" />
+            <line
+              x1={drawing.layout.centerX}
+              y1="0"
+              x2={drawing.layout.centerX}
+              y2={drawing.layout.height}
+              stroke="#9ca3af"
+              strokeDasharray="6,4"
+            />
             <HeadProfile
               config={config}
-              calculated={calculated}
-              center={center}
+              drawing={drawing}
               fontSize={printFontSize}
               isPrint
             />
@@ -232,8 +279,8 @@ export default function PrintReport({isVisible, onClose}: PrintReportProps) {
               const nozzleWidth = getNozzleDiameter(nozzle.size);
               const nozzleVisualWidth = Math.max(20, nozzleWidth);
               const nozzleHeight = 60;
-              const nozzleX = center + nozzle.offset;
-              const nozzleY = center - calculated.totalHeight / 2 + config.thickness + 10;
+              const nozzleX = drawing.layout.centerX + nozzle.offset;
+              const nozzleY = drawing.layout.apexY + config.thickness + 10;
 
               return (
                 <rect
