@@ -8,7 +8,7 @@ export const applyEdgePrep = (
   geometry: HeadDerivedGeometry,
 ): EdgePrepGeometry => {
   const useEdgePrep = config.includeEdgePrep ?? config.edgePrep !== 'None';
-  const outerStart = point(geometry.outer.shellRadius, 0);
+  const baseOuterStart = point(geometry.outer.shellRadius, 0);
   const innerBase = point(geometry.inner.shellRadius, 0);
 
   if (!useEdgePrep || config.edgePrep === 'None') {
@@ -16,25 +16,27 @@ export const applyEdgePrep = (
       mode: 'none',
       bevelHeight: 0,
       rootFace: geometry.thickness,
-      outerStart,
+      outerStart: baseOuterStart,
       innerEnd: innerBase,
-      closurePath: [innerBase, outerStart],
+      closurePath: [innerBase, baseOuterStart],
     };
   }
 
   if (config.edgePrepSide === 'double') {
     const bevelHeight = computeDoubleBevelHeight(config);
     const halfLandInset = (geometry.thickness - config.rootFace) / 2;
-    const centralLandStart = point(geometry.inner.shellRadius + halfLandInset, bevelHeight);
-    const centralLandEnd = point(centralLandStart.x + config.rootFace, bevelHeight);
+    const innerBevelStart = point(geometry.inner.shellRadius, bevelHeight);
+    const outerBevelStart = point(geometry.outer.shellRadius, bevelHeight);
+    const centralLandStart = point(geometry.inner.shellRadius + halfLandInset, 0);
+    const centralLandEnd = point(centralLandStart.x + config.rootFace, 0);
 
     return {
       mode: 'double-v',
       bevelHeight,
       rootFace: config.rootFace,
-      outerStart,
-      innerEnd: innerBase,
-      closurePath: [innerBase, centralLandStart, centralLandEnd, outerStart],
+      outerStart: outerBevelStart,
+      innerEnd: innerBevelStart,
+      closurePath: [innerBevelStart, centralLandStart, centralLandEnd, outerBevelStart],
     };
   }
 
@@ -46,8 +48,8 @@ export const applyEdgePrep = (
     mode: 'single-v',
     bevelHeight,
     rootFace: config.rootFace,
-    outerStart,
+    outerStart: baseOuterStart,
     innerEnd,
-    closurePath: [innerEnd, outerRootFaceEnd, outerStart],
+    closurePath: [innerEnd, outerRootFaceEnd, baseOuterStart],
   };
 };
