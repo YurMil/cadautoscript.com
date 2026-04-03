@@ -1,6 +1,17 @@
 import type {GeometryResult, HeadConfig, Nozzle, NozzleSize, Tolerances} from './types';
 import type {HeadStandard} from './types';
 
+export const getMaxAllowableThickness = (
+  standard: HeadStandard,
+  diameterOuter: number,
+): number => {
+  const shellRadiusOuter = diameterOuter / 2;
+  const crownRadiusOuter = standard === 'DIN28013' ? diameterOuter * 0.8 : diameterOuter;
+  const knuckleRadiusOuter = standard === 'DIN28013' ? diameterOuter * 0.154 : diameterOuter * 0.1;
+
+  return Math.min(shellRadiusOuter, crownRadiusOuter, knuckleRadiusOuter);
+};
+
 export const getTolerances = (diameterOuter: number): Tolerances => {
   let daTol = 0;
   if (diameterOuter <= 500) daTol = 2;

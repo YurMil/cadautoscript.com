@@ -62,10 +62,14 @@ export default function EdgePrepPreview({
   }, [bevelAngle, edgePrep, edgePrepSide, rootFace, thickness, variant]);
 
   const fontSize = variant === 'detail' ? 14 : 11;
-  const strokeWidth = variant === 'detail' ? 1.2 : 0.9;
+  const strokeWidth = variant === 'detail' ? 1.3 : 1;
   const isBevel = edgePrep === 'V-Bevel';
   const isDouble = edgePrepSide === 'double';
   const flip = orientation === 'head';
+  const sectionStroke = '#111827';
+  const dimStroke = '#111827';
+  const labelStroke = '#ffffff';
+  const hatchId = `edge-prep-hatch-${variant}-${orientation}`;
 
   const mapX = (x: number) => (flip ? geometry.x0 + geometry.x1 - x : x);
 
@@ -107,6 +111,16 @@ export default function EdgePrepPreview({
   const sTextX = flip ? sLineX + 10 : sLineX - 10;
   const cTextAnchor = flip ? 'end' : 'start';
   const cTextX = flip ? cLineX - 10 : cLineX + 10;
+  const angleLabelX = mapX(geometry.x1 - geometry.bVisual * 0.55);
+  const angleLabelY = geometry.y0 + geometry.tVisual * 0.33;
+
+  const labelStyle = {
+    paintOrder: 'stroke' as const,
+    stroke: labelStroke,
+    strokeWidth: variant === 'detail' ? 4 : 3,
+    strokeLinecap: 'round' as const,
+    strokeLinejoin: 'round' as const,
+  };
 
   return (
     <svg
@@ -114,16 +128,23 @@ export default function EdgePrepPreview({
       className="w-full h-auto"
       aria-label="Weld edge preparation preview"
     >
-      <rect x="20" y="20" width="480" height="180" rx="20" fill="#f8fafc" stroke="#e2e8f0" />
+      <defs>
+        <pattern id={hatchId} width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(35)">
+          <rect width="10" height="10" fill="#eef2f7" />
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#64748b" strokeWidth="2" opacity="0.9" />
+        </pattern>
+      </defs>
 
-      <path d={path} fill="#0f172a" opacity="0.85" />
+      <rect x="20" y="20" width="480" height="180" rx="20" fill="#f8fafc" stroke="#d6dee8" strokeWidth="1.4" />
+
+      <path d={path} fill={`url(#${hatchId})`} stroke={sectionStroke} strokeWidth="1.6" />
 
       <line
         x1={sLineX}
         y1={geometry.y0}
         x2={sLineX}
         y2={geometry.y0 + geometry.tVisual}
-        stroke="#111827"
+        stroke={dimStroke}
         strokeWidth={strokeWidth}
       />
       <line
@@ -131,7 +152,7 @@ export default function EdgePrepPreview({
         y1={geometry.y0}
         x2={sLineX + 6}
         y2={geometry.y0}
-        stroke="#111827"
+        stroke={dimStroke}
         strokeWidth={strokeWidth}
       />
       <line
@@ -139,15 +160,17 @@ export default function EdgePrepPreview({
         y1={geometry.y0 + geometry.tVisual}
         x2={sLineX + 6}
         y2={geometry.y0 + geometry.tVisual}
-        stroke="#111827"
+        stroke={dimStroke}
         strokeWidth={strokeWidth}
       />
       <text
         x={sTextX}
         y={geometry.y0 + geometry.tVisual / 2 + fontSize / 2}
-        fill="#111827"
-        fontSize={fontSize}
+        fill={dimStroke}
+        fontSize={fontSize + (variant === 'detail' ? 1 : 0)}
         textAnchor={sTextAnchor}
+        fontWeight="700"
+        style={labelStyle}
       >
         s = {geometry.safeThickness.toFixed(1)} mm
       </text>
@@ -159,7 +182,7 @@ export default function EdgePrepPreview({
             y1={geometry.y0 - 18}
             x2={bLineEnd}
             y2={geometry.y0 - 18}
-            stroke="#111827"
+            stroke={dimStroke}
             strokeWidth={strokeWidth}
           />
           <line
@@ -167,7 +190,7 @@ export default function EdgePrepPreview({
             y1={geometry.y0 - 24}
             x2={bLineStart}
             y2={geometry.y0 - 12}
-            stroke="#111827"
+            stroke={dimStroke}
             strokeWidth={strokeWidth}
           />
           <line
@@ -175,10 +198,18 @@ export default function EdgePrepPreview({
             y1={geometry.y0 - 24}
             x2={bLineEnd}
             y2={geometry.y0 - 12}
-            stroke="#111827"
+            stroke={dimStroke}
             strokeWidth={strokeWidth}
           />
-          <text x={bLineMid} y={geometry.y0 - 26} fill="#111827" fontSize={fontSize} textAnchor="middle">
+          <text
+            x={bLineMid}
+            y={geometry.y0 - 26}
+            fill={dimStroke}
+            fontSize={fontSize + (variant === 'detail' ? 1 : 0)}
+            textAnchor="middle"
+            fontWeight="700"
+            style={labelStyle}
+          >
             b = {geometry.bevelWidth.toFixed(1)} mm
           </text>
 
@@ -187,7 +218,7 @@ export default function EdgePrepPreview({
             y1={rootFaceTopY}
             x2={cLineX}
             y2={rootFaceBottomY}
-            stroke="#111827"
+            stroke={dimStroke}
             strokeWidth={strokeWidth}
           />
           <line
@@ -195,7 +226,7 @@ export default function EdgePrepPreview({
             y1={rootFaceTopY}
             x2={cLineX + 6}
             y2={rootFaceTopY}
-            stroke="#111827"
+            stroke={dimStroke}
             strokeWidth={strokeWidth}
           />
           <line
@@ -203,24 +234,29 @@ export default function EdgePrepPreview({
             y1={rootFaceBottomY}
             x2={cLineX + 6}
             y2={rootFaceBottomY}
-            stroke="#111827"
+            stroke={dimStroke}
             strokeWidth={strokeWidth}
           />
           <text
             x={cTextX}
             y={(rootFaceTopY + rootFaceBottomY) / 2 + fontSize / 2}
-            fill="#111827"
-            fontSize={fontSize}
+            fill={dimStroke}
+            fontSize={fontSize + (variant === 'detail' ? 1 : 0)}
             textAnchor={cTextAnchor}
+            fontWeight="700"
+            style={labelStyle}
           >
             c = {geometry.safeRootFace.toFixed(1)} mm
           </text>
 
           <text
-            x={mapX(geometry.x1 - geometry.bVisual + 14)}
-            y={rootFaceTopY - 10}
-            fill="#111827"
+            x={angleLabelX}
+            y={angleLabelY}
+            fill={dimStroke}
             fontSize={fontSize}
+            fontWeight="700"
+            textAnchor="middle"
+            style={labelStyle}
           >
             {isDouble ? 'u1/u2' : 'u'} = {geometry.bevelAngle.toFixed(0)} deg
           </text>
@@ -229,9 +265,11 @@ export default function EdgePrepPreview({
         <text
           x={mapX(geometry.x1 - 10)}
           y={geometry.y0 - 16}
-          fill="#111827"
+          fill={dimStroke}
           fontSize={fontSize}
           textAnchor={flip ? 'start' : 'end'}
+          fontWeight="700"
+          style={labelStyle}
         >
           Square cut
         </text>

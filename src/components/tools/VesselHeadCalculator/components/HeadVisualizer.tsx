@@ -439,22 +439,61 @@ export default function HeadVisualizer() {
   const config = useVesselHeadStore((state) => state.config);
   const nozzles = useVesselHeadStore((state) => state.nozzles);
 
-  const calculated = useMemo(() => calculateGeometry(config), [config]);
-  const volumeM3 = useMemo(
-    () => calculateVolumeM3(config, calculated.totalHeight),
-    [config, calculated.totalHeight],
-  );
-  const dimensionFontSize = getDrawingFontSize(config.diameterOuter);
-  const drawing = useMemo(
-    () => buildHeadDrawingModel(config, dimensionFontSize),
-    [config, dimensionFontSize],
-  );
+  const geometryState = useMemo(() => {
+    try {
+      const calculated = calculateGeometry(config);
+      const dimensionFontSize = getDrawingFontSize(config.diameterOuter);
+      const drawing = buildHeadDrawingModel(config, dimensionFontSize);
+
+      return {
+        calculated,
+        dimensionFontSize,
+        drawing,
+        volumeM3: calculateVolumeM3(config, calculated.totalHeight),
+        error: null as string | null,
+      };
+    } catch (error) {
+      return {
+        calculated: null,
+        dimensionFontSize: null,
+        drawing: null,
+        volumeM3: null,
+        error: error instanceof Error ? error.message : 'Enter valid dimensions to build the head geometry.',
+      };
+    }
+  }, [config]);
+
+  if (geometryState.error || !geometryState.calculated || !geometryState.dimensionFontSize || !geometryState.drawing) {
+    return (
+      <div className="flex-1 bg-neutral-800 rounded-2xl border border-neutral-700 shadow-2xl overflow-hidden relative min-h-[500px] flex flex-col">
+        <div className={clsx('flex-1 flex items-center justify-center p-8', styles.pvdePattern)}>
+          <div className="max-w-md rounded-2xl border border-amber-500/30 bg-neutral-900/85 px-6 py-5 text-center">
+            <p className="text-sm font-medium text-amber-300">Geometry preview is waiting for valid input.</p>
+            <p className="mt-2 text-sm text-neutral-400">
+              {geometryState.error ?? 'Enter values greater than zero and keep the geometry within valid limits.'}
+            </p>
+          </div>
+        </div>
+        <div className="h-20 bg-neutral-800 border-t border-neutral-700 flex items-center justify-around px-4">
+          <div className="text-center">
+            <div className="text-xs text-neutral-500 uppercase">Volume</div>
+            <div className="text-xl font-mono text-neutral-500">--</div>
+          </div>
+          <div className="h-10 w-px bg-neutral-700"></div>
+          <div className="text-center">
+            <div className="text-xs text-neutral-500 uppercase">Weight</div>
+            <div className="text-xl font-mono text-neutral-500">--</div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex-1 bg-neutral-800 rounded-2xl border border-neutral-700 shadow-2xl overflow-hidden relative min-h-[500px] flex flex-col">
       <div className={clsx('flex-1 flex items-center justify-center p-6 lg:p-8', styles.pvdePattern)}>
         <svg
-          viewBox={`0 0 ${drawing.layout.width} ${drawing.layout.height}`}
+          viewBox={`0 0 ${geometryState.drawing.layout.width} ${geometryState.drawing.layout.height}`}
           className="w-full h-full max-h-[640px]"
         >
           <defs>
@@ -466,22 +505,26 @@ export default function HeadVisualizer() {
           </defs>
 
           <line
-            x1={round(drawing.layout.centerX)}
+            x1={round(geometryState.drawing.layout.centerX)}
             y1="0"
-            x2={round(drawing.layout.centerX)}
-            y2={round(drawing.layout.height)}
+            x2={round(geometryState.drawing.layout.centerX)}
+            y2={round(geometryState.drawing.layout.height)}
             stroke="#4b5563"
             strokeDasharray="12 8"
           />
 
-          <HeadProfile config={config} drawing={drawing} fontSize={dimensionFontSize} />
+          <HeadProfile
+            config={config}
+            drawing={geometryState.drawing}
+            fontSize={geometryState.dimensionFontSize}
+          />
 
           {nozzles.map((nozzle, index) => {
             const nozzleWidth = getNozzleDiameter(nozzle.size);
             const nozzleVisualWidth = Math.max(20, nozzleWidth);
             const nozzleHeight = Math.max(42, config.diameterOuter * 0.06);
-            const nozzleX = drawing.layout.centerX + nozzle.offset;
-            const nozzleY = drawing.layout.apexY + config.thickness + 14;
+            const nozzleX = geometryState.drawing.layout.centerX + nozzle.offset;
+            const nozzleY = geometryState.drawing.layout.apexY + config.thickness + 14;
 
             return (
               <g key={nozzle.id}>
@@ -499,7 +542,7 @@ export default function HeadVisualizer() {
                   y={round(nozzleY - nozzleHeight - 10)}
                   textAnchor="middle"
                   fill="#fca5a5"
-                  fontSize={Math.max(16, dimensionFontSize * 0.72)}
+                  fontSize={Math.max(16, geometryState.dimensionFontSize * 0.72)}
                   fontWeight="700"
                 >
                   N{index + 1}
@@ -512,12 +555,12 @@ export default function HeadVisualizer() {
       <div className="h-20 bg-neutral-800 border-t border-neutral-700 flex items-center justify-around px-4">
         <div className="text-center">
           <div className="text-xs text-neutral-500 uppercase">Volume</div>
-          <div className="text-xl font-mono text-white">{volumeM3.toFixed(3)} m3</div>
+          <div className="text-xl font-mono text-white">{geometryState.volumeM3.toFixed(3)} m3</div>
         </div>
         <div className="h-10 w-px bg-neutral-700"></div>
         <div className="text-center">
           <div className="text-xs text-neutral-500 uppercase">Weight</div>
-          <div className="text-xl font-mono text-blue-400">{calculated.weight.toFixed(1)} kg</div>
+          <div className="text-xl font-mono text-blue-400">{geometryState.calculated.weight.toFixed(1)} kg</div>
         </div>
       </div>
     </div>

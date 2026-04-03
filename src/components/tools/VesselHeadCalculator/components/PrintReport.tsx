@@ -103,16 +103,32 @@ export default function PrintReport({isVisible, onClose}: PrintReportProps) {
   const reportRef = useRef<HTMLDivElement | null>(null);
   const [isDownloading, setIsDownloading] = useState(false);
 
-  const calculated = useMemo(() => calculateGeometry(config), [config]);
-  const printFontSize = getDrawingFontSize(config.diameterOuter);
-  const drawing = useMemo(
-    () => buildHeadDrawingModel(config, printFontSize),
-    [config, printFontSize],
-  );
-  const printViewBox = `0 0 ${drawing.layout.width} ${drawing.layout.height}`;
+  const reportGeometryState = useMemo(() => {
+    try {
+      const calculated = calculateGeometry(config);
+      const printFontSize = getDrawingFontSize(config.diameterOuter);
+      const drawing = buildHeadDrawingModel(config, printFontSize);
+
+      return {
+        calculated,
+        printFontSize,
+        drawing,
+        printViewBox: `0 0 ${drawing.layout.width} ${drawing.layout.height}`,
+        error: null as string | null,
+      };
+    } catch (error) {
+      return {
+        calculated: null,
+        printFontSize: null,
+        drawing: null,
+        printViewBox: '0 0 100 100',
+        error: error instanceof Error ? error.message : 'Enter valid dimensions to build the report preview.',
+      };
+    }
+  }, [config]);
 
   const handleDownload = async () => {
-    if (!reportRef.current || isDownloading) {
+    if (!reportRef.current || isDownloading || reportGeometryState.error) {
       return;
     }
 
@@ -171,21 +187,43 @@ export default function PrintReport({isVisible, onClose}: PrintReportProps) {
     'print:block print:static print:overflow-visible bg-white text-black p-8 font-serif w-full h-full',
   );
 
+  const totalHeightText = reportGeometryState.calculated ? `${reportGeometryState.calculated.totalHeight.toFixed(1)} mm` : '--';
+  const weightText = reportGeometryState.calculated ? `${reportGeometryState.calculated.weight.toFixed(1)} kg` : '--';
+  const diameterToleranceText = reportGeometryState.calculated
+    ? `+${reportGeometryState.calculated.tolerances.daPlus} / -${reportGeometryState.calculated.tolerances.daMinus}`
+    : '--';
+  const ovalityToleranceText = reportGeometryState.calculated
+    ? `Max ${reportGeometryState.calculated.tolerances.ovality}`
+    : '--';
+  const heightToleranceText = reportGeometryState.calculated
+    ? `+${reportGeometryState.calculated.tolerances.hPlus} / -${reportGeometryState.calculated.tolerances.hMinus}`
+    : '--';
+  const thicknessToleranceText = reportGeometryState.calculated
+    ? `Min ${(config.thickness - reportGeometryState.calculated.tolerances.thicknessMin).toFixed(1)}`
+    : '--';
+
   return (
     <div className={containerClassName}>
       <div className="print:hidden mb-6 flex justify-between items-center bg-gray-100 p-4 rounded-lg shadow-xs">
         <div className="flex items-center gap-2 text-sm text-gray-700">
           <Info size={18} className="text-blue-600" />
           <span>
-            Click <b>Download PDF</b> to save the report.
+            {reportGeometryState.error
+              ? 'Enter valid values to enable the PDF report.'
+              : <>Click <b>Download PDF</b> to save the report.</>}
           </span>
         </div>
         <div className="flex gap-3">
           <button
             type="button"
             onClick={handleDownload}
-            disabled={isDownloading}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md text-sm"
+            disabled={isDownloading || Boolean(reportGeometryState.error)}
+            className={clsx(
+              'flex items-center gap-2 px-4 py-2 rounded-md text-sm',
+              isDownloading || reportGeometryState.error
+                ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                : 'bg-blue-600 text-white',
+            )}
           >
             <Download size={16} /> {isDownloading ? 'Preparing...' : 'Download PDF'}
           </button>
@@ -248,11 +286,11 @@ export default function PrintReport({isVisible, onClose}: PrintReportProps) {
                 </tr>
                 <tr className="border-b border-gray-100">
                   <td className="py-1 text-gray-600">H (Total Height)</td>
-                  <td className="py-1 font-medium text-right">{calculated.totalHeight.toFixed(1)} mm</td>
+                  <td className="py-1 font-medium text-right">{totalHeightText}</td>
                 </tr>
                 <tr className="border-b border-gray-100">
                   <td className="py-1 text-gray-600">Est. Weight</td>
-                  <td className="py-1 font-medium text-right">{calculated.weight.toFixed(1)} kg</td>
+                  <td className="py-1 font-medium text-right">{weightText}</td>
                 </tr>
               </tbody>
             </table>
@@ -260,42 +298,53 @@ export default function PrintReport({isVisible, onClose}: PrintReportProps) {
         </div>
 
         <div className="mb-6 border border-gray-300 rounded-sm p-4 flex justify-center h-80">
-          <svg viewBox={printViewBox} className="h-full w-auto">
-            <line
-              x1={drawing.layout.centerX}
-              y1="0"
-              x2={drawing.layout.centerX}
-              y2={drawing.layout.height}
-              stroke="#9ca3af"
-              strokeDasharray="6,4"
-            />
-            <HeadProfile
-              config={config}
-              drawing={drawing}
-              fontSize={printFontSize}
-              isPrint
-            />
-            {nozzles.map((nozzle) => {
-              const nozzleWidth = getNozzleDiameter(nozzle.size);
-              const nozzleVisualWidth = Math.max(20, nozzleWidth);
-              const nozzleHeight = 60;
-              const nozzleX = drawing.layout.centerX + nozzle.offset;
-              const nozzleY = drawing.layout.apexY + config.thickness + 10;
+          {reportGeometryState.drawing && reportGeometryState.printFontSize ? (
+            <svg viewBox={reportGeometryState.printViewBox} className="h-full w-auto">
+              <line
+                x1={reportGeometryState.drawing.layout.centerX}
+                y1="0"
+                x2={reportGeometryState.drawing.layout.centerX}
+                y2={reportGeometryState.drawing.layout.height}
+                stroke="#9ca3af"
+                strokeDasharray="6,4"
+              />
+              <HeadProfile
+                config={config}
+                drawing={reportGeometryState.drawing}
+                fontSize={reportGeometryState.printFontSize}
+                isPrint
+              />
+              {nozzles.map((nozzle) => {
+                const nozzleWidth = getNozzleDiameter(nozzle.size);
+                const nozzleVisualWidth = Math.max(20, nozzleWidth);
+                const nozzleHeight = 60;
+                const nozzleX = reportGeometryState.drawing.layout.centerX + nozzle.offset;
+                const nozzleY = reportGeometryState.drawing.layout.apexY + config.thickness + 10;
 
-              return (
-                <rect
-                  key={nozzle.id}
-                  x={nozzleX - nozzleVisualWidth / 2}
-                  y={nozzleY - nozzleHeight}
-                  width={nozzleVisualWidth}
-                  height={nozzleHeight}
-                  fill="none"
-                  stroke="black"
-                  strokeWidth={Math.max(1, config.diameterOuter / 1000)}
-                />
-              );
-            })}
-          </svg>
+                return (
+                  <rect
+                    key={nozzle.id}
+                    x={nozzleX - nozzleVisualWidth / 2}
+                    y={nozzleY - nozzleHeight}
+                    width={nozzleVisualWidth}
+                    height={nozzleHeight}
+                    fill="none"
+                    stroke="black"
+                    strokeWidth={Math.max(1, config.diameterOuter / 1000)}
+                  />
+                );
+              })}
+            </svg>
+          ) : (
+            <div className="flex h-full w-full items-center justify-center rounded-sm bg-gray-50 px-8 text-center">
+              <div>
+                <p className="text-sm font-semibold text-gray-700">Report preview is waiting for valid input.</p>
+                <p className="mt-2 text-sm text-gray-500">
+                  {reportGeometryState.error ?? 'Enter values greater than zero to build the report drawing.'}
+                </p>
+              </div>
+            </div>
+          )}
         </div>
 
         {config.edgePrep !== 'None' ? (
@@ -344,9 +393,7 @@ export default function PrintReport({isVisible, onClose}: PrintReportProps) {
                   <span className="text-xs font-normal text-gray-500">Measure at 0u / 90u</span>
                 </td>
                 <td className="border border-gray-300 p-2 text-center">{config.diameterOuter}</td>
-                <td className="border border-gray-300 p-2 text-center">
-                  +{calculated.tolerances.daPlus} / -{calculated.tolerances.daMinus}
-                </td>
+                <td className="border border-gray-300 p-2 text-center">{diameterToleranceText}</td>
                 <td className="border border-gray-300 p-2"></td>
                 <td className="border border-gray-300 p-2"></td>
                 <td className="border border-gray-300 p-2 bg-gray-50"></td>
@@ -358,7 +405,7 @@ export default function PrintReport({isVisible, onClose}: PrintReportProps) {
                   <span className="text-xs font-normal text-gray-500">Max diff (Dmax - Dmin)</span>
                 </td>
                 <td className="border border-gray-300 p-2 text-center">0</td>
-                <td className="border border-gray-300 p-2 text-center">Max {calculated.tolerances.ovality}</td>
+                <td className="border border-gray-300 p-2 text-center">{ovalityToleranceText}</td>
                 <td className="border border-gray-300 p-2 bg-gray-100 text-center text-xs text-gray-400" colSpan={2}>
                   - Calculated -
                 </td>
@@ -367,10 +414,10 @@ export default function PrintReport({isVisible, onClose}: PrintReportProps) {
 
               <tr>
                 <td className="border border-gray-300 p-2 font-medium">Total Height (H)</td>
-                <td className="border border-gray-300 p-2 text-center">{calculated.totalHeight.toFixed(1)}</td>
                 <td className="border border-gray-300 p-2 text-center">
-                  +{calculated.tolerances.hPlus} / -{calculated.tolerances.hMinus}
+                  {reportGeometryState.calculated ? reportGeometryState.calculated.totalHeight.toFixed(1) : '--'}
                 </td>
+                <td className="border border-gray-300 p-2 text-center">{heightToleranceText}</td>
                 <td className="border border-gray-300 p-2"></td>
                 <td className="border border-gray-300 p-2 bg-gray-100"></td>
                 <td className="border border-gray-300 p-2"></td>
@@ -382,9 +429,7 @@ export default function PrintReport({isVisible, onClose}: PrintReportProps) {
                   <span className="text-xs font-normal text-gray-500">Min. after forming</span>
                 </td>
                 <td className="border border-gray-300 p-2 text-center">{config.thickness}</td>
-                <td className="border border-gray-300 p-2 text-center">
-                  Min {config.thickness - calculated.tolerances.thicknessMin}
-                </td>
+                <td className="border border-gray-300 p-2 text-center">{thicknessToleranceText}</td>
                 <td className="border border-gray-300 p-2"></td>
                 <td className="border border-gray-300 p-2"></td>
                 <td className="border border-gray-300 p-2"></td>
