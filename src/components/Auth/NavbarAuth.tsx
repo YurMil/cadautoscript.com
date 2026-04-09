@@ -158,6 +158,11 @@ export default function NavbarAuth(): React.JSX.Element {
   const initials = user?.email ? user.email.charAt(0).toUpperCase() : 'U';
   const avatarUrl = (user?.user_metadata?.avatar_url as string | undefined) ?? undefined;
   const email = user?.email ?? (user?.user_metadata?.email as string | undefined);
+  const displayName =
+    (user?.user_metadata?.user_name as string | undefined) ??
+    (user?.user_metadata?.full_name as string | undefined) ??
+    (user?.user_metadata?.name as string | undefined) ??
+    undefined;
 
   const renderSignedOut = () => (
     <button type="button" className={styles.signInButton} onClick={openLoginModal}>
@@ -184,7 +189,7 @@ export default function NavbarAuth(): React.JSX.Element {
             ) : (
               <span className={styles.placeholderAvatar}>{initials}</span>
             )}
-            {email ? <span>{email}</span> : null}
+            {displayName ? <span>{displayName}</span> : null}
           </button>
           {menuOpen
             ? (() => {
