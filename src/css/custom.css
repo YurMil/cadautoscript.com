@@ -15,6 +15,12 @@
   --card-border: rgba(255, 255, 255, 0.1);
 }
 
+html[data-theme='light'] {
+  --light-text: #0f172a;
+  --light-text-soft: #334155;
+  --light-text-muted: #64748b;
+}
+
 body {
   background: var(--page-bg);
   color: #f3f6ff;
