@@ -37,12 +37,26 @@ function UtilityCard({utility, index, isAuthenticated, authChecked, utilitiesPub
 
   return (
     <article className={`${styles.utilityCard} ${isLocked ? styles.utilityCardLocked : ''}`}>
+      {/* ── Header row ── */}
       <div className={styles.utilityHead}>
         <span className={styles.badge}>{utility.tech}</span>
         <span className={styles.subtle}>{utility.standards}</span>
       </div>
-      <h3>{utility.name}</h3>
-      <p>{utility.description}</p>
+
+      {/* ── Title — always visible, clickable ── */}
+      <h3>
+        <a
+          href={utility.href}
+          data-nobrokenlinkcheck
+          onClick={handleLaunch}
+          className={styles.titleLink}
+        >
+          {utility.name}
+        </a>
+      </h3>
+
+      {/* ── Body content (covered by icon on hover) ── */}
+      <p className={styles.utilityDesc}>{utility.description}</p>
       {isLocked ? (
         <p className={styles.lockHint}>
           <span aria-hidden="true" className={styles.lockIcon}>
@@ -56,17 +70,42 @@ function UtilityCard({utility, index, isAuthenticated, authChecked, utilitiesPub
           <li key={feature}>{feature}</li>
         ))}
       </ul>
-      <div className={styles.utilityFooter}>
+
+      {/* ── Clickable icon (absolute, expands on hover) ── */}
+      {utility.thumbnail && (
         <a
-          className={`button button--primary ${isLocked ? styles.lockedAction : ''}`}
           href={utility.href}
           data-nobrokenlinkcheck
           onClick={handleLaunch}
+          className={styles.iconLink}
+          title={isLocked ? 'Sign in to open' : `Open ${utility.name}`}
         >
-          {isLocked ? 'Sign in to open' : 'Open utility'}
+          <img
+            src={utility.thumbnail}
+            alt={utility.name}
+            className={styles.utilityIcon}
+            loading="lazy"
+          />
+          <span className={styles.iconOverlay}>
+            {isLocked ? '🔒' : '▶'}
+          </span>
         </a>
-        {isLocked ? <span className={styles.lockBadge}>Requires account</span> : null}
-      </div>
+      )}
+
+      {/* ── Fallback button for cards without thumbnail ── */}
+      {!utility.thumbnail && (
+        <div className={styles.utilityFooter}>
+          <a
+            className={`button button--primary ${isLocked ? styles.lockedAction : ''}`}
+            href={utility.href}
+            data-nobrokenlinkcheck
+            onClick={handleLaunch}
+          >
+            {isLocked ? 'Sign in to open' : 'Open utility'}
+          </a>
+          {isLocked ? <span className={styles.lockBadge}>Requires account</span> : null}
+        </div>
+      )}
     </article>
   );
 }
