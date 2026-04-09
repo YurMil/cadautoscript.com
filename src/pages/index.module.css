@@ -195,7 +195,7 @@
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 10px;
-  padding: 0.5rem 2rem 0.5rem 2.1rem;
+  padding: 0.5rem 2.2rem 0.5rem 2.8rem;
   font-size: 0.85rem;
   color: inherit;
   width: 180px;
@@ -413,7 +413,8 @@
 }
 
 :global(html[data-theme='light']) .iconTileLabel {
-  color: var(--light-text-soft);
+  color: var(--light-text);
+  font-weight: 500;
 }
 
 :global(html[data-theme='light']) .iconTilePlaceholder {
