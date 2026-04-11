@@ -1,0 +1,158 @@
+<svg viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="rlr_sky" x1="0" y1="0" x2="0" y2="1024">
+      <stop stop-color="#FCD34D"/>
+      <stop offset="0.5" stop-color="#F472B6"/>
+      <stop offset="1" stop-color="#818CF8"/>
+    </linearGradient>
+    <linearGradient id="rlr_rail" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#64748B"/>
+      <stop offset="0.5" stop-color="#94A3B8"/>
+      <stop offset="1" stop-color="#334155"/>
+    </linearGradient>
+  </defs>
+
+  <style>
+    .stone { opacity: 0; transform-origin: center; transform-box: fill-box; }
+    .bottle-whole { opacity: 1; transform-origin: center; }
+    .bottle-shard { opacity: 0; transform-origin: center; transform-box: fill-box; }
+    .camera-shake { transform-origin: center; }
+
+    /* Total loop 12s */
+    /* 3 stones thrown, breaking 3 bottles at different depths */
+
+    svg:hover .stone-1 { animation: throwStone 12s cubic-bezier(0.1, 0.8, 0.3, 1) infinite; animation-delay: 1s; }
+    svg:hover .bottle-whole-1 { animation: breakBottle 12s forwards infinite; animation-delay: 1s; }
+    svg:hover .shard-1 { animation: explodeShards 12s forwards cubic-bezier(0.1, 0.8, 0.3, 1) infinite; animation-delay: 1s; }
+    
+    svg:hover .stone-2 { animation: throwStone 12s cubic-bezier(0.1, 0.8, 0.3, 1) infinite; animation-delay: 5s; }
+    svg:hover .bottle-whole-2 { animation: breakBottle 12s forwards infinite; animation-delay: 5s; }
+    svg:hover .shard-2 { animation: explodeShards 12s forwards cubic-bezier(0.1, 0.8, 0.3, 1) infinite; animation-delay: 5s; }
+    
+    svg:hover .stone-3 { animation: throwStone 12s cubic-bezier(0.1, 0.8, 0.3, 1) infinite; animation-delay: 9s; }
+    svg:hover .bottle-whole-3 { animation: breakBottle 12s forwards infinite; animation-delay: 9s; }
+    svg:hover .shard-3 { animation: explodeShards 12s forwards cubic-bezier(0.1, 0.8, 0.3, 1) infinite; animation-delay: 9s; }
+
+    svg:hover .camera-shake { animation: shakeWorld 12s infinite; }
+
+    @keyframes throwStone {
+      0% { opacity: 1; transform: scale(3) translate(0, 500px) rotate(0deg); }
+      6% { opacity: 1; transform: scale(var(--target-scale)) translate(var(--target-x), var(--target-y)) rotate(720deg); }
+      7%, 100% { opacity: 0; transform: scale(0) translate(0, -600px); }
+    }
+    @keyframes breakBottle {
+      0%, 5.9% { opacity: 1; transform: scale(1); }
+      6%, 100% { opacity: 0; transform: scale(1.5); }
+    }
+    @keyframes explodeShards {
+      0%, 5.9% { opacity: 0; transform: translate(0,0) rotate(0deg); }
+      6% { opacity: 1; transform: translate(0,0) rotate(0deg); }
+      14%, 100% { opacity: 0; transform: translate(var(--dx), var(--dy)) rotate(var(--rot)); }
+    }
+    @keyframes shakeWorld {
+      0%, 5.9% { transform: translate(0,0); }
+      6% { transform: translate(-10px, 10px); }
+      6.2% { transform: translate(10px, -10px); }
+      6.4% { transform: translate(-5px, -5px); }
+      7%, 45.9% { transform: translate(0,0); }
+      46% { transform: translate(-10px, 10px); }
+      46.2% { transform: translate(10px, -10px); }
+      46.4% { transform: translate(-5px, -5px); }
+      47%, 79.2% { transform: translate(0,0); }
+      79.3% { transform: translate(-10px, 10px); }
+      79.5% { transform: translate(10px, -10px); }
+      79.7% { transform: translate(-5px, -5px); }
+      80%, 100% { transform: translate(0,0); }
+    }
+  </style>
+
+  <g class="camera-shake">
+    <rect width="1024" height="1024" rx="64" fill="url(#rlr_sky)"/>
+
+    <!-- Sun setting -->
+    <circle cx="512" cy="650" r="250" fill="#FEF08A" opacity="0.9"/>
+
+    <!-- Railroad perspective -->
+    <g stroke="#44403C" stroke-width="12" stroke-linecap="round">
+      <path d="M 280 850 L 470 350"/>
+      <path d="M 380 900 L 490 380"/>
+      <path d="M 644 900 L 534 380"/>
+      <path d="M 744 850 L 554 350"/>
+    </g>
+
+    <!-- Rails -->
+    <path d="M 50 1024 L 490 350" stroke="url(#rlr_rail)" stroke-width="35" stroke-linecap="round"/>
+    <path d="M 974 1024 L 534 350" stroke="url(#rlr_rail)" stroke-width="35" stroke-linecap="round"/>
+
+    <!-- Cross ties -->
+    <path d="M 120 950 L 904 950" stroke="#78350F" stroke-width="45" stroke-linecap="round"/>
+    <path d="M 180 800 L 844 800" stroke="#78350F" stroke-width="35" stroke-linecap="round"/>
+    <path d="M 250 670 L 774 670" stroke="#78350F" stroke-width="30" stroke-linecap="round"/>
+    <path d="M 320 560 L 704 560" stroke="#78350F" stroke-width="25" stroke-linecap="round"/>
+    <path d="M 380 470 L 644 470" stroke="#78350F" stroke-width="20" stroke-linecap="round"/>
+    <path d="M 430 400 L 594 400" stroke="#78350F" stroke-width="15" stroke-linecap="round"/>
+    <path d="M 460 360 L 564 360" stroke="#78350F" stroke-width="10" stroke-linecap="round"/>
+
+    <!-- Bottle 3 (Farthest) -->
+    <g transform="translate(512, 380) scale(0.3)">
+      <g class="bottle-whole-3 bottle-whole">
+        <rect x="-25" y="-100" width="50" height="100" rx="15" fill="#38BDF8" opacity="0.8"/>
+        <rect x="-10" y="-140" width="20" height="40" fill="#38BDF8" opacity="0.9"/>
+      </g>
+      <g class="shard-3" style="--dx: -300px; --dy: -200px; --rot: -120deg;">
+        <polygon points="0,0 -20,-30 10,-20" fill="#38BDF8" opacity="0.8"/>
+      </g>
+      <g class="shard-3" style="--dx: 300px; --dy: -250px; --rot: 200deg;">
+        <polygon points="0,0 25,-40 35,-10" fill="#38BDF8" opacity="0.8"/>
+      </g>
+      <g class="stone-3 stone" style="--target-scale: 0.2; --target-x: 0px; --target-y: -900px;">
+        <circle cx="0" cy="0" r="40" fill="#57534E"/>
+      </g>
+    </g>
+
+    <!-- Bottle 2 (Mid) -->
+    <g transform="translate(512, 480) scale(0.6)">
+      <g class="bottle-whole-2 bottle-whole">
+        <rect x="-25" y="-100" width="50" height="100" rx="15" fill="#34D399" opacity="0.8"/>
+        <rect x="-10" y="-140" width="20" height="40" fill="#34D399" opacity="0.9"/>
+      </g>
+      <g class="shard-2" style="--dx: -400px; --dy: -300px; --rot: -80deg;">
+        <polygon points="-10,10 -30,40 5,30" fill="#34D399" opacity="0.8"/>
+      </g>
+      <g class="shard-2" style="--dx: 450px; --dy: -100px; --rot: 150deg;">
+        <polygon points="10,20 40,50 20,60" fill="#34D399" opacity="0.8"/>
+      </g>
+      <g class="shard-2" style="--dx: 0px; --dy: -500px; --rot: 360deg;">
+        <polygon points="-5,15 -10,-10 15,5" fill="#6EE7B7" opacity="0.9"/>
+      </g>
+      <g class="stone-2 stone" style="--target-scale: 0.5; --target-x: 0px; --target-y: -500px;">
+        <circle cx="0" cy="0" r="40" fill="#57534E"/>
+      </g>
+    </g>
+
+    <!-- Bottle 1 (Closest) -->
+    <g transform="translate(512, 650) scale(1.2)">
+      <g class="bottle-whole-1 bottle-whole">
+        <rect x="-25" y="-100" width="50" height="100" rx="15" fill="#F87171" opacity="0.8"/>
+        <rect x="-10" y="-140" width="20" height="40" fill="#F87171" opacity="0.9"/>
+      </g>
+      <g class="shard-1" style="--dx: -500px; --dy: -200px; --rot: -120deg;">
+        <polygon points="0,0 -30,-40 20,-20" fill="#F87171" opacity="0.8"/>
+      </g>
+      <g class="shard-1" style="--dx: 600px; --dy: -350px; --rot: 200deg;">
+        <polygon points="0,0 35,-50 45,-10" fill="#F87171" opacity="0.8"/>
+      </g>
+      <g class="shard-1" style="--dx: -300px; --dy: 300px; --rot: -80deg;">
+        <polygon points="-10,20 -40,50 15,40" fill="#F87171" opacity="0.8"/>
+      </g>
+      <g class="shard-1" style="--dx: 450px; --dy: 200px; --rot: 150deg;">
+        <polygon points="20,30 50,60 30,80" fill="#F87171" opacity="0.8"/>
+      </g>
+      <g class="stone-1 stone" style="--target-scale: 1; --target-x: 0px; --target-y: -150px;">
+        <circle cx="0" cy="0" r="40" fill="#57534E"/>
+        <path d="M -10 -20 C 10 -30 30 -10 20 10" stroke="#A8A29E" stroke-width="4" stroke-linecap="round" fill="none"/>
+      </g>
+    </g>
+
+  </g>
+</svg>

@@ -1,0 +1,147 @@
+<svg viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Weather States Gradients -->
+    <linearGradient id="eco_bg_rain" x1="0" y1="0" x2="0" y2="1024">
+      <stop stop-color="#0F172A"/>
+      <stop offset="1" stop-color="#334155"/>
+    </linearGradient>
+    <linearGradient id="eco_bg_sun" x1="0" y1="0" x2="0" y2="1024">
+      <stop stop-color="#38BDF8"/>
+      <stop offset="1" stop-color="#BAE6FD"/>
+    </linearGradient>
+
+    <!-- Filters for glows -->
+    <filter id="eco_glowGreen">
+      <feDropShadow dx="0" dy="0" stdDeviation="20" flood-color="#22C55E" flood-opacity="0.8"/>
+    </filter>
+    <filter id="eco_glowBlue">
+      <feDropShadow dx="0" dy="0" stdDeviation="20" flood-color="#3B82F6" flood-opacity="0.8"/>
+    </filter>
+    <filter id="eco_glowYellow">
+      <feDropShadow dx="0" dy="0" stdDeviation="20" flood-color="#EAB308" flood-opacity="0.8"/>
+    </filter>
+  </defs>
+
+  <style>
+    /* Full sequence: 12 seconds
+       1s-4s: Apple into Green Bin
+       5s-8s: Paper into Blue Bin
+       9s-12s: Can into Yellow Bin
+    */
+    .weather-rain { animation: fadeRain 12s infinite; }
+    .sky-bg { animation: skyChange 12s infinite; }
+
+    .trash { opacity: 0; transform-origin: center; transform-box: fill-box; }
+    .bin-lid { transform-origin: top; }
+
+    svg:hover .trash-1 { animation: throw1 12s cubic-bezier(0.1, 0.8, 0.3, 1) infinite; }
+    svg:hover .lid-1 { animation: openLid 12s infinite; animation-delay: 0s; }
+
+    svg:hover .trash-2 { animation: throw2 12s cubic-bezier(0.1, 0.8, 0.3, 1) infinite; }
+    svg:hover .lid-2 { animation: openLid 12s infinite; animation-delay: 4s; }
+
+    svg:hover .trash-3 { animation: throw3 12s cubic-bezier(0.1, 0.8, 0.3, 1) infinite; }
+    svg:hover .lid-3 { animation: openLid 12s infinite; animation-delay: 8s; }
+
+    @keyframes skyChange {
+      0%, 30% { fill: url(#eco_bg_rain); }  /* Rainy */
+      40%, 100% { fill: url(#eco_bg_sun); } /* Sunny starts mid sorting */
+    }
+    
+    @keyframes fadeRain {
+      0%, 30% { opacity: 1; transform: translateY(0); }
+      40%, 100% { opacity: 0; transform: translateY(200px); }
+    }
+
+    @keyframes openLid {
+      0%, 10% { transform: rotateX(0deg) translateY(0); }
+      15%, 25% { transform: rotateX(65deg) translateY(-30px); }
+      30%, 100% { transform: rotateX(0deg) translateY(0); }
+    }
+
+    @keyframes throw1 {
+      0%, 5% { opacity: 0; transform: translate(0, 1000px) scale(1) rotate(0deg); }
+      10% { opacity: 1; transform: translate(0, 700px) scale(1.5) rotate(90deg); } /* Holding */
+      15% { opacity: 1; transform: translate(-312px, 350px) scale(0.5) rotate(-180deg); } /* Thrown into Green */
+      20%, 100% { opacity: 0; transform: translate(-312px, 450px) scale(0) rotate(-360deg); } /* Dropped */
+    }
+
+    @keyframes throw2 {
+      0%, 38% { opacity: 0; transform: translate(0, 1000px) scale(1) rotate(0deg); }
+      43% { opacity: 1; transform: translate(0, 700px) scale(1.5) rotate(-45deg); } /* Holding */
+      48% { opacity: 1; transform: translate(0, 350px) scale(0.5) rotate(180deg); } /* Thrown into Blue (center) */
+      53%, 100% { opacity: 0; transform: translate(0, 450px) scale(0) rotate(360deg); } /* Dropped */
+    }
+
+    @keyframes throw3 {
+      0%, 71% { opacity: 0; transform: translate(0, 1000px) scale(1) rotate(0deg); }
+      76% { opacity: 1; transform: translate(0, 700px) scale(1.5) rotate(45deg); } /* Holding */
+      81% { opacity: 1; transform: translate(312px, 350px) scale(0.5) rotate(270deg); } /* Thrown into Yellow */
+      86%, 100% { opacity: 0; transform: translate(312px, 450px) scale(0) rotate(540deg); } /* Dropped */
+    }
+  </style>
+
+  <!-- Dynamic Sky Base -->
+  <rect class="sky-bg" width="1024" height="1024" rx="64" fill="url(#eco_bg_rain)"/>
+
+  <!-- Rain Layer -->
+  <g class="weather-rain" stroke="#93C5FD" stroke-width="4" stroke-linecap="round" stroke-dasharray="20 40">
+    <path d="M 100 0 L 0 1024" />
+    <path d="M 300 0 L 200 1024" />
+    <path d="M 500 0 L 400 1024" />
+    <path d="M 700 0 L 600 1024" />
+    <path d="M 900 0 L 800 1024" />
+    <path d="M 1100 0 L 1000 1024" />
+  </g>
+
+  <!-- Flooring -->
+  <path d="M 0 850 Q 512 750 1024 850 L 1024 1024 L 0 1024 Z" fill="#020617" opacity="0.8"/>
+
+  <!-- Bin 1: Organic (Green) -->
+  <g transform="translate(200, 650)">
+    <path d="M -80 0 L 80 0 L 60 200 L -60 200 Z" fill="#15803D"/>
+    <path d="M -80 0 L 80 0 L 60 200 L -60 200 Z" fill="none" stroke="#22C55E" stroke-width="6" filter="url(#eco_glowGreen)"/>
+    <path d="M -90 -20 L 90 -20 L 80 0 L -80 0 Z" fill="#166534" class="bin-lid lid-1"/>
+    <path d="M 0 -30 L -15 0 L 15 0 Z M -30 20 L -15 -10 L 0 20 Z M 30 20 L 15 -10 L 0 20 Z" stroke="#4ADE80" stroke-width="6" stroke-linejoin="round" fill="none" transform="translate(0, 100) scale(0.8)"/>
+  </g>
+
+  <!-- Bin 2: Paper (Blue) -->
+  <g transform="translate(512, 650)">
+    <path d="M -80 0 L 80 0 L 60 200 L -60 200 Z" fill="#1D4ED8"/>
+    <path d="M -80 0 L 80 0 L 60 200 L -60 200 Z" fill="none" stroke="#3B82F6" stroke-width="6" filter="url(#eco_glowBlue)"/>
+    <path d="M -90 -20 L 90 -20 L 80 0 L -80 0 Z" fill="#1E3A8A" class="bin-lid lid-2"/>
+    <path d="M 0 -30 L -15 0 L 15 0 Z M -30 20 L -15 -10 L 0 20 Z M 30 20 L 15 -10 L 0 20 Z" stroke="#60A5FA" stroke-width="6" stroke-linejoin="round" fill="none" transform="translate(0, 100) scale(0.8)"/>
+  </g>
+
+  <!-- Bin 3: Plastic/Metal (Yellow) -->
+  <g transform="translate(824, 650)">
+    <path d="M -80 0 L 80 0 L 60 200 L -60 200 Z" fill="#A16207"/>
+    <path d="M -80 0 L 80 0 L 60 200 L -60 200 Z" fill="none" stroke="#EAB308" stroke-width="6" filter="url(#eco_glowYellow)"/>
+    <path d="M -90 -20 L 90 -20 L 80 0 L -80 0 Z" fill="#713F12" class="bin-lid lid-3"/>
+    <path d="M 0 -30 L -15 0 L 15 0 Z M -30 20 L -15 -10 L 0 20 Z M 30 20 L 15 -10 L 0 20 Z" stroke="#FDE047" stroke-width="6" stroke-linejoin="round" fill="none" transform="translate(0, 100) scale(0.8)"/>
+  </g>
+
+  <!-- Throwing Items Platform Origin -->
+  <g transform="translate(512, 100)">
+    
+    <!-- Apple Core (Organic) -> Bin 1 -->
+    <g class="trash trash-1">
+      <path d="M -30 -20 C -40 -40 -10 -50 0 -30 C 10 -50 40 -40 30 -20 C 10 0 10 30 30 50 C 40 70 10 80 0 60 C -10 80 -40 70 -30 50 C -10 30 -10 0 -30 -20 Z" fill="#FCA5A5" stroke="#B91C1C" stroke-width="4"/>
+      <path d="M 0 -30 L 10 -60" stroke="#15803D" stroke-width="6" stroke-linecap="round"/>
+    </g>
+
+    <!-- Crumpled Paper (Paper) -> Bin 2 -->
+    <g class="trash trash-2">
+      <path d="M 40 -30 L 100 -10 L 110 50 L 60 80 L 20 40 Z" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="6"/>
+      <path d="M 40 -30 L 60 10 L 110 50 M 100 -10 L 70 30 L 20 40" stroke="#94A3B8" stroke-width="3" fill="none"/>
+    </g>
+
+    <!-- Crushed Can (Metal) -> Bin 3 -->
+    <g class="trash trash-3">
+      <path d="M -40 -10 L 20 -40 L 40 10 L -20 40 Z" fill="#94A3B8" stroke="#475569" stroke-width="6"/>
+      <ellipse cx="-10" cy="-25" rx="35" ry="15" fill="#CBD5E1" transform="rotate(-25, -10, -25)"/>
+      <ellipse cx="10" cy="25" rx="35" ry="15" fill="#64748B" transform="rotate(-25, 10, 25)"/>
+      <path d="M -40 0 L 20 10" stroke="#475569" stroke-width="6" fill="none"/>
+    </g>
+  </g>
+</svg>

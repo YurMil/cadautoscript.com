@@ -1,0 +1,212 @@
+<svg viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="eng_bg" x1="0" y1="0" x2="1024" y2="1024" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#051024"/>
+      <stop offset="1" stop-color="#02050E"/>
+    </linearGradient>
+    <radialGradient id="eng_glowPulse" cx="50%" cy="50%" r="50%">
+      <stop stop-color="#FF3860" stop-opacity="0.8"/>
+      <stop offset="1" stop-color="#FF3860" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="eng_grid" width="64" height="64" patternUnits="userSpaceOnUse">
+      <path d="M 64 0 L 0 0 0 64" fill="none" stroke="#254B7A" stroke-width="1.5" stroke-opacity="0.5"/>
+    </pattern>
+    <pattern id="eng_subgrid" width="16" height="16" patternUnits="userSpaceOnUse">
+      <path d="M 16 0 L 0 0 0 16" fill="none" stroke="#122B4A" stroke-width="0.5" stroke-opacity="0.4"/>
+    </pattern>
+  </defs>
+
+  <style>
+    .scanner { opacity: 0; }
+    .cover { opacity: 1; fill: #0A1D36; stroke: #3EE7FF; stroke-dasharray: 5 10; stroke-width: 2; }
+    
+    svg:hover .scanner { animation: sweep 6s linear infinite; opacity: 1; }
+    
+    /* Minesweeper revealing logic */
+    svg:hover .cover-1 { animation: reveal 6s infinite; animation-delay: 1s; }
+    svg:hover .num-1 { animation: popIn 6s infinite; animation-delay: 1s; }
+    
+    svg:hover .cover-2 { animation: reveal 6s infinite; animation-delay: 2s; }
+    svg:hover .num-2 { animation: popIn 6s infinite; animation-delay: 2s; }
+    
+    svg:hover .cover-3 { animation: reveal 6s infinite; animation-delay: 3s; }
+    svg:hover .num-3 { animation: popIn 6s infinite; animation-delay: 3s; }
+    
+    svg:hover .cover-4 { animation: reveal 6s infinite; animation-delay: 4s; }
+    svg:hover .num-4 { animation: popIn 6s infinite; animation-delay: 4s; }
+    
+    svg:hover .cover-bomb { animation: reveal 6s infinite; animation-delay: 5s; }
+    
+    /* NCR Bomb effect */
+    .ncr-glow { opacity: 0; }
+    .ncr-alert-text { opacity: 0; fill: #FF3860; font-family: monospace; font-size: 30px; font-weight: bold; }
+    
+    svg:hover .ncr-glow { animation: bombExplode 6s infinite; animation-delay: 5s; }
+    svg:hover .ncr-shake { animation: shakeBomb 6s infinite; animation-delay: 5s; }
+    svg:hover .ncr-alert-text { animation: blinkAlert 6s infinite; animation-delay: 5s; }
+
+    @keyframes sweep {
+      0% { transform: translateY(-100px); }
+      100% { transform: translateY(1100px); }
+    }
+    @keyframes reveal {
+      0%, 99% { opacity: 1; }
+      100% { opacity: 0; }   /* Keeps it hidden until sequence loops */
+    }
+    @keyframes popIn {
+      0%, 99% { opacity: 0; transform: scale(0.5); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    @keyframes bombExplode {
+      0%, 99% { opacity: 0; transform: scale(1); }
+      100% { opacity: 1; transform: scale(1.5); }
+    }
+    @keyframes shakeBomb {
+      0%, 99% { transform: translate(0, 0); }
+      99.2% { transform: translate(-3px, -3px); }
+      99.4% { transform: translate(3px, 3px); }
+      99.6% { transform: translate(-3px, 3px); }
+      99.8% { transform: translate(3px, -3px); }
+      100% { transform: translate(0, 0); }
+    }
+    @keyframes blinkAlert {
+      0%, 99% { opacity: 0; }
+      99.5%, 100% { opacity: 1; }
+    }
+
+    /* Since we're using percentage for forwards-like behavior in an infinite loop: */
+    /* Let's redefine it properly for a 8s loop */
+    
+    svg:hover .cover-1 { animation: stepReveal 8s infinite; animation-delay: 0.5s; }
+    svg:hover .num-1 { animation: stepPop 8s infinite; animation-delay: 0.5s; }
+    
+    svg:hover .cover-2 { animation: stepReveal 8s infinite; animation-delay: 1.5s; }
+    svg:hover .num-2 { animation: stepPop 8s infinite; animation-delay: 1.5s; }
+    
+    svg:hover .cover-3 { animation: stepReveal 8s infinite; animation-delay: 2.5s; }
+    svg:hover .num-3 { animation: stepPop 8s infinite; animation-delay: 2.5s; }
+    
+    svg:hover .cover-4 { animation: stepReveal 8s infinite; animation-delay: 3.5s; }
+    svg:hover .num-4 { animation: stepPop 8s infinite; animation-delay: 3.5s; }
+
+    svg:hover .cover-bomb { animation: stepReveal 8s infinite; animation-delay: 4.5s; }
+    svg:hover .ncr-glow { animation: ncrPulse 8s infinite; animation-delay: 4.5s; }
+    svg:hover .ncr-shake { animation: ncrShake 8s infinite; animation-delay: 4.5s; }
+    svg:hover .ncr-alert-text { animation: alertFlash 8s infinite; animation-delay: 4.5s; }
+
+    @keyframes stepReveal {
+      0% { opacity: 1; }
+      1% { opacity: 0; fill: transparent; }
+      80% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+    @keyframes stepPop {
+      0% { opacity: 0; transform: scale(0.5); }
+      2% { opacity: 1; transform: scale(1.1); }
+      5% { transform: scale(1); opacity: 1; }
+      80% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+    @keyframes ncrPulse {
+      0% { opacity: 0; }
+      5%, 15%, 25%, 35%, 45% { opacity: 1; transform: scale(1.2); }
+      10%, 20%, 30%, 40% { opacity: 0.5; transform: scale(1); }
+      50% { opacity: 0; }
+      100% { opacity: 0; }
+    }
+    @keyframes ncrShake {
+      0%, 40% { transform: translate(0,0); }
+      1%, 3%, 5%, 7% { transform: translate(-3px, -2px); }
+      2%, 4%, 6%, 8% { transform: translate(3px, 2px); }
+      50%, 100% { transform: translate(0,0); }
+    }
+    @keyframes alertFlash {
+      0%, 45% { opacity: 0; }
+      1%, 5%, 9%, 13% { opacity: 1; }
+      3%, 7%, 11%, 15% { opacity: 0.2; }
+      50%, 100% { opacity: 0; }
+    }
+  </style>
+
+  <!-- Base -->
+  <rect width="1024" height="1024" rx="64" fill="url(#eng_bg)"/>
+  <rect x="32" y="32" width="960" height="960" fill="url(#eng_subgrid)"/>
+  <rect x="32" y="32" width="960" height="960" fill="url(#eng_grid)"/>
+  <rect x="32" y="32" width="960" height="960" rx="42" stroke="#3EE7FF" stroke-width="4" stroke-opacity="0.3"/>
+
+  <text x="64" y="940" class="ncr-alert-text" opacity="0">ERROR: NCR PROTOCOL TRIGGERED !</text>
+
+  <!-- HUD Decor -->
+  <circle cx="512" cy="512" r="300" fill="none" stroke="#254B7A" stroke-width="3" stroke-dasharray="10 15"/>
+  <circle cx="512" cy="512" r="280" fill="none" stroke="#3EE7FF" stroke-width="1" stroke-opacity="0.5"/>
+
+  <!-- Minesweeper Grid Center -->
+  <g transform="translate(320, 320)">
+    
+    <!-- Cell 1 -->
+    <g transform="translate(0, 0)">
+      <rect x="0" y="0" width="120" height="120" fill="#030C1A" stroke="#3EE7FF" stroke-opacity="0.6" stroke-width="2" rx="10"/>
+      <g class="num-1" style="transform-origin: 60px 60px; opacity: 0;">
+        <text x="60" y="75" fill="#3EE7FF" font-family="monospace" font-size="48" text-anchor="middle" font-weight="bold">1</text>
+      </g>
+      <rect class="cover cover-1" x="0" y="0" width="120" height="120" rx="10"/>
+    </g>
+
+    <!-- Cell 2 -->
+    <g transform="translate(128, 0)">
+      <rect x="0" y="0" width="120" height="120" fill="#030C1A" stroke="#3EE7FF" stroke-opacity="0.6" stroke-width="2" rx="10"/>
+      <g class="num-2" style="transform-origin: 60px 60px; opacity: 0;">
+        <text x="60" y="75" fill="#50FFAA" font-family="monospace" font-size="48" text-anchor="middle" font-weight="bold">2</text>
+      </g>
+      <rect class="cover cover-2" x="0" y="0" width="120" height="120" rx="10"/>
+    </g>
+
+    <!-- Cell 3 -->
+    <g transform="translate(0, 128)">
+      <rect x="0" y="0" width="120" height="120" fill="#030C1A" stroke="#3EE7FF" stroke-opacity="0.6" stroke-width="2" rx="10"/>
+      <g class="num-3" style="transform-origin: 60px 60px; opacity: 0;">
+        <text x="60" y="75" fill="#3EE7FF" font-family="monospace" font-size="48" text-anchor="middle" font-weight="bold">1</text>
+      </g>
+      <rect class="cover cover-3" x="0" y="0" width="120" height="120" rx="10"/>
+    </g>
+
+    <!-- Cell 4 -->
+    <g transform="translate(256, 128)">
+      <rect x="0" y="0" width="120" height="120" fill="#030C1A" stroke="#3EE7FF" stroke-opacity="0.6" stroke-width="2" rx="10"/>
+      <g class="num-4" style="transform-origin: 60px 60px; opacity: 0;">
+        <text x="60" y="75" fill="#3EE7FF" font-family="monospace" font-size="48" text-anchor="middle" font-weight="bold">1</text>
+      </g>
+      <rect class="cover cover-4" x="0" y="0" width="120" height="120" rx="10"/>
+    </g>
+
+    <!-- BOMB CELL (Triggered last) -->
+    <g transform="translate(128, 128)">
+      <g class="ncr-shake" style="transform-origin: 60px 60px;">
+        <rect x="0" y="0" width="120" height="120" fill="#3A0D15" stroke="#FF3860" stroke-width="4" rx="10"/>
+        <circle cx="60" cy="60" r="45" fill="url(#eng_glowPulse)" class="ncr-glow" style="transform-origin: 60px 60px;"/>
+        <path d="M 60 25 L 90 80 L 30 80 Z" fill="#FF3860" />
+        <path d="M 60 40 L 60 65" stroke="#100A16" stroke-width="6" stroke-linecap="round"/>
+        <circle cx="60" cy="73" r="3" fill="#100A16"/>
+      </g>
+      <rect class="cover cover-bomb" x="0" y="0" width="120" height="120" rx="10"/>
+    </g>
+
+    <!-- Empty safe cells forming the grid -->
+    <g transform="translate(256, 0)">
+      <rect x="0" y="0" width="120" height="120" fill="#0A1D36" stroke="#3EE7FF" stroke-opacity="0.4" stroke-width="2" stroke-dasharray="4 4" rx="10"/>
+    </g>
+    <g transform="translate(0, 256)">
+      <rect x="0" y="0" width="120" height="120" fill="#0A1D36" stroke="#3EE7FF" stroke-opacity="0.4" stroke-width="2" stroke-dasharray="4 4" rx="10"/>
+    </g>
+    <g transform="translate(128, 256)">
+      <rect x="0" y="0" width="120" height="120" fill="#0A1D36" stroke="#3EE7FF" stroke-opacity="0.4" stroke-width="2" stroke-dasharray="4 4" rx="10"/>
+    </g>
+    <g transform="translate(256, 256)">
+      <rect x="0" y="0" width="120" height="120" fill="#0A1D36" stroke="#3EE7FF" stroke-opacity="0.4" stroke-width="2" stroke-dasharray="4 4" rx="10"/>
+    </g>
+  </g>
+
+  <!-- Scanner line overlay -->
+  <rect class="scanner" x="0" y="0" width="1024" height="15" fill="#3EE7FF" opacity="0" filter="drop-shadow(0 0 10px #3EE7FF)"/>
+
+</svg>

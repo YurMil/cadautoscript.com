@@ -89,6 +89,7 @@ const config: Config = {
     colorMode: {
       defaultMode: 'dark',
       respectPrefersColorScheme: false,
+      disableSwitch: true,
     },
     navbar: {
       title: 'CAD AutoScript',
@@ -107,6 +108,7 @@ const config: Config = {
         {to: '/mini-games', label: 'Mini Games', position: 'left'},
         {type: 'custom-search', position: 'right'},
         {type: 'custom-support-button', position: 'right'},
+        {type: 'custom-theme-toggle', position: 'right'},
         {type: 'custom-navbar-auth', position: 'right'},
       ],
     },

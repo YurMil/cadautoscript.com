@@ -56,16 +56,22 @@ body {
    ══════════════════════════════════════ */
 
 @media (max-width: 996px) {
-  .navbar__items--right > *:not(.navbar__toggle):not(.navbar-auth-control) {
+  .navbar__items--right > *:not(.navbar__toggle):not(.navbar-auth-control):not(.navbar-theme-toggle-control) {
     display: none !important;
   }
 
   .navbar__items--right {
-    gap: 0;
+    gap: 0.35rem;
   }
 
   .navbar__brand {
     gap: 0.35rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .navbar__items--right > .navbar-theme-toggle-control {
+    display: none !important;
   }
 }
 
@@ -239,6 +245,10 @@ body {
   width: 100%;
   max-width: none;
   position: relative;
+}
+
+.navbar-sidebar__items .navbar-theme-toggle-control {
+  display: none !important;
 }
 
 .navbar-sidebar__items .navbar-auth-control .avatarButton {

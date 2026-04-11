@@ -1,0 +1,96 @@
+.desktopToggle {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #cdd8f2;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.desktopToggle:hover {
+  background: rgba(100, 255, 218, 0.1);
+  color: #64ffda;
+  border-color: rgba(100, 255, 218, 0.25);
+  transform: translateY(-1px);
+}
+
+.mobileToggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  justify-content: space-between;
+  padding: 0.8rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  color: inherit;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.mobileToggle:hover {
+  background: rgba(100, 255, 218, 0.08);
+  border-color: rgba(100, 255, 218, 0.18);
+  color: var(--ifm-color-primary);
+}
+
+.mobileIcon {
+  width: 2rem;
+  height: 2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  flex-shrink: 0;
+}
+
+.mobileLabel {
+  margin-right: auto;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.mobileValue {
+  font-size: 0.88rem;
+  color: #8ca3c9;
+}
+
+:global(html[data-theme='light']) .desktopToggle {
+  background: rgba(15, 23, 42, 0.04);
+  border-color: rgba(15, 23, 42, 0.12);
+  color: #475569;
+}
+
+:global(html[data-theme='light']) .desktopToggle:hover {
+  background: rgba(33, 92, 255, 0.08);
+  border-color: rgba(33, 92, 255, 0.2);
+  color: var(--ifm-color-primary-darker);
+}
+
+:global(html[data-theme='light']) .mobileToggle {
+  background: rgba(15, 23, 42, 0.03);
+  border-color: rgba(15, 23, 42, 0.1);
+  color: #0f172a;
+}
+
+:global(html[data-theme='light']) .mobileToggle:hover {
+  background: rgba(33, 92, 255, 0.07);
+  border-color: rgba(33, 92, 255, 0.16);
+  color: var(--ifm-color-primary-darker);
+}
+
+:global(html[data-theme='light']) .mobileIcon {
+  background: rgba(15, 23, 42, 0.05);
+}
+
+:global(html[data-theme='light']) .mobileValue {
+  color: #64748b;
+}
