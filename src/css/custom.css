@@ -247,10 +247,6 @@ body {
   position: relative;
 }
 
-.navbar-sidebar__items .navbar-theme-toggle-control {
-  display: none !important;
-}
-
 .navbar-sidebar__items .navbar-auth-control .avatarButton {
   width: 100%;
   justify-content: center;
