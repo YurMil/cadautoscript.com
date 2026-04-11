@@ -44,6 +44,11 @@ html[data-theme='light'] .footer {
   box-shadow: 0 12px 30px rgba(15, 23, 42, 0.1);
 }
 
+html[data-theme='light'] .navbar__toggle,
+html[data-theme='light'] .navbar__toggle svg {
+  color: var(--light-text);
+}
+
 html[data-theme='light'] .navbar__item,
 html[data-theme='light'] .footer__item {
   color: inherit;
