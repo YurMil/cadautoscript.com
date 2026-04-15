@@ -238,6 +238,17 @@ export const utilities: UtilityDescriptor[] = [
     thumbnail: '/img/utilities/react-table-editor.png',
   },
   {
+    id: 'focus-planner',
+    name: 'Focus Planner',
+    description:
+      'Plan tasks, run standalone or task-linked timers, and review analytics in a local-first browser workspace.',
+    tech: 'React + IndexedDB',
+    standards: 'Local-first productivity',
+    features: ['Calendar planning', 'Task + standalone timers', 'Local analytics'],
+    href: '/utilities/focus-planner/',
+    thumbnail: '/img/utilities/focus-planner.png',
+  },
+  {
     id: 'blind-flange-calculator',
     name: 'Blind Flange Calculator',
     description:

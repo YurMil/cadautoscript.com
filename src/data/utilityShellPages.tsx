@@ -22,6 +22,7 @@ export type UtilityPageSlug =
   | 'engineering-prompt-catalog'
   | 'business-calendar-generator'
   | 'react-table-editor'
+  | 'focus-planner'
   | 'blind-flange-calculator'
   | 'pressure-vessel-dished-end-calc';
 
@@ -371,6 +372,25 @@ export const utilityPageConfigs: Record<UtilityPageSlug, UtilityPageConfig> = {
     features: ['CSV/XLSX import', 'Inline cell editing', 'Column and row management', 'CSV/XLSX export'],
     scriptType: 'module',
     appPath: '/utility-apps/react-table-editor/app.html',
+  },
+  'focus-planner': {
+    slug: 'focus-planner',
+    title: 'Focus Planner',
+    subtitle: 'Web utility - Local-first planning, focus tracking, and analytics',
+    description:
+      'Plan work on a calendar, manage tasks, run focus timers, and review analytics with local browser storage.',
+    about:
+      'Focus Planner is a local-first browser workspace with dashboard, calendar, task management, dedicated timers, analytics, and settings screens. It stores data locally, supports timer recovery, and includes backup import/export flows for a private planning workflow without a backend.',
+    tags: ['Planning', 'Focus timer', 'Analytics', 'Local-first'],
+    note:
+      'Runs as a standalone browser bundle under the utility catalog. Tasks, sessions, and settings stay local in the browser unless you explicitly export them.',
+    features: [
+      'Dashboard, calendar, tasks, timers, analytics, and settings views',
+      'Task-linked and standalone timers with recovery support',
+      'IndexedDB-backed local storage with backup import/export',
+      'Planning and reporting without a backend',
+    ],
+    scriptType: 'module',
   },
   'blind-flange-calculator': {
     slug: 'blind-flange-calculator',
