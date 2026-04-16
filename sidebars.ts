@@ -42,6 +42,7 @@ const sidebars: SidebarsConfig = {
         'utilities/engineering-prompt-catalog',
         'utilities/business-calendar-generator',
         'utilities/react-table-editor',
+        'utilities/focus-planner',
         'utilities/dxf-editor',
         'utilities/file-renamer',
         'utilities/folder-structure-builder',
