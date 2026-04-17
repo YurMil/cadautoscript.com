@@ -1,0 +1,1 @@
+import{t as e}from"./index-BI2GQf9m.js";export{e as timerService};
