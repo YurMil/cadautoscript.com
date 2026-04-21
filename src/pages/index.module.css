@@ -11,6 +11,20 @@
    Hero
    ══════════════════════════════════════ */
 
+.hero, .utilitySection {
+  /* SVG engineering colors — dark */
+  --sv-grid-minor: rgba(30,70,120,0.45);
+  --sv-grid-major: rgba(40,90,160,0.6);
+  --sv-border:     rgba(30,80,150,0.7);
+  --sv-accent:     rgba(0,180,220,0.75);
+  --sv-orange:     rgba(255,100,50,0.8);
+  --sv-gear:       rgba(25,80,160,0.5);
+  --sv-gear-stroke:rgba(50,130,220,0.6);
+  --sv-hub:        rgba(0,180,220,0.7);
+  --sv-dim:        rgba(0,140,200,0.5);
+  --sv-text:       rgba(40,120,200,0.7);
+}
+
 .hero {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -20,8 +34,56 @@
   border-radius: 24px;
   padding: 2rem;
   position: relative;
-  transition: padding 0.35s ease;
+  transition: padding 0.35s ease, border-color 0.35s, background 0.3s, box-shadow 0.3s;
+  overflow: hidden;
 }
+
+.hero:hover {
+  border-color: rgba(100,255,218,0.30);
+  box-shadow: 0 0 0 1px rgba(100,255,218,0.20), 0 20px 60px rgba(0,0,0,0.25);
+}
+
+.heroBgSvg {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  opacity: 1;
+  z-index: 0;
+}
+
+.hero > *:not(.heroBgSvg):not(.heroToggle) {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes spinCw  { to { transform: rotate(360deg);  } }
+@keyframes spinCcw { to { transform: rotate(-360deg); } }
+@keyframes scanY {
+  0%   { transform: translateY(-80px); opacity: 0; }
+  5%   { opacity: 1; }
+  95%  { opacity: 1; }
+  100% { transform: translateY(400px); opacity: 0; }
+}
+@keyframes pulseRing {
+  0%   { r: 8;  opacity: 0.8; }
+  100% { r: 28; opacity: 0; }
+}
+@keyframes march {
+  to { stroke-dashoffset: -40; }
+}
+@keyframes blinkDot {
+  0%,100% { opacity: 1; }
+  50%      { opacity: 0.15; }
+}
+
+.gearCw  { transform-origin: 50% 50%; transform-box: fill-box; animation: spinCw  20s linear infinite; }
+.gearCcw { transform-origin: 50% 50%; transform-box: fill-box; animation: spinCcw 14s linear infinite; }
+.scanline { animation: scanY 5s linear infinite; }
+.pring    { animation: pulseRing 2.2s ease-out infinite; }
+.pring2   { animation: pulseRing 2.2s ease-out 0.6s infinite; }
+.march    { animation: march 1.2s linear infinite; }
+.blink    { animation: blinkDot 1.8s ease-in-out infinite; }
 
 /* ── Collapsed compact mode ── */
 
@@ -153,6 +215,67 @@
   flex-direction: column;
   gap: 1.5rem;
 }
+
+.utilitySection, .docsSection {
+  position: relative;
+  overflow: hidden;
+}
+
+.utilitySection::before, .docsSection::before {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border: 1.2px solid var(--sv-border);
+  border-radius: 16px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.utilitySection::after, .docsSection::after {
+  content: '';
+  position: absolute;
+  inset: 12px;
+  border: 0.5px dashed var(--sv-border);
+  border-radius: 14px;
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.utilityBgSvg {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  opacity: 1;
+  z-index: 0;
+}
+
+.utilitySection > *:not(.utilityBgSvg),
+.docsSection > *:not(.utilityBgSvg) {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes docScan {
+  0% { transform: translateY(0); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(100px); opacity: 0; }
+}
+.docScan {
+  animation: docScan 3s linear infinite;
+}
+
+@keyframes pulseLines {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; filter: drop-shadow(0 0 6px var(--sv-accent)); }
+}
+.docLines rect:nth-child(1) { animation: pulseLines 3s ease-in-out 0s infinite; }
+.docLines rect:nth-child(2) { animation: pulseLines 3s ease-in-out 0.4s infinite; }
+.docLines rect:nth-child(3) { animation: pulseLines 3s ease-in-out 0.8s infinite; }
+.docLines rect:nth-child(4) { animation: pulseLines 3s ease-in-out 1.2s infinite; }
+.docLines rect:nth-child(5) { animation: pulseLines 3s ease-in-out 1.6s infinite; }
 
 .utilityGrid {
   display: grid;
@@ -693,9 +816,25 @@
 :global(html[data-theme='light']) .hero,
 :global(html[data-theme='light']) .utilitySection,
 :global(html[data-theme='light']) .docsSection {
+  /* SVG engineering colors — light */
+  --sv-grid-minor: rgba(100,150,220,0.20);
+  --sv-grid-major: rgba(80,130,200,0.28);
+  --sv-border:     rgba(60,110,200,0.35);
+  --sv-accent:     rgba(5,120,220,0.55);
+  --sv-orange:     rgba(220,80,20,0.65);
+  --sv-gear:       rgba(200,225,255,0.7);
+  --sv-gear-stroke:rgba(80,140,220,0.5);
+  --sv-hub:        rgba(5,120,220,0.55);
+  --sv-dim:        rgba(5,100,200,0.45);
+  --sv-text:       rgba(40,100,200,0.55);
+
   background: var(--light-surface);
   border-color: var(--card-border);
   box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+}
+
+:global(html[data-theme='light']) .hero:hover {
+  box-shadow: 0 0 0 1px rgba(5,150,105,0.18), 0 20px 60px rgba(15,23,42,0.14);
 }
 
 :global(html[data-theme='light']) .eyebrow,
@@ -712,8 +851,8 @@
 
 :global(html[data-theme='light']) .utilityCard {
   border-color: var(--card-border);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(243, 247, 255, 0.94));
-  box-shadow: 0 14px 36px rgba(15, 23, 42, 0.08);
+  background: #ffffff;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
 }
 
 :global(html[data-theme='light']) .utilityCard:hover {

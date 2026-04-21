@@ -12,6 +12,102 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 24px;
   padding: 2rem;
+  position: relative;
+  overflow: hidden;
+
+  /* SVG engineering colors — dark */
+  --sv-grid-minor: rgba(30,70,120,0.45);
+  --sv-grid-major: rgba(40,90,160,0.6);
+  --sv-border:     rgba(30,80,150,0.7);
+  --sv-accent:     rgba(0,180,220,0.75);
+  --sv-orange:     rgba(255,100,50,0.8);
+  --sv-gear:       rgba(25,80,160,0.5);
+  --sv-gear-stroke:rgba(50,130,220,0.6);
+  --sv-hub:        rgba(0,180,220,0.7);
+  --sv-dim:        rgba(0,140,200,0.5);
+  --sv-text:       rgba(40,120,200,0.7);
+  --sv-support:    rgba(255, 60, 100, 0.75);
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border: 1.2px solid var(--sv-border);
+  border-radius: 16px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 12px;
+  border: 0.5px dashed var(--sv-border);
+  border-radius: 14px;
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.bgSvg {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  opacity: 1;
+  z-index: 0;
+}
+
+@keyframes pulseSupport {
+  0%   { r: 4;  opacity: 0.8; }
+  100% { r: 24; opacity: 0; }
+}
+@keyframes pulseSupport2 {
+  0%   { r: 12;  opacity: 0.6; }
+  100% { r: 36; opacity: 0; }
+}
+@keyframes beat {
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1.05); }
+  50% { transform: scale(1); }
+  75% { transform: scale(1.05); }
+}
+
+.pulseRing { animation: pulseSupport 4s ease-out infinite; }
+.pulseRing2 { animation: pulseSupport2 4s ease-out 1s infinite; }
+.heartBeat { 
+  transform-origin: center; 
+  animation: beat 4s ease-in-out infinite; 
+  cursor: pointer;
+  transition: filter 0.3s ease;
+}
+.heartBeat:hover {
+  filter: drop-shadow(0 0 8px var(--sv-support));
+}
+
+.march    { animation: march 3s linear infinite; }
+@keyframes march { to { stroke-dashoffset: -40; } }
+
+.floatingBtnWrap {
+  position: fixed;
+  z-index: 9999;
+  transform: translateX(-50%);
+  animation: floatUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes floatUp {
+  from { opacity: 0; transform: translate(-50%, 15px) scale(0.9); }
+  to { opacity: 1; transform: translate(-50%, 0) scale(1); }
+}
+
+.eyebrow,
+.card h1,
+.lead,
+.note,
+.actions {
+  position: relative;
+  z-index: 1;
 }
 
 .eyebrow {
@@ -51,6 +147,19 @@
 }
 
 :global(html[data-theme='light']) .card {
+  /* SVG engineering colors — light */
+  --sv-grid-minor: rgba(100,150,220,0.20);
+  --sv-grid-major: rgba(80,130,200,0.28);
+  --sv-border:     rgba(60,110,200,0.35);
+  --sv-accent:     rgba(5,120,220,0.55);
+  --sv-orange:     rgba(220,80,20,0.65);
+  --sv-gear:       rgba(200,225,255,0.7);
+  --sv-gear-stroke:rgba(80,140,220,0.5);
+  --sv-hub:        rgba(5,120,220,0.55);
+  --sv-dim:        rgba(5,100,200,0.45);
+  --sv-text:       rgba(40,100,200,0.55);
+  --sv-support:    rgba(220, 40, 80, 0.65);
+
   background: var(--light-surface);
   border-color: var(--card-border);
   box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);

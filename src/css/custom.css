@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
 @layer theme, base, components, utilities;
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/utilities.css" layer(utilities);
@@ -13,17 +14,22 @@
   --ifm-font-family-base: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --page-bg: linear-gradient(180deg, #05070f 0%, #080c18 100%);
   --card-border: rgba(255, 255, 255, 0.1);
+  --bg: #0f1117;
 }
 
 html[data-theme='light'] {
   --light-text: #0f172a;
   --light-text-soft: #334155;
-  --light-text-muted: #64748b;
+  --light-text-muted: #475569;
+  --light-surface: #ffffff;
+  --card-border: rgba(15, 23, 42, 0.12);
+  --bg: #f4f7fb;
+  --main-text: #0f172a;
 }
 
 body {
   background: var(--page-bg);
-  color: #f3f6ff;
+  color: var(--main-text, #f3f6ff);
 }
 
 .site-container {

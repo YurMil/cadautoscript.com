@@ -52,6 +52,48 @@ export default function MiniGamesIndex() {
           </div>
         </header>
         <section className={styles.catalogSection}>
+          <svg className={styles.bgSvg} width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="mgm" width="20" height="20" patternUnits="userSpaceOnUse">
+                <path d="M20 0L0 0 0 20" fill="none" stroke="var(--sv-grid-minor)" strokeWidth="0.6"/>
+              </pattern>
+              <pattern id="mgM" width="100" height="100" patternUnits="userSpaceOnUse">
+                <rect width="100" height="100" fill="url(#mgm)"/>
+                <path d="M100 0L0 0 0 100" fill="none" stroke="var(--sv-grid-major)" strokeWidth="1.1"/>
+              </pattern>
+              <radialGradient id="mgcenter" cx="75%" cy="30%" r="65%">
+                <stop offset="0%" stopColor="transparent"/>
+                <stop offset="100%" stopColor="var(--bg)" stopOpacity="0.85"/>
+              </radialGradient>
+            </defs>
+
+            <rect width="100%" height="100%" fill="url(#mgM)"/>
+            <rect width="100%" height="100%" fill="url(#mgcenter)"/>
+
+            <svg x="75%" y="30%" overflow="visible" opacity="0.8">
+              {/* Abstract gamepad body */}
+              <path d="M -50 -20 Q -60 -20 -60 -10 L -60 10 Q -60 20 -50 20 L 50 20 Q 60 20 60 10 L 60 -10 Q 60 -20 50 -20 Z" fill="none" stroke="var(--sv-border)" strokeWidth="1.5" opacity="0.6" />
+              
+              {/* D-Pad Base */}
+              <path d="M -35 -5 L -25 -5 L -25 -15 L -15 -15 L -15 -5 L -5 -5 L -5 5 L -15 5 L -15 15 L -25 15 L -25 5 L -35 5 Z" fill="none" stroke="var(--sv-accent)" strokeWidth="1" opacity="0.5"/>
+              
+              {/* Animated D-pad highlight */}
+              <rect className={styles.dpadPress} x="-25" y="-15" width="10" height="10" fill="var(--sv-accent)" opacity="0.8" />
+              
+              {/* Action buttons */}
+              <circle cx="20" cy="5" r="4" fill="var(--sv-text)" opacity="0.4"/>
+              <circle cx="32" cy="-5" r="4" fill="var(--sv-text)" opacity="0.4"/>
+              <circle cx="44" cy="5" r="4" fill="var(--sv-orange)" className={styles.actionButton}/>
+              
+              {/* Connecting data lines */}
+              <path className={styles.march} d="M -150 -10 L -60 -10" fill="none" stroke="var(--sv-accent)" strokeWidth="1.2" strokeDasharray="5 5" opacity="0.6"/>
+              <path className={styles.march} d="M 60 10 L 120 10" fill="none" stroke="var(--sv-orange)" strokeWidth="1.2" strokeDasharray="4 4" opacity="0.6"/>
+              
+              <circle cx="-150" cy="-10" r="3" fill="var(--sv-accent)" opacity="0.8"/>
+              <circle cx="120" cy="10" r="3" fill="var(--sv-orange)" opacity="0.8"/>
+            </svg>
+          </svg>
+
           <header className={styles.sectionHeader}>
             <div>
               <p className={styles.eyebrow}>
