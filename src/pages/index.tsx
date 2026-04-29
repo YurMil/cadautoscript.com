@@ -8,6 +8,7 @@ import {useAuthModal} from '@site/src/contexts/AuthModalContext';
 import {useAuthStatus} from '@site/src/hooks/useAuthStatus';
 import {useUtilitiesAccess} from '@site/src/hooks/useUtilitiesAccess';
 import styles from './index.module.css';
+import AnimatedLogo from '@site/src/components/AnimatedLogo/AnimatedLogo';
 
 const heroStats = [
   {label: 'Live utilities', value: utilities.length.toString()},
@@ -357,21 +358,7 @@ export default function Home(): ReactNode {
               <text x="776" y="299" fill="var(--sv-accent)">ONLINE</text>
             </g>
 
-            <g transform="translate(620,195)" opacity="0.9">
-              <polygon points="0,0 60,-30 60,30 0,60" fill="var(--sv-gear)" stroke="var(--sv-accent)" strokeWidth="1.2"/>
-              <polygon points="0,0 60,-30 120,0 60,30" fill="var(--sv-hub)" opacity="0.25" stroke="var(--sv-accent)" strokeWidth="1.2"/>
-              <polygon points="60,30 120,0 120,60 60,90" fill="var(--sv-gear)" opacity="0.6" stroke="var(--sv-accent)" strokeWidth="1.2"/>
-              <line x1="0" y1="0" x2="60" y2="30" stroke="var(--sv-accent)" strokeWidth="0.6" strokeDasharray="3,3" opacity="0.5"/>
-              <line x1="60" y1="30" x2="60" y2="90" stroke="var(--sv-accent)" strokeWidth="0.6" strokeDasharray="3,3" opacity="0.5"/>
-              <line x1="0" y1="70" x2="60" y2="100" stroke="var(--sv-orange)" strokeWidth="0.8" markerStart="url(#haor)" markerEnd="url(#hao)"/>
-              <text x="22" y="95" fontFamily="'Share Tech Mono',monospace" fontSize="8" fill="var(--sv-orange)">L</text>
-              <line x1="130" y1="0" x2="130" y2="60" stroke="var(--sv-orange)" strokeWidth="0.8" markerStart="url(#haor)" markerEnd="url(#hao)"/>
-              <text x="134" y="33" fontFamily="'Share Tech Mono',monospace" fontSize="8" fill="var(--sv-orange)">H</text>
-              <path d="M 20 0 A 20 20 0 0 1 37 -10" fill="none" stroke="var(--sv-accent)" strokeWidth="0.7"/>
-              <text x="42" y="-4" fontFamily="'Share Tech Mono',monospace" fontSize="7" fill="var(--sv-accent)">30°</text>
-              <polygon points="-40,-8 -8,-8 -8,6 -24,14 -40,6" fill="var(--bg)" stroke="var(--sv-orange)" strokeWidth="0.9" opacity="0.9"/>
-              <text x="-24" y="3" textAnchor="middle" fontFamily="'Share Tech Mono',monospace" fontSize="8" fill="var(--sv-orange)">A–A</text>
-            </g>
+            <AnimatedLogo x="590" y="105" width="180" height="180" opacity="0.9" />
 
             <g transform="translate(840,270)" fontFamily="'Share Tech Mono',monospace">
               <line x1="0" y1="0" x2="30" y2="0" stroke="var(--sv-orange)" strokeWidth="1.5" markerEnd="url(#hao)"/>

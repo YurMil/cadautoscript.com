@@ -1,0 +1,105 @@
+.logo {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* ── Gear rotations ──────────────────────────────── */
+@keyframes cw {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes ccw {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+.gearFrame {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: cw 80s linear infinite;
+}
+.gear1 {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: cw 12s linear infinite;
+}
+.gear2 {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ccw 8.25s linear infinite;
+}
+.gear3 {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ccw 6s linear infinite;
+}
+.gear4 {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: cw 4.4s linear infinite;
+}
+
+/* ── Circuit traces ──────────────────────────────── */
+@keyframes trace {
+  0% {
+    stroke-dashoffset: 420;
+    opacity: 0;
+  }
+  6% {
+    opacity: 0.95;
+  }
+  88% {
+    opacity: 0.88;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+.ct {
+  fill: none;
+  stroke-dasharray: 80 420;
+  animation: trace 5s ease-in-out infinite;
+}
+
+/* ── Node dots ───────────────────────────────────── */
+@keyframes nodePulse {
+  0%,
+  100% {
+    r: 2;
+    opacity: 0.3;
+  }
+  50% {
+    r: 3.8;
+    opacity: 1;
+  }
+}
+.cdot {
+  animation: nodePulse 2.8s ease-in-out infinite;
+}
+
+/* ── Scan sweep ──────────────────────────────────── */
+@keyframes sweep {
+  0% {
+    transform: rotate(-170deg);
+    opacity: 0;
+  }
+  4% {
+    opacity: 1;
+  }
+  96% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: rotate(170deg);
+    opacity: 0;
+  }
+}
+.scan {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: sweep 8s ease-in-out infinite;
+}
