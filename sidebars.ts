@@ -57,6 +57,7 @@ const sidebars: SidebarsConfig = {
         'utilities/pipe-cutter',
         'utilities/qr-master',
         'utilities/qr-nameplate',
+        'utilities/wikalog-analyzer',
       ],
     },
   ],

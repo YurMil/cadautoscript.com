@@ -19,26 +19,31 @@
 .gearFrame {
   transform-box: fill-box;
   transform-origin: center;
+  will-change: transform;
   animation: cw 80s linear infinite;
 }
 .gear1 {
   transform-box: fill-box;
   transform-origin: center;
+  will-change: transform;
   animation: cw 12s linear infinite;
 }
 .gear2 {
   transform-box: fill-box;
   transform-origin: center;
+  will-change: transform;
   animation: ccw 8.25s linear infinite;
 }
 .gear3 {
   transform-box: fill-box;
   transform-origin: center;
+  will-change: transform;
   animation: ccw 6s linear infinite;
 }
 .gear4 {
   transform-box: fill-box;
   transform-origin: center;
+  will-change: transform;
   animation: cw 4.4s linear infinite;
 }
 
@@ -62,6 +67,7 @@
 .ct {
   fill: none;
   stroke-dasharray: 80 420;
+  will-change: stroke-dashoffset, opacity;
   animation: trace 5s ease-in-out infinite;
 }
 
@@ -69,15 +75,18 @@
 @keyframes nodePulse {
   0%,
   100% {
-    r: 2;
+    transform: scale(0.6);
     opacity: 0.3;
   }
   50% {
-    r: 3.8;
+    transform: scale(1.1);
     opacity: 1;
   }
 }
 .cdot {
+  transform-box: fill-box;
+  transform-origin: center;
+  will-change: transform, opacity;
   animation: nodePulse 2.8s ease-in-out infinite;
 }
 
@@ -101,5 +110,6 @@
 .scan {
   transform-box: fill-box;
   transform-origin: center;
+  will-change: transform, opacity;
   animation: sweep 8s ease-in-out infinite;
 }

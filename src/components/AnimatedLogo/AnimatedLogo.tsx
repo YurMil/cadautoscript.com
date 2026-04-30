@@ -290,9 +290,11 @@ const AnimatedLogo: React.FC<AnimatedLogoProps> = ({ className, ...props }) => {
         </g>
         <circle cx="300" cy="308" r="230" fill="none" stroke="#0c2060" strokeWidth="0.8" opacity="0.35" />
 
-        {/* MAIN CIRCLE INTERIOR */}
-        <g clipPath="url(#cc)">
-          <circle cx="300" cy="308" r="185" fill="url(#circleBG)" />
+        <circle cx="300" cy="308" r="185" fill="url(#circleBG)" />
+      </g>
+
+      {/* MAIN CIRCLE INTERIOR (Animated elements) */}
+      <g clipPath="url(#cc)">
 
           {/* Blueprint grid */}
           <g stroke="#1a3c7a" strokeWidth="0.38" opacity="0.45">
@@ -532,7 +534,6 @@ const AnimatedLogo: React.FC<AnimatedLogoProps> = ({ className, ...props }) => {
         >
           AS
         </text>
-      </g>
     </svg>
   );
 };
