@@ -270,4 +270,15 @@ export const utilities: UtilityDescriptor[] = [
     href: '/utilities/pressure-vessel-dished-end-calc/',
     thumbnail: '/img/utilities/pressure-vessel-dished-end-calc.png',
   },
+  {
+    id: 'wikalog-analyzer',
+    name: 'WIKA Log Analyzer',
+    description:
+      'Parse WIKA CPG1500 calibrator logs, review measurement data, and print QC reports locally.',
+    tech: 'React + MUI',
+    standards: 'WIKA CPG1500',
+    features: ['Log file parsing', 'Measurement charts', 'Printable QC reports'],
+    href: '/utilities/wikalog-analyzer/',
+    thumbnail: '/img/utilities/wikalog-analyzer.png',
+  },
 ];

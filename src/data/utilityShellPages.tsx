@@ -24,7 +24,8 @@ export type UtilityPageSlug =
   | 'react-table-editor'
   | 'focus-planner'
   | 'blind-flange-calculator'
-  | 'pressure-vessel-dished-end-calc';
+  | 'pressure-vessel-dished-end-calc'
+  | 'wikalog-analyzer';
 
 export type UtilityPageConfig = {
   slug: UtilityPageSlug;
@@ -421,6 +422,26 @@ export const utilityPageConfigs: Record<UtilityPageSlug, UtilityPageConfig> = {
     tags: ['Pressure vessels', 'DIN', 'Fabrication'],
     note: 'All calculations run in the browser. Use the QC report view to print or save as PDF.',
     features: ['DIN 28011 / 28013 geometry presets', 'Nozzle offset callouts', 'Printable QC worksheet'],
+    scriptType: 'module',
+  },
+  'wikalog-analyzer': {
+    slug: 'wikalog-analyzer',
+    title: 'WIKA CPG1500 Log Analyzer',
+    subtitle: 'Web utility — Parse and report on WIKA calibrator logs',
+    description:
+      'Drop WIKA CPG1500 log files, inspect device identity and measurement readings, visualize pressure data, and print QC reports — all locally in the browser.',
+    about:
+      'Upload log files exported from a WIKA CPG1500 digital pressure calibrator, review device identity and calibration metadata, browse timestamped measurement rows, visualize pressure curves on interactive charts, and generate print-ready QC reports without uploading data anywhere.',
+    tags: ['Calibration', 'WIKA CPG1500', 'QC reports'],
+    note:
+      'All parsing runs locally in the browser. Log files and extracted data stay on your device until you close the tab.',
+    features: [
+      'WIKA CPG1500 log file parsing',
+      'Device identity and calibration metadata',
+      'Measurement data grid with search',
+      'Pressure chart visualization',
+      'Print-optimized QC report export',
+    ],
     scriptType: 'module',
   },
 };

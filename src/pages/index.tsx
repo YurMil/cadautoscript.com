@@ -237,7 +237,7 @@ export default function Home(): ReactNode {
               <line x1="865" y1="278" x2="865" y2="292"/><line x1="858" y1="285" x2="872" y2="285"/>
             </g>
 
-            <g transform="translate(72,290)">
+            <g className={styles.leftGearPos}>
               <g className={styles.gearCw}>
                 <g fill="var(--sv-gear)" stroke="var(--sv-gear-stroke)" strokeWidth="1.2">
                   <rect x="-9" y="-92" width="18" height="28" rx="3"/>
@@ -268,7 +268,7 @@ export default function Home(): ReactNode {
               <line x1="0" y1="-110" x2="0" y2="110" stroke="var(--sv-accent)" strokeWidth="0.5" opacity="0.4"/>
             </g>
 
-            <g transform="translate(835,65)">
+            <g className={styles.rightGearPos}>
               <g className={styles.gearCcw}>
                 <g fill="var(--sv-gear)" stroke="var(--sv-gear-stroke)" strokeWidth="1">
                   <rect x="-5.5" y="-56" width="11" height="17" rx="2"/>
@@ -358,7 +358,9 @@ export default function Home(): ReactNode {
               <text x="776" y="299" fill="var(--sv-accent)">ONLINE</text>
             </g>
 
-            <AnimatedLogo x="590" y="105" width="180" height="180" opacity="0.9" />
+            <g className={styles.logoPos}>
+              <AnimatedLogo width="180" height="180" opacity="0.9" />
+            </g>
 
             <g transform="translate(840,270)" fontFamily="'Share Tech Mono',monospace">
               <line x1="0" y1="0" x2="30" y2="0" stroke="var(--sv-orange)" strokeWidth="1.5" markerEnd="url(#hao)"/>
