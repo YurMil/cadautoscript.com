@@ -1,7 +1,9 @@
-import React, {useEffect, useRef, useState} from 'react';
-import EmojiPicker, {type EmojiClickData} from 'emoji-picker-react';
+import React, {Suspense, lazy, useEffect, useRef, useState} from 'react';
+import type {EmojiClickData} from 'emoji-picker-react';
 import {supabase} from '@site/src/lib/supabaseClient';
 import styles from './Comments.module.css';
+
+const EmojiPicker = lazy(() => import('emoji-picker-react'));
 
 type CustomEmoji = {
   names: string[];
@@ -16,9 +18,12 @@ type Props = {
 export default function EmojiPickerBtn({onEmojiSelect}: Props): React.JSX.Element {
   const [customEmojis, setCustomEmojis] = useState<CustomEmoji[]>([]);
   const [open, setOpen] = useState(false);
+  const [emojisLoaded, setEmojisLoaded] = useState(false);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
 
+  // Only fetch custom emojis when the picker is opened for the first time
   useEffect(() => {
+    if (!open || emojisLoaded) return;
     let active = true;
     const load = async () => {
       const {data, error} = await supabase.from('custom_emojis').select('name, url');
@@ -34,12 +39,13 @@ export default function EmojiPickerBtn({onEmojiSelect}: Props): React.JSX.Elemen
           imgUrl: row.url,
         })) ?? [];
       setCustomEmojis(mapped);
+      setEmojisLoaded(true);
     };
     void load();
     return () => {
       active = false;
     };
-  }, []);
+  }, [open, emojisLoaded]);
 
   const handleEmoji = (emojiData: EmojiClickData) => {
     if (emojiData.isCustom) {
@@ -75,16 +81,18 @@ export default function EmojiPickerBtn({onEmojiSelect}: Props): React.JSX.Elemen
       </button>
       {open ? (
         <div className={styles.pickerPopover}>
-          <EmojiPicker
-            onEmojiClick={handleEmoji}
-            lazyLoadEmojis
-            previewConfig={{showPreview: false}}
-            searchDisabled
-            skinTonesDisabled
-            customEmojis={customEmojis}
-            height={320}
-            width="100%"
-          />
+          <Suspense fallback={<div style={{padding: '1rem', fontSize: '0.85rem'}}>Loading…</div>}>
+            <EmojiPicker
+              onEmojiClick={handleEmoji}
+              lazyLoadEmojis
+              previewConfig={{showPreview: false}}
+              searchDisabled
+              skinTonesDisabled
+              customEmojis={customEmojis}
+              height={320}
+              width="100%"
+            />
+          </Suspense>
         </div>
       ) : null}
     </div>

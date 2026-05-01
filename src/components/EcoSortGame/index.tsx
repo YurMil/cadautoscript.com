@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Physics } from '@react-three/rapier';
 import useIsBrowser from '@docusaurus/useIsBrowser';
@@ -26,10 +26,18 @@ export default function EcoSortGame() {
   const setPointerLockPending = useEcoSortStore((state) => state.setPointerLockPending);
   const setPlaying = useEcoSortStore((state) => state.setPlaying);
 
+  const [tabVisible, setTabVisible] = useState(true);
+
   useEffect(() => {
     const next = WEATHER_OPTIONS[Math.floor(Math.random() * WEATHER_OPTIONS.length)];
     setWeather(next);
   }, [setWeather, resetToken]); // regenerate weather on restart too
+
+  useEffect(() => {
+    const onVisibility = () => setTabVisible(!document.hidden);
+    document.addEventListener('visibilitychange', onVisibility);
+    return () => document.removeEventListener('visibilitychange', onVisibility);
+  }, []);
 
   useEffect(() => {
     if (!pointerLockTarget) return;
@@ -63,6 +71,7 @@ export default function EcoSortGame() {
     <div style={styles.wrapper}>
       <Canvas
         shadows
+        frameloop={tabVisible ? 'always' : 'never'}
         camera={{ position: [0, 2, 8], fov: 60 }}
         gl={{ antialias: false, powerPreference: 'high-performance' }}
         onCreated={({ gl }) => {

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import styles from './AnimatedLogo.module.css';
 
 interface AnimatedLogoProps extends React.SVGProps<SVGSVGElement> {
@@ -6,6 +6,27 @@ interface AnimatedLogoProps extends React.SVGProps<SVGSVGElement> {
 }
 
 const AnimatedLogo: React.FC<AnimatedLogoProps> = ({ className, ...props }) => {
+  const svgRef = useRef<SVGSVGElement | null>(null);
+  const [paused, setPaused] = useState(false);
+
+  useEffect(() => {
+    const node = svgRef.current;
+    if (!node || typeof IntersectionObserver === 'undefined') return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setPaused(!entry.isIntersecting),
+      { rootMargin: '120px', threshold: 0 },
+    );
+    observer.observe(node);
+    const onVisibility = () => {
+      if (document.hidden) setPaused(true);
+    };
+    document.addEventListener('visibilitychange', onVisibility);
+    return () => {
+      observer.disconnect();
+      document.removeEventListener('visibilitychange', onVisibility);
+    };
+  }, []);
+
   // ── Path generation logic ──
   const paths = useMemo(() => {
     const gearPath = (cx: number, cy: number, teeth: number, outerR: number, innerR: number) => {
@@ -66,10 +87,12 @@ const AnimatedLogo: React.FC<AnimatedLogoProps> = ({ className, ...props }) => {
 
   return (
     <svg
+      ref={svgRef}
       id="logo"
       viewBox="0 0 600 680"
       xmlns="http://www.w3.org/2000/svg"
       className={`${styles.logo} ${className || ''}`}
+      data-paused={paused ? 'true' : undefined}
       {...props}
     >
       <defs>

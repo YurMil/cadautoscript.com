@@ -7,6 +7,7 @@ import SupportSection from '@site/src/components/Support/SupportSection';
 import {useAuthModal} from '@site/src/contexts/AuthModalContext';
 import {useAuthStatus} from '@site/src/hooks/useAuthStatus';
 import {useUtilitiesAccess} from '@site/src/hooks/useUtilitiesAccess';
+import {usePauseWhenOffscreen} from '@site/src/hooks/usePauseWhenOffscreen';
 import styles from './index.module.css';
 import AnimatedLogo from '@site/src/components/AnimatedLogo/AnimatedLogo';
 
@@ -86,6 +87,9 @@ function UtilityCard({utility, index, isAuthenticated, authChecked, utilitiesPub
             alt={utility.name}
             className={styles.utilityIcon}
             loading="lazy"
+            decoding="async"
+            width="56"
+            height="56"
           />
           <span className={styles.iconOverlay}>
             {isLocked ? '🔒' : '▶'}
@@ -121,6 +125,10 @@ export default function Home(): ReactNode {
   const [heroReady, setHeroReady] = useState(false);
   const [compactMode, setCompactMode] = useState(false);
   const [filterQuery, setFilterQuery] = useState('');
+
+  const hero = usePauseWhenOffscreen<HTMLElement>();
+  const utilSection = usePauseWhenOffscreen<HTMLElement>();
+  const docsSection = usePauseWhenOffscreen<HTMLElement>();
 
   const filteredUtilities = useMemo(() => {
     const q = filterQuery.trim().toLowerCase();
@@ -177,6 +185,8 @@ export default function Home(): ReactNode {
       description="CAD AutoScript - SolidWorks macros, calculators, and QA tools">
       <main className={styles.main}>
         <section
+          ref={hero.ref}
+          data-paused={hero.paused ? 'true' : undefined}
           className={`${styles.hero} ${heroReady && heroCollapsed ? styles.heroCollapsed : ''}`}
         >
           <svg className={styles.heroBgSvg} viewBox="0 0 900 320" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
@@ -436,7 +446,11 @@ export default function Home(): ReactNode {
           )}
         </section>
 
-        <section className={styles.utilitySection}>
+        <section
+          ref={utilSection.ref}
+          data-paused={utilSection.paused ? 'true' : undefined}
+          className={styles.utilitySection}
+        >
           <svg className={styles.utilityBgSvg} width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <pattern id="ugm" width="20" height="20" patternUnits="userSpaceOnUse">
@@ -531,6 +545,9 @@ export default function Home(): ReactNode {
                         alt={utility.name}
                         className={styles.iconTileImg}
                         loading="lazy"
+                        decoding="async"
+                        width="60"
+                        height="60"
                       />
                     ) : (
                       <span className={styles.iconTilePlaceholder}>
@@ -562,7 +579,11 @@ export default function Home(): ReactNode {
           )}
         </section>
 
-        <section className={styles.docsSection}>
+        <section
+          ref={docsSection.ref}
+          data-paused={docsSection.paused ? 'true' : undefined}
+          className={styles.docsSection}
+        >
           <svg className={styles.utilityBgSvg} width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <pattern id="dgm" width="20" height="20" patternUnits="userSpaceOnUse">
