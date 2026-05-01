@@ -113,3 +113,32 @@
   will-change: transform, opacity;
   animation: sweep 8s ease-in-out infinite;
 }
+
+/* ── Pause animations when off-screen (saves GPU on mobile) ── */
+.logo[data-paused='true'] .gearFrame,
+.logo[data-paused='true'] .gear1,
+.logo[data-paused='true'] .gear2,
+.logo[data-paused='true'] .gear3,
+.logo[data-paused='true'] .gear4,
+.logo[data-paused='true'] .ct,
+.logo[data-paused='true'] .cdot,
+.logo[data-paused='true'] .scan {
+  animation-play-state: paused;
+}
+
+/* ── Respect prefers-reduced-motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .gearFrame,
+  .gear1,
+  .gear2,
+  .gear3,
+  .gear4,
+  .ct,
+  .cdot,
+  .scan {
+    animation: none !important;
+  }
+  .ct {
+    opacity: 0.5;
+  }
+}

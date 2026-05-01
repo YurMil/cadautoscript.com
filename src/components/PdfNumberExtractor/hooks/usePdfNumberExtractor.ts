@@ -238,14 +238,23 @@ export function usePdfNumberExtractor(runtimeConfig: PdfRuntimeConfig) {
   ).size;
 
   function addFiles(files: FileList | File[]) {
+    const MAX_FILE_BYTES = 200 * 1024 * 1024; // 200 MB per file
     const incomingFiles = Array.from(files);
     const existingNames = new Set(state.uploadedFiles.map((entry) => entry.name));
     const incomingNames = new Set<string>();
+    let skippedOversized = 0;
 
     const entries = incomingFiles
       .filter((file) => {
         const isPdf = file.type === 'application/pdf' || /\.pdf$/i.test(file.name);
         if (!isPdf) {
+          return false;
+        }
+        if (file.size > MAX_FILE_BYTES) {
+          skippedOversized += 1;
+          console.warn(
+            `[PdfNumberExtractor] Skipped "${file.name}" (${(file.size / 1024 / 1024).toFixed(1)} MB) — exceeds 200 MB limit`,
+          );
           return false;
         }
         if (existingNames.has(file.name) || incomingNames.has(file.name)) {
@@ -262,7 +271,20 @@ export function usePdfNumberExtractor(runtimeConfig: PdfRuntimeConfig) {
       }));
 
     if (!entries.length) {
+      if (skippedOversized > 0) {
+        dispatch({
+          type: 'SET_STATUS_TEXT',
+          statusText: `Skipped ${skippedOversized} file${skippedOversized === 1 ? '' : 's'} larger than 200 MB.`,
+        });
+      }
       return;
+    }
+
+    if (skippedOversized > 0) {
+      dispatch({
+        type: 'SET_STATUS_TEXT',
+        statusText: `Skipped ${skippedOversized} oversized file${skippedOversized === 1 ? '' : 's'} (limit: 200 MB).`,
+      });
     }
 
     dispatch({

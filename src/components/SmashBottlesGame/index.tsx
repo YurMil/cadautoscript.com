@@ -1,4 +1,5 @@
 import type { CSSProperties } from 'react';
+import { useEffect, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Physics } from '@react-three/rapier';
 import useIsBrowser from '@docusaurus/useIsBrowser';
@@ -26,17 +27,33 @@ import CameraController from './ui/CameraController';
 export default function SmashBottlesGame() {
     const isBrowser = useIsBrowser();
     const resetToken = useSmashBottlesStore((state) => state.resetToken);
+    const [tabVisible, setTabVisible] = useState(true);
+
+    useEffect(() => {
+        const onVisibility = () => setTabVisible(!document.hidden);
+        document.addEventListener('visibilitychange', onVisibility);
+        return () => document.removeEventListener('visibilitychange', onVisibility);
+    }, []);
 
     if (!isBrowser) {
         return null;
     }
 
+    // Skip antialias on touch/coarse devices (mobile) and high-DPR screens
+    // where it's expensive and not visible. Keep on desktop.
+    const isCoarse =
+        typeof window !== 'undefined' &&
+        (window.matchMedia?.('(pointer: coarse)').matches ?? false);
+    const highDpr = typeof window !== 'undefined' && window.devicePixelRatio > 1.5;
+    const enableAntialias = !isCoarse && !highDpr;
+
     return (
         <div style={styles.wrapper}>
             <Canvas
                 shadows
+                frameloop={tabVisible ? 'always' : 'never'}
                 camera={{ position: [0, 4, 10], fov: 45 }}
-                gl={{ antialias: true, powerPreference: 'high-performance' }}
+                gl={{ antialias: enableAntialias, powerPreference: 'high-performance' }}
                 onCreated={({ gl }) => {
                     gl.toneMapping = ACESFilmicToneMapping;
                     gl.toneMappingExposure = 1.0;

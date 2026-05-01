@@ -333,6 +333,37 @@
 .docLines rect:nth-child(4) { animation: pulseLines 3s ease-in-out 1.2s infinite; }
 .docLines rect:nth-child(5) { animation: pulseLines 3s ease-in-out 1.6s infinite; }
 
+/* ── Pause hero/section animations when off-screen (saves GPU on mobile) ── */
+[data-paused='true'] .gearCw,
+[data-paused='true'] .gearCcw,
+[data-paused='true'] .scanline,
+[data-paused='true'] .pring,
+[data-paused='true'] .pring2,
+[data-paused='true'] .march,
+[data-paused='true'] .blink,
+[data-paused='true'] .docScan,
+[data-paused='true'] .docLines rect {
+  animation-play-state: paused;
+}
+
+/* ── Respect prefers-reduced-motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .gearCw,
+  .gearCcw,
+  .scanline,
+  .pring,
+  .pring2,
+  .march,
+  .blink,
+  .docScan,
+  .docLines rect {
+    animation: none !important;
+  }
+  .scanline {
+    display: none;
+  }
+}
+
 .utilityGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
