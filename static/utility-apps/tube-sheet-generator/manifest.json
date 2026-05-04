@@ -1,0 +1,35 @@
+{
+  "slug": "tube-sheet-generator",
+  "entry": "app.html",
+  "generatedAt": "2026-05-04T20:17:15.937Z",
+  "files": [
+    {
+      "path": "app.html",
+      "bytes": 407
+    },
+    {
+      "path": "assets/cad-worker-kiheFctN.js",
+      "bytes": 4111
+    },
+    {
+      "path": "assets/index-B0n04mHF.css",
+      "bytes": 2622
+    },
+    {
+      "path": "assets/index-Bfhx7k99.js",
+      "bytes": 205061
+    },
+    {
+      "path": "assets/replicad_single-BXInhmaQ.wasm",
+      "bytes": 10800306
+    },
+    {
+      "path": "assets/replicad_single-C8eAV7Qf.js",
+      "bytes": 82389
+    },
+    {
+      "path": "assets/replicad-ysdo0lAQ.js",
+      "bytes": 287551
+    }
+  ]
+}

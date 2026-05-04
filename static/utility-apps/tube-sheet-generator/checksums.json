@@ -1,0 +1,44 @@
+{
+  "files": [
+    {
+      "path": "app.html",
+      "sha256": "21f0d17ed068367c3e5e5257ff1e747ce099cdb081df147022c43df5ae37b29a",
+      "bytes": 407
+    },
+    {
+      "path": "assets/cad-worker-kiheFctN.js",
+      "sha256": "21e6460abf05cb5c8e4a30141060a719c4004ff96f45edc5b5f8facaa6d25079",
+      "bytes": 4111
+    },
+    {
+      "path": "assets/index-B0n04mHF.css",
+      "sha256": "89138cfc7914941f9ce45661b68a88df885350c36056680a1417b05bcf84a6a8",
+      "bytes": 2622
+    },
+    {
+      "path": "assets/index-Bfhx7k99.js",
+      "sha256": "6f36de810a653d2ade95ab26d218d4ae8263c8f4f681444be78759d602f2917c",
+      "bytes": 205061
+    },
+    {
+      "path": "assets/replicad_single-BXInhmaQ.wasm",
+      "sha256": "c6c37587645e49156570a8f6714586529e7383581eea90b22fa2500aed507d39",
+      "bytes": 10800306
+    },
+    {
+      "path": "assets/replicad_single-C8eAV7Qf.js",
+      "sha256": "b679b921f969b245a6c25ccb1970fd6c77059b5f2050987dd0cb8606dff70b45",
+      "bytes": 82389
+    },
+    {
+      "path": "assets/replicad-ysdo0lAQ.js",
+      "sha256": "e8cec66e149729f67fe1d8b846aa169696fedb6821e7d6970fcfe1b40575f5e2",
+      "bytes": 287551
+    },
+    {
+      "path": "manifest.json",
+      "sha256": "75d182a051f823259fc89a277c190745f18a8e2563f07a7c7e990ad983b7ad50",
+      "bytes": 670
+    }
+  ]
+}

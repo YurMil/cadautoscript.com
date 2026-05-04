@@ -303,6 +303,7 @@ export const utilityPageConfigs: Record<UtilityPageSlug, UtilityPageConfig> = {
       'DXF + STEP export with local processing',
     ],
     scriptType: 'module',
+    appPath: '/utility-apps/tube-sheet-generator/app.html',
   },
   'webstep-viewer': {
     slug: 'webstep-viewer',
