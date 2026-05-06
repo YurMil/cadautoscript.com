@@ -16,7 +16,7 @@ type UtilityShellPageProps = UtilityPageConfig & {tool?: React.ReactNode};
 type HeroLink = {label: string; href: string; variant?: 'primary' | 'ghost'; external?: boolean};
 
 const defaultHeroLinks: HeroLink[] = [
-  {label: 'Back to Web utilities', href: '/docs/utilities/overview', variant: 'ghost'},
+  {label: 'Back to Web utilities', href: '/docs/utilities/overview/', variant: 'ghost'},
   {label: 'Macro catalog', href: '/', variant: 'primary'},
 ];
 
@@ -66,9 +66,13 @@ export default function UtilityShellPage({tool, ...config}: UtilityShellPageProp
     <iframe className="tool-frame" src={iframeSrc} title={title} loading="lazy" data-nobrokenlinkcheck></iframe>
   );
 
+  const canonicalUrl = `https://cadautoscript.com/utilities/${slug}/`;
+
   return (
     <Layout title={title} description={description}>
       <Head>
+        <link rel="canonical" href={canonicalUrl} />
+        <meta property="og:url" content={canonicalUrl} />
         <link rel="stylesheet" href={stylesHref} />
         <link rel="stylesheet" href={shellCssHref} />
         <link rel="stylesheet" href={shellLightHref} />

@@ -426,10 +426,10 @@ export default function Home(): ReactNode {
                   and a mini-games arcade.
                 </p>
                 <div className={styles.heroActions}>
-                  <Link className="button button--primary" href="/docs/utilities/overview">
+                  <Link className="button button--primary" href="/docs/utilities/overview/">
                     View all docs
                   </Link>
-                  <Link className="button button--secondary" href="/blog">
+                  <Link className="button button--secondary" href="/blog/">
                     Release notes
                   </Link>
                 </div>
@@ -633,10 +633,10 @@ export default function Home(): ReactNode {
             </p>
           </div>
           <div className={styles.docsLinks}>
-            <Link className="button button--primary" href="/docs/utilities/embed-calculators">
+            <Link className="button button--primary" href="/docs/utilities/embed-calculators/">
               Embed utilities
             </Link>
-            <Link className="button button--secondary" to="/doc-parser">
+            <Link className="button button--secondary" to="/doc-parser/">
               Launch Doc Parser
             </Link>
           </div>
