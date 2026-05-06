@@ -14,6 +14,7 @@ const config: Config = {
   },
   url: 'https://cadautoscript.com',
   baseUrl: '/',
+  trailingSlash: true,
   organizationName: 'biosxxx',
   projectName: 'cadautoscript.com',
   customFields: {
@@ -104,8 +105,8 @@ const config: Config = {
           position: 'left',
           label: 'Docs',
         },
-        {to: '/blog', label: 'Blog', position: 'left'},
-        {to: '/mini-games', label: 'Mini Games', position: 'left'},
+        {to: '/blog/', label: 'Blog', position: 'left'},
+        {to: '/mini-games/', label: 'Mini Games', position: 'left'},
         {type: 'custom-search', position: 'right'},
         {type: 'custom-support-button', position: 'right'},
         {type: 'custom-theme-toggle', position: 'right'},
@@ -118,8 +119,8 @@ const config: Config = {
         {
           title: 'Docs',
           items: [
-            {label: 'Automation overview', to: '/docs/intro'},
-            {label: 'Utility catalog', to: '/docs/utilities/overview'},
+            {label: 'Automation overview', to: '/docs/intro/'},
+            {label: 'Utility catalog', to: '/docs/utilities/overview/'},
           ],
         },
         {
@@ -139,7 +140,7 @@ const config: Config = {
         {
           title: 'More',
           items: [
-            {label: 'Blog', to: '/blog'},
+            {label: 'Blog', to: '/blog/'},
             {label: 'GitHub', href: 'https://github.com/biosxxx/cadautoscript.com'},
           ],
         },

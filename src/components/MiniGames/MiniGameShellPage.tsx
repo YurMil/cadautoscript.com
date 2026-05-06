@@ -10,7 +10,7 @@ import type {MiniGamePageConfig} from '@site/src/data/miniGamePages';
 type HeroLink = {label: string; href: string; variant?: 'primary' | 'ghost'; external?: boolean};
 
 const defaultHeroLinks: HeroLink[] = [
-  {label: 'Back to Mini Games', href: '/mini-games', variant: 'ghost'},
+  {label: 'Back to Mini Games', href: '/mini-games/', variant: 'ghost'},
   {label: 'Macro catalog', href: '/', variant: 'primary'},
 ];
 
@@ -30,9 +30,13 @@ export default function MiniGameShellPage(config: MiniGamePageConfig) {
     return () => document.body.classList.remove('utility-shell-page');
   }, []);
 
+  const canonicalUrl = `https://cadautoscript.com/mini-games/${slug}/`;
+
   return (
     <Layout title={title} description={description}>
       <Head>
+        <link rel="canonical" href={canonicalUrl} />
+        <meta property="og:url" content={canonicalUrl} />
         <link rel="stylesheet" href={stylesHref} />
         <link rel="stylesheet" href={shellCssHref} />
         <link rel="stylesheet" href={shellLightHref} />

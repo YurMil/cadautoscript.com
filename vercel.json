@@ -1,3 +1,37 @@
 {
-  "trailingSlash": true
+  "trailingSlash": true,
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.cadautoscript.com"
+        }
+      ],
+      "destination": "https://cadautoscript.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/games",
+      "destination": "/mini-games/",
+      "permanent": true
+    },
+    {
+      "source": "/games/:slug*",
+      "destination": "/mini-games/:slug*/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/tags/:tag",
+      "destination": "/blog/:tag/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/tags/:tag/",
+      "destination": "/blog/:tag/",
+      "permanent": true
+    }
+  ]
 }
+
