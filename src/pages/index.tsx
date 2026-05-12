@@ -8,6 +8,7 @@ import {useAuthModal} from '@site/src/contexts/AuthModalContext';
 import {useAuthStatus} from '@site/src/hooks/useAuthStatus';
 import {useUtilitiesAccess} from '@site/src/hooks/useUtilitiesAccess';
 import {usePauseWhenOffscreen} from '@site/src/hooks/usePauseWhenOffscreen';
+import {listUtilityUsage, type UtilityUsageStat} from '@site/src/shared/utility-usage';
 import styles from './index.module.css';
 import AnimatedLogo from '@site/src/components/AnimatedLogo/AnimatedLogo';
 
@@ -16,6 +17,12 @@ const heroStats = [
   {label: 'Runtime', value: 'Chromium + WASM'},
   {label: 'Formats', value: 'DXF / SVG / CSV / PDF / JSON'},
 ];
+
+function getUsageTimestamp(value: string | null | undefined): number {
+  if (!value) return 0;
+  const timestamp = Date.parse(value);
+  return Number.isFinite(timestamp) ? timestamp : 0;
+}
 
 type UtilityCardProps = {
   utility: (typeof utilities)[number];
@@ -117,7 +124,7 @@ function UtilityCard({utility, index, isAuthenticated, authChecked, utilitiesPub
 
 export default function Home(): ReactNode {
   const {siteConfig} = useDocusaurusContext();
-  const {isAuthenticated, authChecked} = useAuthStatus();
+  const {user, isAuthenticated, authChecked} = useAuthStatus();
   const {utilitiesPublicAccess} = useUtilitiesAccess();
   const {openLoginModal} = useAuthModal();
 
@@ -125,15 +132,45 @@ export default function Home(): ReactNode {
   const [heroReady, setHeroReady] = useState(false);
   const [compactMode, setCompactMode] = useState(false);
   const [filterQuery, setFilterQuery] = useState('');
+  const [usageStats, setUsageStats] = useState<UtilityUsageStat[]>([]);
 
   const hero = usePauseWhenOffscreen<HTMLElement>();
   const utilSection = usePauseWhenOffscreen<HTMLElement>();
   const docsSection = usePauseWhenOffscreen<HTMLElement>();
 
+  const usageByUtilityId = useMemo(() => {
+    return new Map(usageStats.map((stat) => [stat.utilityId, stat]));
+  }, [usageStats]);
+
+  const orderedUtilities = useMemo(() => {
+    if (!isAuthenticated || usageStats.length === 0) {
+      return utilities;
+    }
+
+    return [...utilities].sort((a, b) => {
+      const aUsage = usageByUtilityId.get(a.id);
+      const bUsage = usageByUtilityId.get(b.id);
+      const countDiff = (bUsage?.launchCount ?? 0) - (aUsage?.launchCount ?? 0);
+
+      if (countDiff !== 0) {
+        return countDiff;
+      }
+
+      const timeDiff =
+        getUsageTimestamp(bUsage?.lastOpenedAt) - getUsageTimestamp(aUsage?.lastOpenedAt);
+
+      if (timeDiff !== 0) {
+        return timeDiff;
+      }
+
+      return utilities.indexOf(a) - utilities.indexOf(b);
+    });
+  }, [isAuthenticated, usageByUtilityId, usageStats.length]);
+
   const filteredUtilities = useMemo(() => {
     const q = filterQuery.trim().toLowerCase();
-    if (!q) return utilities;
-    return utilities.filter((u) => {
+    if (!q) return orderedUtilities;
+    return orderedUtilities.filter((u) => {
       const haystack = [
         u.name,
         u.description,
@@ -143,7 +180,37 @@ export default function Home(): ReactNode {
       ].join(' ').toLowerCase();
       return haystack.includes(q);
     });
-  }, [filterQuery]);
+  }, [filterQuery, orderedUtilities]);
+
+  useEffect(() => {
+    if (!authChecked || !isAuthenticated) {
+      setUsageStats([]);
+      return;
+    }
+
+    let isMounted = true;
+
+    const loadUsage = async () => {
+      try {
+        const stats = await listUtilityUsage();
+        if (isMounted) {
+          setUsageStats(stats);
+        }
+      } catch (err) {
+        const message = err instanceof Error ? err.message : 'Unable to load utility usage.';
+        console.warn('[UtilityUsage] Unable to load utility ranking', message);
+        if (isMounted) {
+          setUsageStats([]);
+        }
+      }
+    };
+
+    void loadUsage();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [authChecked, isAuthenticated, user?.id]);
 
   useEffect(() => {
     try {

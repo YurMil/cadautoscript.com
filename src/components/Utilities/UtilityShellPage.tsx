@@ -9,6 +9,7 @@ import {utilities} from '@site/src/data/utilities';
 import {useAuthStatus} from '@site/src/hooks/useAuthStatus';
 import {useUtilitiesAccess} from '@site/src/hooks/useUtilitiesAccess';
 import {useAuthModal} from '@site/src/contexts/AuthModalContext';
+import {incrementUtilityUsage, shouldReportUtilityUsage} from '@site/src/shared/utility-usage';
 import type {UtilityPageConfig} from '@site/src/data/utilityShellPages';
 
 type UtilityShellPageProps = UtilityPageConfig & {tool?: React.ReactNode};
@@ -39,7 +40,7 @@ export default function UtilityShellPage({tool, ...config}: UtilityShellPageProp
   const shellCssHref = useBaseUrl('/utilities/util-shell.css');
   const shellLightHref = useBaseUrl('/utilities/util-shell.light.css');
   const shellScriptSrc = useBaseUrl('/utilities/util-shell.js');
-  const {isAuthenticated, authChecked} = useAuthStatus();
+  const {user, isAuthenticated, authChecked} = useAuthStatus();
   const {utilitiesPublicAccess} = useUtilitiesAccess();
   const {openLoginModal} = useAuthModal();
   React.useEffect(() => {
@@ -51,10 +52,26 @@ export default function UtilityShellPage({tool, ...config}: UtilityShellPageProp
     () => utilities.findIndex((utility) => utility.href === `/utilities/${slug}/` || utility.id === slug),
     [slug],
   );
+  const trackedUtility = utilityIndex >= 0 ? utilities[utilityIndex] : null;
   const isFreeUtility = utilityIndex >= 0 && utilityIndex < 3;
   const isAuthRequired = !utilitiesPublicAccess;
   const isLocked = isAuthRequired && !isAuthenticated && !isFreeUtility;
   const isCheckingAccess = isAuthRequired && !authChecked && !isFreeUtility;
+
+  React.useEffect(() => {
+    if (!authChecked || !isAuthenticated || isLocked || isCheckingAccess || !trackedUtility) {
+      return;
+    }
+
+    if (!shouldReportUtilityUsage(trackedUtility.id, user?.id ?? null)) {
+      return;
+    }
+
+    void incrementUtilityUsage(trackedUtility.id).catch((err) => {
+      const message = err instanceof Error ? err.message : 'Unable to increment utility usage.';
+      console.warn('[UtilityUsage] Unable to record utility launch', message);
+    });
+  }, [authChecked, isAuthenticated, isLocked, isCheckingAccess, trackedUtility, user?.id]);
 
   const heroLinks = defaultHeroLinks;
   const reactionsSlug = config.reactionSlug ?? `tool-${slug}`;
