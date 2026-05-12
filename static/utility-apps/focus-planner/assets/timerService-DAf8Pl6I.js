@@ -1,0 +1,1 @@
+import{t as e}from"./index-CZCh-hiu.js";export{e as timerService};
