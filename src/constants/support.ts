@@ -1,27 +1,22 @@
-export const SUPPORT_LINK = 'https://www.paypal.com/donate/?hosted_button_id=ZDAWJ7N234PWE';
+export const PAYPAL_LINK = 'https://www.paypal.com/donate/?hosted_button_id=ZDAWJ7N234PWE';
+/**
+ * Stripe Payment Link URL — create at dashboard.stripe.com/payment-links
+ * test mode: 'https://buy.stripe.com/test_00weVd1uSceGgXrb4W8k800'
+ */
+export const STRIPE_LINK = 'https://buy.stripe.com/4gM9AT1ve2PG76OaZ7dZ600';
 export const SUPPORT_LOCAL_PATH = '/support';
 
-export function getSupportDestination(hostname?: string): {
+/** @deprecated Use PAYPAL_LINK directly */
+export const SUPPORT_LINK = PAYPAL_LINK;
+
+export function getSupportDestination(_hostname?: string): {
   href: string;
   openInNewTab: boolean;
 } {
-  const normalized = hostname?.toLowerCase();
-  const isLocalHost =
-    normalized === 'localhost' ||
-    normalized === '127.0.0.1' ||
-    normalized === '0.0.0.0' ||
-    normalized === '::1';
-
-  if (isLocalHost) {
-    return {
-      href: SUPPORT_LOCAL_PATH,
-      openInNewTab: false,
-    };
-  }
-
+  // Always route to the support page so the user can choose PayPal or Stripe
   return {
-    href: SUPPORT_LINK,
-    openInNewTab: true,
+    href: SUPPORT_LOCAL_PATH,
+    openInNewTab: false,
   };
 }
 
