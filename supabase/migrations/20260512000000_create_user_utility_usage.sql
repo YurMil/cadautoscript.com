@@ -72,6 +72,7 @@ $$;
 
 revoke all on public.user_utility_usage from public;
 revoke all on public.user_utility_usage from anon;
+revoke all on public.user_utility_usage from authenticated;
 grant select, insert, update on public.user_utility_usage to authenticated;
 
 revoke execute on function public.increment_utility_usage(text) from public;
