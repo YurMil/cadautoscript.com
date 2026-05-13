@@ -3,6 +3,8 @@ import {SUPPORT_TEXT} from '@site/src/constants/support';
 import SupportButton from './SupportButton';
 import styles from './SupportSection.module.css';
 
+// Keep section actions pointing to /support page where user chooses PayPal or Stripe
+
 export default function SupportSection(): React.JSX.Element {
   const [floatingBtnPos, setFloatingBtnPos] = useState<{x: number; y: number} | null>(null);
 
