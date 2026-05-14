@@ -85,6 +85,7 @@ export default function UtilityShellPage({tool, ...config}: UtilityShellPageProp
       if (stage && !stage.classList.contains('is-fullscreen')) {
         stage.classList.add('is-fullscreen');
         if (container) container.classList.add('utility-shell--fullscreen');
+        document.body.classList.add('utility-is-fullscreen');
         if (btn) {
           btn.textContent = 'Exit full screen';
           btn.setAttribute('aria-pressed', 'true');
