@@ -213,7 +213,13 @@ export default function UtilityShellPage({tool, ...config}: UtilityShellPageProp
           <div className="utility-comments">
             <Comments slug={reactionsSlug} />
           </div>
-          <div className="utility-fullscreen-exit-zone">
+          <div className="utility-fullscreen-exit-zone top">
+            <div className="utility-fullscreen-indicator" aria-hidden="true"></div>
+            <button type="button" className="utility-fullscreen-exit-button">
+              Exit full screen
+            </button>
+          </div>
+          <div className="utility-fullscreen-exit-zone bottom">
             <div className="utility-fullscreen-indicator" aria-hidden="true"></div>
             <button type="button" className="utility-fullscreen-exit-button">
               Exit full screen

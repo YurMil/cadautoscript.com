@@ -309,15 +309,24 @@ body.utility-is-fullscreen {
   position: fixed;
   left: 0;
   right: 0;
-  bottom: 0;
   height: 120px;
   display: flex;
-  align-items: flex-end;
   justify-content: center;
-  padding-bottom: 20px;
   pointer-events: none;
   z-index: 1200;
   transition: opacity 0.2s ease;
+}
+
+.utility-shell.utility-shell--fullscreen .utility-fullscreen-exit-zone.bottom {
+  bottom: 0;
+  align-items: flex-end;
+  padding-bottom: 20px;
+}
+
+.utility-shell.utility-shell--fullscreen .utility-fullscreen-exit-zone.top {
+  top: 0;
+  align-items: flex-start;
+  padding-top: 20px;
 }
 
 .utility-fullscreen-indicator {
@@ -329,15 +338,30 @@ body.utility-is-fullscreen {
   transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
-.utility-fullscreen-exit-zone:hover .utility-fullscreen-indicator,
-.utility-fullscreen-exit-zone:focus-within .utility-fullscreen-indicator {
+.utility-fullscreen-exit-zone.bottom:hover .utility-fullscreen-indicator,
+.utility-fullscreen-exit-zone.bottom:focus-within .utility-fullscreen-indicator {
   opacity: 0;
   transform: translateY(6px);
 }
 
+.utility-fullscreen-exit-zone.bottom .utility-fullscreen-exit-button {
+  bottom: 24px;
+  transform: translateY(12px);
+}
+
+.utility-fullscreen-exit-zone.top:hover .utility-fullscreen-indicator,
+.utility-fullscreen-exit-zone.top:focus-within .utility-fullscreen-indicator {
+  opacity: 0;
+  transform: translateY(-6px);
+}
+
+.utility-fullscreen-exit-zone.top .utility-fullscreen-exit-button {
+  top: 24px;
+  transform: translateY(-12px);
+}
+
 .utility-fullscreen-exit-button {
   position: absolute;
-  bottom: 24px;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -349,7 +373,6 @@ body.utility-is-fullscreen {
   font-weight: 600;
   cursor: pointer;
   opacity: 0;
-  transform: translateY(12px);
   pointer-events: none;
   transition: opacity 0.2s ease, transform 0.2s ease;
 }
