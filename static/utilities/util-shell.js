@@ -6,6 +6,7 @@
     containers.forEach((container) => {
       container.classList.toggle("utility-shell--fullscreen", Boolean(hasActive));
     });
+    document.body.classList.toggle("utility-is-fullscreen", Boolean(hasActive));
   };
 
   containers.forEach((container) => {
