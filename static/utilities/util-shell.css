@@ -313,7 +313,7 @@ body.utility-is-fullscreen {
   display: flex;
   justify-content: center;
   pointer-events: none;
-  z-index: 1200;
+  z-index: 10000;
   transition: opacity 0.2s ease;
 }
 
@@ -336,6 +336,16 @@ body.utility-is-fullscreen {
   background: rgba(255, 255, 255, 0.3);
   pointer-events: auto;
   transition: transform 0.2s ease, opacity 0.2s ease;
+  position: relative;
+}
+
+.utility-fullscreen-indicator::after {
+  content: "";
+  position: absolute;
+  top: -15px;
+  bottom: -15px;
+  left: -20px;
+  right: -20px;
 }
 
 .utility-fullscreen-exit-zone.bottom:hover .utility-fullscreen-indicator,
