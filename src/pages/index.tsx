@@ -37,7 +37,11 @@ type UtilityCardProps = {
 
 function UtilityCard({utility, index, isAuthenticated, authChecked, utilitiesPublicAccess}: UtilityCardProps) {
   const {openLoginModal} = useAuthModal();
+  const {t, tu} = useI18n();
   const isLocked = !utilitiesPublicAccess && authChecked && !isAuthenticated && index >= 3;
+  const translated = tu(utility.id);
+  const displayName = translated.name || utility.name;
+  const displayDesc = translated.description || utility.description;
 
   const handleLaunch = (event: React.MouseEvent<HTMLAnchorElement>) => {
     if (!isLocked) {
@@ -63,18 +67,18 @@ function UtilityCard({utility, index, isAuthenticated, authChecked, utilitiesPub
           onClick={handleLaunch}
           className={styles.titleLink}
         >
-          {utility.name}
+          {displayName}
         </a>
       </h3>
 
       {/* ── Body content (covered by icon on hover) ── */}
-      <p className={styles.utilityDesc}>{utility.description}</p>
+      <p className={styles.utilityDesc}>{displayDesc}</p>
       {isLocked ? (
         <p className={styles.lockHint}>
           <span aria-hidden="true" className={styles.lockIcon}>
             lock
           </span>
-          Sign in to unlock this utility
+          {t('home.locked')}
         </p>
       ) : null}
       <ul className={styles.featureList}>

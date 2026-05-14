@@ -24,6 +24,8 @@ type I18nContextType = {
   setLocale: (locale: Locale) => void;
   /** Look up a translation key like 'settings.title'. Returns the key on miss. */
   t: (key: string, vars?: Record<string, string>) => string;
+  /** Look up a utility's translated name and description by its ID */
+  tu: (id: string) => { name: string; description: string };
   /** All available locales with metadata */
   availableLocales: typeof LOCALES;
   /** True while the locale dictionary is loading */
@@ -34,6 +36,7 @@ const I18nContext = createContext<I18nContextType>({
   locale: DEFAULT_LOCALE,
   setLocale: () => {},
   t: (key) => key,
+  tu: () => ({ name: '', description: '' }),
   availableLocales: LOCALES,
   loadingLocale: false,
 });
@@ -116,8 +119,19 @@ export function I18nProvider({children, preferredLocale}: I18nProviderProps) {
     [dict],
   );
 
+  /** Look up a utility's translated name and description by its ID */
+  const tu = useCallback(
+    (id: string): { name: string; description: string } => {
+      const utils = (dict as Record<string, unknown>).utilities as
+        | Record<string, { name: string; description: string }>
+        | undefined;
+      return utils?.[id] ?? { name: id, description: '' };
+    },
+    [dict],
+  );
+
   return (
-    <I18nContext.Provider value={{locale, setLocale, t, availableLocales: LOCALES, loadingLocale}}>
+    <I18nContext.Provider value={{locale, setLocale, t, tu, availableLocales: LOCALES, loadingLocale}}>
       {children}
     </I18nContext.Provider>
   );

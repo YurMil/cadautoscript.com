@@ -124,12 +124,15 @@ export function UserSettingsProvider({children}: {children: React.ReactNode}) {
 
         setSettings(migratedSettings);
 
-        // Persist migrated settings
-        supabase.from('user_settings').insert({
-          user_id: user.id,
-          ...migratedSettings,
-          updated_at: new Date().toISOString(),
-        }).catch(err => console.error('Failed to save migrated settings:', err));
+        // Persist migrated settings (fire-and-forget, log on error)
+        void (async () => {
+          const {error: insertErr} = await supabase.from('user_settings').insert({
+            user_id: user.id,
+            ...migratedSettings,
+            updated_at: new Date().toISOString(),
+          });
+          if (insertErr) console.error('Failed to save migrated settings:', insertErr.message);
+        })();
       }
       
       setLoading(false);
@@ -170,23 +173,17 @@ export function UserSettingsProvider({children}: {children: React.ReactNode}) {
     // Apply theme
     if (settings.default_theme !== 'auto') {
       document.documentElement.setAttribute('data-theme', settings.default_theme);
-      // Persist in docusaurus theme storage as well
       localStorage.setItem('theme', settings.default_theme);
     }
-    
-    // Auto translation language
+
+    // Persist locale choice to localStorage so I18nContext can pick it up
+    // (I18nProvider reads 'site-locale' on mount)
     const lang = settings.auto_translation_language;
-    document.documentElement.lang = lang;
-    
-    // Set standard translation cookies for client-side translation engines
-    if (lang && lang !== 'en') {
-      document.cookie = `googtrans=/en/${lang}; path=/`;
-      document.cookie = `googtrans=/en/${lang}; domain=${window.location.hostname}; path=/`;
-    } else {
-      document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-      document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=${window.location.hostname}; path=/;`;
+    if (lang) {
+      try {
+        localStorage.setItem('site-locale', lang);
+      } catch { /* ignore */ }
     }
-    
   }, [settings, loading]);
 
   return (
