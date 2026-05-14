@@ -4,6 +4,8 @@ import type {Props} from '@theme/Root';
 import LoginModal from '@site/src/components/Auth/LoginModal';
 import {AuthModalProvider} from '@site/src/contexts/AuthModalContext';
 
+import {UserSettingsProvider} from '@site/src/contexts/UserSettingsContext';
+
 // Lazy load SpeedInsights component (client-side only)
 const SpeedInsights = lazy(() =>
   import('@vercel/speed-insights/react').then((module) => ({
@@ -21,12 +23,14 @@ const Analytics = lazy(() =>
 export default function RootWrapper(props: Props) {
   return (
     <AuthModalProvider>
-      <Root {...props} />
-      <LoginModal />
-      <Suspense fallback={null}>
-        <SpeedInsights />
-        <Analytics />
-      </Suspense>
+      <UserSettingsProvider>
+        <Root {...props} />
+        <LoginModal />
+        <Suspense fallback={null}>
+          <SpeedInsights />
+          <Analytics />
+        </Suspense>
+      </UserSettingsProvider>
     </AuthModalProvider>
   );
 }

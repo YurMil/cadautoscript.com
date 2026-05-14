@@ -1,6 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import {useColorMode} from '@docusaurus/theme-common';
+import {useUserSettings} from '@site/src/contexts/UserSettingsContext';
 import styles from './styles.module.css';
 
 type Props = {
@@ -10,11 +11,13 @@ type Props = {
 
 export default function ThemeToggleNavbarItem({mobile, className}: Props): React.JSX.Element {
   const {colorMode, setColorMode} = useColorMode();
+  const {updateSettings} = useUserSettings();
   const isDark = colorMode !== 'light';
   const nextMode = isDark ? 'light' : 'dark';
 
   const handleToggle = () => {
     setColorMode(nextMode);
+    updateSettings({ default_theme: nextMode }).catch(console.error);
   };
 
   if (mobile) {
