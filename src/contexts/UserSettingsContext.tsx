@@ -157,10 +157,8 @@ export function UserSettingsProvider({children}: {children: React.ReactNode}) {
     };
   }, [user]);
 
-  // Sync guest settings across tabs
+  // Sync settings across tabs (for both guests and logged in users, until Realtime is implemented)
   useEffect(() => {
-    if (user) return; // For logged in users, we rely on DB state (realtime not implemented yet)
-
     const handleStorage = (e: StorageEvent) => {
       if (e.key === 'site-locale' && e.newValue) {
         setSettings((prev) => ({ ...prev, auto_translation_language: e.newValue! }));
@@ -178,11 +176,28 @@ export function UserSettingsProvider({children}: {children: React.ReactNode}) {
 
     window.addEventListener('storage', handleStorage);
     return () => window.removeEventListener('storage', handleStorage);
-  }, [user]);
+  }, []);
 
   const updateSettings = async (newSettings: Partial<UserSettings>) => {
     const updated = {...settings, ...newSettings};
     setSettings(updated);
+
+    // Always persist to localStorage for instant cross-tab sync (both guest and auth)
+    if (newSettings.utility_display_mode) {
+      try {
+        localStorage.setItem('utilities-compact', newSettings.utility_display_mode === 'compact' ? 'true' : 'false');
+      } catch { /* ignore */ }
+    }
+    if (newSettings.auto_translation_language) {
+      try {
+        localStorage.setItem('site-locale', newSettings.auto_translation_language);
+      } catch { /* ignore */ }
+    }
+    if (newSettings.default_theme) {
+      try {
+        localStorage.setItem('theme', newSettings.default_theme);
+      } catch { /* ignore */ }
+    }
 
     if (user) {
       await supabase.from('user_settings').upsert({
@@ -190,24 +205,6 @@ export function UserSettingsProvider({children}: {children: React.ReactNode}) {
         ...updated,
         updated_at: new Date().toISOString(),
       });
-    } else {
-      // For guests, we persist the settings to localStorage so they don't lose it between reloads,
-      // and so it can be migrated when they eventually log in.
-      if (newSettings.utility_display_mode) {
-        try {
-          localStorage.setItem('utilities-compact', newSettings.utility_display_mode === 'compact' ? 'true' : 'false');
-        } catch { /* ignore */ }
-      }
-      if (newSettings.auto_translation_language) {
-        try {
-          localStorage.setItem('site-locale', newSettings.auto_translation_language);
-        } catch { /* ignore */ }
-      }
-      if (newSettings.default_theme) {
-        try {
-          localStorage.setItem('theme', newSettings.default_theme);
-        } catch { /* ignore */ }
-      }
     }
   };
 
