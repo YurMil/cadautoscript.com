@@ -77,7 +77,7 @@
         return;
       }
 
-      if (exitZone && event.target.closest(".utility-fullscreen-exit-button")) {
+      if (event.target.closest(".utility-fullscreen-exit-button")) {
         handleFullscreen();
       }
     });
