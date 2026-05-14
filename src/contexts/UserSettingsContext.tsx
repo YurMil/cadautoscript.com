@@ -69,16 +69,28 @@ export function UserSettingsProvider({children}: {children: React.ReactNode}) {
     if (!user) {
       // Try to load from localStorage for guests so they don't lose preference before logging in
       let guestDisplayMode = defaultSettings.utility_display_mode;
+      let guestLocale = defaultSettings.auto_translation_language;
+      let guestTheme = defaultSettings.default_theme;
       try {
         const legacyCompact = localStorage.getItem('utilities-compact');
         if (legacyCompact !== null) {
           guestDisplayMode = legacyCompact === 'false' ? 'detailed' : 'compact';
         }
+        const siteLocale = localStorage.getItem('site-locale');
+        if (siteLocale !== null) {
+          guestLocale = siteLocale;
+        }
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light' || savedTheme === 'dark' || savedTheme === 'auto') {
+          guestTheme = savedTheme;
+        }
       } catch { /* ignore */ }
 
       setSettings({
         ...defaultSettings,
-        utility_display_mode: guestDisplayMode
+        utility_display_mode: guestDisplayMode,
+        auto_translation_language: guestLocale,
+        default_theme: guestTheme
       });
       setLoading(false);
       return;
@@ -145,6 +157,29 @@ export function UserSettingsProvider({children}: {children: React.ReactNode}) {
     };
   }, [user]);
 
+  // Sync guest settings across tabs
+  useEffect(() => {
+    if (user) return; // For logged in users, we rely on DB state (realtime not implemented yet)
+
+    const handleStorage = (e: StorageEvent) => {
+      if (e.key === 'site-locale' && e.newValue) {
+        setSettings((prev) => ({ ...prev, auto_translation_language: e.newValue! }));
+      }
+      if (e.key === 'utilities-compact' && e.newValue) {
+        setSettings((prev) => ({
+          ...prev,
+          utility_display_mode: e.newValue === 'true' ? 'compact' : 'detailed',
+        }));
+      }
+      if (e.key === 'theme' && e.newValue) {
+        setSettings((prev) => ({ ...prev, default_theme: e.newValue as UserSettings['default_theme'] }));
+      }
+    };
+
+    window.addEventListener('storage', handleStorage);
+    return () => window.removeEventListener('storage', handleStorage);
+  }, [user]);
+
   const updateSettings = async (newSettings: Partial<UserSettings>) => {
     const updated = {...settings, ...newSettings};
     setSettings(updated);
@@ -156,11 +191,21 @@ export function UserSettingsProvider({children}: {children: React.ReactNode}) {
         updated_at: new Date().toISOString(),
       });
     } else {
-      // For guests, we persist the display mode to localStorage so they don't lose it between reloads,
+      // For guests, we persist the settings to localStorage so they don't lose it between reloads,
       // and so it can be migrated when they eventually log in.
       if (newSettings.utility_display_mode) {
         try {
           localStorage.setItem('utilities-compact', newSettings.utility_display_mode === 'compact' ? 'true' : 'false');
+        } catch { /* ignore */ }
+      }
+      if (newSettings.auto_translation_language) {
+        try {
+          localStorage.setItem('site-locale', newSettings.auto_translation_language);
+        } catch { /* ignore */ }
+      }
+      if (newSettings.default_theme) {
+        try {
+          localStorage.setItem('theme', newSettings.default_theme);
         } catch { /* ignore */ }
       }
     }

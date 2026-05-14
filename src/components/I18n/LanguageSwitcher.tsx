@@ -1,5 +1,6 @@
 import React, {useState, useRef, useEffect} from 'react';
 import {useI18n} from '@site/src/contexts/I18nContext';
+import {useUserSettings} from '@site/src/contexts/UserSettingsContext';
 import type {LocaleMeta} from '@site/src/i18n';
 
 type LanguageSwitcherProps = {
@@ -9,6 +10,7 @@ type LanguageSwitcherProps = {
 
 export default function LanguageSwitcher({compact = false}: LanguageSwitcherProps) {
   const {locale, setLocale, availableLocales} = useI18n();
+  const {updateSettings} = useUserSettings();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -27,6 +29,7 @@ export default function LanguageSwitcher({compact = false}: LanguageSwitcherProp
 
   const handleSelect = (meta: LocaleMeta) => {
     setLocale(meta.code);
+    updateSettings({auto_translation_language: meta.code});
     setOpen(false);
   };
 

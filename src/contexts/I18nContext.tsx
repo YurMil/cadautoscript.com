@@ -56,11 +56,18 @@ export function I18nProvider({children, preferredLocale}: I18nProviderProps) {
   const [loadingLocale, setLoadingLocale] = useState(false);
   // Keep track of whether we've initialised (to avoid double-loading on mount)
   const initialised = useRef(false);
+  // Track the latest requested locale to prevent race conditions during async load
+  const latestLocaleRequest = useRef<Locale | null>(null);
 
   // Load dictionary whenever locale changes
   const applyLocale = useCallback(async (next: Locale) => {
+    latestLocaleRequest.current = next;
     setLoadingLocale(true);
     const loaded = await loadLocale(next);
+    
+    // Bail out if another locale was requested while we were loading
+    if (latestLocaleRequest.current !== next) return;
+    
     setDict(loaded);
     setLocaleState(next);
     setLoadingLocale(false);
@@ -83,6 +90,20 @@ export function I18nProvider({children, preferredLocale}: I18nProviderProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Sync locale across tabs
+  useEffect(() => {
+    const handleStorage = (e: StorageEvent) => {
+      if (e.key === 'site-locale' && e.newValue) {
+        const match = LOCALES.find((l) => l.code === e.newValue);
+        if (match && match.code !== locale) {
+          applyLocale(match.code);
+        }
+      }
+    };
+    window.addEventListener('storage', handleStorage);
+    return () => window.removeEventListener('storage', handleStorage);
+  }, [applyLocale, locale]);
+
   // React to changes in preferredLocale (from UserSettings sync)
   useEffect(() => {
     if (!preferredLocale) return;
@@ -90,8 +111,7 @@ export function I18nProvider({children, preferredLocale}: I18nProviderProps) {
     if (detected !== locale) {
       applyLocale(detected);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [preferredLocale]);
+  }, [preferredLocale, locale, applyLocale]);
 
   const setLocale = useCallback(
     (next: Locale) => {
