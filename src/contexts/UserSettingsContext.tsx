@@ -14,7 +14,7 @@ const defaultSettings: UserSettings = {
   smart_sorting: false,
   default_theme: 'auto',
   utility_display_mode: 'compact',
-  auto_translation_language: 'en',
+  auto_translation_language: '',
   fullscreen_utilities: false,
 };
 
@@ -30,8 +30,36 @@ const UserSettingsContext = createContext<UserSettingsContextType>({
   updateSettings: async () => {},
 });
 
+function getInitialSettings(): UserSettings {
+  if (typeof window === 'undefined') return defaultSettings;
+  let guestDisplayMode = defaultSettings.utility_display_mode;
+  let guestLocale = defaultSettings.auto_translation_language;
+  let guestTheme = defaultSettings.default_theme;
+  try {
+    const legacyCompact = localStorage.getItem('utilities-compact');
+    if (legacyCompact !== null) {
+      guestDisplayMode = legacyCompact === 'false' ? 'detailed' : 'compact';
+    }
+    const siteLocale = localStorage.getItem('site-locale');
+    if (siteLocale !== null) {
+      guestLocale = siteLocale;
+    }
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light' || savedTheme === 'dark' || savedTheme === 'auto') {
+      guestTheme = savedTheme;
+    }
+  } catch { /* ignore */ }
+
+  return {
+    ...defaultSettings,
+    utility_display_mode: guestDisplayMode,
+    auto_translation_language: guestLocale,
+    default_theme: guestTheme
+  };
+}
+
 export function UserSettingsProvider({children}: {children: React.ReactNode}) {
-  const [settings, setSettings] = useState<UserSettings>(defaultSettings);
+  const [settings, setSettings] = useState<UserSettings>(getInitialSettings);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<User | null>(null);
 
@@ -67,31 +95,6 @@ export function UserSettingsProvider({children}: {children: React.ReactNode}) {
 
   useEffect(() => {
     if (!user) {
-      // Try to load from localStorage for guests so they don't lose preference before logging in
-      let guestDisplayMode = defaultSettings.utility_display_mode;
-      let guestLocale = defaultSettings.auto_translation_language;
-      let guestTheme = defaultSettings.default_theme;
-      try {
-        const legacyCompact = localStorage.getItem('utilities-compact');
-        if (legacyCompact !== null) {
-          guestDisplayMode = legacyCompact === 'false' ? 'detailed' : 'compact';
-        }
-        const siteLocale = localStorage.getItem('site-locale');
-        if (siteLocale !== null) {
-          guestLocale = siteLocale;
-        }
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'light' || savedTheme === 'dark' || savedTheme === 'auto') {
-          guestTheme = savedTheme;
-        }
-      } catch { /* ignore */ }
-
-      setSettings({
-        ...defaultSettings,
-        utility_display_mode: guestDisplayMode,
-        auto_translation_language: guestLocale,
-        default_theme: guestTheme
-      });
       setLoading(false);
       return;
     }
@@ -121,17 +124,23 @@ export function UserSettingsProvider({children}: {children: React.ReactNode}) {
       } else {
         // No settings exist yet, let's migrate legacy local storage keys
         let initialDisplayMode = defaultSettings.utility_display_mode;
+        let initialLanguage = defaultSettings.auto_translation_language;
         try {
           const legacyCompact = localStorage.getItem('utilities-compact');
           if (legacyCompact !== null) {
             initialDisplayMode = legacyCompact === 'false' ? 'detailed' : 'compact';
             localStorage.removeItem('utilities-compact');
           }
+          const siteLocale = localStorage.getItem('site-locale');
+          if (siteLocale !== null) {
+             initialLanguage = siteLocale;
+          }
         } catch { /* ignore */ }
 
         const migratedSettings = {
           ...defaultSettings,
           utility_display_mode: initialDisplayMode,
+          auto_translation_language: initialLanguage,
         };
 
         setSettings(migratedSettings);

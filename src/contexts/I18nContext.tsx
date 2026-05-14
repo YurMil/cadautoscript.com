@@ -26,6 +26,8 @@ type I18nContextType = {
   t: (key: string, vars?: Record<string, string>) => string;
   /** Look up a utility's translated name and description by its ID */
   tu: (id: string) => { name: string; description: string };
+  /** Look up a mini-game's translated strings by its ID */
+  tg: (id: string) => { name: string; subtitle: string; description: string; about: string; note: string; features: string[] };
   /** All available locales with metadata */
   availableLocales: typeof LOCALES;
   /** True while the locale dictionary is loading */
@@ -37,6 +39,7 @@ const I18nContext = createContext<I18nContextType>({
   setLocale: () => {},
   t: (key) => key,
   tu: () => ({ name: '', description: '' }),
+  tg: () => ({ name: '', subtitle: '', description: '', about: '', note: '', features: [] }),
   availableLocales: LOCALES,
   loadingLocale: false,
 });
@@ -150,8 +153,19 @@ export function I18nProvider({children, preferredLocale}: I18nProviderProps) {
     [dict],
   );
 
+  /** Look up a mini-game's translated strings by its ID */
+  const tg = useCallback(
+    (id: string): { name: string; subtitle: string; description: string; about: string; note: string; features: string[] } => {
+      const games = (dict as Record<string, unknown>).miniGames as
+        | Record<string, { name: string; subtitle: string; description: string; about: string; note: string; features: string[] }>
+        | undefined;
+      return games?.[id] ?? { name: id, subtitle: '', description: '', about: '', note: '', features: [] };
+    },
+    [dict],
+  );
+
   return (
-    <I18nContext.Provider value={{locale, setLocale, t, tu, availableLocales: LOCALES, loadingLocale}}>
+    <I18nContext.Provider value={{locale, setLocale, t, tu, tg, availableLocales: LOCALES, loadingLocale}}>
       {children}
     </I18nContext.Provider>
   );

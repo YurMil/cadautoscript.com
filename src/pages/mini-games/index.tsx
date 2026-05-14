@@ -2,11 +2,13 @@ import React, {useEffect, useMemo, useState} from 'react';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
 import {miniGames} from '@site/src/data/miniGames';
+import {useI18n} from '@site/src/contexts/I18nContext';
 import styles from './miniGames.module.css';
 
 export default function MiniGamesIndex() {
   const [compactMode, setCompactMode] = useState(true);
   const [filterQuery, setFilterQuery] = useState('');
+  const {t, tg} = useI18n();
 
   const filteredGames = useMemo(() => {
     const q = filterQuery.trim().toLowerCase();
@@ -14,10 +16,11 @@ export default function MiniGamesIndex() {
       return miniGames;
     }
 
-    return miniGames.filter((game) =>
-      [game.name, game.description, game.tech, ...game.tags].join(' ').toLowerCase().includes(q),
-    );
-  }, [filterQuery]);
+    return miniGames.filter((game) => {
+      const trans = tg(game.id);
+      return [trans.name, trans.description, game.tech, ...game.tags].join(' ').toLowerCase().includes(q);
+    });
+  }, [filterQuery, tg]);
 
   useEffect(() => {
     try {
@@ -40,14 +43,14 @@ export default function MiniGamesIndex() {
   };
 
   return (
-    <Layout title="Mini Games" description="Quick engineering-themed mini games.">
+    <Layout title={t('miniGamesPage.title')} description={t('miniGamesPage.lead')}>
       <main className={styles.container}>
         <header className={styles.hero}>
           <div>
-            <p className={styles.eyebrow}>Mini Games</p>
-            <h1 className={styles.title}>Engineering mini games</h1>
+            <p className={styles.eyebrow}>{t('miniGamesPage.eyebrow')}</p>
+            <h1 className={styles.title}>{t('miniGamesPage.title')}</h1>
             <p className={styles.lead}>
-              Quick, browser-friendly games inspired by CAD, QA, and shop-floor problem solving.
+              {t('miniGamesPage.lead')}
             </p>
           </div>
         </header>
@@ -97,9 +100,9 @@ export default function MiniGamesIndex() {
           <header className={styles.sectionHeader}>
             <div>
               <p className={styles.eyebrow}>
-                Mini Games{filterQuery.trim() ? ` — ${filteredGames.length} of ${miniGames.length}` : ''}
+                {t('miniGamesPage.sectionEyebrow')}{filterQuery.trim() ? ` — ${filteredGames.length} / ${miniGames.length}` : ''}
               </p>
-              <h2 className={styles.sectionTitle}>Playable prototypes</h2>
+              <h2 className={styles.sectionTitle}>{t('miniGamesPage.sectionTitle')}</h2>
             </div>
             <div className={styles.controls}>
               <div className={styles.filterWrap}>
@@ -110,10 +113,10 @@ export default function MiniGamesIndex() {
                 <input
                   type="text"
                   className={styles.filterInput}
-                  placeholder="Filter mini games..."
+                  placeholder={t('miniGamesPage.filterPlaceholder')}
                   value={filterQuery}
                   onChange={(e) => setFilterQuery(e.target.value)}
-                  aria-label="Filter mini games"
+                  aria-label={t('miniGamesPage.filterPlaceholder')}
                 />
                 {filterQuery && (
                   <button
@@ -131,7 +134,6 @@ export default function MiniGamesIndex() {
                 className={styles.viewToggle}
                 onClick={toggleCompact}
                 aria-label={compactMode ? 'Card view' : 'Compact view'}
-                title={compactMode ? 'Switch to card view' : 'Switch to icon view'}
               >
                 {compactMode ? (
                   <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
@@ -155,78 +157,84 @@ export default function MiniGamesIndex() {
           </header>
 
           {filteredGames.length === 0 ? (
-            <p className={styles.noResults}>No mini games match "{filterQuery.trim()}"</p>
+            <p className={styles.noResults}>{t('miniGamesPage.noResults', {query: filterQuery.trim()})}</p>
           ) : compactMode ? (
             <div className={styles.iconGrid}>
-              {filteredGames.map((game) => (
-                <Link
-                  key={game.id}
-                  to={game.href}
-                  className={styles.iconTile}
-                  title={`Play ${game.name}`}
-                >
-                  {game.Component ? (
-                    <game.Component className={styles.iconTileImg} />
-                  ) : game.thumbnail ? (
-                    <img
-                      src={game.thumbnail}
-                      alt={game.name}
-                      className={styles.iconTileImg}
-                      loading="lazy"
-                    />
-                  ) : (
-                    <span className={styles.iconTilePlaceholder}>
-                      {game.name.charAt(0)}
-                    </span>
-                  )}
-                  <span className={styles.iconTileLabel}>{game.name}</span>
-                </Link>
-              ))}
-            </div>
-          ) : (
-            <div className={styles.grid}>
-              {filteredGames.map((game) => (
-                <article key={game.id} className={styles.card}>
-                  <div className={styles.cardBody}>
-                    <p className={styles.cardEyebrow}>{game.tech}</p>
-                    <h2 className={styles.cardTitle}>
-                      <Link to={game.href} className={styles.titleLink}>
-                        {game.name}
-                      </Link>
-                    </h2>
-                    <p className={styles.cardDesc}>{game.description}</p>
-                    <div className={styles.tagRow}>
-                      {game.tags.map((tag) => (
-                        <span key={tag} className={styles.tag}>
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
+              {filteredGames.map((game) => {
+                const trans = tg(game.id);
+                return (
                   <Link
+                    key={game.id}
                     to={game.href}
-                    className={styles.iconLink}
-                    title={`Play ${game.name}`}
+                    className={styles.iconTile}
+                    title={`${t('miniGamesPage.play')} ${trans.name}`}
                   >
                     {game.Component ? (
-                      <game.Component className={styles.utilityIcon} />
+                      <game.Component className={styles.iconTileImg} />
                     ) : game.thumbnail ? (
                       <img
                         src={game.thumbnail}
-                        alt={game.name}
-                        className={styles.utilityIcon}
+                        alt={trans.name}
+                        className={styles.iconTileImg}
                         loading="lazy"
                       />
                     ) : (
-                      <div className={styles.iconPlaceholder}>
-                        {game.name.charAt(0)}
-                      </div>
+                      <span className={styles.iconTilePlaceholder}>
+                        {trans.name.charAt(0)}
+                      </span>
                     )}
-                    <span className={styles.iconOverlay}>▶</span>
+                    <span className={styles.iconTileLabel}>{trans.name}</span>
                   </Link>
-                </article>
-              ))}
+                );
+              })}
+            </div>
+          ) : (
+            <div className={styles.grid}>
+              {filteredGames.map((game) => {
+                const trans = tg(game.id);
+                return (
+                  <article key={game.id} className={styles.card}>
+                    <div className={styles.cardBody}>
+                      <p className={styles.cardEyebrow}>{game.tech}</p>
+                      <h2 className={styles.cardTitle}>
+                        <Link to={game.href} className={styles.titleLink}>
+                          {trans.name}
+                        </Link>
+                      </h2>
+                      <p className={styles.cardDesc}>{trans.description}</p>
+                      <div className={styles.tagRow}>
+                        {game.tags.map((tag) => (
+                          <span key={tag} className={styles.tag}>
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <Link
+                      to={game.href}
+                      className={styles.iconLink}
+                      title={`${t('miniGamesPage.play')} ${trans.name}`}
+                    >
+                      {game.Component ? (
+                        <game.Component className={styles.utilityIcon} />
+                      ) : game.thumbnail ? (
+                        <img
+                          src={game.thumbnail}
+                          alt={trans.name}
+                          className={styles.utilityIcon}
+                          loading="lazy"
+                        />
+                      ) : (
+                        <div className={styles.iconPlaceholder}>
+                          {trans.name.charAt(0)}
+                        </div>
+                      )}
+                      <span className={styles.iconOverlay}>▶</span>
+                    </Link>
+                  </article>
+                );
+              })}
             </div>
           )}
         </section>
