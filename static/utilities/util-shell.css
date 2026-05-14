@@ -261,13 +261,19 @@ body.utility-shell-page .navbar__link:hover {
 
 .utility-stage.is-fullscreen {
   position: fixed;
-  inset: 16px;
-  width: auto;
+  inset: 0;
+  width: 100vw;
   max-width: none;
-  height: calc(100vh - 32px);
+  height: 100vh;
   min-height: 0;
-  z-index: 1000;
-  border-radius: 24px;
+  z-index: 9999;
+  border-radius: 0;
+  border: none;
+  background: #020714;
+}
+
+body.utility-is-fullscreen {
+  overflow: hidden !important;
 }
 
 .utility-stage.is-fullscreen .tool-frame {
