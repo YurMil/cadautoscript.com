@@ -11,6 +11,7 @@ import {usePauseWhenOffscreen} from '@site/src/hooks/usePauseWhenOffscreen';
 import {listUtilityUsage, type UtilityUsageStat} from '@site/src/shared/utility-usage';
 import styles from './index.module.css';
 import AnimatedLogo from '@site/src/components/AnimatedLogo/AnimatedLogo';
+import {useUserSettings} from '@site/src/contexts/UserSettingsContext';
 
 const heroStats = [
   {label: 'Live utilities', value: utilities.length.toString()},
@@ -127,10 +128,10 @@ export default function Home(): ReactNode {
   const {user, isAuthenticated, authChecked} = useAuthStatus();
   const {utilitiesPublicAccess} = useUtilitiesAccess();
   const {openLoginModal} = useAuthModal();
+  const {settings, updateSettings} = useUserSettings();
 
   const [heroCollapsed, setHeroCollapsed] = useState(true);
   const [heroReady, setHeroReady] = useState(false);
-  const [compactMode, setCompactMode] = useState(false);
   const [filterQuery, setFilterQuery] = useState('');
   const [usageStats, setUsageStats] = useState<UtilityUsageStat[]>([]);
 
@@ -143,7 +144,7 @@ export default function Home(): ReactNode {
   }, [usageStats]);
 
   const orderedUtilities = useMemo(() => {
-    if (!isAuthenticated || usageStats.length === 0) {
+    if (!isAuthenticated || usageStats.length === 0 || !settings.smart_sorting) {
       return utilities;
     }
 
@@ -220,10 +221,6 @@ export default function Home(): ReactNode {
       } else {
         setHeroCollapsed(false);
       }
-      const savedCompact = localStorage.getItem('utilities-compact');
-      if (savedCompact !== null) {
-        setCompactMode(savedCompact === 'true');
-      }
     } catch {
       setHeroCollapsed(false);
     }
@@ -239,12 +236,12 @@ export default function Home(): ReactNode {
   };
 
   const toggleCompact = () => {
-    const next = !compactMode;
-    setCompactMode(next);
-    try {
-      localStorage.setItem('utilities-compact', String(next));
-    } catch { /* ignore */ }
+    updateSettings({
+      utility_display_mode: settings.utility_display_mode === 'compact' ? 'detailed' : 'compact'
+    });
   };
+
+  const isCompactMode = settings.utility_display_mode === 'compact';
 
   return (
     <Layout
@@ -574,10 +571,10 @@ export default function Home(): ReactNode {
                 type="button"
                 className={styles.viewToggle}
                 onClick={toggleCompact}
-                aria-label={compactMode ? 'Card view' : 'Compact view'}
-                title={compactMode ? 'Switch to card view' : 'Switch to icon view'}
+                aria-label={isCompactMode ? 'Card view' : 'Compact view'}
+                title={isCompactMode ? 'Switch to card view' : 'Switch to icon view'}
               >
-                {compactMode ? (
+                {isCompactMode ? (
                   <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="1" y="1" width="8" height="8" rx="2" stroke="currentColor" strokeWidth="1.5"/><rect x="11" y="1" width="8" height="8" rx="2" stroke="currentColor" strokeWidth="1.5"/><rect x="1" y="11" width="8" height="8" rx="2" stroke="currentColor" strokeWidth="1.5"/><rect x="11" y="11" width="8" height="8" rx="2" stroke="currentColor" strokeWidth="1.5"/></svg>
                 ) : (
                   <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="1" y="2" width="5" height="5" rx="1.5" stroke="currentColor" strokeWidth="1.5"/><rect x="8" y="2" width="5" height="5" rx="1.5" stroke="currentColor" strokeWidth="1.5"/><rect x="15" y="2" width="4" height="5" rx="1.5" stroke="currentColor" strokeWidth="1.5"/><rect x="1" y="9" width="5" height="5" rx="1.5" stroke="currentColor" strokeWidth="1.5"/><rect x="8" y="9" width="5" height="5" rx="1.5" stroke="currentColor" strokeWidth="1.5"/><rect x="15" y="9" width="4" height="5" rx="1.5" stroke="currentColor" strokeWidth="1.5"/></svg>
@@ -588,7 +585,7 @@ export default function Home(): ReactNode {
 
           {filteredUtilities.length === 0 ? (
             <p className={styles.noResults}>No utilities match «{filterQuery.trim()}»</p>
-          ) : compactMode ? (
+          ) : isCompactMode ? (
             <div className={styles.iconGrid}>
               {filteredUtilities.map((utility) => {
                 const origIndex = utilities.indexOf(utility);

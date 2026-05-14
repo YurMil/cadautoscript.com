@@ -1,0 +1,171 @@
+.main {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.panel {
+  background: radial-gradient(circle at 20% 20%, rgba(100, 255, 218, 0.05), transparent 55%),
+    rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  padding: 1.5rem;
+  box-shadow: 0 22px 50px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(8px);
+}
+
+.header {
+  margin-bottom: 1.5rem;
+}
+
+.eyebrow {
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #9ab7ff;
+  margin: 0;
+}
+
+.title {
+  margin: 0.1rem 0;
+  font-size: 1.6rem;
+}
+
+.subtle {
+  margin: 0;
+  color: #9aa5c8;
+}
+
+.guard {
+  text-align: center;
+}
+
+.guardActions {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.alert {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  border: 1px solid var(--card-border);
+}
+
+.alertError {
+  background: rgba(248, 113, 113, 0.1);
+  border-color: rgba(248, 113, 113, 0.35);
+  color: #ffd2d2;
+}
+
+.alertSuccess {
+  background: rgba(74, 222, 128, 0.12);
+  border-color: rgba(74, 222, 128, 0.35);
+  color: #d5f7e0;
+}
+
+.loading {
+  margin-top: 1.2rem;
+  color: #9aa5c8;
+}
+
+.form {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.field {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.field label {
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.field select {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 0.75rem 0.9rem;
+  color: inherit;
+  width: 100%;
+  appearance: none;
+}
+
+.field select:focus {
+  outline: 2px solid rgba(100, 255, 218, 0.45);
+}
+
+.field input[type="checkbox"] {
+  width: 1.2rem;
+  height: 1.2rem;
+  cursor: pointer;
+  accent-color: rgba(100, 255, 218, 1);
+}
+
+.hint {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #9aa5c8;
+}
+
+.formActions {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (max-width: 600px) {
+  .main {
+    padding: 1.5rem 1rem 3rem;
+  }
+}
+
+:global(html[data-theme='light']) .panel {
+  background: radial-gradient(circle at 20% 20%, rgba(33, 92, 255, 0.08), transparent 55%),
+    var(--light-surface);
+  box-shadow: 0 20px 46px rgba(15, 23, 42, 0.1);
+}
+
+:global(html[data-theme='light']) .eyebrow,
+:global(html[data-theme='light']) .subtle,
+:global(html[data-theme='light']) .loading,
+:global(html[data-theme='light']) .hint {
+  color: var(--light-text-soft);
+}
+
+:global(html[data-theme='light']) .alertError {
+  background: var(--light-danger-bg);
+  border-color: var(--light-danger-border);
+  color: var(--light-danger-text);
+}
+
+:global(html[data-theme='light']) .alertSuccess {
+  background: var(--light-success-bg);
+  border-color: var(--light-success-border);
+  color: var(--light-success-text);
+}
+
+:global(html[data-theme='light']) .field select {
+  background: rgba(248, 250, 255, 0.92);
+  border-color: var(--card-border);
+}
+
+:global(html[data-theme='light']) .field select:focus {
+  outline: 2px solid rgba(33, 92, 255, 0.28);
+}
+
+:global(html[data-theme='light']) .field input[type="checkbox"] {
+  accent-color: var(--light-accent);
+}

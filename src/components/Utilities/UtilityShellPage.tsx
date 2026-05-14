@@ -9,6 +9,7 @@ import {utilities} from '@site/src/data/utilities';
 import {useAuthStatus} from '@site/src/hooks/useAuthStatus';
 import {useUtilitiesAccess} from '@site/src/hooks/useUtilitiesAccess';
 import {useAuthModal} from '@site/src/contexts/AuthModalContext';
+import {useUserSettings} from '@site/src/contexts/UserSettingsContext';
 import {incrementUtilityUsage, shouldReportUtilityUsage} from '@site/src/shared/utility-usage';
 import type {UtilityPageConfig} from '@site/src/data/utilityShellPages';
 
@@ -43,6 +44,8 @@ export default function UtilityShellPage({tool, ...config}: UtilityShellPageProp
   const {user, isAuthenticated, authChecked} = useAuthStatus();
   const {utilitiesPublicAccess} = useUtilitiesAccess();
   const {openLoginModal} = useAuthModal();
+  const {settings} = useUserSettings();
+
   React.useEffect(() => {
     document.body.classList.add('utility-shell-page');
     return () => document.body.classList.remove('utility-shell-page');
@@ -72,6 +75,23 @@ export default function UtilityShellPage({tool, ...config}: UtilityShellPageProp
       console.warn('[UtilityUsage] Unable to record utility launch', message);
     });
   }, [authChecked, isAuthenticated, isLocked, isCheckingAccess, trackedUtility, user?.id]);
+
+  React.useEffect(() => {
+    if (settings.fullscreen_utilities && !isLocked && !isCheckingAccess) {
+      const stage = document.querySelector('.utility-stage');
+      const container = document.querySelector('.utility-shell');
+      const btn = document.querySelector('.utility-fullscreen');
+      
+      if (stage && !stage.classList.contains('is-fullscreen')) {
+        stage.classList.add('is-fullscreen');
+        if (container) container.classList.add('utility-shell--fullscreen');
+        if (btn) {
+          btn.textContent = 'Exit full screen';
+          btn.setAttribute('aria-pressed', 'true');
+        }
+      }
+    }
+  }, [settings.fullscreen_utilities, isLocked, isCheckingAccess]);
 
   const heroLinks = defaultHeroLinks;
   const reactionsSlug = config.reactionSlug ?? `tool-${slug}`;

@@ -216,6 +216,13 @@ export default function NavbarAuth(): React.JSX.Element {
                     >
                       My Profile
                     </Link>
+                    <Link
+                      to="/settings"
+                      className={styles.dropdownButton}
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      Settings
+                    </Link>
                     <button type="button" className={styles.dropdownButton} onClick={handleSignOut}>
                       Sign Out
                     </button>
