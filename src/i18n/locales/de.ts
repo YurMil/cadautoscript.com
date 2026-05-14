@@ -97,31 +97,31 @@ export const de: TranslationDict = {
   },
   utilities: {
     'pipe-cutter': {
-      name: 'Rohrschneider-Visualisierer',
+      name: 'Pipe Cutter Visualizer',
       description: 'Sattelschnitte vorschauen, Versätze einstellen und CNC-fertige DXF-Vorlagen exportieren.',
     },
     'shell-rolling': {
-      name: 'Zylindrisches Blechwalzen',
+      name: 'Cylindrical Shell Rolling',
       description: 'Walzenabstand, Biegetoleranz und abgewickelte Längen nach EN / ASME berechnen.',
     },
     'metal-bending': {
-      name: 'Blechbiegung',
+      name: 'Sheet-metal Bending',
       description: 'K-Faktoren, Entlastungskerben und Biegeabzüge vor dem CAM-Programm simulieren.',
     },
     'thread-atlas': {
-      name: 'Interaktiver Gewindeatlas',
+      name: 'Interactive Thread Atlas',
       description: 'ISO / UNC / UNF-Serien filtern, Bohrdurchmesser nachschlagen und Beschriftungen kopieren.',
     },
     'doc-parser': {
-      name: 'PDF-Nummernextraktor',
+      name: 'PDF Number Extractor',
       description: 'QA-Seriennummern, BOM-IDs und Prüfnummern lokal per WASM hervorheben.',
     },
     'qr-nameplate': {
-      name: '3D-QR-Typenschild',
+      name: '3D QR Nameplate',
       description: 'Geräteschilder mit QR-Codes modellieren; Dicke, Materialien und Gravur in Echtzeit vorschauen.',
     },
     'dxf-editor': {
-      name: 'WebDXF-Editor',
+      name: 'WebDXF Editor',
       description: 'DXF-Dateien im Browser zuschneiden, kommentieren und für schnelle QA-Prüfungen neu speichern.',
     },
     'pdf-master': {
@@ -129,7 +129,7 @@ export const de: TranslationDict = {
       description: 'Zeichnungspakete neu anordnen, drehen und zu einem sauberen PDF zusammenführen — vollständig offline.',
     },
     'pdf-batch-signer': {
-      name: 'PDF-Stapelsignierung',
+      name: 'PDF Batch Signer',
       description: 'Eine wiederverwendbare Unterschrift auf jede Seite mehrerer PDFs auf einmal aufstempeln.',
     },
     'qr-master': {
@@ -137,31 +137,31 @@ export const de: TranslationDict = {
       description: 'QR-/Barcodes scannen, benutzerdefinierte Codes generieren und den Scanverlauf lokal verwalten.',
     },
     'pdf-bom-extractor': {
-      name: 'PDF-Stücklistenextraktor',
+      name: 'PDF BOM Extractor',
       description: 'Stücklistentabellen aus CAD-PDFs in saubere CSVs mit Masterberichtexport extrahieren.',
     },
     'file-renamer': {
-      name: 'Stapel-Dateiumbenenner',
+      name: 'Batch File Renamer',
       description: 'Dateien massenweise mit Suchen/Ersetzen, Präfixen, Nummerierung und ZIP-Export umbenennen.',
     },
     'folder-structure-builder': {
-      name: 'Ordnerstruktur-Generator',
+      name: 'Folder Structure Builder',
       description: 'Ordnerbäume aus JSON oder ZIP entwerfen; bash/PowerShell-Skripte exportieren.',
     },
     'magnetic-level-gauge-configurator': {
-      name: 'Magnetischer Füllstandsmesser',
+      name: 'Magnetic Level Gauge',
       description: 'Verbindungen, Abmessungen und Optionen konfigurieren; PDF-Datenblatt exportieren.',
     },
     'bourdon-gauge-configurator': {
-      name: 'Bourdon-Manometer-Konfigurator',
+      name: 'Bourdon Gauge Configurator',
       description: 'Druckmessgeräte mit Bereichen, Anschlüssen und Zubehör konfigurieren; PDF exportieren.',
     },
     'industrial-thermometer-configurator': {
-      name: 'Industriethermometer',
+      name: 'Industrial Thermometer',
       description: 'Bimetallthermometer konfigurieren: Bereiche, Stäbe, Tauchhülsen; PDF-Datenblatt exportieren.',
     },
     'tube-sheet-generator': {
-      name: 'Rohrboden-Generator',
+      name: 'Tube Sheet Generator',
       description: 'Rohrlochbilder anordnen und DXF- oder STEP-Dateien lokal exportieren.',
     },
     'webstep-viewer': {
@@ -169,15 +169,15 @@ export const de: TranslationDict = {
       description: 'STEP-Baugruppen inspizieren, Teile isolieren und Geometrie im Browser messen.',
     },
     'engineering-prompt-catalog': {
-      name: 'Ingenieur-Prompt-Katalog',
+      name: 'Engineering Prompt Catalog',
       description: 'Prompt-Vorlagen für MSR, Maschinenbau und Beschaffung durchsuchen, filtern und exportieren.',
     },
     'business-calendar-generator': {
-      name: 'Betriebskalender',
+      name: 'Business Calendar',
       description: 'Jahreskalender mit regionalen Feiertagen erstellen und als PDF oder PNG exportieren.',
     },
     'react-table-editor': {
-      name: 'Tabellen-Editor',
+      name: 'React Table Editor',
       description: 'Tabellendaten mit CSV-/XLSX-Import und -Export öffnen, bearbeiten und validieren.',
     },
     'focus-planner': {
@@ -185,15 +185,15 @@ export const de: TranslationDict = {
       description: 'Aufgaben planen, eigenständige oder aufgabengebundene Timer ausführen und Analysen im lokalen Browser-Arbeitsbereich überprüfen.',
     },
     'blind-flange-calculator': {
-      name: 'Blindflansch-Rechner',
+      name: 'Blind Flange Calculator',
       description: 'PN-Klasse automatisch auswählen und EN 13445-3-Wanddicke mit Gewichtsschätzungen berechnen.',
     },
     'pressure-vessel-dished-end-calc': {
-      name: 'Behälterböden-Rechner',
+      name: 'Dished End Calculator',
       description: 'DIN 28011/28013-Böden dimensionieren, Stutzenbeschriftungen hinzufügen und QC-Arbeitsblatt drucken.',
     },
     'wikalog-analyzer': {
-      name: 'WIKA-Protokoll-Analysator',
+      name: 'WIKA Log Analyzer',
       description: 'WIKA CPG1500-Kalibriererprotokolle parsen, Messdaten prüfen und QC-Berichte lokal drucken.',
     },
   },

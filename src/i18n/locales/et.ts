@@ -97,31 +97,31 @@ export const et: TranslationDict = {
   },
   utilities: {
     'pipe-cutter': {
-      name: 'Torulõikaja visualiseerija',
+      name: 'Pipe Cutter Visualizer',
       description: 'Eelvaatle sadulõikeid, reguleeri nihkeid ja ekspordi CNC-valmis DXF-mallid.',
     },
     'shell-rolling': {
-      name: 'Silindrilise kesta valtsimisarvutus',
+      name: 'Cylindrical Shell Rolling',
       description: 'Arvuta valtsimissamm, paindetolerands ja laotus EN / ASME presetide järgi.',
     },
     'metal-bending': {
-      name: 'Lehtmetalli painutamine',
+      name: 'Sheet-metal Bending',
       description: 'Simuleeri K-tegureid, leevendussooni ja paindevähendusi enne CAM-programmide lukustamist.',
     },
     'thread-atlas': {
-      name: 'Interaktiivne keermeatlas',
+      name: 'Interactive Thread Atlas',
       description: 'Filtreeri ISO / UNC / UNF seeriad, otsi puurimõõtmeid ja kopeeri tähistused.',
     },
     'doc-parser': {
-      name: 'PDF numbrite ekstraktija',
+      name: 'PDF Number Extractor',
       description: 'Tõsta esile QA seerianumbrid, BOM ID-d ja kontrollnumbrid lokaalselt WASM abil.',
     },
     'qr-nameplate': {
-      name: '3D QR-koodiga nimeplaat',
+      name: '3D QR Nameplate',
       description: 'Modelleeri seadmete silte QR-koodidega; eelvaatle paksust, materjale ja graveeringut reaalajas.',
     },
     'dxf-editor': {
-      name: 'WebDXF redaktor',
+      name: 'WebDXF Editor',
       description: 'Lõika, annoteeeri ja salvesta DXF-faile brauseris kiireks QA-kontrolliks.',
     },
     'pdf-master': {
@@ -129,7 +129,7 @@ export const et: TranslationDict = {
       description: 'Järjesta ümber, pööra ja ühenda joonisekomplekte puhtaks PDF-iks — täielikult võrguühenduseta.',
     },
     'pdf-batch-signer': {
-      name: 'PDF-dokumentide partiiallukirjastaja',
+      name: 'PDF Batch Signer',
       description: 'Templi korduvkasutatav allkiri igale lehele mitmes PDF-is korraga.',
     },
     'qr-master': {
@@ -137,47 +137,47 @@ export const et: TranslationDict = {
       description: 'Skanneeri QR-/vöötkoode, genereeri kohandatud koode ja halda skaneerimisajalugu lokaalselt.',
     },
     'pdf-bom-extractor': {
-      name: 'PDF komponentide loendi ekstraktija',
+      name: 'PDF BOM Extractor',
       description: 'Eralda CAD PDF-idest BOM-tabelid puhtasse CSV-formaati koos koondraportiga.',
     },
     'file-renamer': {
-      name: 'Failide partiiümbernimetaja',
+      name: 'Batch File Renamer',
       description: 'Nimeta faile ümber otsimise/asendamise, eesliidete, nummerdamise ja ZIP-ekspordiga.',
     },
     'folder-structure-builder': {
-      name: 'Kauststruktuuri koostaja',
+      name: 'Folder Structure Builder',
       description: 'Kaustapuude kujundamine JSON-ist või ZIP-ist; bash/PowerShell-skriptide eksport.',
     },
     'magnetic-level-gauge-configurator': {
-      name: 'Magnetiline tasemeandurite konfigurator',
+      name: 'Magnetic Level Gauge',
       description: 'Konfigureeri ühendused, mõõtmed ja valikud; ekspordi PDF-andmeleht.',
     },
     'bourdon-gauge-configurator': {
-      name: 'Burdoni manomeetri konfigurator',
+      name: 'Bourdon Gauge Configurator',
       description: 'Konfigureeri rõhumõõturid vahemike, ühenduste ja lisaseadmetega; ekspordi PDF.',
     },
     'industrial-thermometer-configurator': {
-      name: 'Tööstuslik termomeeter',
+      name: 'Industrial Thermometer',
       description: 'Konfigureeri bimetaltermomeetreid: vahemikud, varred, termokaevud; ekspordi PDF-andmeleht.',
     },
     'tube-sheet-generator': {
-      name: 'Torulehtede generaator',
+      name: 'Tube Sheet Generator',
       description: 'Paiguta torude augumustrid ja ekspordi DXF- või STEP-failid lokaalselt.',
     },
     'webstep-viewer': {
-      name: 'WebSTEP vaataja',
+      name: 'WebSTEP Viewer',
       description: 'Tutvu STEP-komplektidega, erista osi ja mõõda geomeetriat brauseris.',
     },
     'engineering-prompt-catalog': {
-      name: 'Inseneriküsimuste kataloog',
+      name: 'Engineering Prompt Catalog',
       description: 'Sirvi, filtreeri ja ekspordi küsimuste malle instrumentatsiooni, masinaehituse ja hangete jaoks.',
     },
     'business-calendar-generator': {
-      name: 'Tootmiskalender',
+      name: 'Business Calendar',
       description: 'Genereeri aastane kalender piirkondlike riigipühadega ja ekspordi PDF- või PNG-formaati.',
     },
     'react-table-editor': {
-      name: 'Tabeliredaktor',
+      name: 'React Table Editor',
       description: 'Ava, redigeeri ja valideeri tabeliandmeid CSV / XLSX impordiga ja ekspordiga.',
     },
     'focus-planner': {
@@ -185,15 +185,15 @@ export const et: TranslationDict = {
       description: 'Planeerida ülesandeid, käivita taimereid ja vaata analüütikat kohalikus brauseri tööruumis.',
     },
     'blind-flange-calculator': {
-      name: 'Pimeflantsikalkulator',
+      name: 'Blind Flange Calculator',
       description: 'Vali automaatselt PN-klass ja arvuta EN 13445-3 seina paksus koos kaaluhinnangu.',
     },
     'pressure-vessel-dished-end-calc': {
-      name: 'Nõude põhja kalkulator',
+      name: 'Dished End Calculator',
       description: 'Arvuta DIN 28011/28013 põhjad, lisa stutserite tähistused ja prindi QC-tööleht.',
     },
     'wikalog-analyzer': {
-      name: 'WIKA logide analüsaator',
+      name: 'WIKA Log Analyzer',
       description: 'Parseeri WIKA CPG1500 kalibreerimisloge, vaata mõõteandmeid ja prindi QC-raportid lokaalselt.',
     },
   },

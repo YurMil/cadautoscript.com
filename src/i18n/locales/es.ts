@@ -97,31 +97,31 @@ export const es: TranslationDict = {
   },
   utilities: {
     'pipe-cutter': {
-      name: 'Visualizador de corte de tubo',
+      name: 'Pipe Cutter Visualizer',
       description: 'Previsualiza intersecciones de silla, ajusta desplazamientos y exporta plantillas DXF para CNC.',
     },
     'shell-rolling': {
-      name: 'Laminado de cilindros',
+      name: 'Cylindrical Shell Rolling',
       description: 'Calcula el espaciado de rodillos y las longitudes desarrolladas según presets EN / ASME.',
     },
     'metal-bending': {
-      name: 'Doblado de chapa metálica',
+      name: 'Sheet-metal Bending',
       description: 'Simula factores K, alivios y deducciones de doblado antes de bloquear los programas CAM.',
     },
     'thread-atlas': {
-      name: 'Atlas interactivo de roscas',
+      name: 'Interactive Thread Atlas',
       description: 'Filtra series ISO / UNC / UNF, busca diámetros de brocas y copia denominaciones.',
     },
     'doc-parser': {
-      name: 'Extractor de números PDF',
+      name: 'PDF Number Extractor',
       description: 'Resalta números de serie QA, IDs de BOM y números de inspección localmente via WASM.',
     },
     'qr-nameplate': {
-      name: 'Placa de identificación QR 3D',
+      name: '3D QR Nameplate',
       description: 'Modela etiquetas de equipos con QR; previsualiza grosor, materiales y grabado en tiempo real.',
     },
     'dxf-editor': {
-      name: 'Editor WebDXF',
+      name: 'WebDXF Editor',
       description: 'Recorta, anota y guarda archivos DXF en el navegador para verificaciones rápidas de QA.',
     },
     'pdf-master': {
@@ -129,7 +129,7 @@ export const es: TranslationDict = {
       description: 'Reordena, rota y fusiona paquetes de planos en un PDF limpio — totalmente sin conexión.',
     },
     'pdf-batch-signer': {
-      name: 'Firmador de PDF en lote',
+      name: 'PDF Batch Signer',
       description: 'Estampa una firma reutilizable en cada página de múltiples PDFs a la vez.',
     },
     'qr-master': {
@@ -137,31 +137,31 @@ export const es: TranslationDict = {
       description: 'Escanea QR/códigos de barras, genera códigos personalizados y gestiona el historial localmente.',
     },
     'pdf-bom-extractor': {
-      name: 'Extractor de BOM en PDF',
+      name: 'PDF BOM Extractor',
       description: 'Extrae tablas BOM de PDFs CAD en CSVs limpios con exportación de informe maestro.',
     },
     'file-renamer': {
-      name: 'Renombrador de archivos en lote',
+      name: 'Batch File Renamer',
       description: 'Renombra archivos masivamente con buscar/reemplazar, prefijos, numeración y ZIP.',
     },
     'folder-structure-builder': {
-      name: 'Constructor de estructura de carpetas',
+      name: 'Folder Structure Builder',
       description: 'Diseña árboles de carpetas desde JSON o ZIP; exporta scripts bash/PowerShell.',
     },
     'magnetic-level-gauge-configurator': {
-      name: 'Medidor de nivel magnético',
+      name: 'Magnetic Level Gauge',
       description: 'Configura conexiones, dimensiones y opciones; exporta una hoja de datos PDF.',
     },
     'bourdon-gauge-configurator': {
-      name: 'Configurador de manómetro Bourdon',
+      name: 'Bourdon Gauge Configurator',
       description: 'Configura manómetros con rangos, conexiones y accesorios; exporta PDF.',
     },
     'industrial-thermometer-configurator': {
-      name: 'Termómetro industrial',
+      name: 'Industrial Thermometer',
       description: 'Configura termómetros bimetálicos: rangos, vástagos, termopozo; exporta hoja de datos PDF.',
     },
     'tube-sheet-generator': {
-      name: 'Generador de placas tubulares',
+      name: 'Tube Sheet Generator',
       description: 'Distribuye patrones de agujeros para tubos y exporta archivos DXF o STEP localmente.',
     },
     'webstep-viewer': {
@@ -169,15 +169,15 @@ export const es: TranslationDict = {
       description: 'Inspecciona ensamblajes STEP, aísla piezas y mide geometría en el navegador.',
     },
     'engineering-prompt-catalog': {
-      name: 'Catálogo de prompts de ingeniería',
+      name: 'Engineering Prompt Catalog',
       description: 'Navega, filtra y exporta plantillas de prompts para I&C, diseño mecánico y adquisiciones.',
     },
     'business-calendar-generator': {
-      name: 'Calendario de negocios',
+      name: 'Business Calendar',
       description: 'Genera un calendario anual con festivos regionales y exporta PDF o PNG.',
     },
     'react-table-editor': {
-      name: 'Editor de tablas',
+      name: 'React Table Editor',
       description: 'Abre, edita y valida datos tabulares con importación y exportación CSV / XLSX.',
     },
     'focus-planner': {
@@ -185,15 +185,15 @@ export const es: TranslationDict = {
       description: 'Planifica tareas, ejecuta temporizadores y revisa análisis en un espacio de trabajo local en el navegador.',
     },
     'blind-flange-calculator': {
-      name: 'Calculadora de brida ciega',
+      name: 'Blind Flange Calculator',
       description: 'Selecciona automáticamente la clase PN y calcula el espesor EN 13445-3 con estimaciones de peso.',
     },
     'pressure-vessel-dished-end-calc': {
-      name: 'Calculadora de fondos de recipientes',
+      name: 'Dished End Calculator',
       description: 'Dimensiona fondos DIN 28011/28013, añade designaciones de boquillas e imprime una hoja QC.',
     },
     'wikalog-analyzer': {
-      name: 'Analizador de registros WIKA',
+      name: 'WIKA Log Analyzer',
       description: 'Analiza registros del calibrador WIKA CPG1500, revisa datos e imprime informes QC localmente.',
     },
   },

@@ -97,31 +97,31 @@ export const ua: TranslationDict = {
   },
   utilities: {
     'pipe-cutter': {
-      name: 'Візуалізатор труборізки',
+      name: 'Pipe Cutter Visualizer',
       description: 'Попередній перегляд перетинів сідел, налаштування зміщень та експорт DXF-шаблонів для ЧПК.',
     },
     'shell-rolling': {
-      name: 'Вальцювання циліндричних обичайок',
+      name: 'Cylindrical Shell Rolling',
       description: 'Розрахунок кроку вальцювання, допуску на гнуття та розгорток за стандартами EN / ASME.',
     },
     'metal-bending': {
-      name: 'Гнуття листового металу',
+      name: 'Sheet-metal Bending',
       description: 'Моделювання K-факторів, розвантажувальних канавок і вирахувань на гнуття перед CAM-обробкою.',
     },
     'thread-atlas': {
-      name: 'Інтерактивний атлас різьб',
+      name: 'Interactive Thread Atlas',
       description: 'Фільтрація серій ISO / UNC / UNF, підбір діаметрів свердел, копіювання позначень.',
     },
     'doc-parser': {
-      name: 'Витягування чисел з PDF',
+      name: 'PDF Number Extractor',
       description: 'Виділення серійних номерів QA, кодів BOM та інспекційних номерів локально через WASM.',
     },
     'qr-nameplate': {
-      name: '3D-шильдик з QR-кодом',
+      name: '3D QR Nameplate',
       description: 'Моделювання шильдиків для обладнання з QR-кодами; перегляд товщини, матеріалів та гравюри.',
     },
     'dxf-editor': {
-      name: 'WebDXF-редактор',
+      name: 'WebDXF Editor',
       description: 'Обрізка, анотування та перезбереження DXF-файлів у браузері для швидкої перевірки QA.',
     },
     'pdf-master': {
@@ -129,7 +129,7 @@ export const ua: TranslationDict = {
       description: 'Переставлення, поворот та об\'єднання комплектів креслень у чистий PDF — повністю офлайн.',
     },
     'pdf-batch-signer': {
-      name: 'Пакетний підпис PDF',
+      name: 'PDF Batch Signer',
       description: 'Нанесення підпису на кожну сторінку кількох PDF одночасно.',
     },
     'qr-master': {
@@ -137,31 +137,31 @@ export const ua: TranslationDict = {
       description: 'Сканування QR/штрихкодів, генерація кодів, управління історією сканування офлайн.',
     },
     'pdf-bom-extractor': {
-      name: 'Витягування специфікацій з PDF',
+      name: 'PDF BOM Extractor',
       description: 'Витягування таблиць BOM з CAD PDF у чисті CSV з експортом зведеного звіту.',
     },
     'file-renamer': {
-      name: 'Пакетне перейменування файлів',
+      name: 'Batch File Renamer',
       description: 'Масове перейменування з пошуком/заміною, префіксами, нумерацією та експортом ZIP.',
     },
     'folder-structure-builder': {
-      name: 'Конструктор структури папок',
+      name: 'Folder Structure Builder',
       description: 'Проектування дерева папок з JSON або ZIP; експорт bash/PowerShell-скриптів.',
     },
     'magnetic-level-gauge-configurator': {
-      name: 'Магнітний рівнемір',
+      name: 'Magnetic Level Gauge',
       description: 'Конфігурування з\'єднань, розмірів та опцій; експорт PDF-паспорта.',
     },
     'bourdon-gauge-configurator': {
-      name: 'Конфігуратор манометра Бурдона',
+      name: 'Bourdon Gauge Configurator',
       description: 'Налаштування діапазонів, з\'єднань та аксесуарів манометра; експорт PDF.',
     },
     'industrial-thermometer-configurator': {
-      name: 'Промисловий термометр',
+      name: 'Industrial Thermometer',
       description: 'Конфігурування біметалевих термометрів: діапазони, гільзи, термопари; експорт PDF.',
     },
     'tube-sheet-generator': {
-      name: 'Генератор трубних дошок',
+      name: 'Tube Sheet Generator',
       description: 'Розмітка схем отворів трубної дошки та експорт DXF або STEP-файлів офлайн.',
     },
     'webstep-viewer': {
@@ -169,15 +169,15 @@ export const ua: TranslationDict = {
       description: 'Перегляд STEP-збірок, ізоляція деталей та вимірювання геометрії в браузері.',
     },
     'engineering-prompt-catalog': {
-      name: 'Каталог інженерних промптів',
+      name: 'Engineering Prompt Catalog',
       description: 'Пошук, фільтрація та експорт шаблонів промптів для КВП, проектування та закупівель.',
     },
     'business-calendar-generator': {
-      name: 'Виробничий календар',
+      name: 'Business Calendar',
       description: 'Генерація річного календаря з святковими днями за регіонами; експорт PDF або PNG.',
     },
     'react-table-editor': {
-      name: 'Табличний редактор',
+      name: 'React Table Editor',
       description: 'Відкриття, редагування та перевірка табличних даних з імпортом/експортом CSV / XLSX.',
     },
     'focus-planner': {
@@ -185,15 +185,15 @@ export const ua: TranslationDict = {
       description: 'Планування задач, таймери, аналітика в локальному браузерному робочому просторі.',
     },
     'blind-flange-calculator': {
-      name: 'Калькулятор глухого фланця',
+      name: 'Blind Flange Calculator',
       description: 'Автовибір класу PN та розрахунок товщини за EN 13445-3 з оцінкою маси.',
     },
     'pressure-vessel-dished-end-calc': {
-      name: 'Калькулятор кришок посудин',
+      name: 'Dished End Calculator',
       description: 'Розрахунок кришок DIN 28011 / 28013, додавання позначень патрубків, друк QC-листа.',
     },
     'wikalog-analyzer': {
-      name: 'Аналізатор журналів WIKA',
+      name: 'WIKA Log Analyzer',
       description: 'Розбір журналів каліброатора WIKA CPG1500, аналіз вимірювань, QC-звіти офлайн.',
     },
   },
