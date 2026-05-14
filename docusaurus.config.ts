@@ -30,13 +30,14 @@ const config: Config = {
   },
   i18n: {
     defaultLocale: 'en',
-    locales: ['en', 'ru', 'ua', 'de', 'es'],
+    locales: ['en', 'ru', 'ua', 'de', 'es', 'et'],
     localeConfigs: {
       en: {label: 'English', direction: 'ltr', htmlLang: 'en'},
       ru: {label: 'Русский', direction: 'ltr', htmlLang: 'ru'},
       ua: {label: 'Українська', direction: 'ltr', htmlLang: 'uk'},
       de: {label: 'Deutsch', direction: 'ltr', htmlLang: 'de'},
       es: {label: 'Español', direction: 'ltr', htmlLang: 'es'},
+      et: {label: 'Eesti', direction: 'ltr', htmlLang: 'et'},
     },
   },
   plugins: [

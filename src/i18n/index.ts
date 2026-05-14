@@ -2,7 +2,7 @@ import type {TranslationDict} from './locales/en';
 
 export type {TranslationDict};
 
-export type Locale = 'en' | 'ru' | 'ua' | 'de' | 'es';
+export type Locale = 'en' | 'ru' | 'ua' | 'de' | 'es' | 'et';
 
 export type LocaleMeta = {
   code: Locale;
@@ -21,6 +21,7 @@ export const LOCALES: LocaleMeta[] = [
   {code: 'ua', label: 'Українська', htmlLang: 'uk', flag: '🇺🇦', dir: 'ltr'},
   {code: 'de', label: 'Deutsch', htmlLang: 'de', flag: '🇩🇪', dir: 'ltr'},
   {code: 'es', label: 'Español', htmlLang: 'es', flag: '🇪🇸', dir: 'ltr'},
+  {code: 'et', label: 'Eesti', htmlLang: 'et', flag: '🇪🇪', dir: 'ltr'},
 ];
 
 export const DEFAULT_LOCALE: Locale = 'en';
@@ -59,6 +60,8 @@ export async function loadLocale(locale: Locale): Promise<TranslationDict> {
         return (await import('./locales/de')).de;
       case 'es':
         return (await import('./locales/es')).es;
+      case 'et':
+        return (await import('./locales/et')).et;
       default:
         return (await import('./locales/en')).en;
     }
