@@ -1,0 +1,128 @@
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
+import {en} from '@site/src/i18n/locales/en';
+import {
+  type Locale,
+  type TranslationDict,
+  LOCALES,
+  DEFAULT_LOCALE,
+  detectLocale,
+  loadLocale,
+  resolveKey,
+} from '@site/src/i18n';
+
+type I18nContextType = {
+  /** Current active locale code */
+  locale: Locale;
+  /** Change locale (saves to localStorage, updates <html lang="">) */
+  setLocale: (locale: Locale) => void;
+  /** Look up a translation key like 'settings.title'. Returns the key on miss. */
+  t: (key: string, vars?: Record<string, string>) => string;
+  /** All available locales with metadata */
+  availableLocales: typeof LOCALES;
+  /** True while the locale dictionary is loading */
+  loadingLocale: boolean;
+};
+
+const I18nContext = createContext<I18nContextType>({
+  locale: DEFAULT_LOCALE,
+  setLocale: () => {},
+  t: (key) => key,
+  availableLocales: LOCALES,
+  loadingLocale: false,
+});
+
+type I18nProviderProps = {
+  children: React.ReactNode;
+  /**
+   * Optional locale override from UserSettingsContext.
+   * When provided, takes priority over localStorage / browser detection.
+   */
+  preferredLocale?: string | null;
+};
+
+export function I18nProvider({children, preferredLocale}: I18nProviderProps) {
+  const [locale, setLocaleState] = useState<Locale>(DEFAULT_LOCALE);
+  const [dict, setDict] = useState<TranslationDict>(en);
+  const [loadingLocale, setLoadingLocale] = useState(false);
+  // Keep track of whether we've initialised (to avoid double-loading on mount)
+  const initialised = useRef(false);
+
+  // Load dictionary whenever locale changes
+  const applyLocale = useCallback(async (next: Locale) => {
+    setLoadingLocale(true);
+    const loaded = await loadLocale(next);
+    setDict(loaded);
+    setLocaleState(next);
+    setLoadingLocale(false);
+
+    // Update <html lang=""> for accessibility + crawlers
+    const meta = LOCALES.find((l) => l.code === next);
+    if (meta) {
+      document.documentElement.lang = meta.htmlLang;
+      document.documentElement.dir = meta.dir;
+    }
+  }, []);
+
+  // Initialise once on mount
+  useEffect(() => {
+    if (initialised.current) return;
+    initialised.current = true;
+
+    const initial = detectLocale(preferredLocale);
+    applyLocale(initial);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // React to changes in preferredLocale (from UserSettings sync)
+  useEffect(() => {
+    if (!preferredLocale) return;
+    const detected = detectLocale(preferredLocale);
+    if (detected !== locale) {
+      applyLocale(detected);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [preferredLocale]);
+
+  const setLocale = useCallback(
+    (next: Locale) => {
+      try {
+        localStorage.setItem('site-locale', next);
+      } catch {
+        // ignore
+      }
+      applyLocale(next);
+    },
+    [applyLocale],
+  );
+
+  /** Translate a dot-notation key, optionally interpolating {var} placeholders. */
+  const t = useCallback(
+    (key: string, vars?: Record<string, string>): string => {
+      let result = resolveKey(dict, key);
+      if (vars) {
+        for (const [k, v] of Object.entries(vars)) {
+          result = result.replace(new RegExp(`\\{${k}\\}`, 'g'), v);
+        }
+      }
+      return result;
+    },
+    [dict],
+  );
+
+  return (
+    <I18nContext.Provider value={{locale, setLocale, t, availableLocales: LOCALES, loadingLocale}}>
+      {children}
+    </I18nContext.Provider>
+  );
+}
+
+export function useI18n(): I18nContextType {
+  return useContext(I18nContext);
+}

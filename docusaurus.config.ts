@@ -30,7 +30,14 @@ const config: Config = {
   },
   i18n: {
     defaultLocale: 'en',
-    locales: ['en'],
+    locales: ['en', 'ru', 'ua', 'de', 'es'],
+    localeConfigs: {
+      en: {label: 'English', direction: 'ltr', htmlLang: 'en'},
+      ru: {label: 'Русский', direction: 'ltr', htmlLang: 'ru'},
+      ua: {label: 'Українська', direction: 'ltr', htmlLang: 'uk'},
+      de: {label: 'Deutsch', direction: 'ltr', htmlLang: 'de'},
+      es: {label: 'Español', direction: 'ltr', htmlLang: 'es'},
+    },
   },
   plugins: [
     async function myPlugin(_context, _options) {
@@ -109,6 +116,7 @@ const config: Config = {
         {to: '/mini-games/', label: 'Mini Games', position: 'left'},
         {type: 'custom-search', position: 'right'},
         {type: 'custom-support-button', position: 'right'},
+        {type: 'custom-language-switcher', position: 'right'},
         {type: 'custom-theme-toggle', position: 'right'},
         {type: 'custom-navbar-auth', position: 'right'},
       ],

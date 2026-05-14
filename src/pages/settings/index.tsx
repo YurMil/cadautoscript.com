@@ -4,6 +4,8 @@ import type {User} from '@supabase/supabase-js';
 import Layout from '@theme/Layout';
 import {supabase} from '@site/src/lib/supabaseClient';
 import {useAuthModal} from '@site/src/contexts/AuthModalContext';
+import {useI18n} from '@site/src/contexts/I18nContext';
+import {LOCALES} from '@site/src/i18n';
 import styles from './index.module.css';
 import {useColorMode} from '@docusaurus/theme-common';
 
@@ -37,6 +39,7 @@ function SettingsContent(): React.JSX.Element {
   const [promptedLogin, setPromptedLogin] = useState(false);
   const {openLoginModal} = useAuthModal();
   const {setColorMode} = useColorMode();
+  const {t, setLocale} = useI18n();
 
   useEffect(() => {
     let isMounted = true;
@@ -114,7 +117,7 @@ function SettingsContent(): React.JSX.Element {
 
       if (settingsError && !shouldSilence(settingsError.message)) {
         console.error('[Supabase Settings] Unable to load settings', settingsError.message);
-        setError('Unable to load your settings. Please try again.');
+        setError(t('settings.errorLoad'));
       }
 
       if (data) {
@@ -141,6 +144,16 @@ function SettingsContent(): React.JSX.Element {
       ...prev,
       [field]: value,
     }));
+    // Instantly apply language change so user can see effect immediately
+    if (field === 'auto_translation_language' && typeof value === 'string') {
+      // Map stored value to our locale codes (handle legacy 'uk' → 'ua')
+      const mapped = value === 'uk' ? 'ua' : value;
+      try {
+        setLocale(mapped as Parameters<typeof setLocale>[0]);
+      } catch {
+        // ignore unknown locale codes — they'll fall back to 'en'
+      }
+    }
   };
 
   const handleSave = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -166,13 +179,13 @@ function SettingsContent(): React.JSX.Element {
 
     if (upsertError) {
       console.error('[Supabase Settings] Unable to save settings', upsertError.message);
-      setError('Unable to save your settings. Please try again.');
+      setError(t('settings.errorSave'));
       setSaving(false);
       return;
     }
 
-    setSuccess('Settings saved successfully.');
-    
+    setSuccess(t('settings.saved'));
+
     // Apply theme change locally immediately if needed
     if (settings.default_theme !== 'auto') {
       setColorMode(settings.default_theme);
@@ -183,17 +196,15 @@ function SettingsContent(): React.JSX.Element {
 
   const renderUnauthed = () => (
     <div className={styles.guard}>
-      <p className={styles.eyebrow}>Settings</p>
-      <h1 className={styles.title}>Sign in to view settings</h1>
-      <p className={styles.subtle}>
-        This page is protected. Start a session to view or edit your personal settings.
-      </p>
+      <p className={styles.eyebrow}>{t('settings.eyebrow')}</p>
+      <h1 className={styles.title}>{t('settings.signInTitle')}</h1>
+      <p className={styles.subtle}>{t('settings.signInCopy')}</p>
       <div className={styles.guardActions}>
         <a className="button button--primary" href="/">
-          Return home
+          {t('settings.returnHome')}
         </a>
         <button type="button" className="button button--secondary" onClick={openLoginModal}>
-          Open sign in
+          {t('settings.openSignIn')}
         </button>
       </div>
     </div>
@@ -207,9 +218,9 @@ function SettingsContent(): React.JSX.Element {
           ) : (
             <>
               <header className={styles.header}>
-                <p className={styles.eyebrow}>Preferences</p>
-                <h1 className={styles.title}>Settings</h1>
-                <p className={styles.subtle}>Manage your site preferences and personalization.</p>
+                <p className={styles.eyebrow}>{t('settings.eyebrow')}</p>
+                <h1 className={styles.title}>{t('settings.title')}</h1>
+                <p className={styles.subtle}>{t('settings.subtitle')}</p>
               </header>
 
               {error ? (
@@ -220,7 +231,7 @@ function SettingsContent(): React.JSX.Element {
               ) : null}
 
               {loading ? (
-                <div className={styles.loading}>Loading your settings...</div>
+                <div className={styles.loading}>{t('settings.loading')}</div>
               ) : (
                 <form className={styles.form} onSubmit={handleSave}>
                   <div className={styles.field}>
@@ -230,53 +241,52 @@ function SettingsContent(): React.JSX.Element {
                         checked={settings.smart_sorting}
                         onChange={(e) => handleChange('smart_sorting', e.target.checked)}
                       />
-                      Enable smart sorting of utilities on homepage
+                      {t('settings.smartSorting')}
                     </label>
-                    <p className={styles.hint}>Utilities will be sorted based on your usage frequency.</p>
+                    <p className={styles.hint}>{t('settings.smartSortingHint')}</p>
                   </div>
 
                   <div className={styles.field}>
-                    <label htmlFor="default_theme">Default Theme</label>
+                    <label htmlFor="default_theme">{t('settings.theme')}</label>
                     <select
                       id="default_theme"
                       value={settings.default_theme}
                       onChange={(e) => handleChange('default_theme', e.target.value)}
                     >
-                      <option value="light">Light</option>
-                      <option value="dark">Dark</option>
-                      <option value="auto">Automatic (System)</option>
+                      <option value="light">{t('settings.themeLight')}</option>
+                      <option value="dark">{t('settings.themeDark')}</option>
+                      <option value="auto">{t('settings.themeAuto')}</option>
                     </select>
                   </div>
 
                   <div className={styles.field}>
-                    <label htmlFor="utility_display_mode">Utility Display Mode</label>
+                    <label htmlFor="utility_display_mode">{t('settings.displayMode')}</label>
                     <select
                       id="utility_display_mode"
                       value={settings.utility_display_mode}
                       onChange={(e) => handleChange('utility_display_mode', e.target.value)}
                     >
-                      <option value="compact">Compact View</option>
-                      <option value="detailed">Detailed View</option>
+                      <option value="compact">{t('settings.displayCompact')}</option>
+                      <option value="detailed">{t('settings.displayDetailed')}</option>
                     </select>
-                    <p className={styles.hint}>This option can also be toggled directly from the homepage.</p>
+                    <p className={styles.hint}>{t('settings.displayHint')}</p>
                   </div>
 
+                  {/* Interface Language — replaces old "Auto-translation Language" */}
                   <div className={styles.field}>
-                    <label htmlFor="auto_translation_language">Auto-translation Language</label>
+                    <label htmlFor="auto_translation_language">{t('settings.language')}</label>
                     <select
                       id="auto_translation_language"
                       value={settings.auto_translation_language}
                       onChange={(e) => handleChange('auto_translation_language', e.target.value)}
                     >
-                      <option value="en">English</option>
-                      <option value="es">Spanish</option>
-                      <option value="fr">French</option>
-                      <option value="de">German</option>
-                      <option value="uk">Ukrainian</option>
-                      <option value="pl">Polish</option>
-                      <option value="zh">Chinese</option>
+                      {LOCALES.map((l) => (
+                        <option key={l.code} value={l.code}>
+                          {l.flag} {l.label}
+                        </option>
+                      ))}
                     </select>
-                    <p className={styles.hint}>Set the default language for automatic website page translation.</p>
+                    <p className={styles.hint}>{t('settings.languageHint')}</p>
                   </div>
 
                   <div className={styles.field}>
@@ -286,9 +296,9 @@ function SettingsContent(): React.JSX.Element {
                         checked={settings.fullscreen_utilities}
                         onChange={(e) => handleChange('fullscreen_utilities', e.target.checked)}
                       />
-                      Open utilities in fullscreen
+                      {t('settings.fullscreen')}
                     </label>
-                    <p className={styles.hint}>Any utility opened from the homepage will launch immediately in fullscreen mode.</p>
+                    <p className={styles.hint}>{t('settings.fullscreenHint')}</p>
                   </div>
 
                   <div className={styles.formActions}>
@@ -297,7 +307,7 @@ function SettingsContent(): React.JSX.Element {
                       className="button button--primary"
                       disabled={saving}
                     >
-                      {saving ? 'Saving...' : 'Save Settings'}
+                      {saving ? t('settings.saving') : t('settings.save')}
                     </button>
                   </div>
                 </form>
@@ -310,8 +320,9 @@ function SettingsContent(): React.JSX.Element {
 }
 
 export default function SettingsPage(): React.JSX.Element {
+  const {t} = useI18n();
   return (
-    <Layout title="Settings" description="Manage your CAD AutoScript settings.">
+    <Layout title={t('settings.title')} description="Manage your CAD AutoScript settings.">
       <SettingsContent />
     </Layout>
   );

@@ -12,6 +12,8 @@ import {listUtilityUsage, type UtilityUsageStat} from '@site/src/shared/utility-
 import styles from './index.module.css';
 import AnimatedLogo from '@site/src/components/AnimatedLogo/AnimatedLogo';
 import {useUserSettings} from '@site/src/contexts/UserSettingsContext';
+import {useI18n} from '@site/src/contexts/I18nContext';
+import HreflangHead from '@site/src/components/I18n/HreflangHead';
 
 const heroStats = [
   {label: 'Live utilities', value: utilities.length.toString()},
@@ -129,6 +131,7 @@ export default function Home(): ReactNode {
   const {utilitiesPublicAccess} = useUtilitiesAccess();
   const {openLoginModal} = useAuthModal();
   const {settings, updateSettings} = useUserSettings();
+  const {t} = useI18n();
 
   const [heroCollapsed, setHeroCollapsed] = useState(true);
   const [heroReady, setHeroReady] = useState(false);
@@ -246,7 +249,8 @@ export default function Home(): ReactNode {
   return (
     <Layout
       title={siteConfig.title}
-      description="CAD AutoScript - SolidWorks macros, calculators, and QA tools">
+      description={t('home.heroSubtitle')}>
+      <HreflangHead path="/" />
       <main className={styles.main}>
         <section
           ref={hero.ref}

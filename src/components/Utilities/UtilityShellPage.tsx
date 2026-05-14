@@ -10,6 +10,7 @@ import {useAuthStatus} from '@site/src/hooks/useAuthStatus';
 import {useUtilitiesAccess} from '@site/src/hooks/useUtilitiesAccess';
 import {useAuthModal} from '@site/src/contexts/AuthModalContext';
 import {useUserSettings} from '@site/src/contexts/UserSettingsContext';
+import {useI18n} from '@site/src/contexts/I18nContext';
 import {incrementUtilityUsage, shouldReportUtilityUsage} from '@site/src/shared/utility-usage';
 import type {UtilityPageConfig} from '@site/src/data/utilityShellPages';
 
@@ -45,6 +46,7 @@ export default function UtilityShellPage({tool, ...config}: UtilityShellPageProp
   const {utilitiesPublicAccess} = useUtilitiesAccess();
   const {openLoginModal} = useAuthModal();
   const {settings} = useUserSettings();
+  const {t} = useI18n();
 
   React.useEffect(() => {
     document.body.classList.add('utility-shell-page');
@@ -147,25 +149,25 @@ export default function UtilityShellPage({tool, ...config}: UtilityShellPageProp
           <div className="utility-stage">
             {isCheckingAccess ? (
               <div className="utility-locked">
-                <p className="utility-locked__eyebrow">Checking access…</p>
-                <h2>Hold on</h2>
+                <p className="utility-locked__eyebrow">{t('utility.checkingAccess')}</p>
+                <h2>{t('utility.holdOn')}</h2>
                 <p className="utility-locked__copy">
-                  Verifying your session for <strong>{title}</strong>.
+                  {t('utility.verifyingSession', {name: title})}
                 </p>
               </div>
             ) : isLocked ? (
               <div className="utility-locked">
-                <p className="utility-locked__eyebrow">Sign in required</p>
-                <h2>Unlock this utility</h2>
+                <p className="utility-locked__eyebrow">{t('utility.signInRequired')}</p>
+                <h2>{t('utility.unlockTitle')}</h2>
                 <p className="utility-locked__copy">
-                  Guests can open the first three tools. Sign in to launch <strong>{title}</strong> and the rest of the catalog.
+                  {t('utility.unlockCopy', {name: title})}
                 </p>
                 <div className="utility-locked__actions">
                   <button type="button" className="button primary" onClick={openLoginModal}>
-                    Sign in
+                    {t('auth.signIn')}
                   </button>
                   <Link className="button ghost" to="/utilities/pipe-cutter/">
-                    View free utilities
+                    {t('utility.viewFreeUtilities')}
                   </Link>
                 </div>
               </div>
@@ -176,10 +178,10 @@ export default function UtilityShellPage({tool, ...config}: UtilityShellPageProp
           {!isLocked ? (
             <div className="utility-toolbar" role="toolbar">
               <button className="utility-toggle" type="button" aria-expanded="true">
-                Hide info
+                {t('utility.hideInfo')}
               </button>
               <button className="utility-fullscreen" type="button" aria-pressed="false">
-                Full screen
+                {t('utility.fullScreen')}
               </button>
             </div>
           ) : null}
@@ -188,7 +190,7 @@ export default function UtilityShellPage({tool, ...config}: UtilityShellPageProp
           </div>
           <aside className="utility-info" data-collapsible>
             <div className="utility-info__header">
-              <h2>About this tool</h2>
+              <h2>{t('utility.about')}</h2>
               <p>{about}</p>
             </div>
             <div className="utility-tags">
@@ -201,7 +203,7 @@ export default function UtilityShellPage({tool, ...config}: UtilityShellPageProp
             {note ? <p className="utility-note">{note}</p> : null}
             {features && features.length > 0 ? (
               <div className="utility-card">
-                <h2>Key actions</h2>
+                <h2>{t('utility.keyActions')}</h2>
                 <ul>
                   {features.map((feature) => (
                     <li key={feature}>{feature}</li>
@@ -216,13 +218,13 @@ export default function UtilityShellPage({tool, ...config}: UtilityShellPageProp
           <div className="utility-fullscreen-exit-zone top">
             <div className="utility-fullscreen-indicator" aria-hidden="true"></div>
             <button type="button" className="utility-fullscreen-exit-button">
-              Exit full screen
+              {t('utility.exitFullScreen')}
             </button>
           </div>
           <div className="utility-fullscreen-exit-zone bottom">
             <div className="utility-fullscreen-indicator" aria-hidden="true"></div>
             <button type="button" className="utility-fullscreen-exit-button">
-              Exit full screen
+              {t('utility.exitFullScreen')}
             </button>
           </div>
         </section>
