@@ -1,0 +1,37 @@
+---
+slug: /utilities/tube-sheet-generator
+title: Tube Sheet Generator
+---
+
+import Head from '@docusaurus/Head';
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/tube-sheet-generator/" />
+</Head>
+
+Genereerige soojusvahetite toruplaatide avade mustreid, vaadake paigutust eelvaates ja eksportige DXF- või STEP-faile otse brauserist.
+
+<a className="button button--primary" href="/utilities/tube-sheet-generator/" data-nobrokenlinkcheck>
+  Ava utiliit
+</a>
+
+## Mida see teeb
+
+- Koostab ruudu- või kolmnurkse sammuga mustreid ringikujulise toruplaadi sisse.
+- Näitab reaalajas 2D-eelvaadet koos valikuliste vaheseintega.
+- Ekspordib DXF-i 2D-paigutuste jaoks ja STEP-i 3D-mudelite jaoks.
+
+## Teie kontrollitavad sisendid
+
+- Toruplaadi läbimõõt, paksus ja serva varu.
+- Toru läbimõõt, samm ja paigutusmuster.
+- Käikude arv, vaheseina laius ja orientatsioon (visuaalne juhend).
+
+## Märkused ekspordi kohta
+
+- DXF-eksport sisaldab toruplaadi piirjoont ja kõiki toruavasid.
+- STEP-eksport töötab brauseris WebAssembly abil; suure avade arvu korral võib see aega võtta.
+
+## Tagasiside
+
+Saatke e-kiri või DM koos slugiga `tube-sheet-generator`, et saaksime probleeme reprodutseerida.

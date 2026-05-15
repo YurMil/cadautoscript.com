@@ -1,0 +1,118 @@
+---
+title: Metal Bending Prototype
+description: Modellige ääriku pikkusi, neutraaltelje asendeid ja paindemahasid lehtmetalli tööde jaoks enne tööriistade lukustamist.
+slug: /utilities/metal-bending
+image: /img/og/utilities/metal-bending.png
+keywords:
+  - sheet metal bending
+  - k-factor
+  - bend deduction
+  - flat length
+  - press brake
+  - neutral axis
+  - sheet metal calculator
+  - prototype
+---
+
+import Head from '@docusaurus/Head';
+
+# Metal Bending Prototype
+
+Modellige ääriku pikkusi, neutraaltelje asendeid ja paindemahasid lehtmetalli tööde jaoks enne tööriistade lukustamist.
+
+<a className="button button--primary" href="/utilities/metal-bending/" data-nobrokenlinkcheck>Ava utiliit</a>
+
+![metal-bending utility screenshot](/img/og/utilities/metal-bending.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/metal-bending/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Metal Bending Prototype",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Modellige ääriku pikkusi, neutraaltelje asendeid ja paindemahasid lehtmetalli tööde jaoks enne tööriistade lukustamist.",
+  "url": "https://cadautoscript.com/utilities/metal-bending/",
+  "image": "https://cadautoscript.com/img/og/utilities/metal-bending.png",
+  "featureList": [
+    "K-teguri häälestamine",
+    "Pressi piduri eelsätted",
+    "Meetrilise ja tolli lülitid"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/metal-bending/",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "CAD AutoScript"
+  }
+}`}</script>
+</Head>
+
+## Mida see teeb
+Katsetage K-tegureid, paindemahasid ja neutraaltelje asendeid enne programmide saatmist presspiduriga. Sisestage paksus, raadius ja nurgad, et näha kogupikkust ja paindekompensatsioone vastavalt ISO 2768 või ANSI tolerantsiplokile.
+
+## Millal seda kasutada (ja millal mitte)
+**Kasutage seda, kui:**
+- Koostate või vaatate üle presspiduriprogramme ja soovite enne tootmist kompensatsioone valideerida.
+- Soovite häälestada K-tegurit või paindemahasid uue materjalipardi või tööriistastiku jaoks.
+- Vajate kiiret õppematerjali praktikantidele, kes õpivad, kuidas ääriku pikkused muutuvad erinevate raadiustega.
+
+**Vältige seda, kui:**
+- Modelleerisite tempitud, rulljooksvaid või tugevalt mittelineaarseid painutusi, mis nõuavad FEA-d või tarnija andmeid.
+- Vajate automaatseid lamedaid mustreid keerukate mitme-painutusega osade jaoks; kasutage seda painutuse kohta ja kombineerige tulemused.
+
+## Sisendid ja väljundid
+### Sisendid
+| Sisend | Kirjeldus |
+| --- | --- |
+| Materjali paksus | Painutatava lehe mõõt või paksus. |
+| Sisemine painderaadius | Raadius neutraaltelje piirkonnas; määrab kompensatsiooniväärtused. |
+| Paindenurk | Moodustunud nurk pärast peegeldumist; sisestage järjepidevates ühikutes. |
+| Ääriku pikkused | Painutuse kõrval olevad jalg-pikkused, mis integreeritakse kogupikkusesse. |
+| K-tegur või paindemahasus | Valige arvutuste juhtimiseks K-tegur või teadaolev mahasus. |
+| Materjali või tööriista märkused | Valikulised märkused tömbi laiuse, tera suuna või piduri seadistuse kohta. |
+
+### Väljundid
+| Väljund | Vorming | Märkused |
+| --- | --- | --- |
+| Kogupikkus lamedalt | Numbriline | Pikkus programmeerimiseks või lõikamiseks enne vormimist. |
+| Paindekompenstatsioon / mahasus | Numbriline | Arvutatud paksuse, raadiuse ja nurga põhjal määratud K-teguri jaoks. |
+| Neutraaltelje asukoht | Numbriline | Asukoht, väljendatuna paksuse tegurina, viiteks. |
+| Kokkuvõttekaart | Ekraanil | Väärtused CAM-märkmetesse või teekaardile kopeerimiseks. |
+
+## Kuidas kasutada
+1. Sisestage lehe paksus ja sisemine painderaadius.
+2. Seadke paindenurk ja ääriku pikkused, mis vajavad tasandamist.
+3. Valige, kas juhite matemaatikat K-teguri või paindemahausega.
+4. Vaadake üle saadud kogupikkus ja kompensatsiooninumbrid.
+5. Kopeerige väärtused oma CAM-programmi või salvestage ekraanipilt marsruutimislehele.
+
+## Täpsus ja kontroll
+- Eeldab õhkpainutust ühe K-teguriga kogu painutuse ulatuses.
+- Ei arvesta tera suunda ega tööriistade kulumist; kontrollige painutatud katsetükiga enne täisproduktsioonile minekut.
+- Hoidke sisendühikud järjepidevad; tööriist ei teisenda segaühikuid.
+- Kasutage presspidurite katsepakke K-teguri täpsustamiseks iga materjalipartii jaoks.
+
+## KKK
+- **Kas see toetab mitmeid painutusi?** Kasutage seda painutuse või jala kohta; kombineerige tulemused keerukate osade jaoks.
+- **Kas saan töötada tollides ja meetris?** Jah. Sisestage väärtused kasutatavates ühikutes; matemaatika on ühikusõltumatu.
+- **Kuidas numbreid eksportida?** Kopeerige need otse kokkuvõttest või tehke kiire ekraanipilt.
+- **Kas see töötab võrguühenduseta?** Jah. Kõik toimub lokaalselt teie brauseris.
+- **Mis siis, kui minu piduril on paindemahaususe tabelid?** Valige paindemahaususe režiim ja sisestage tabeli väärtus, et näha saadud kogupikkust.
+
+## Seotud tööriistad
+- [Cylindrical Shell Rolling Calculator](./cylindrical-shell-rolling)
+- [Pipe Cutter Visualizer](./pipe-cutter)
+- [Interactive Thread Cheat Sheet](./interactive-thread)
+
+## Muudatuste logi
+- Esialgne dokumentatsioon.
+
+## Tagasiside / vearaport
+- [Ava GitHubi probleem](https://github.com/biosxxx/cadautoscript.com/issues)
+- Saatke e-kiri või DM slugiga `metal-bending`, et saaksime probleemi reprodutseerida.

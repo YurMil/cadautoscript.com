@@ -1,0 +1,81 @@
+---
+title: QR Master
+description: Skannige QR-koode ja vöörtkoode koheselt, genereerige kohandatud koode linkide või WiFi jaoks ja hallake oma skaneerimisajalugu lokaalselt.
+slug: /utilities/qr-master
+image: /img/og/utilities/qr-master.png
+keywords:
+  - QR scanner
+  - barcode reader
+  - QR generator
+  - WiFi QR
+  - offline scanner
+  - history export
+---
+
+import Head from '@docusaurus/Head';
+
+# QR Master
+
+Skannige QR-koode ja vöötkoode, genereerige kohandatud koode linkide või WiFi jaoks ja hallake kõike lokaalselt.
+
+<a className="button button--primary" href="/utilities/qr-master/" data-nobrokenlinkcheck>Ava utiliit</a>
+
+![qr-master utility screenshot](/img/og/utilities/qr-master.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/qr-master/" />
+</Head>
+
+## Mida see teeb
+Kasutage oma kaamerat, kleebitud pilte või üleslaadimisi QR-koodide ja levinud vöötkoode skannimiseks, seejärel genereerige oma koodid WiFi, linkide või kontaktide jaoks. Hoidke lokaalset ajalugu import- ja ekspordifunktsiooniga, et skaneerimised oleksid kaasaskantavad ilma pilvesünkroonimiseta.
+
+## Millal seda kasutada (ja millal mitte)
+**Kasutage seda, kui:**
+- Peate skaneerima varade silte või vöötkoode käigult ilma rakendust installimata.
+- Soovite genereerida WiFi- või link-QR-koode kiireks jagamiseks.
+- Vajate kerget, võrguühenduseta viisi skaneerimiste logimiseks ja nende JSON-na eksportimiseks.
+
+**Vältige seda, kui:**
+- Vajate ettevõttetaseme laofunktsioone või pilvesünkroonimist.
+- Valgustus või kaamera kvaliteet on usaldusväärse vöötkoodi lugemiseks liiga kehv.
+
+## Sisendid ja väljundid
+### Sisendid
+| Sisend | Kirjeldus |
+| --- | --- |
+| Kaamera voog või üleslaaditud pilt | Reaalajas skannimine või pildi importimine dekodeerimiseks. |
+| Käsitsi sisu | Tekst, URL-id, WiFi-mandaadid või kontaktandmed kodeerimiseks. |
+| Ajaloo import | Laadige eelnevad skaneerimised JSON-ist, kui soovite sessioonideülest järjepidevust. |
+
+### Väljundid
+| Väljund | Vorming | Märkused |
+| --- | --- | --- |
+| Dekodeeritud skannimistulemused | Tekst | Skannitud QR- või vöötkoodi väärtuste sisu. |
+| Genereeritud koodid | PNG | Allalaaditavad QR- või vöötkoodi pildid jagamiseks. |
+| Skannimisajalugu | JSON | Lokaalselt salvestatud varasemate skaneerimiste eksport. |
+
+## Kuidas kasutada
+1. Lubage kaamera juurdepääs või laadige pilt skannimiseks.
+2. Vaadake dekodeeritud andmeid üle ja salvestage need valikuliselt ajalukku.
+3. Sisestage link, WiFi-login või tekst uue koodi genereerimiseks.
+4. Laadige PNG alla või hoidke seda ajaloos.
+5. Eksportige ajalugu JSON-ina, kui vajate varundamist.
+
+## KKK
+- **Milliseid vorminguid toetatakse?** QR ja levinud vöötkoode; testige näidist, kui tuginete konkreetsele sümboloogiale.
+- **Kas see töötab võrguühenduseta?** Jah. Skannimine ja genereerimine toimuvad brauseris.
+- **Kus ajalugu hoitakse?** Teie brauseri mälus, kuni ekspordite või tühjate selle.
+- **Kas saan skannida piltidelt kaamera asemel?** Jah. Kleepige või laadige pilt üles ja dekoodri loeb selle.
+- **Kas saan skaneerimisi eksportida?** Jah. Eksportige ajalugu JSON-ina varundamiseks või jagamiseks.
+
+## Seotud tööriistad
+- [QR Nameplate Generator](./qr-nameplate)
+- [PDF Master](./pdf-master)
+- [PDF Batch Signer](./pdf-batch-signer)
+
+## Muudatuste logi
+- Esialgne dokumentatsioon.
+
+## Tagasiside / vearaport
+- [Ava GitHubi probleem](https://github.com/biosxxx/cadautoscript.com/issues)
+- Saatke e-kiri või DM slugiga `qr-master`.

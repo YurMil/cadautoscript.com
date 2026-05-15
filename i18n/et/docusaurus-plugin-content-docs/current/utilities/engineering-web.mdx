@@ -1,0 +1,57 @@
+---
+title: "Inseneri veeb: Chromium ja HTML5 kui CAD-i ja arvutuste keskkond"
+sidebar_position: 3
+description: Miks Chromiumi mootor, HTML5 ja veebi-API-d on tehniliste utiliitide uus platvorm.
+---
+
+import Head from '@docusaurus/Head';
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/docs/utilities/engineering-web/" />
+</Head>
+
+Traditsiooniline inseneritarkvara kannatab sageli kahe äärmuse all: see on kas **raske töölaua CAD**, mis nõuab võimsat riistvara/litsentse, või **laialipaisatud tabelarvutid**, mida on raske hooldada. Kaasaegne veebitehnoloogia — Chromium, HTML5, WebAssembly — võimaldab luua täisväärtuslikke inseneri utiliite, mis töötavad täielikult brauseris. Brauserist saab arvutuste operatsioonisüsteem.
+
+## Miks see on oluline
+
+### Pingutuseta ristplatvormiline ühilduvus
+Üks HTML/JS build töötab samamoodi Windowsis, Linuxis, macOS-is või tsehhi tahvelarvutites. Pole vaja installereid ega muretsemist DLL-failide pärast.
+
+### Visualiseerimine ja interaktiivsus
+DOM, Canvas, SVG ja WebGL võimaldavad renderdada diagramme ja 3D-eelvaateid reaalajas. Tala pikkuse või seina paksuse reguleerimine uuendab vaadet koheselt.
+
+### Juurdepääs riistvarale
+API-d nagu Web Serial, Web Bluetooth ja WebHID suhtlevad PLC-de, kontrollerite ja instrumentidega üle USB/COM-pordi. Ideaalne elektromehaanika või tootmisdiagnostika jaoks.
+
+### Lokaalne töö (PWA)
+Progressiivsed veebirakendused (PWA) puhverdavad utiliidi, nii et see töötab masina juures võrguühenduseta. See käitub nagu kohalik tööriist, kuid uueneb lihtsa juurutamise kaudu.
+
+## Praktilised rakendusnäited
+
+### 1. Interaktiivsed istud ja tolerantsid (mehaanika)
+- **Sisendid:** nimiläbimõõt + tolerantsiklass (nt `50 H7/g6`).
+- **Loogika:** JavaScript arvutab hälbed, lõtkud ja pingud.
+- **Visualiseerimine:** Canvas joonistab tolerantsitsoonid; tööriistavihjed näitavad tõrgete tõenäosust.
+- **Tulemus:** Insenerid näevad istu selle asemel, et uurida staatilisi tabeleid.
+
+### 2. Kaabli ristlõike kalkulaator (elektroonika)
+- **Liides:** Lohistage koormussõlmed SVG-marsruudile.
+- **Dünaamika:** Kaabli värv muutub rohelisest punaseks, kui pingelang ületab lubatud protsendi.
+- **Automatiseerimine:** `jspdf` ekspordib vormindatud spetsifikatsiooni kinnitamiseks.
+
+### 3. Kontrolleri diagnostikapaneel (elektromehaanika)
+- **Stsenaarium:** Mootori juhtseadmed, mis põhinevad STM32/Arduinol.
+- **Lahendus:** Leht nupuga „Connect“; brauser küsib COM-porti Web Seriali kaudu.
+- **Funktsionaalsus:** Reaalajas telemeetria graafikud (Chart.js/uPlot) pluss muudetavad PID-väljad, mis kirjutatakse tagasi jadapordi kaudu.
+- **Eelis:** Puuduvad tootjapoolsed käitusajad või draiverite installid — piisab Chrome'ist ja USB-kaablist.
+
+## Tehnoloogiline pinu alustamiseks
+
+- **UI:** HTML + CSS (Tailwind/Bootstrap valikuline).
+- **Loogika:** Vanilla JavaScript või TypeScript tüübitud füüsikaliste väärtuste jaoks.
+- **Graafika:** SVG/Canvas 2D-skeemide jaoks; Three.js 3D-sõlmede jaoks.
+- **Arvutus:** WebAssembly raske matemaatika jaoks C++/Rustist, kuid JS katab enamiku kasutusjuhtudest.
+
+## Kokkuvõte
+
+Insenerarvutuste kolimine veebi ei ole lihtsalt trend — see on levitamisstrateegia. Kalkulaatorist saab link, mille saate kopeerida ettevõtte portaali, jagada kolleegiga või avada tahvelarvutis masina kõrval. See vähendab inimlikke vigu ja kiirendab inseneritsüklit.

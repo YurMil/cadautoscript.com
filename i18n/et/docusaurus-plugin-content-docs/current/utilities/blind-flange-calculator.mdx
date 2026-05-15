@@ -1,0 +1,165 @@
+---
+title: Blind Flange Calculator
+description: Arvuta EN 13445-3 pimeääriku paksus automaatse EN 1092-1 PN valiku, kaalu hinnangu ja brauseripõhise 3D STEP ekspordiga.
+slug: /utilities/blind-flange-calculator
+keywords:
+  - blind flange
+  - EN 13445-3
+  - EN 1092-1
+  - flange thickness
+  - PN selection
+  - pressure vessel
+---
+
+import Head from '@docusaurus/Head';
+
+# Blind Flange Calculator
+
+Automaatne PN-klassi valik standardist EN 1092-1, minimaalse paksuse arvutamine vastavalt EN 13445-3-le ja vastava 3D STEP-mudeli genereerimine otse brauseris.
+
+<a className="button button--primary" href="/utilities/blind-flange-calculator/" data-nobrokenlinkcheck>Ava rakendus</a>
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/blind-flange-calculator/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Blind Flange Calculator",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Automaatne PN-klassi valik standardist EN 1092-1, minimaalse paksuse arvutamine vastavalt EN 13445-3-le, soovitatav standardne plaadipaksus pimeäärikutele ja vastava 3D STEP-mudeli eksport.",
+  "url": "https://cadautoscript.com/utilities/blind-flange-calculator/",
+  "featureList": [
+"Automaatne PN valik",
+"Minimaalne ja soovitatav paksus",
+"Poltringi andmed ja kaalu hinnang",
+"3D STEP eksport konfigureeritud pimeäärikutele"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/blind-flange-calculator/",
+  "offers": {
+"@type": "Offer",
+"price": "0",
+"priceCurrency": "USD"
+  },
+  "author": {
+"@type": "Organization",
+"name": "CAD AutoScript"
+  }
+}`}</script>
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+{
+  "@type": "Question",
+  "name": "Kuidas valitakse PN klass?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Kalkulaator valib lähima EN 1092-1 PN klassi, mis vastab töörõhule või ületab seda."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Kas ma saan survetestirõhku muuta?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Jah. Survetestirõhk uueneb automaatselt töörõhu põhjal, kuni te seda käsitsi muudate."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Millised materjalid on valikus?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Praegune valik sisaldab materjale P265GH, P355GH ja 1.4404 (316L) koos temperatuurist sõltuvate voolavuspiiridega."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Kas minu andmed laaditakse üles?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Ei. Kõik töötab lokaalselt teie brauseris."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Kas see on lõplik projekteerimiskontroll?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Ei. Kasutage seda esialgseks dimensioneerimiseks ning kontrollige enne väljastamist poldikoormusi, tihendivalikut ja vastavust normidele."
+  }
+}
+  ]
+}`}</script>
+</Head>
+
+## Mida see teeb
+Valige DN, määrake töö- ja testrõhk, temperatuur ja materjali mark. Tööriist kasutab EN 1092-1 ääriku mõõtmeid ja EN 13445-3 pingekontrolle, et arvutada minimaalne paksus, soovitada standardset plaadipaksust ja eksportida vastav 3D STEP-mudel aktiivse ääriku konfiguratsiooni jaoks.
+
+## Millal seda kasutada (ja millal mitte)
+**Kasutage, kui:**
+- Vajate kiiret esialgset pimeääriku paksust EN 13445 projektide jaoks.
+- Soovite automaatset PN-otsingut käsitsi tabelite kontrollimise asemel.
+- Vajate kiiret kaalu hinnangut hanke- või käitlusplaanide jaoks.
+- Soovite brauseripõhist lihtsat 3D STEP-mudelit praeguse ääriku geomeetria kohta.
+
+**Vältige, kui:**
+- Vajate täielikult sertifitseeritud arvutuspaketti või kolmanda osapoole kinnitust.
+- Teie materjali mark või ääriku standard ei sisaldu andmestikus.
+
+## Sisendid ja väljundid
+### Sisendid
+| Sisend | Kirjeldus |
+| --- | --- |
+| DN | Nimiläbimõõt EN 1092-1 mõõtmete jaoks. |
+| Töörõhk | Kasutatakse PN-klassi valimiseks. |
+| Testrõhk | Vaikimisi arvutatakse töörõhu põhjal, kuid seda saab muuta. |
+| Temperatuur | Kasutatakse temperatuurist sõltuva voolavuspiiri valimiseks (°C). |
+| Materjal | P265GH, P355GH või 1.4404 (316L). |
+| Korrosioonivaru | Lisatakse minimaalsele paksusele. |
+
+### Väljundid
+| Väljund | Formaat | Märkused |
+| --- | --- | --- |
+| Soovitatav paksus | mm | Ümardatud ülespoole vastavalt standardsele plaadinimekirjale. |
+| Minimaalne paksus | mm | Vastavalt EN 13445-3-le, korrosioonivaru on näidatud eraldi. |
+| PN-klass ja poltide andmed | Ekraanil | Sisaldab poltide arvu, suurust ja poltringi läbimõõtu. |
+| Kaalu hinnang | kg | Põhineb ääriku välisläbimõõdul, paksusel ja materjali tihedusel. |
+| 3D STEP mudel | STEP | Ekspordib konfigureeritud pimeääriku korpuse ja poltide avade mustri. |
+
+## Kuidas kasutada
+1. Valige DN ja sisestage töörõhk.
+2. Kinnitage või muutke survetestirõhku.
+3. Valige temperatuur, materjal ja korrosioonivaru.
+4. Vaadake soovitatavat paksust, PN-klassi ja poltide andmeid.
+5. Kasutage STEP-ekspordi funktsiooni, kui vajate praeguse geomeetriaga 3D-mudelit.
+
+**Näidisandmed:** DN 100, töörõhk 10 bar, testrõhk 14 bar, temperatuur 20 C, materjal P265GH, korrosioon 1 mm.
+- Oodatav tulemus: Soovitatav paksus ja PN-klass koos poltide suuruse ja kaalu hinnanguga.
+
+## Täpsus ja kontroll
+- Kalkulaator on esialgne dimensioneerimise tööriist ega asenda täielikku normidele vastavuse kontrolli.
+- Kinnitage ääriku klassi valik vastavalt projekti rõhuklassidele ja tihendite nõuetele.
+- Kontrollige materjali omadusi, eriti kõrgetel temperatuuridel.
+- EN 1092-1 kõrgrõhuklassid (PN160+) on standarditud ainult piiratud DN-vahemikus; toetamata kombinatsioonide puhul kuvatakse "No data".
+
+## FAQ
+- **Kuidas valitakse PN klass?** Valitakse lähim EN 1092-1 PN klass, mis vastab töörõhule või ületab seda.
+- **Kas ma saan survetestirõhku muuta?** Jah. Testrõhu muutmine lülitab automaatsed uuendused välja.
+- **Millised materjalid on valikus?** P265GH, P355GH ja 1.4404 (316L) koos temperatuurist sõltuvate andmetega.
+- **Kas minu andmed laaditakse üles?** Ei. Kõik toimub lokaalselt brauseris.
+- **Kas see on lõplik projekteerimiskontroll?** Ei. Kasutage seda esialgseks dimensioneerimiseks ja kontrollige vastavalt oma projekti spetsifikatsioonidele.
+
+## Seotud tööriistad
+- [Dished End (Vessel Head) Calculator](./pressure-vessel-dished-end-calc)
+- [Cylindrical Shell Rolling Calculator](./cylindrical-shell-rolling)
+- [Pipe Cutter Visualizer](./pipe-cutter)
+
+## Changelog
+- Lisatud brauseripõhine 3D STEP eksport konfigureeritud pimeäärikutele.
+- Esmane dokumentatsioon.
+
+## Tagasiside / veateade
+- [Ava GitHubi issue](https://github.com/biosxxx/cadautoscript.com/issues)
+- Saada e-kiri või DM märksõnaga `blind-flange-calculator`, et saaksime vea taastada.

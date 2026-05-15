@@ -1,0 +1,167 @@
+---
+title: Bourdon Gauge Configurator
+description: Valige Bourdon tube manomeetritele nominaalsed suurused, vahemikud, ühendused ja lisaseadmed, vaadake eelvaadet ja eksportige PDF-andmeleht.
+slug: /utilities/bourdon-gauge-configurator
+image: /img/og/utilities/bourdon-gauge-configurator.png
+keywords:
+  - bourdon gauge
+  - pressure gauge
+  - gauge configurator
+  - pressure range
+  - process connection
+  - datasheet PDF
+  - instrument specification
+  - glycerin fill
+---
+
+import Head from '@docusaurus/Head';
+
+# Bourdon Gauge Configurator
+
+Valige Bourdon tube manomeetritele nominaalsed suurused, vahemikud, ühendused ja lisaseadmed, seejärel eksportige PDF-andmeleht.
+
+<a className="button button--primary" href="/utilities/bourdon-gauge-configurator/" data-nobrokenlinkcheck>Ava rakendus</a>
+
+![bourdon-gauge-configurator utility screenshot](/img/og/utilities/bourdon-gauge-configurator.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/bourdon-gauge-configurator/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Bourdon Gauge Configurator",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Pick nominal sizes, ranges, connections, and accessories for Bourdon tube gauges, view the preview, and export a PDF datasheet.",
+  "url": "https://cadautoscript.com/utilities/bourdon-gauge-configurator/",
+  "image": "https://cadautoscript.com/img/og/utilities/bourdon-gauge-configurator.png",
+  "featureList": [
+"Range presets with custom span",
+"Connection and case fill presets",
+"Accessory toggles",
+"Live gauge drawing",
+"PDF datasheet export"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/bourdon-gauge-configurator/",
+  "offers": {
+"@type": "Offer",
+"price": "0",
+"priceCurrency": "USD"
+  },
+  "author": {
+"@type": "Organization",
+"name": "CAD AutoScript"
+  }
+}`}</script>
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+{
+  "@type": "Question",
+  "name": "Kas ma saan sisestada kohandatud vahemiku?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Jah. Kasutage kohandatud vahemikku (custom span), kui eelseadistused ei vasta teie vajadustele."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Kas see toetab imperiaalühikuid?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Jah. Sisestage psi või bar vastavalt vajadusele; andmeleht kuvab seda, mida sisestate."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Kas ma saan lisada oma ettevõtte logo?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Kasutage eksporditud PDF-i ja lisage oma sümboolika hiljem, kui see on vajalik."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Kas eelvaade on õiges mõõtkavas?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "See on illustratiivne; täpsete mõõtmete saamiseks küsige tootjalt sertifitseeritud jooniseid."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Kas see laeb minu andmed üles?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Ei. Kõik töötab lokaalselt brauseris."
+  }
+}
+  ]
+}`}</script>
+</Head>
+
+## Mida see teeb
+Valige Bourdon tube manomeetri sihverplaadi suurus, rõhuvahemik, ühendusstandard, korpuse täide ja lisaseadmed. Vaadake manomeetri joonise eelvaadet, lülitage sisse sifooni või ventiili valikud ja eksportige valikutega PDF-andmeleht.
+
+## Millal seda kasutada (ja millal mitte)
+**Kasutage seda, kui:**
+- Koostate manomeetri spetsifikatsiooni hinnapakkumise või sisese heakskiidu jaoks.
+- Soovite kiiresti võrrelda ühenduse või täite valikuid koos reaalajas eelvaatega.
+- Soovite PDF-lehte, mida saata tarnijatele, ootamata CAD-joonise valmimist.
+
+**Vältige seda, kui:**
+- Vajate sertifitseeritud rõhunäitajaid või heakskiite väljaspool esialgset andmelehte.
+- Konfigureerite elektroonilisi transmittereid või diafragmatihendeid (ei kuulu selle tööriista alla).
+
+## Sisendid ja väljundid
+### Sisendid
+| Sisend | Kirjeldus |
+| --- | --- |
+| Dial size | Manomeetri sihverplaadi nominaalne läbimõõt. |
+| Pressure range and units | Valige eelseadistatud vahemikud või sisestage kohandatud vahemik. |
+| Connection location and standard | Alumine või tagumine ühendus DIN, ANSI, NPT või muude valikutega. |
+| Case fill and window | Kuiv või täidetud korpus ning vaateakna materjal. |
+| Accessories | Sifoon (siphon), ventiil (valve), äärik või muud lisatavad valikud. |
+| Project metadata | Tag, liini number ja märkused andmelehe jaoks. |
+
+### Väljundid
+| Väljund | Formaat | Märkused |
+| --- | --- | --- |
+| PDF datasheet | PDF | Manomeetri kokkuvõte koos eelvaate ja valikutega. |
+| Gauge preview | Ekraanil | Reaalajas joonis, mis uueneb valikute muutmisel. |
+
+## Kuidas kasutada
+1. Valige sihverplaadi suurus (dial size) ja rõhuvahemik (eelseadistatud või kohandatud).
+2. Valige ühenduse asukoht, standard ja korpuse täide.
+3. Lülitage sisse lisaseadmed nagu sifoon, ventiil või äärik.
+4. Lisage projekti sildid (tag) või märkused.
+5. Eksportige PDF-andmeleht ülevaatamiseks või esitamiseks.
+
+**Näidisandmed:** Dial: 100 mm, Vahemik: 0 kuni 10 bar, Ühendus: tagumine G 1/2, Täide: glycerin, Lisaseade: siphon, Tag: PG-204.
+- Oodatud tulemus: Loob PDF-andmelehe valitud vahemiku, ühenduse, täite, lisaseadme ja eelvaatepildiga PG-204 jaoks.
+
+## Täpsus ja kontrollimine
+- Andmeleht on esialgne; kontrollige rõhunäitajaid ja materjale koos tootjaga.
+- Vahemikud ja ühikud on kasutaja sisestatud; kinnitage, et need vastavad teie protsessi piirangutele.
+- Lisaseadmed on indikatiivsed; kontrollige keerme pikkust ja paigaldusruumi enne paigaldamist.
+- Kõik arvutused jäävad lokaalseks; salvestage PDF oma valikute arhiveerimiseks.
+
+## FAQ
+- **Kas ma saan sisestada kohandatud vahemiku?** Jah. Kasutage kohandatud vahemikku (custom span), kui eelseadistused ei vasta teie vajadustele.
+- **Kas see toetab imperiaalühikuid?** Jah. Sisestage psi või bar vastavalt vajadusele; andmeleht kuvab seda, mida sisestate.
+- **Kas ma saan lisada oma ettevõtte logo?** Kasutage eksporditud PDF-i ja lisage oma sümboolika hiljem, kui see on vajalik.
+- **Kas eelvaade on õiges mõõtkavas?** See on illustratiivne; täpsete mõõtmete saamiseks küsige tootjalt sertifitseeritud jooniseid.
+- **Kas see laeb minu andmed üles?** Ei. Kõik töötab lokaalselt brauseris.
+
+## Seotud tööriistad
+- [Magnetic Level Gauge Configurator](./magnetic-level-gauge-configurator)
+- [Industrial Thermometer Configurator](./industrial-thermometer-configurator)
+- [Pipe Cutter Visualizer](./pipe-cutter)
+
+## Muudatuste logi (Changelog)
+- Esialgne dokumentatsioon.
+
+## Tagasiside / veateade
+- [Ava GitHub-is issue](https://github.com/biosxxx/cadautoscript.com/issues)
+- Saada e-kiri või DM koos slugiga `bourdon-gauge-configurator`, et saaksime vea taasesitada.

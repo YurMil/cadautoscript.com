@@ -1,0 +1,81 @@
+---
+title: PDF Number Extractor
+description: Tõstke esile QA-seerianumbrid, BOM-ID-d ja kontrollnumbrid lokaalselt WASM-põhise sõelumisega. Üleslaadimisi ei ole.
+slug: /utilities/pdf-number-extractor
+image: /img/og/utilities/pdf-number-extractor.png
+keywords:
+  - pdf number extraction
+  - regex filter
+  - csv export
+  - offline pdf
+  - serial capture
+  - wasm parser
+---
+
+import Head from '@docusaurus/Head';
+
+# PDF Number Extractor
+
+Tõstke esile QA-seerianumbrid, BOM-ID-d ja kontrollnumbrid lokaalselt WASM-sõelumise ja CSV-ekspordiga.
+
+<a className="button button--primary" href="/utilities/pdf-number-extractor/" data-nobrokenlinkcheck>Ava utiliit</a>
+
+![pdf-number-extractor utility screenshot](/img/og/utilities/pdf-number-extractor.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/pdf-number-extractor/" />
+</Head>
+
+## Mida see teeb
+Lohistage PDF-failid, filtreerige tuvastatud numbrid regex- või pikkusreeglitega ning eksportige puhaste vastete loend. Sõelumine toimub brauseris WASM-iga, nii et QA-seerianumbrid, BOM-ID-d ja kontrollnumbrid ei lahku teie masinast.
+
+## Millal seda kasutada (ja millal mitte)
+**Kasutage seda, kui:**
+- Peate tõmbama seerianumbreid või ID-sid tootmise PDF-idest QA või jälgitavuse jaoks.
+- Soovite eeltäita tabeleid kontrollnumbritega ilma käsitsi ümbertrükkimiseta.
+- Eelistate võrguühenduseta töövoogu ilma üleslaadimiste ja järjekordadeta.
+
+**Vältige seda, kui:**
+- Teie PDF-id on skaneeritud pildid, mis nõuavad sõelumise asemel OCR-i.
+- Vajate korraga tuhandete lehtede täistekstotsimist.
+
+## Sisendid ja väljundid
+### Sisendid
+| Sisend | Kirjeldus |
+| --- | --- |
+| PDF-failid | Üksikud või mitu PDF-i, mis lohistatakse brauserisse. |
+| Regex- või filtrireeglid | Kaasake või jätke välja mustrid vajalike numbrite isoleerimiseks. |
+| Miinimum/maksimum pikkus | Valikulised piirangud müra, näiteks leheküljenumbrite, vältimiseks. |
+| Ekspordivalikud | Valige CSV-eksport või kopeerimine lõikepuhvrisse. |
+
+### Väljundid
+| Väljund | Vorming | Märkused |
+| --- | --- | --- |
+| Esiletõstetud vasteid | Ekraanil | Sobitatud numbrite visuaalne ülekate kiireks QA-ks. |
+| CSV-eksport | CSV | Ekstraheeritud numbrite loend faili kohta, valmis tabelitele. |
+| Lõikepuhvri koopia | Tekst | Vastete kiirkoopia ilma faili allalaadimiseta. |
+
+## Kuidas kasutada
+1. Lohistage PDF-failid utiliiti.
+2. Lisage regex- või pikkusfiltrid vajalike ID-de sihtimiseks.
+3. Vaadake esiletõstetud vasteid ekraanil üle.
+4. Eksportige tulemused CSV-na või kopeerige lõikepuhvrisse.
+5. Tühjendage seanss lõpetamisel; midagi ei laadita üles.
+
+## KKK
+- **Kas see teeb OCR-i skaneeritud PDF-idele?** Ei. See loeb olemasolevat teksti; kasutage esmalt OCR-i, kui PDF on pilt.
+- **Kas saan töödelda mitu faili?** Jah. Laadige PDF-ide pakk ja eksportige kombineeritud tulemused.
+- **Kas andmeid laaditakse üles?** Ei. Sõelumine toimub lokaalselt teie brauseris.
+- **Kas saan regexis muudatusi teha?** Jah. Toetatud on standardne JavaScripti regex-süntaks.
+
+## Seotud tööriistad
+- [PDF BOM Extractor](./pdf-bom-extractor)
+- [PDF Master](./pdf-master)
+- [PDF Batch Signer](./pdf-batch-signer)
+
+## Muudatuste logi
+- Esialgne dokumentatsioon.
+
+## Tagasiside / vearaport
+- [Ava GitHubi probleem](https://github.com/biosxxx/cadautoscript.com/issues)
+- Saatke e-kiri või DM slugiga `pdf-number-extractor`.

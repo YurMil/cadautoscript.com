@@ -4,9 +4,11 @@ import {utilities} from '@site/src/data/utilities';
 import {useAuthModal} from '@site/src/contexts/AuthModalContext';
 import {useAuthStatus} from '@site/src/hooks/useAuthStatus';
 import {useUtilitiesAccess} from '@site/src/hooks/useUtilitiesAccess';
+import {useI18n} from '@site/src/contexts/I18nContext';
 import styles from './UtilityAccessTable.module.css';
 
 export default function UtilityAccessTable(): React.JSX.Element {
+  const {t, tu} = useI18n();
   const {isAuthenticated, authChecked} = useAuthStatus();
   const {openLoginModal} = useAuthModal();
   const {utilitiesPublicAccess} = useUtilitiesAccess();
@@ -26,25 +28,26 @@ export default function UtilityAccessTable(): React.JSX.Element {
     <div className={styles.wrapper}>
       <p className={styles.notice}>
         {utilitiesPublicAccess
-          ? 'All utilities are currently open. Sign-in is optional.'
-          : 'Guests can launch the first three tools. Sign in to unlock the rest of the catalog.'}
+          ? t('utility.allUtilitiesOpen')
+          : t('utility.guestNotice')}
       </p>
       <table className="utilityTable">
         <thead>
           <tr>
-            <th>Utility</th>
-            <th>Description</th>
-            <th>Standards</th>
-            <th>Launch</th>
+            <th>{t('utility.tableColumnUtility')}</th>
+            <th>{t('utility.tableColumnDescription')}</th>
+            <th>{t('utility.tableColumnStandards')}</th>
+            <th>{t('utility.tableColumnLaunch')}</th>
           </tr>
         </thead>
         <tbody>
           {utilities.map((utility, index) => {
             const isLocked = !utilitiesPublicAccess && authChecked && !isAuthenticated && index >= 3;
+            const {name, description} = tu(utility.id);
             return (
               <tr key={utility.id}>
-                <td>{utility.name}</td>
-                <td>{utility.description}</td>
+                <td>{name}</td>
+                <td>{description}</td>
                 <td>{utility.standards}</td>
                 <td className={styles.launchCell}>
                   <Link
@@ -53,9 +56,9 @@ export default function UtilityAccessTable(): React.JSX.Element {
                     onClick={(event) => handleLaunch(event, isLocked)}
                     className={isLocked ? styles.lockedLink : undefined}
                   >
-                    {isLocked ? 'Sign in to open' : 'Open'}
+                    {isLocked ? t('utility.signInToOpen') : t('utility.open')}
                   </Link>
-                  {isLocked ? <span className={styles.lockPill}>Locked</span> : null}
+                  {isLocked ? <span className={styles.lockPill}>{t('utility.locked')}</span> : null}
                 </td>
               </tr>
             );

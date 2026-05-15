@@ -1,0 +1,81 @@
+---
+title: PDF BOM Extractor
+description: Ekstraheerige vektoriaalsetest PDF-idest BOM- ja spetsifikatsioonitabelid puhasteks CSV-ideks, allalaaditavateks lokaalselt.
+slug: /utilities/pdf-bom-extractor
+image: /img/og/utilities/pdf-bom-extractor.png
+keywords:
+  - bom extraction
+  - pdf to csv
+  - table detection
+  - offline parser
+  - csv export
+---
+
+import Head from '@docusaurus/Head';
+
+# PDF BOM Extractor
+
+Ekstraheerige BOM- ja spetsifikatsioonitabelid vektoriaalsetest PDF-idest puhasteks CSV-ideks, mida saate lokaalselt alla laadida.
+
+<a className="button button--primary" href="/utilities/pdf-bom-extractor/" data-nobrokenlinkcheck>Ava utiliit</a>
+
+![pdf-bom-extractor utility screenshot](/img/og/utilities/pdf-bom-extractor.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/pdf-bom-extractor/" />
+</Head>
+
+## Mida see teeb
+Laadige CAD-genereeritud PDF-id, tuvastage automaatselt päiseread ja veerud, eemaldage revisjoni- ja jaluse müra ning eksportige failipõhised CSV-id või ühendatud põhiaruanne. Kõik töötab kliendi poolel, nii et joonised ja ekstraheeritud andmed jäävad teie seadmesse.
+
+## Millal seda kasutada (ja millal mitte)
+**Kasutage seda, kui:**
+- Soovite tõmmata BOM-tabeleid jooniste PDF-idest ilma käsitsi ümbertrükkimiseta.
+- Vajate kiiret CSV-eksporti hankele või QA-le edastamiseks.
+- Eelistate lokaalset sõelumist ilma üleslaadimisteta.
+
+**Vältige seda, kui:**
+- Teie PDF-id on skaneeritud pildid, mis vajaksid lugemiseks OCR-i.
+- Tabelitel on rasked ühendatud lahtrid või muutuvad veergude arvud, mis rikuvad automaattuvastuse.
+
+## Sisendid ja väljundid
+### Sisendid
+| Sisend | Kirjeldus |
+| --- | --- |
+| PDF-joonised | Vektoriaal-PDF-id BOM- või spetsifikatsioonitabelitega. |
+| Päiserea valik | Kinnitage või kohandage, milline rida määratleb veeru päised. |
+| Veerutuvastuse lülitid | Kontrollige, kuidas sõeluja veerge grupeerib. |
+| Rea filtrid | Jätke välja revisjoni- või jaluseread, mida te CSV-s ei soovi. |
+| Põhiaruande valik | Kombineerige väljundid üheks CSV-ks vajadusel. |
+
+### Väljundid
+| Väljund | Vorming | Märkused |
+| --- | --- | --- |
+| Failipõhine CSV | CSV | Üks CSV iga töödeldud PDF-i kohta. |
+| Põhi-CSV | CSV | Valikuline kombineeritud aruanne kõigist üleslaaditud failidest. |
+| Eelvaate tabel | Ekraanil | Vaadake üle ja kohandage enne allalaadimist. |
+
+## Kuidas kasutada
+1. Laadige üles üks või mitu joonise PDF-i.
+2. Kinnitage tuvastatud päiserida ja kohandage veerge vajadusel.
+3. Eemaldage jaluse- või revisjonread.
+4. Laadige alla failipõhised CSV-id või põhiaruanne.
+5. Arhiveerige CSV-id oma töövihikuga.
+
+## KKK
+- **Kas see teeb OCR-i piltidele?** Ei. See loeb ainult vektorteksti.
+- **Kas saan töödelda palju faile?** Jah. Laadige üles pakett ja eksportige failipõhiselt või põhiaruandena.
+- **Kas andmeid laaditakse üles?** Ei. Kõik jääb brauserisse.
+- **Kuidas käsitletakse ühendatud lahtreid?** Sõeluja tasandab veerud; kontrollige ja kohandage pärast eksporti vajadusel.
+
+## Seotud tööriistad
+- [PDF Number Extractor](./pdf-number-extractor)
+- [PDF Master](./pdf-master)
+- [PDF Batch Signer](./pdf-batch-signer)
+
+## Muudatuste logi
+- Esialgne dokumentatsioon.
+
+## Tagasiside / vearaport
+- [Ava GitHubi probleem](https://github.com/biosxxx/cadautoscript.com/issues)
+- Saatke e-kiri või DM slugiga `pdf-bom-extractor`.

@@ -1,0 +1,168 @@
+---
+title: Industrial Thermometer Configurator
+description: Valige tööstuslikele termomeetritele vahemikud, sääred (stems), kaitsetaskud (thermowells) ja ühendused, vaadake eelvaadet ja eksportige PDF-andmeleht.
+slug: /utilities/industrial-thermometer-configurator
+image: /img/og/utilities/industrial-thermometer-configurator.png
+keywords:
+  - industrial thermometer
+  - bimetal thermometer
+  - thermowell
+  - datasheet PDF
+  - EN 13190
+  - stem length
+  - process connection
+  - instrument specification
+---
+
+import Head from '@docusaurus/Head';
+
+# Industrial Thermometer Configurator
+
+Valige tööstuslikele termomeetritele vahemikud, sääred (stems), kaitsetaskud (thermowells) ja ühendused, vaadake seadistuse eelvaadet ja eksportige PDF-andmeleht.
+
+<a className="button button--primary" href="/utilities/industrial-thermometer-configurator/" data-nobrokenlinkcheck>Ava rakendus</a>
+
+![industrial-thermometer-configurator utility screenshot](/img/og/utilities/industrial-thermometer-configurator.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/industrial-thermometer-configurator/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Industrial Thermometer Configurator",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Select ranges, stems, thermowells, and connections for industrial thermometers, preview the build, and export a PDF datasheet.",
+  "url": "https://cadautoscript.com/utilities/industrial-thermometer-configurator/",
+  "image": "https://cadautoscript.com/img/og/utilities/industrial-thermometer-configurator.png",
+  "featureList": [
+"Range presets plus custom span",
+"Stem and thermowell options",
+"Mounting preview",
+"PDF datasheet export"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/industrial-thermometer-configurator/",
+  "offers": {
+"@type": "Offer",
+"price": "0",
+"priceCurrency": "USD"
+  },
+  "author": {
+"@type": "Organization",
+"name": "CAD AutoScript"
+  }
+}`}</script>
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+{
+  "@type": "Question",
+  "name": "Kas ma saan määrata kohandatud vahemiku?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Jah. Lülituge kohandatud (custom) vaatele ja sisestage oma miinimum ja maksimum."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Kas see toetab Fahrenheit skaalat?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Jah. Valige ühik enne vahemiku valimist."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Kas ma saan seda kasutada võrguühenduseta?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Jah. Eelvaate loomine ja PDF-eksport toimuvad brauseris."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Kas see arvutab kaitsetaskute (thermowells) mõõtmed automaatselt?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "See järgib teie sisestusi; kontrollige neid vastavalt rõhu ja sukeldusnõuetele."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Kus minu andmeid hoitakse?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Ainult teie brauseris, kuni eksportite PDF-i."
+  }
+}
+  ]
+}`}</script>
+</Head>
+
+## Mida see teeb
+Konfigureerige bimetall-tööstuslik termomeeter (bimetal thermometer): valige sihverplaadi suurus, temperatuurivahemik, sääre (stem) pikkus ja läbimõõt, paigaldusviis ja kaitsetasku (thermowell) valikud. Vaadake SVG-joonise eelvaadet ja eksportige valikutega PDF-andmeleht.
+
+## Millal seda kasutada (ja millal mitte)
+**Kasutage seda, kui:**
+- Koostate seadmete paketti ja vajate kiiret termomeetri andmelehte.
+- Soovite enne tellimist kontrollida sääre pikkust, ühendust ja kaitsetasku valikuid.
+- Vajate prinditavat PDF-i, mida jagada tarnijate või hooldusmeeskondadega.
+
+**Vältige seda, kui:**
+- Vajate sertifitseeritud rõhu- või vibratsiooniarvutusi väljaspool esialgset andmelehte.
+- Vajate elektroonilisi RTD andureid või transmittereid bimetall-termomeetrite asemel.
+
+## Sisendid ja väljundid
+### Sisendid
+| Sisend | Kirjeldus |
+| --- | --- |
+| Dial nominal size and unit | Valige 63, 100 või 160 mm ning Celsius või Fahrenheit vahemik. |
+| Temperature range | Eelseadistatud vahemikud või kohandatud min/max vastavalt protsessi tingimustele. |
+| Stem length, diameter, and material | Valige sääre geomeetria ja materjal vastavalt sukeldusvajadusele. |
+| Connection location, design, and standard | Alumine, tagumine või reguleeritav kinnitus G, NPT või meetrilise keermega. |
+| Case material and fill | Kuiv või silikooniga täidetud korpus ning vaateakna valik. |
+| Thermowell options | Lubage treitud või keevitatud taskud, valige disain, materjal, protsessiühendus, sukeldus- ja kaela pikkused. |
+| Project metadata and accessories | Tag-number, keskkond, standard, sertifikaadid ja lisad nagu kontrollosuti või kalibreerimissertifikaat. |
+
+### Väljundid
+| Väljund | Formaat | Märkused |
+| --- | --- | --- |
+| PDF datasheet | PDF | Genereeritakse lokaalselt koos valitud parameetrite ja joonisega. |
+| SVG preview | Ekraanil | Reaalajas joonis, mis uueneb geomeetria muutmisel. |
+| Configuration summary | Ekraanil | Kiire ülevaade vahemiku, sääre, ühenduse ja kaitsetasku valikutest. |
+
+## Kuidas kasutada
+1. Valige sihverplaadi suurus ja temperatuurivahemik (eelseadistatud või kohandatud).
+2. Määrake sääre pikkus, läbimõõt ja materjal vastavalt sukeldusvajadusele.
+3. Valige ühenduse asukoht ja keermestandard; valige korpuse täide ja aken.
+4. Lubage ja määrake kaitsetasku (thermowell) mõõtmed, kui see on vajalik, ning lisage projekti andmed.
+5. Vaadake eelvaade üle ja eksportige PDF-andmeleht.
+
+**Näidisandmed:** Dial: 100 mm, Vahemik: 0 kuni 200 C, Säär: 8 x 200 mm roostevaba, Kinnitus: alumine G 1/2, Korpus: silikooniga täidetud, Kaitsetasku: treitud G 1/2 koos 200 mm sukeldusega, Tag: TI-310.
+- Oodatud tulemus: Loob PDF-andmelehe ja eelvaate TI-310 jaoks koos valitud parameetritega.
+
+## Täpsus ja kontrollimine
+- Andmeleht on esialgne; kontrollige rõhupiiranguid ja sukeldusreegleid koos tootjaga.
+- Veenduge, et sukelduspikkus on piisav täpseks mõõtmiseks ja elemendi kaitsmiseks.
+- Ühikud ja vahemikud kajastavad teie sisestust; kontrollige need enne tellimuse esitamist üle.
+- Kogu töötlus jääb lokaalseks, kuni salvestate PDF-i.
+
+## FAQ
+- **Kas ma saan määrata kohandatud vahemiku?** Jah. Lülituge kohandatud (custom) vaatele ja sisestage min ja max.
+- **Kas see toetab Fahrenheit skaalat?** Jah. Valige ühik enne vahemiku valimist.
+- **Kas ma saan seda kasutada võrguühenduseta?** Jah. Joonistamine ja PDF-eksport toimuvad brauseris.
+- **Kas see arvutab kaitsetaskute mõõtmed automaatselt?** See järgib teie sisestusi; kontrollige neid vastavalt protsessi nõuetele.
+- **Kus minu andmeid hoitakse?** Ainult teie brauseris kuni PDF-i eksportimiseni.
+
+## Seotud tööriistad
+- [Bourdon Gauge Configurator](./bourdon-gauge-configurator)
+- [Magnetic Level Gauge Configurator](./magnetic-level-gauge-configurator)
+- [Pipe Cutter Visualizer](./pipe-cutter)
+
+## Muudatuste logi (Changelog)
+- Esialgne dokumentatsioon.
+
+## Tagasiside / veateade
+- [Ava GitHub-is issue](https://github.com/biosxxx/cadautoscript.com/issues)
+- Saada e-kiri või DM koos slugiga `industrial-thermometer-configurator`.
