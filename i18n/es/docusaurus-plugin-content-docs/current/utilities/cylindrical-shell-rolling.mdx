@@ -1,0 +1,167 @@
+---
+title: Cylindrical Shell Rolling Calculator
+description: Estime el espaciado de los rodillos, la tolerancia de doblado y la longitud desarrollada para virolas cilíndricas con ajustes preestablecidos EN 13445 / ASME VIII.
+slug: /utilities/cylindrical-shell-rolling
+image: /img/og/utilities/cylindrical-shell-rolling.png
+keywords:
+  - plate rolling
+  - developed length
+  - EN 13445
+  - ASME VIII
+  - roll spacing
+  - bending allowance
+  - shell calculator
+  - pressure vessel
+---
+
+import Head from '@docusaurus/Head';
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/cylindrical-shell-rolling/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Cylindrical Shell Rolling Calculator",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Estimate roll spacing, bending allowance, and developed length for cylindrical shells with EN 13445 / ASME VIII presets.",
+  "url": "https://cadautoscript.com/utilities/cylindrical-shell-rolling/",
+  "image": "https://cadautoscript.com/img/og/utilities/cylindrical-shell-rolling.png",
+  "featureList": [
+"Roll spacing hints",
+"Printable offsets",
+"Tolerance guidance"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/cylindrical-shell-rolling/",
+  "offers": {
+"@type": "Offer",
+"price": "0",
+"priceCurrency": "USD"
+  },
+  "author": {
+"@type": "Organization",
+"name": "CAD AutoScript"
+  }
+}`}</script>
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+{
+  "@type": "Question",
+  "name": "¿Soporta pulgadas así como el sistema métrico?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Sí. Ingrese los números en el sistema de unidades que utilice; los cálculos son independientes de las unidades."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Puedo exportar los resultados?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Use el cuadro de diálogo de impresión de su navegador o copie los valores en su propia plantilla; nada se almacena en el servidor."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Calcula conos o codos?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "No. El modelo actual asume un cilindro constante."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Cómo se maneja el retorno elástico (springback)?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Los ajustes preestablecidos incluyen tolerancias típicas. Ajuste el sobrecurvado o las tolerancias para su lote de material."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Se guardan mis entradas?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "No. Cierre la página para borrar todo; permanece únicamente en la memoria de su navegador."
+  }
+}
+  ]
+}`}</script>
+</Head>
+
+# Cylindrical Shell Rolling Calculator
+
+Estime el espaciado de los rodillos, la tolerancia de doblado y la longitud desarrollada para virolas cilíndricas con ajustes preestablecidos EN 13445 / ASME VIII.
+
+<a className="button button--primary" href="/utilities/cylindrical-shell-rolling/" data-nobrokenlinkcheck>Abrir utilidad</a>
+
+![cylindrical-shell-rolling utility screenshot](/img/og/utilities/cylindrical-shell-rolling.png)
+
+## Qué hace
+Calcule el espaciado de los rodillos, la tolerancia de doblado y la longitud desarrollada para virolas cilíndricas antes de que la placa llegue a los rodillos. Use ajustes preestablecidos de estilo EN 13445 o ASME VIII, agregue la brecha de la costura o tolerancias de sobrecurvado, y entregue el resumen del espaciado al operador.
+
+## Cuándo usarlo (y cuándo no)
+**Úselo cuando:**
+- Necesite el espaciado de los rodillos y la longitud desarrollada para una virola cilíndrica antes de liberar un trabajo al taller.
+- Quiera comparar la guía de EN 13445 frente a ASME VIII o compartir las desviaciones con un inspector.
+- Quiera una tarjeta de configuración imprimible para los operadores sin abrir hojas de cálculo.
+
+**Evítelo cuando:**
+- Esté curvando conos, transiciones o formas no cilíndricas.
+- Requiera comprobaciones de elementos finitos o cálculos de capacidad de la máquina más allá de las simples tolerancias de doblado.
+
+## Entradas y salidas
+### Entradas
+| Entrada | Descripción |
+| --- | --- |
+| Diámetro objetivo de la virola | Diámetro exterior o interior que debe alcanzar la virola después del curvado. |
+| Espesor de la placa | Espesor del material que determina el eje neutro y la tolerancia. |
+| Longitud de la virola y brecha de costura | Longitud terminada más cualquier brecha de punteado/ajuste que desee dejar. |
+| Ajuste estándar | Elija EN 13445, ASME VIII o tolerancias personalizadas para su taller. |
+| Tolerancia de sobrecurvado o extremo plano | Cuánto curvado extra desea en los extremos para minimizar las zonas planas. |
+| Espaciado de rodillos o geometría de la máquina | Entradas opcionales de espaciado para verificar la capacidad y deflexión. |
+
+### Salidas
+| Salida | Formato | Notas |
+| --- | --- | --- |
+| Guía de espaciado de rodillos | En pantalla | Espaciado sugerido para alcanzar el diámetro objetivo con mínimos extremos planos. |
+| Longitud plana desarrollada | Numérico | Longitud para cortar la placa antes del curvado, teniendo en cuenta la brecha de la costura. |
+| Tolerancia / deducción de doblado | Numérico | Valores de tolerancia que puede copiar en su hoja de ruta o proceso. |
+| Notas de configuración imprimibles | Texto | Copie o imprima directamente desde la página para el operador de los rodillos. |
+
+## Cómo usarlo
+1. Ingrese el diámetro objetivo de la virola y la longitud terminada.
+2. Establezca el espesor de la placa y elija el ajuste estándar que coincida con su trabajo.
+3. Agregue la brecha de la costura y cualquier ajuste de sobrecurvado o extremo plano.
+4. Revise el espaciado de los rodillos, la longitud desarrollada y los números de tolerancia.
+5. Imprima o copie los valores en la hoja de ruta del taller.
+
+**Ejemplo de datos:** DE de la virola: 1500 mm, Espesor: 12 mm, Longitud: 2500 mm, Brecha de costura: 3 mm, Ajuste: EN 13445, Sobrecurvado: sesgo final pequeño para reducir las zonas planas.
+- Resultado esperado: Genera una longitud desarrollada, sugerencias de espaciado de rodillos y valores de tolerancia listos para compartir con el operador de los rodillos.
+
+## Precisión y verificación
+- Asume una virola cilíndrica con espesor uniforme y un retorno elástico moderado manejado por el ajuste preestablecido.
+- No reemplaza las comprobaciones de capacidad de la máquina ni los cálculos detallados de esfuerzo.
+- Use los datos de prueba del fabricante (mill test) para refinar el sobrecurvado para aleaciones que tengan un retorno elástico diferente.
+- Realice una comprobación puntual con una probeta antes de procesar placas de longitud completa.
+
+## FAQ
+- **¿Soporta pulgadas así como el sistema métrico?** Sí. Ingrese los números en el sistema de unidades que utilice; los cálculos son independientes de las unidades.
+- **¿Puedo exportar los resultados?** Use el cuadro de diálogo de impresión de su navegador o copie los valores en su propia plantilla; nada se almacena en el servidor.
+- **¿Calcula conos o codos?** No. El modelo actual asume un cilindro constante.
+- **¿Cómo se maneja el retorno elástico (springback)?** Los ajustes preestablecidos incluyen tolerancias típicas. Ajuste el sobrecurvado o las tolerancias para su lote de material.
+- **¿Se guardan mis entradas?** No. Cierre la página para borrar todo; permanece únicamente en la memoria de su navegador.
+
+## Herramientas relacionadas
+- [Pipe Cutter Visualizer](./pipe-cutter)
+- [Metal Bending Prototype](./metal-bending)
+- [Interactive Thread Cheat Sheet](./interactive-thread)
+
+## Registro de cambios
+- Documentación inicial.
+
+## Comentarios / informe de errores
+- [Abrir un issue en GitHub](https://github.com/biosxxx/cadautoscript.com/issues)
+- Envíe un correo electrónico o DM con el slug `cylindrical-shell-rolling` para que podamos reproducir el problema.

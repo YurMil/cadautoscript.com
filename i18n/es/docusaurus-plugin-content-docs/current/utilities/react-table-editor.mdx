@@ -1,0 +1,147 @@
+---
+title: Editor de tablas React
+description: Edite tablas CSV y XLSX en el navegador con flujos de trabajo de importación/exportación y validación en línea.
+slug: /utilities/react-table-editor
+image: /img/og/utilities/react-table-editor.png
+keywords:
+  - editor de tablas
+  - editor csv
+  - editor xlsx
+  - hoja de cálculo en el navegador
+  - limpieza de datos
+---
+
+import Head from '@docusaurus/Head';
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/react-table-editor/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Editor de tablas React",
+  "applicationCategory": "MultimediaApplication",
+  "operatingSystem": "Web",
+  "description": "Edite tablas CSV y XLSX en el navegador con flujos de trabajo de importación/exportación y validación en línea.",
+  "url": "https://cadautoscript.com/utilities/react-table-editor/",
+  "image": "https://cadautoscript.com/img/og/utilities/react-table-editor.png",
+  "featureList": [
+    "Importación de CSV y XLSX",
+    "Edición de celdas en línea",
+    "Gestión de filas y columnas",
+    "Exportación local a CSV/XLSX"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/react-table-editor/",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "CAD AutoScript"
+  }
+}`}</script>
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Carga mi archivo?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No, el procesamiento se ejecuta localmente en su navegador."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué formatos son compatibles?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "CSV y XLSX."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Puedo editar fórmulas?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Está optimizado para la edición de valores, no para flujos de trabajo de fórmulas de hojas de cálculo avanzadas."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Puedo usarlo sin conexión?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Si los activos están en caché y disponibles localmente en el navegador, sí."
+      }
+    }
+  ]
+}`}</script>
+</Head>
+
+# Editor de tablas React
+
+Abra archivos CSV o XLSX, edite datos en línea y exporte tablas limpias localmente en el navegador.
+
+<a className="button button--primary" href="/utilities/react-table-editor/" data-nobrokenlinkcheck>Abrir utilidad</a>
+
+![react-table-editor utility screenshot](/img/og/utilities/react-table-editor.png)
+
+## Qué hace
+- Importa datos tabulares de archivos CSV y XLSX.
+- Le permite editar celdas en línea y ajustar filas/columnas.
+- Admite la exportación del lado del cliente a CSV o XLSX.
+- Mantiene los datos locales sin carga en el servidor.
+
+## Cuándo usarlo (y cuándo no)
+**Úselo cuando:**
+- Necesite una limpieza rápida de tablas de BOM, control de calidad o producción.
+- Quiera normalizar hojas de cálculo antes de compartirlas con flujos de CAD/ERP.
+- Necesite edición solo en el navegador sin software de oficina de escritorio.
+
+**Evítelo cuando:**
+- Necesite fórmulas de hojas de cálculo avanzadas y tablas dinámicas.
+- Necesite colaboración multiusuario en tiempo real.
+
+## Entradas y salidas
+### Entradas
+| Entrada | Descripción |
+| --- | --- |
+| Archivo CSV/XLSX | Cargue una tabla para edición interactiva. |
+| Ediciones manuales | Actualice celdas, etiquetas de columnas y valores de filas. |
+
+### Salidas
+| Salida | Formato | Notas |
+| --- | --- | --- |
+| Tabla editada | En pantalla | Vista previa de cuadrícula en vivo con actualizaciones inmediatas. |
+| Archivo exportado | CSV/XLSX | Guarde un conjunto de datos limpio para herramientas posteriores. |
+
+## Cómo usar
+1. Importe un archivo CSV o XLSX.
+2. Revise la tabla y edite las celdas según sea necesario.
+3. Agregue/elimine filas o columnas si su flujo de trabajo requiere una reestructuración.
+4. Exporte la tabla final a CSV o XLSX.
+
+## Precisión y verificación
+- Valide las unidades, los delimitadores y los nombres de los encabezados antes de exportar.
+- Vuelva a abrir el archivo exportado en su flujo de trabajo de destino para confirmar la compatibilidad.
+- Los datos permanecen en su sesión de navegador a menos que los exporte.
+
+## Preguntas frecuentes
+- **¿Carga mi archivo?** No, el procesamiento se ejecuta localmente en su navegador.
+- **¿Qué formatos son compatibles?** CSV y XLSX.
+- **¿Puedo editar fórmulas?** Está optimizado para la edición de valores, no para flujos de trabajo de fórmulas de hojas de cálculo avanzadas.
+- **¿Puedo usarlo sin conexión?** Si los activos están en caché y disponibles localmente en el navegador, sí.
+
+## Herramientas relacionadas
+- [Extractor de BOM de PDF](./pdf-bom-extractor)
+- [Renombrador de archivos por lotes](./file-renamer)
+
+## Registro de cambios
+- Documentación inicial.
+
+## Comentarios / informe de errores
+- [Abrir un problema en GitHub](https://github.com/biosxxx/cadautoscript.com/issues)
+- Correo electrónico o DM con el slug `react-table-editor` para que podamos reproducir el problema

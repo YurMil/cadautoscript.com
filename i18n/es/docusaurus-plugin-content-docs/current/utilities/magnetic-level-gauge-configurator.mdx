@@ -1,0 +1,166 @@
+---
+title: Configurador de indicador de nivel magnético
+description: Configure las dimensiones, conexiones y opciones del indicador de nivel magnético con un boceto en vivo y exportación de hoja de datos en PDF.
+slug: /utilities/magnetic-level-gauge-configurator
+image: /img/og/utilities/magnetic-level-gauge-configurator.png
+keywords:
+  - indicador de nivel magnético
+  - hoja de datos de indicador de nivel
+  - conexión a proceso
+  - configurador de instrumentos
+  - exportación PDF
+  - vista previa SVG
+  - DIN
+  - ANSI
+---
+
+import Head from '@docusaurus/Head';
+
+# Configurador de indicador de nivel magnético
+
+Configure las dimensiones, conexiones y opciones del indicador de nivel magnético con un boceto en vivo y exportación de hoja de datos en PDF.
+
+<a className="button button--primary" href="/utilities/magnetic-level-gauge-configurator/" data-nobrokenlinkcheck>Abrir utilidad</a>
+
+![captura de pantalla de la utilidad configurador de indicador de nivel magnético](/img/og/utilities/magnetic-level-gauge-configurator.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/magnetic-level-gauge-configurator/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Configurador de indicador de nivel magnético",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Configure las dimensiones, conexiones y opciones del indicador de nivel magnético con un boceto en vivo y exportación de hoja de datos en PDF.",
+  "url": "https://cadautoscript.com/utilities/magnetic-level-gauge-configurator/",
+  "image": "https://cadautoscript.com/img/og/utilities/magnetic-level-gauge-configurator.png",
+  "featureList": [
+"Ajustes preestablecidos de conexión a proceso",
+"Vista previa SVG en vivo",
+"Exportación PDF con especificaciones"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/magnetic-level-gauge-configurator/",
+  "offers": {
+"@type": "Offer",
+"price": "0",
+"priceCurrency": "USD"
+  },
+  "author": {
+"@type": "Organization",
+"name": "CAD AutoScript"
+  }
+}`}</script>
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+{
+  "@type": "Question",
+  "name": "¿Puedo cambiar entre métrico e imperial?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Sí. Ingrese los valores en las unidades que utiliza; el boceto se escala en consecuencia."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Está el PDF listo para su presentación?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Es una hoja de datos preliminar; obtenga la confirmación del proveedor para dibujos certificados."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Almacena mis etiquetas (tags)?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "No. Cierre la página para borrar las entradas o guarde el PDF para sus registros."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Puedo ajustar los tipos de venteo y drenaje?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Sí. Elija estilos de tapón, válvula o brida para la parte superior e inferior."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Se envían datos a algún servidor?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "No. Los cálculos y la exportación se ejecutan en el navegador."
+  }
+}
+  ]
+}`}</script>
+</Head>
+
+## Qué hace
+Seleccione conexiones de proceso, dimensiones de la cámara, opciones de venteo y drenaje, y materiales, luego obtenga una vista previa de un boceto SVG en vivo. Exporte una hoja de datos en PDF que capture las selecciones para adquisiciones o revisión de proveedores.
+
+## Cuándo usarlo (y cuándo no)
+**Úselo cuando:**
+- Esté redactando una especificación de indicador de nivel magnético para una cotización o revisión interna.
+- Quiera verificar las dimensiones de centro a centro y los estándares de conexión antes de realizar el pedido.
+- Necesite una hoja de datos rápida en PDF para compartir con los equipos de tuberías o instrumentación.
+
+**Evítelo cuando:**
+- Requiera cálculos certificados de presión o dimensionamiento del flotador de un fabricante.
+- Esté configurando un radar de onda guiada o instrumentos de nivel no magnéticos.
+
+## Entradas y salidas
+### Entradas
+| Entrada | Descripción |
+| --- | --- |
+| Estándar y tamaño de conexión a proceso | Opciones DIN, ANSI, soldadas o roscadas para conexiones laterales. |
+| Dimensión de centro a centro | Longitud de la cámara del indicador utilizada para escalar el boceto. |
+| Conexiones superior e inferior | Opciones de venteo y drenaje como tapón, válvula o brida. |
+| Materiales y clasificaciones | Material de la cámara, clasificación de la brida y supuestos de gravedad específica. |
+| Opciones de instrumentación | Interruptores, transmisores remotos, camisas de calefacción y preferencias del indicador. |
+| Metadatos del proyecto | Etiqueta (tag), número de línea, cliente y notas para la hoja de datos. |
+
+### Salidas
+| Salida | Formato | Notas |
+| --- | --- | --- |
+| Hoja de datos PDF | PDF | Hoja técnica con selecciones y un boceto a escala. |
+| Vista previa SVG en vivo | SVG | Boceto en pantalla que se actualiza con sus entradas. |
+| Resumen de conexión | En pantalla | Indicaciones de proceso, venteo y drenaje para revisión. |
+
+## Cómo usar
+1. Elija el estándar, tamaño y clasificación de la conexión a proceso.
+2. Ingrese la longitud de centro a centro más los detalles de venteo y drenaje.
+3. Establezca los materiales, la gravedad específica y los interruptores o transmisores opcionales.
+4. Agregue metadatos del proyecto para la trazabilidad.
+5. Revise el boceto y exporte la hoja de datos en PDF.
+
+**Conjunto de datos de ejemplo:** Conexiones laterales: DIN DN25 PN40 RF, Centro a centro: 1800 mm, Superior: tapón NPT de 1/2 pulgada, Inferior: válvula NPT de 1/2 pulgada, Material: 316L, Opciones: sensores superior e inferior activados, Camisa de calefacción desactivada, Etiqueta: MLG-101.
+- Salida esperada: Genera una hoja de datos en PDF con las conexiones, dimensiones, materiales seleccionados y un boceto en vivo para MLG-101.
+
+## Precisión y verificación
+- Las dimensiones del boceto son ilustrativas; confirme las dimensiones finales con el proveedor antes de la fabricación.
+- Las clasificaciones de presión y temperatura deben validarse contra su código de diseño.
+- Se asume la gravedad específica y el dimensionamiento del flotador; confirme con los datos del proceso si es crítico.
+- Los archivos permanecen locales hasta que descarga el PDF.
+
+## Preguntas frecuentes
+- **¿Puedo cambiar entre métrico e imperial?** Sí. Ingrese los valores en las unidades que utiliza; el boceto se escala en consecuencia.
+- **¿Está el PDF listo para su presentación?** Es una hoja de datos preliminar; obtenga la confirmación del proveedor para dibujos certificados.
+- **¿Almacena mis etiquetas (tags)?** No. Cierre la página para borrar las entradas o guarde el PDF para sus registros.
+- **¿Puedo ajustar los tipos de venteo y drenaje?** Sí. Elija estilos de tapón, válvula o brida para la parte superior e inferior.
+- **¿Se envían datos a algún servidor?** No. Los cálculos y la exportación se ejecutan en el navegador.
+
+## Herramientas relacionadas
+- [Configurador de manómetro Bourdon](./bourdon-gauge-configurator)
+- [Configurador de termómetro industrial](./industrial-thermometer-configurator)
+- [Visualizador de cortador de tubos](./pipe-cutter)
+
+## Registro de cambios
+- Documentación inicial.
+
+## Comentarios / informe de errores
+- [Abrir un problema en GitHub](https://github.com/biosxxx/cadautoscript.com/issues)
+- Correo electrónico o DM con el slug `magnetic-level-gauge-configurator` para que podamos reproducir el problema

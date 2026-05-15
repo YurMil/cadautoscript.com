@@ -1,0 +1,86 @@
+---
+title: WebSTEP Viewer
+description: Cargue ensamblajes STEP, inspeccione piezas y mida la geometría localmente en el navegador.
+slug: /utilities/webstep-viewer
+keywords:
+  - step viewer
+  - stp viewer
+  - step assembly
+  - cad inspector
+  - wasm cad
+  - geometry measurement
+---
+
+import Head from '@docusaurus/Head';
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/webstep-viewer/" />
+</Head>
+
+# WebSTEP Viewer
+
+Cargue ensamblajes STEP, inspeccione piezas y mida la geometría directamente en el navegador.
+
+<a className="button button--primary" href="/utilities/webstep-viewer/" data-nobrokenlinkcheck>Abrir utilidad</a>
+
+## Qué hace
+- Analiza archivos .step / .stp localmente con WebAssembly.
+- Construye un árbol de ensamblaje para que pueda aislar u ocultar piezas.
+- Mide distancias, radios y ángulos en la geometría.
+- Exporta una lista de materiales (BOM) simple (CSV) desde la estructura del ensamblaje.
+
+## Cuándo usarlo (y cuándo no)
+**Úselo cuando:**
+- Necesite una verificación visual rápida de un archivo STEP antes de enviarlo a producción.
+- Quiera aislar una pieza o verificar la estructura del ensamblaje.
+- Necesite mediciones rápidas sin abrir un sistema CAD completo.
+
+**Evítelo cuando:**
+- Necesite editar o reparar la geometría.
+- El modelo sea extremadamente grande y necesite el rendimiento completo de una estación de trabajo.
+
+## Entradas y salidas
+### Entradas
+| Entrada | Descripción |
+| --- | --- |
+| Archivo STEP | Suba un ensamblaje .step o .stp. |
+| Alternadores de vista | Controle los bordes, la rejilla y el modo de vista. |
+| Modo de medición | Elija sondas de punto, borde, cara o ángulo. |
+
+### Salidas
+| Salida | Formato | Notas |
+| --- | --- | --- |
+| Visor en pantalla | Interfaz de usuario | Inspeccione el modelo y aísle piezas. |
+| Lecturas de medición | En pantalla | Muestra valores en las unidades seleccionadas. |
+| Exportación de BOM | CSV | Lista básica de piezas desde el árbol de ensamblaje. |
+
+## Cómo usarlo
+1. Arrastre y suelte un archivo .step o .stp.
+2. Use el árbol de ensamblaje para expandir, aislar u ocultar componentes.
+3. Alterne las herramientas de medición o análisis de geometría según sea necesario.
+4. Exporte el BOM si necesita una lista de piezas.
+
+**Ejemplo:** Abra un ensamblaje de equipo, aísle el subensamblaje de la boquilla, mida la distancia de centro a centro de la boquilla y exporte un BOM para notas de control de calidad (QA).
+
+## Precisión y verificación
+- Las mediciones se basan en los datos del modelo; verifique las unidades y tolerancias contra su CAD de origen.
+- Los ensamblajes grandes pueden tardar más en analizarse y renderizarse.
+- Los archivos se procesan localmente y no se cargan en un servidor.
+
+## FAQ
+- **¿Qué formatos son compatibles?** Archivos STEP (.step / .stp).
+- **¿Sube mis archivos?** No. Todo se ejecuta en su navegador.
+- **¿Puedo editar la geometría?** No, esto es solo un visor e inspector.
+- **¿Puedo exportar a otros formatos?** La herramienta solo exporta BOM en CSV.
+- **¿Por qué es lento en ensamblajes grandes?** El análisis y renderizado de WebAssembly puede ser pesado para modelos grandes.
+
+## Herramientas relacionadas
+- [Tube Sheet Generator](./tube-sheet-generator)
+- [WebDXF Editor](./dxf-editor)
+
+## Registro de cambios
+- Documentación inicial.
+
+## Comentarios / informe de errores
+- [Abrir un issue en GitHub](https://github.com/biosxxx/cadautoscript.com/issues)
+- Envíe un correo electrónico o DM con el slug `webstep-viewer` para que podamos reproducir el problema.

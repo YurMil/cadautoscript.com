@@ -1,0 +1,164 @@
+---
+title: Batch File Renamer
+description: Dateien in großen Mengen umbenennen mit Suchen/Ersetzen, Präfixen, Groß-/Kleinschreibung, Nummerierung und sofortigem ZIP-Download – alles lokal.
+slug: /utilities/file-renamer
+image: /img/og/utilities/file-renamer.png
+keywords:
+  - Stapelumbenennung
+  - Regex-Umbenennung
+  - ZIP-Download
+  - Offline-Umbenennung
+  - Suchen Ersetzen
+  - Nummerierung
+  - Dateibenennung
+  - lokale Verarbeitung
+---
+
+import Head from '@docusaurus/Head';
+
+# Batch File Renamer
+
+Dateien in großen Mengen umbenennen mit Suchen/Ersetzen, Präfixen, Groß-/Kleinschreibung, Nummerierung und sofortigem ZIP-Download – alles lokal.
+
+<a className="button button--primary" href="/utilities/file-renamer/" data-nobrokenlinkcheck>Utility öffnen</a>
+
+![file-renamer utility screenshot](/img/og/utilities/file-renamer.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/file-renamer/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Batch File Renamer",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Dateien in großen Mengen umbenennen mit Suchen/Ersetzen, Präfixen, Groß-/Kleinschreibung, Nummerierung und sofortigem ZIP-Download – alles lokal.",
+  "url": "https://cadautoscript.com/utilities/file-renamer/",
+  "image": "https://cadautoscript.com/img/og/utilities/file-renamer.png",
+  "featureList": [
+"Regex oder literales Suchen/Ersetzen",
+"Präfix/Suffix und Nummerierung",
+"ZIP-Download mit Konfliktbehandlung"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/file-renamer/",
+  "offers": {
+"@type": "Offer",
+"price": "0",
+"priceCurrency": "USD"
+  },
+  "author": {
+"@type": "Organization",
+"name": "CAD AutoScript"
+  }
+}`}</script>
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+{
+  "@type": "Question",
+  "name": "Funktionieren Regex-Muster?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Ja. Verwenden Sie Standard-JavaScript-Regex für fortgeschrittene Umbenennungen."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Bleibt die Ordnerstruktur erhalten?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Dateien werden mit neuen Namen in einer flachen ZIP-Datei zusammengefasst."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Werden Daten hochgeladen?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Nein. Alles läuft lokal in Ihrem Browser."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Wie viele Dateien kann ich gleichzeitig umbenennen?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Das hängt vom Speicher des Browsers ab; teilen Sie sehr große Sätze auf."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Was ist mit dem Dateiinhalt?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Die Inhalte bleiben unverändert; nur die Dateinamen werden aktualisiert."
+  }
+}
+  ]
+}`}</script>
+</Head>
+
+## Funktionen
+Laden Sie einen Stapel Dateien hoch, sehen Sie sich die neuen Namen mit Regex oder literalem Suchen/Ersetzen an, fügen Sie Präfixe, Suffixe oder Nummerierungen hinzu und laden Sie den umbenannten Satz als ZIP herunter. Alles läuft im Browser ab, sodass Ihre Dateien lokal bleiben.
+
+## Wann man es verwendet (und wann nicht)
+**Verwenden Sie es, wenn:**
+- Sie Zeichnungsnamen normalisieren oder Jobnummern hinzufügen müssen, bevor Sie ein Paket versenden.
+- Sie Nummerierungen oder Präfixe stapelweise ohne Skripte anwenden möchten.
+- Sie eine schnelle Offline-Umbenennung mit ZIP-Ausgabe bevorzugen.
+
+**Vermeiden Sie es, wenn:**
+- Sie Tausende von Dateien auf der Festplatte umbenennen müssen; verwenden Sie in diesem Fall ein CLI-Skript.
+- Sie die Ordnerhierarchie aus verschachtelten Verzeichnissen beibehalten müssen; das Verflachen der Struktur ist hier möglicherweise nicht erwünscht.
+
+## Eingaben und Ausgaben
+### Eingaben
+| Eingabe | Beschreibung |
+| --- | --- |
+| Dateien zum Umbenennen | Ziehen Sie die Dateien hierher, die Sie verarbeiten möchten. |
+| Suchen/Ersetzen-Regeln | Verwenden Sie literale oder Regex-Muster zur Transformation der Namen. |
+| Präfix/Suffix | Fügen Sie Jobnummern, Revisionen oder andere Tags hinzu. |
+| Nummerierung | Legen Sie Startwert, Inkrement und Auffüllung für Sequenznummern fest. |
+| Schreibweise (Casing) | Optionale Konvertierungen in Groß/Klein oder Kebab-Case. |
+
+### Ausgaben
+| Ausgabe | Format | Hinweise |
+| --- | --- | --- |
+| Vorschau-Tabelle | Auf dem Bildschirm | Sehen Sie alte vs. neue Namen vor dem Export. |
+| Umbenannte Dateien | ZIP | Herunterladbares Archiv mit aktualisierten Dateinamen. |
+
+## Bedienungsanleitung
+1. Ziehen Sie die Dateien zum Umbenennen hinein.
+2. Wenden Sie Suchen/Ersetzen, Präfixe, Suffixe oder Nummerierungen an.
+3. Überprüfen Sie die Vorschau, um sicherzustellen, dass Namenskollisionen behandelt werden.
+4. Laden Sie die ZIP-Datei der umbenannten Dateien herunter.
+5. Versenden oder archivieren Sie das umbenannte Paket.
+
+**Beispieldatensatz:** Laden Sie `P-001.pdf`, `P-002.pdf` hoch; suchen Sie nach 'P-' und ersetzen Sie es durch 'FAB-', fügen Sie das Präfix `2025_` hinzu, starten Sie die Nummerierung bei 10.
+- Erwartetes Ergebnis: Lädt eine ZIP-Datei mit den Dateien `2025_FAB-10.pdf` und `2025_FAB-11.pdf` herunter.
+
+## Genauigkeit und Verifizierung
+- Die Umbenennung erfolgt im Browser; behalten Sie die Originale, bis Sie die ZIP-Datei überprüft haben.
+- Regex-Muster sind mächtig – testen Sie sie zuerst an einem kleinen Satz.
+- Namenskollisionen werden in der Vorschau behandelt; lösen Sie diese vor dem Export.
+- Große Chargen sind durch den Browserspeicher begrenzt; teilen Sie diese bei Bedarf auf.
+
+## FAQ
+- **Funktionieren Regex-Muster?** Ja. Verwenden Sie Standard-JavaScript-Regex für fortgeschrittene Umbenennungen.
+- **Bleibt die Ordnerstruktur erhalten?** Dateien werden mit neuen Namen in einer flachen ZIP-Datei zusammengefasst.
+- **Werden Daten hochgeladen?** Nein. Alles läuft lokal in Ihrem Browser.
+- **Wie viele Dateien kann ich gleichzeitig umbenennen?** Das hängt vom Speicher des Browsers ab; teilen Sie sehr große Sätze auf.
+- **Was ist mit dem Dateiinhalt?** Die Inhalte bleiben unverändert; nur die Dateinamen werden aktualisiert.
+
+## Verwandte Tools
+- [Folder Structure Builder](./folder-structure-builder)
+- [PDF Master](./pdf-master)
+- [PDF Batch Signer](./pdf-batch-signer)
+
+## Versionsлаборатория (Changelog)
+- Erstveröffentlichung der Dokumentation.
+
+## Feedback / Fehlermeldung
+- [GitHub-Issue öffnen](https://github.com/biosxxx/cadautoscript.com/issues)
+- E-Mail oder DM mit dem Slug `file-renamer`, damit wir das Problem reproduzieren können

@@ -1,0 +1,165 @@
+---
+title: Extractor de BOM de PDF
+description: Extraiga tablas de listas de materiales (BOM) y especificaciones de PDF vectoriales en archivos CSV limpios, descargables por lotes localmente.
+slug: /utilities/pdf-bom-extractor
+image: /img/og/utilities/pdf-bom-extractor.png
+keywords:
+  - extracción de bom
+  - pdf a csv
+  - detección de tablas
+  - pdf del lado del cliente
+  - informe maestro
+  - analizador sin conexión
+  - tabla cad
+  - exportación csv
+---
+
+import Head from '@docusaurus/Head';
+
+# Extractor de BOM de PDF
+
+Extraiga tablas de listas de materiales (BOM) y especificaciones de PDF vectoriales en archivos CSV limpios que puede descargar localmente.
+
+<a className="button button--primary" href="/utilities/pdf-bom-extractor/" data-nobrokenlinkcheck>Abrir utilidad</a>
+
+![captura de pantalla de la utilidad extractor de BOM de PDF](/img/og/utilities/pdf-bom-extractor.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/pdf-bom-extractor/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Extractor de BOM de PDF",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Extraiga tablas de listas de materiales (BOM) y especificaciones de PDF vectoriales en archivos CSV limpios, descargables por lotes localmente.",
+  "url": "https://cadautoscript.com/utilities/pdf-bom-extractor/",
+  "image": "https://cadautoscript.com/img/og/utilities/pdf-bom-extractor.png",
+  "featureList": [
+"Detección inteligente de encabezados y columnas",
+"Recorte de ruido de revisión y pie de página",
+"Carga por lotes con informe maestro"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/pdf-bom-extractor/",
+  "offers": {
+"@type": "Offer",
+"price": "0",
+"priceCurrency": "USD"
+  },
+  "author": {
+"@type": "Organization",
+"name": "CAD AutoScript"
+  }
+}`}</script>
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+{
+  "@type": "Question",
+  "name": "¿Realiza OCR en imágenes?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "No. Solo lee texto vectorial."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Puedo procesar muchos archivos?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Sí. Cargue un lote y exporte por archivo o como un informe maestro."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Se carga algún dato?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "No. Todo permanece en el navegador."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Cómo se manejan las celdas combinadas?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "El analizador aplana las columnas; verifique y ajuste después de la exportación si es necesario."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Puedo cambiar el delimitador?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Se exporta como CSV; ajuste los delimitadores más tarde en su herramienta de hoja de cálculo."
+  }
+}
+  ]
+}`}</script>
+</Head>
+
+## Qué hace
+Suelte PDF generados por CAD, detecte automáticamente las filas y columnas de encabezado, recorte el ruido de revisión o pie de página y exporte archivos CSV por archivo o un informe maestro combinado. Todo se ejecuta en el lado del cliente, por lo que los dibujos y los datos extraídos permanecen en su dispositivo.
+
+## Cuándo usarlo (y cuándo no)
+**Úselo cuando:**
+- Quiera extraer tablas de listas de materiales (BOM) de dibujos en PDF sin tener que volver a escribir manualmente.
+- Necesite una exportación rápida a CSV para entregar a compras o control de calidad.
+- Prefiera un análisis local sin cargas de archivos.
+
+**Evítelo cuando:**
+- Sus PDF sean imágenes escaneadas que necesiten OCR para ser leídas.
+- Las tablas tengan muchas celdas combinadas o recuentos de columnas variables que impidan la detección automática.
+
+## Entradas y salidas
+### Entradas
+| Entrada | Descripción |
+| --- | --- |
+| Dibujos PDF | PDF vectoriales con tablas de BOM o especificaciones. |
+| Selección de fila de encabezado | Confirme o ajuste qué fila define los encabezados de las columnas. |
+| Selectores de detección automática de columnas | Controle cómo el analizador agrupa las columnas. |
+| Filtros de fila | Omita las filas de revisión o de pie de página que no desee en el CSV. |
+| Opción de informe maestro | Combine las salidas en un solo CSV cuando sea necesario. |
+
+### Salidas
+| Salida | Formato | Notas |
+| --- | --- | --- |
+| CSV por archivo | CSV | Un CSV por cada PDF que procese. |
+| CSV maestro | CSV | Informe combinado opcional de todos los archivos cargados. |
+| Tabla de vista previa | En pantalla | Revise y ajuste antes de descargar. |
+
+## Cómo usar
+1. Cargue uno o más dibujos en PDF.
+2. Confirme la fila de encabezado detectada y ajuste las columnas si es necesario.
+3. Recorte cualquier fila de pie de página o de revisión.
+4. Descargue los CSV por archivo o un informe maestro.
+5. Archive los CSV con su paquete de trabajo.
+
+**Conjunto de datos de ejemplo:** Cargue dos PDF de ensamblaje con tablas de BOM, mantenga la fila de encabezado 2, recorte las notas de revisión y exporte tanto los CSV por archivo como un master_report.csv.
+- Salida esperada: Produce dos CSV individuales más un archivo maestro combinado con columnas alineadas.
+
+## Precisión y verificación
+- Depende de texto seleccionable; los PDF escaneados necesitan OCR primero.
+- Las tablas combinadas o irregulares pueden necesitar una limpieza manual después de la exportación.
+- Revise la vista previa antes de descargar para asegurarse de que se detectó la fila de encabezado correcta.
+- Todo el análisis se ejecuta localmente; mantenga sus propias copias de seguridad de los CSV exportados.
+
+## Preguntas frecuentes
+- **¿Realiza OCR en imágenes?** No. Solo lee texto vectorial.
+- **¿Puedo procesar muchos archivos?** Sí. Cargue un lote y exporte por archivo o como un informe maestro.
+- **¿Se carga algún dato?** No. Todo permanece en el navegador.
+- **¿Cómo se manejan las celdas combinadas?** El analizador aplana las columnas; verifique y ajuste después de la exportación si es necesario.
+- **¿Puedo cambiar el delimitador?** Se exporta como CSV; ajuste los delimitadores más tarde en su herramienta de hoja de cálculo.
+
+## Herramientas relacionadas
+- [Extractor de números de PDF](./pdf-number-extractor)
+- [PDF Master](./pdf-master)
+- [Firmador de PDF por lotes](./pdf-batch-signer)
+
+## Registro de cambios
+- Documentación inicial.
+
+## Comentarios / informe de errores
+- [Abrir un problema en GitHub](https://github.com/biosxxx/cadautoscript.com/issues)
+- Correo electrónico o DM con el slug `pdf-bom-extractor` para que podamos reproducir el problema

@@ -1,0 +1,167 @@
+---
+title: Industrial Thermometer Configurator
+description: Seleccione rangos, tallos, vainas (thermowells) y conexiones para termómetros industriales, vea la vista previa y exporte una ficha técnica en PDF.
+slug: /utilities/industrial-thermometer-configurator
+image: /img/og/utilities/industrial-thermometer-configurator.png
+keywords:
+  - industrial thermometer
+  - bimetal thermometer
+  - thermowell
+  - datasheet PDF
+  - EN 13190
+  - stem length
+  - process connection
+  - instrument specification
+---
+
+import Head from '@docusaurus/Head';
+
+# Industrial Thermometer Configurator
+
+Seleccione rangos, tallos (stems), vainas (thermowells) y conexiones para termómetros industriales, previsualice el montaje y exporte una ficha técnica en PDF.
+
+<a className="button button--primary" href="/utilities/industrial-thermometer-configurator/" data-nobrokenlinkcheck>Abrir utilidad</a>
+
+![industrial-thermometer-configurator utility screenshot](/img/og/utilities/industrial-thermometer-configurator.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/industrial-thermometer-configurator/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Industrial Thermometer Configurator",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Select ranges, stems, thermowells, and connections for industrial thermometers, preview the build, and export a PDF datasheet.",
+  "url": "https://cadautoscript.com/utilities/industrial-thermometer-configurator/",
+  "image": "https://cadautoscript.com/img/og/utilities/industrial-thermometer-configurator.png",
+  "featureList": [
+"Range presets plus custom span",
+"Stem and thermowell options",
+"Mounting preview",
+"PDF datasheet export"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/industrial-thermometer-configurator/",
+  "offers": {
+"@type": "Offer",
+"price": "0",
+"priceCurrency": "USD"
+  },
+  "author": {
+"@type": "Organization",
+"name": "CAD AutoScript"
+  }
+}`}</script>
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+{
+  "@type": "Question",
+  "name": "¿Puedo establecer un rango personalizado?",
+  "acceptedAnswer": {
+    "text": "Sí. Cambie a personalizado (custom) y e introduzca su mínimo y máximo."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Soporta Fahrenheit?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Sí. Elija la unidad antes de seleccionar un rango."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Puedo ejecutarlo sin conexión?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Sí. El renderizado y la exportación a PDF ocurren en el navegador."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Dimensiona las vainas (thermowells) automáticamente?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Sigue sus entradas; verifique contra los requisitos de presión y inmersión."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Dónde se almacenan mis datos?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Solo en su navegador hasta que exporte el PDF."
+  }
+}
+  ]
+}`}</script>
+</Head>
+
+## Qué hace
+Configure un termómetro industrial bimetálico (bimetal thermometer): elija el tamaño de la esfera, el rango de temperatura, la longitud y el diámetro del tallo (stem), el diseño de montaje y las opciones de vaina (thermowell). Previsualice el boceto SVG y exporte una ficha técnica en PDF (datasheet) con metadatos del proyecto.
+
+## Cuándo usarlo (y cuándo no)
+**Úselo cuando:**
+- Esté creando un paquete de instrumentación y necesite una ficha técnica de termómetro rápida.
+- Quiera verificar la longitud del tallo, la conexión y las opciones de vaina antes de realizar el pedido.
+- Necesite un PDF imprimible para compartir con proveedores o equipos de mantenimiento.
+
+**Evítelo cuando:**
+- Requiera cálculos certificados de presión o vibración más allá de una ficha técnica preliminar.
+- Esté especificando RTDs electrónicos o transmisores en lugar de termómetros bimetálicos.
+
+## Entradas y salidas
+### Entradas
+| Entrada | Descripción |
+| --- | --- |
+| Dial nominal size and unit | Seleccione 63, 100 o 160 mm y elija rangos en Celsius o Fahrenheit. |
+| Temperature range | Rangos preestablecidos o personalizados (mín/máx) para adaptarse a las condiciones del proceso. |
+| Stem length, diameter, and material | Elija la geometría del tallo y el material para los requisitos de inmersión. |
+| Connection location, design, and standard | Montaje inferior, posterior o ajustable con roscas G, NPT o métricas. |
+| Case material and fill | Cajas secas o llenas de silicona más selección de ventana. |
+| Thermowell options | Active vainas sólidas o fabricadas, elija el diseño, material, conexión a proceso, longitudes de inserción y extensión. |
+| Project metadata and accessories | Número de tag, medio, estándar, certificados y opciones como puntero rojo o certificado de calibración. |
+
+### Salidas
+| Salida | Formato | Notas |
+| --- | --- | --- |
+| PDF datasheet | PDF | Generado localmente con las selecciones y el boceto configurados. |
+| SVG preview | En pantalla | Dibujo en vivo que se actualiza a medida que cambia la geometría. |
+| Configuration summary | En pantalla | Revisión rápida de las opciones de rango, tallo, conexión y vaina. |
+
+## Cómo usar
+1. Seleccione el tamaño de la esfera y el rango de temperatura (preestablecido o personalizado).
+2. Establezca la longitud, el diámetro y el material del tallo para que coincidan con las necesidades de inmersión.
+3. Elija la ubicación de la conexión y el estándar de rosca; elija el llenado de la caja y la ventana.
+4. Active y dimensione una vaina (thermowell) si es necesario, luego añada los metadatos del proyecto.
+5. Revise la vista previa y exporte la ficha técnica en PDF.
+
+**Ejemplo de conjunto de datos:** Dial: 100 mm, Rango: 0 a 200 C, Tallo: 8 x 200 mm inoxidable, Montaje: inferior G 1/2, Caja: llena de silicona, Vaina: mecanizada sólida G 1/2 con inserción de 200 mm, Tag: TI-310.
+- Resultado esperado: Genera una ficha técnica en PDF y una vista previa para TI-310 que muestra el rango, tallo, montaje y vaina seleccionados.
+
+## Precisión y verificación
+- La ficha técnica es preliminar; confirme los límites de presión y las reglas de inmersión con el fabricante.
+- Asegúrese de que la longitud de inserción sea suficiente para una detección precisa y para proteger el elemento.
+- Las unidades y rangos reflejan su entrada; verifique dos veces antes de emitir una orden de compra.
+- Todo el procesamiento permanece local hasta que guarde el PDF.
+
+## FAQ
+- **¿Puedo establecer un rango personalizado?** Sí. Cambie a personalizado (custom) y e introduzca su mín y máx.
+- **¿Soporta Fahrenheit?** Sí. Elija la unidad antes de seleccionar un rango.
+- **¿Puedo ejecutarlo sin conexión?** Sí. El renderizado y la exportación a PDF ocurren en el navegador.
+- **¿Dimensiona las vainas automáticamente?** Sigue sus entradas; verifique contra los requisitos de presión y inmersión.
+- **¿Dónde se almacenan mis datos?** Solo en su navegador hasta que exporte el PDF.
+
+## Herramientas relacionadas
+- [Bourdon Gauge Configurator](./bourdon-gauge-configurator)
+- [Magnetic Level Gauge Configurator](./magnetic-level-gauge-configurator)
+- [Pipe Cutter Visualizer](./pipe-cutter)
+
+## Changelog
+- Documentación inicial.
+
+## Comentarios / informe de errores
+- [Abrir un issue en GitHub](https://github.com/biosxxx/cadautoscript.com/issues)
+- Envíe un correo electrónico o DM con el slug `industrial-thermometer-configurator`.

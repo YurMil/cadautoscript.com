@@ -1,0 +1,57 @@
+---
+title: "Web de Ingeniería: Chromium y HTML5 como entorno para CAD y cálculos"
+sidebar_position: 3
+description: Por qué el motor Chromium, HTML5 y las API web son la nueva plataforma para las utilidades técnicas.
+---
+
+import Head from '@docusaurus/Head';
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/docs/utilities/engineering-web/" />
+</Head>
+
+El software de ingeniería tradicional a menudo sufre de dos extremos: o es un **CAD de escritorio pesado** que requiere hardware/licencias potentes, o son **hojas de cálculo dispersas** que son difíciles de mantener. La tecnología web moderna —Chromium, HTML5, WebAssembly— permite utilidades de ingeniería completas que se ejecutan enteramente en el navegador. El navegador se convierte en el sistema operativo para los cálculos.
+
+## Por qué esto es importante
+
+### Compatibilidad multiplataforma sin esfuerzo
+Una sola compilación de HTML/JS se ejecuta igual en Windows, Linux, macOS o tabletas de planta. Sin instaladores ni conflictos de DLL.
+
+### Visualización e interactividad
+DOM, Canvas, SVG y WebGL le permiten renderizar diagramas y vistas previas en 3D en tiempo real. Ajustar la longitud de una viga o el espesor de una pared reconstruye la vista inmediatamente.
+
+### Acceso al hardware
+Las API como Web Serial, Web Bluetooth y WebHID hablan con PLC, controladores e instrumentos a través de USB/COM. Perfecto para electromecánica o diagnóstico de producción.
+
+### Operación local (PWA)
+Las aplicaciones web progresivas (PWA) almacenan en caché la utilidad para que se ejecute sin conexión en la máquina. Se comporta como una herramienta nativa, pero se actualiza mediante una implementación sencilla.
+
+## Ejemplos prácticos de implementación
+
+### 1. Ajustes y tolerancias interactivos (mecánica)
+- **Entradas:** diámetro nominal + clase de tolerancia (p. ej., `50 H7/g6`).
+- **Lógica:** JavaScript calcula desviaciones, holguras, bandas de interferencia.
+- **Visualización:** Canvas dibuja zonas de tolerancia; las descripciones emergentes muestran probabilidades de falla.
+- **Resultado:** Los ingenieros ven el ajuste en lugar de analizar tablas estáticas.
+
+### 2. Calculadora de sección transversal de cables (eléctrica)
+- **Interfaz:** Arrastrar y soltar nodos de carga en una ruta SVG.
+- **Dinámica:** El color del cable cambia de verde a rojo cuando la caída de voltaje supera el % permitido.
+- **Automatización:** `jspdf` exporta una especificación formateada para su aprobación.
+
+### 3. Panel de diagnóstico del controlador (electromecánica)
+- **Escenario:** Unidades de control de motores basadas en STM32/Arduino.
+- **Solución:** Página con botón “Conectar”; el navegador solicita el puerto COM a través de Web Serial.
+- **Funcionalidad:** Gráficos de telemetría en vivo (Chart.js/uPlot) además de campos PID editables que se escriben de nuevo a través de la conexión serial.
+- **Ventaja:** Sin tiempos de ejecución de proveedores ni instalaciones de controladores: Chrome + cable USB es suficiente.
+
+## Pila tecnológica para empezar
+
+- **UI:** HTML + CSS (Tailwind/Bootstrap opcional).
+- **Lógica:** JavaScript puro o TypeScript para valores físicos tipados.
+- **Gráficos:** SVG/Canvas para esquemas 2D; Three.js para nodos 3D.
+- **Cómputo:** WebAssembly para matemáticas pesadas desde C++/Rust, pero JS cubre la mayoría de los casos de uso.
+
+## Conclusión
+
+Mover los cálculos de ingeniería a la web no es una tendencia, es una estrategia de distribución. Una calculadora se convierte en un enlace que puede insertar en un portal corporativo, compartir con un colega o abrir en una tableta al lado de la máquina. Eso reduce el error humano y acelera el ciclo de ingeniería.

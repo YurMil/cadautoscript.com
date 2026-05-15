@@ -1,0 +1,163 @@
+---
+title: WebDXF Editor
+description: Geometrie trimmen, Längen beschriften und DXF-Dateien direkt im Browser speichern für schnelle Qualitätssicherung oder Makrotests.
+slug: /utilities/dxf-editor
+image: /img/og/utilities/dxf-editor.png
+keywords:
+  - dxf editor
+  - Browser CAD
+  - dxf trimmen
+  - dxf messen
+  - offline cad
+  - dxf r12
+  - Geometriebereinigung
+  - CAD QA
+---
+
+import Head from '@docusaurus/Head';
+
+# WebDXF Editor
+
+Geometrie trimmen, Längen beschriften und DXF-Dateien direkt im Browser speichern für schnelle Qualitätssicherung oder Makrotests.
+
+<a className="button button--primary" href="/utilities/dxf-editor/" data-nobrokenlinkcheck>Utility öffnen</a>
+
+![dxf-editor utility screenshot](/img/og/utilities/dxf-editor.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/dxf-editor/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "WebDXF Editor",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Geometrie trimmen, Längen beschriften und DXF-Dateien direkt im Browser speichern für schnelle Qualitätssicherung oder Makrotests.",
+  "url": "https://cadautoscript.com/utilities/dxf-editor/",
+  "image": "https://cadautoscript.com/img/og/utilities/dxf-editor.png",
+  "featureList": [
+"Crossing-Auswahl",
+"Trimmen und Messen",
+"Offline DXF I/O"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/dxf-editor/",
+  "offers": {
+"@type": "Offer",
+"price": "0",
+"priceCurrency": "USD"
+  },
+  "author": {
+"@type": "Organization",
+"name": "CAD AutoScript"
+  }
+}`}</script>
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+{
+  "@type": "Question",
+  "name": "Welche DXF-Versionen werden unterstützt?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Funktioniert mit gängiger R12+ DXF-Geometrie."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Werden Blöcke und Schraffuren unterstützt?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Einfache Blöcke funktionieren; aufwendige Schraffuren können langsamer sein und sollten nach dem Export überprüft werden."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Werden Bearbeitungen online gespeichert?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Nein. Dateien verlassen niemals Ihren Browser."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Kann ich die Einheiten ändern?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Verwenden Sie die Skalenreferenz in Ihrer DXF; das Tool respektiert die Quellgeometrie."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Bleiben die Layernamen erhalten?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Layerdaten bleiben beim erneuten Speichern erhalten."
+  }
+}
+  ]
+}`}</script>
+</Head>
+
+## Funktionen
+Öffnen Sie DXF-Dateien im Browser, trimmen oder messen Sie Elemente und speichern Sie Änderungen direkt wieder als DXF, ohne den Umweg über schwere CAD-Software. Ideal für schnelle QS, Makrotests oder Korrekturen, bevor die Geometrie weiterverarbeitet wird.
+
+## Wann man es verwendet (und wann nicht)
+**Verwenden Sie es, wenn:**
+- Sie überstehende Linien trimmen oder schnelle Messungen vornehmen müssen, ohne Desktop-CAD zu starten.
+- Sie CAD-Makros testen und die DXF-Ausgabe verifizieren möchten.
+- Sie eine Offline-DXF-Plausibilitätsprüfung wünschen, bevor Sie Dateien an Lieferanten senden.
+
+**Vermeiden Sie es, wenn:**
+- Sie 3D-Modellierung, Abhängigkeiten oder fortgeschrittene Konstruktionsfunktionen benötigen.
+- Ihre Datei extrem groß oder schraffurintensiv ist und von einer vollwertigen CAD-Workstation profitieren würde.
+
+## Eingaben und Ausgaben
+### Eingaben
+| Eingabe | Beschreibung |
+| --- | --- |
+| DXF-Datei | Laden Sie die Zeichnung hoch, die Sie prüfen oder bearbeiten möchten. |
+| Layer-Sichtbarkeit oder Farben | Schalten Sie Layer um, um sich auf kritische Geometrie zu konzentrieren. |
+| Auswahl- und Fangmodus | Wählen Sie aus, wie Sie Linien auswählen und messen. |
+| Einheitenreferenz | Verwenden Sie die Quell-DXF-Einheiten oder Ihre eigene Referenzskala. |
+
+### Ausgaben
+| Ausgabe | Format | Hinweise |
+| --- | --- | --- |
+| Editierte DXF | DXF | Speichern Sie die aktualisierte Geometrie lokal. |
+| Messwertanzeigen | Auf dem Bildschirm | Längen und Abstände für schnelle QS. |
+
+## Bedienungsanleitung
+1. Laden Sie Ihre DXF-Datei in den Editor.
+2. Schalten Sie Layer oder Objektfang um, um die benötigte Geometrie zu isolieren.
+3. Trimmen, beschriften oder messen Sie nach Bedarf.
+4. Überprüfen Sie die Zeichnung am Bildschirm auf Genauigkeit.
+5. Laden Sie die aktualisierte DXF herunter.
+
+**Beispieldatensatz:** Öffnen Sie flange.dxf, trimmen Sie überstehende Konstruktionslinien, messen Sie den Lochkreis und speichern Sie die bereinigte DXF.
+- Erwartetes Ergebnis: Gibt eine bereinigte DXF sowie Messwerte am Bildschirm zurück, die Sie in QS-Notizen verwenden können.
+
+## Genauigkeit und Verifizierung
+- Entwickelt für DXF-Workflows; erstellen Sie ein Backup des Originals, bevor Sie es überschreiben.
+- Große Dateien können sich im Browser langsamer anfühlen als auf einer Workstation.
+- Einheiten folgen der Quell-DXF; prüfen Sie den Maßstab beim Import aus Quellen mit unterschiedlichen Einheiten.
+- Alle Bearbeitungen bleiben lokal; exportieren Sie, um Ihre Änderungen zu speichern.
+
+## FAQ
+- **Welche DXF-Versionen werden unterstützt?** Funktioniert mit gängiger R12+ DXF-Geometrie.
+- **Werden Blöcke und Schraffuren unterstützt?** Einfache Blöcke funktionieren; aufwendige Schraffuren können langsamer sein und sollten nach dem Export überprüft werden.
+- **Werden Bearbeitungen online gespeichert?** Nein. Dateien verlassen niemals Ihren Browser.
+- **Kann ich die Einheiten ändern?** Verwenden Sie die Skalenreferenz in Ihrer DXF; das Tool respektiert die Quellgeometrie.
+- **Bleiben die Layernamen erhalten?** Layerdaten bleiben beim erneuten Speichern erhalten.
+
+## Verwandte Tools
+- [Pipe Cutter Visualizer](./pipe-cutter)
+- [PDF Master](./pdf-master)
+- [PDF BOM Extractor](./pdf-bom-extractor)
+
+## Versionsлаборатория (Changelog)
+- Erstveröffentlichung der Dokumentation.
+
+## Feedback / Fehlermeldung
+- [GitHub-Issue öffnen](https://github.com/biosxxx/cadautoscript.com/issues)
+- E-Mail oder DM mit dem Slug `dxf-editor`, damit wir das Problem reproduzieren können

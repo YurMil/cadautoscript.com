@@ -1,0 +1,166 @@
+---
+title: Pipe Cutter Visualizer
+description: Vorschau von Rohrsattel-Schnittpunkten, Anpassung von Offsets und Export von DXF-Vorlagen für CNC-Plasma- oder Wasserstrahlschneidmaschinen.
+slug: /utilities/pipe-cutter
+image: /img/og/utilities/pipe-cutter.png
+keywords:
+  - pipe saddle template
+  - dxf export
+  - pipe fitting
+  - branch connection
+  - CNC plasma
+  - waterjet
+  - 3D preview
+  - welding
+---
+
+import Head from '@docusaurus/Head';
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/pipe-cutter/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Pipe Cutter Visualizer",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Preview saddle intersections, adjust offsets, and export DXF templates ready for CNC plasma or waterjet tables.",
+  "url": "https://cadautoscript.com/utilities/pipe-cutter/",
+  "image": "https://cadautoscript.com/img/og/utilities/pipe-cutter.png",
+  "featureList": [
+"3D saddle preview",
+"DXF wrap and hole export",
+"Offset and padding controls",
+"Browser-only processing"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/pipe-cutter/",
+  "offers": {
+"@type": "Offer",
+"price": "0",
+"priceCurrency": "USD"
+  },
+  "author": {
+"@type": "Organization",
+"name": "CAD AutoScript"
+  }
+}`}</script>
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+{
+  "@type": "Question",
+  "name": "Kann ich sowohl in Zoll als auch metrisch arbeiten?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Ja. Geben Sie Werte in den von Ihnen verwendeten Einheiten ein, solange die Eingaben konsistent bleiben; die DXF folgt Ihren Zahlen."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Sind die DXF-Vorlagen maßstabsgetreu?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Ja. Die Exporte werden im Maßstab 1:1 generiert. Deaktivieren Sie beim Plotten jegliche Druckskalierung."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Kann ich die Fasenzugabe oder den Wurzelspalt anpassen?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Verwenden Sie die Polsterungs- (Padding) oder Offset-Steuerelemente, um zusätzliches Material zu lassen, und fertigen Sie die Fase dann im CAM oder an der Werkbank an."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Läuft es offline?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Ja. Die Berechnung und der DXF-Export laufen im Browser und bleiben auf Ihrem Gerät."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Welche CAD-Tools öffnen die DXF?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Jedes DXF-fähige Tool (AutoCAD, Fusion, SheetCAM usw.) kann die Polylinien importieren."
+  }
+}
+  ]
+}`}</script>
+</Head>
+
+# Pipe Cutter Visualizer
+
+Vorschau von Sattelschnittpunkten, Anpassung von Offsets und Export von DXF-Abwicklungen und Lochvorlagen für Rohranpassungen.
+
+<a className="button button--primary" href="/utilities/pipe-cutter/" data-nobrokenlinkcheck>Utility öffnen</a>
+
+![pipe-cutter utility screenshot](/img/og/utilities/pipe-cutter.png)
+
+## Was es tut
+Pipe Cutter Visualizer rendert Rohr-zu-Rohr-Schnittpunkte in 3D, damit Sie die Sattelpassung vor dem Schneiden überprüfen können. Geben Sie Hauptrohr- und Abzweigdurchmesser ein, passen Sie den Schnittwinkel und den Offset an und laden Sie maßstabsgetreue DXF-Abwicklungen für den Abzweig sowie einen passenden Ausschnitt für das Hauptrohr herunter.
+
+## Wann man es verwenden sollte (und wann nicht)
+**Verwenden Sie es, wenn:**
+- Sie die Hauptrohr- und Abzweigdurchmesser kennen und eine Abwicklungsvorlage für das Schneiden mit Brenner, Plasma oder Wasserstrahl benötigen.
+- Sie Freiraum und Versatz vor dem Schweißen von Spoolstücken in der Vorschau sehen möchten.
+- Sie eine schnelle DXF-Geometrie für das CAM benötigen oder im Maßstab 1:1 für die Werkstatt drucken möchten.
+
+**Vermeiden Sie es, wenn:**
+- Sie Verstärkungspatschen-Dimensionierung oder Code-Berechnungen benötigen; dieses Tool konzentriert sich nur auf die Geometrie.
+- Das Rohr stark ovalisiert ist oder komplexe Fasenzugaben über einfache Offsets hinaus erfordert.
+
+## Eingaben und Ausgaben
+### Eingaben
+| Eingabe | Beschreibung |
+| --- | --- |
+| Hauptrohr-Außendurchmesser (D1) | Basiszylinder, um den sich der Sattel wickelt. |
+| Abzweigrohr-Außendurchmesser (D2) | Abzweigrohr, das ausgeklinkt und umwickelt wird. |
+| Schnittwinkel | Winkel zwischen Hauptrohr- und Abzweig-Mittellinien; unterstützt rechtwinklige oder schräge Verbindungen. |
+| Abzweig-Offset | Verschieben Sie den Sattel nach oben oder unten, um reale Offsets vor dem Schneiden anzupassen. |
+| Polsterung / Trim-Zugabe | Zusätzlicher Rand im DXF-Export, damit Drucke Beschnittzugabe für das Schneiden haben. |
+
+### Ausgaben
+| Ausgabe | Format | Notizen |
+| --- | --- | --- |
+| Abzweig-Abwicklungsvorlage | DXF | Abgewickelter Sattel zum Umwickeln des Abzweigrohrs im Maßstab 1:1. |
+| Hauptrohr-Ausschnitt | DXF | Offene Polylinie, die das zu schneidende Loch im Hauptrohr zeigt, mit einem Referenzrahmen. |
+| 3D-Vorschau | Viewport | Interaktive Ansicht zur Überprüfung der Ausrichtung vor dem Geometrie-Export. |
+
+## Wie man es benutzt
+1. Öffnen Sie das Utility und geben Sie Durchmesser in dem von Ihnen verwendeten Einheitensystem ein.
+2. Geben Sie den Hauptrohr-AD, Abzweig-AD und den Schnittwinkel ein.
+3. Fügen Sie erforderliche Offsets oder Polsterungen für Ihre Anpassung hinzu.
+4. Überprüfen Sie die Live-3D-Vorschau, um Freiraum und Rotation zu bestätigen.
+5. Exportieren Sie die DXF-Abwicklung und die Lochvorlage, drucken Sie diese aus oder senden Sie diese an das CAM.
+
+**Beispieldatensatz:** Hauptrohr-AD: 114,3 mm, Abzweig-AD: 60,3 mm, Winkel: 45 Grad, Offset: 10 mm, Polsterung: 5 mm.
+- Erwartetes Ergebnis: Exportiert pipe_template.dxf und hole_template.dxf, dimensioniert für einen 1:1-Druck oder CAM-Import.
+
+## Genauigkeit und Verifizierung
+- Geht von runden Rohren mit vernachlässigbarer Ovalität aus; gegen tatsächliches Material prüfen.
+- DXF-Export ist nur geometrisch; Fasenabstände oder Schweißvorbereitungen im Werkstattprogramm bei Bedarf hinzufügen.
+- Im Maßstab 100 % drucken und eine schnelle Papierabwicklung prüfen, bevor Sie auf Stahl schneiden.
+- Druck- oder Verstärkungsprüfungen müssen separat durchgeführt werden.
+
+## FAQ
+- **Kann ich sowohl in Zoll als auch metrisch arbeiten?** Ja. Geben Sie Werte in den von Ihnen verwendeten Einheiten ein, solange die Eingaben konsistent bleiben; die DXF folgt Ihren Zahlen.
+- **Sind die DXF-Vorlagen maßstabsgetreu?** Ja. Die Exporte werden im Maßstab 1:1 generiert. Deaktivieren Sie beim Plotten jegliche Druckskalierung.
+- **Kann ich die Fasenzugabe oder den Wurzelspalt anpassen?** Verwenden Sie die Polsterungs- (Padding) oder Offset-Steuerelemente, um zusätzliches Material zu lassen, und fertigen Sie die Fase dann im CAM oder an der Werkbank an.
+- **Läuft es offline?** Ja. Die Berechnung und der DXF-Export laufen im Browser und bleiben auf Ihrem Gerät.
+- **Welche CAD-Tools öffnen die DXF?** Jedes DXF-fähige Tool (AutoCAD, Fusion, SheetCAM usw.) kann die Polylinien importieren.
+
+## Ähnliche Tools
+- [Cylindrical Shell Rolling Calculator](./cylindrical-shell-rolling)
+- [Metal Bending Prototype](./metal-bending)
+- [Interactive Thread Cheat Sheet](./interactive-thread)
+
+## Changelog
+- Initiale Dokumentation.
+
+## Feedback / Fehlermeldung
+- [Öffnen Sie ein GitHub-Issue](https://github.com/biosxxx/cadautoscript.com/issues)
+- E-Mail oder DM mit dem Slug `pipe-cutter`, damit wir das Problem reproduzieren können.

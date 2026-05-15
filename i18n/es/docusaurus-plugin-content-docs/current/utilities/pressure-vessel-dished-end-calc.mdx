@@ -1,0 +1,171 @@
+---
+title: Dished End (Vessel Head) Calculator
+description: Calcule la geometría, el diámetro del disco y el peso de los fondos torisféricos y elipsoidales (DIN 28011, DIN 28013, SS 895) con configuración de boquillas, informes de QC y exportación 3D STEP.
+slug: /utilities/pressure-vessel-dished-end-calc
+image: /img/og/utilities/pressure-vessel-dished-end-calc.png
+keywords:
+  - dished end
+  - vessel head
+  - DIN 28011
+  - DIN 28013
+  - torispherical
+  - blank diameter
+  - pressure vessel
+---
+
+import Head from '@docusaurus/Head';
+
+# Dished End (Vessel Head) Calculator
+
+Calcule la geometría, el diámetro del disco y el peso de los fondos torisféricos y elipsoidales (DIN 28011, DIN 28013, SS 895) con configuración de boquillas, informes de QC y exportación 3D STEP basada en el navegador.
+
+<a className="button button--primary" href="/utilities/pressure-vessel-dished-end-calc/" data-nobrokenlinkcheck>Abrir utilidad</a>
+
+![pressure-vessel-dished-end-calc utility screenshot](/img/og/utilities/pressure-vessel-dished-end-calc.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/pressure-vessel-dished-end-calc/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Dished End (Vessel Head) Calculator",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Calcule la geometría, el diámetro del disco y el peso de los fondos torisféricos y elipsoidales (DIN 28011, DIN 28013, SS 895) con configuración de boquillas, informes de QC y exportación 3D STEP basada en el navegador.",
+  "url": "https://cadautoscript.com/utilities/pressure-vessel-dished-end-calc/",
+  "image": "https://cadautoscript.com/img/og/utilities/pressure-vessel-dished-end-calc.png",
+  "featureList": [
+    "Cálculo automático de la geometría (R, r, h1, h2)",
+    "Estimación del diámetro del disco",
+    "Visualizador de posicionamiento de boquillas",
+    "Informe de QC de fabricación imprimible",
+    "Exportación 3D STEP para fondos de recipientes"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/pressure-vessel-dished-end-calc/",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "CAD AutoScript"
+  }
+}`}</script>
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Qué estándares son compatibles?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "La calculadora es compatible con los estándares DIN 28011 (Torisférico), DIN 28013 (Elipsoidal) y SS 895."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Calcula el diámetro del disco?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí. Estima el diámetro del disco utilizando factores estándar (p. ej., 1.09x o 1.14x Da) más la pestaña recta."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Puedo configurar la preparación de la soldadura?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí. Puede seleccionar entre un corte recto (None) o un bisel en V con ángulo y cara de raíz configurables."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Es personalizable el informe de QC?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "El informe de QC se genera automáticamente en función de sus entradas e incluye tolerancias DIN 28005-1. Se imprime directamente desde el navegador."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Se guardan mis entradas?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Cierre la página para borrarlo todo; solo permanece en la memoria de su navegador."
+      }
+    }
+  ]
+}`}</script>
+</Head>
+
+## Qué hace
+Cálculo instantáneo de la geometría, el peso y el volumen del fondo de un recipiente a presión. Genera un perfil visual que incluye las posiciones de las boquillas, exporta un modelo 3D STEP correspondiente y produce un "Informe de fabricación" imprimible con las tolerancias esperadas para el control de calidad.
+
+## Cuándo usarlo (y cuándo no)
+**Úselo cuando:**
+- Necesite estimar el peso y el diámetro del disco para el pedido de materiales.
+- Desee visualizar las posiciones de las boquillas en relación con la curvatura del fondo.
+- Necesite una hoja de QC rápida con tolerancias estándar (DIN 28005-1) para el taller.
+- Desee un archivo 3D STEP del lado del navegador del fondo configurado para el trabajo de CAD posterior.
+
+**Evítelo cuando:**
+- Esté diseñando fondos elipsoidales ASME 2:1 (a menos que la geometría coincida manualmente con los ajustes preestablecidos de DIN/SS proporcionados).
+- Necesite clasificaciones de presión o análisis de tensión ASME VIII Div 1.
+
+## Entradas y salidas
+### Entradas
+| Entrada | Descripción |
+| --- | --- |
+| Estándar | Elija entre DIN 28011, DIN 28013 o SS 895. |
+| Geometría (Da, s, h1) | Diámetro exterior, espesor de pared y altura de la pestaña recta. |
+| Material | Seleccione entre grados comunes (P265GH, Inoxidable, Titanio) para determinar la densidad. |
+| Preparación de bordes | Ángulo de bisel en V y dimensiones de la cara de raíz configurables. |
+| Boquillas | Añada boquillas con tamaños DN específicos y posiciones de desplazamiento. |
+
+### Salidas
+| Salida | Formato | Notas |
+| --- | --- | --- |
+| Geometría (H, h2, R, r) | Numérico | Cálculos de altura total, altura del abombado, radio del abombado y radio de la zona de transición. |
+| Peso y volumen | Numérico | Peso final estimado y volumen interno. |
+| Diámetro del disco | Numérico | Diámetro teórico de la placa plana necesaria para el conformado. |
+| Modelo 3D STEP | STEP | Exporta la geometría del fondo del recipiente configurada como un archivo 3D generado por el navegador. |
+| Informe de QC | PDF/Imprimir | Una hoja formateada con valores nominales y campos en blanco para las medidas reales. |
+
+## Cómo usarlo
+1. Seleccione el estándar de fabricación (p. ej., DIN 28011).
+2. Introduzca el diámetro exterior (Da), el espesor (s) y la pestaña recta (h1).
+3. Configure el material y la preparación de los bordes (ángulo de bisel/cara de raíz) si es necesario.
+4. (Opcional) Añada boquillas especificando el tamaño (p. ej., DN50) y el desplazamiento desde el centro.
+5. Descargue el modelo 3D STEP cuando necesite el fondo actual como un archivo CAD.
+6. Haga clic en "QC Report (PDF)" para generar la hoja de fabricación imprimible.
+
+**Ejemplo de datos:** Estándar: DIN 28011, Da: 1000 mm, s: 8 mm, h1: 25 mm, Material: P265GH.
+- Resultado esperado: Altura total (H) calculada, estimación de peso (~25 kg) y un perfil visual que muestra el radio del abombado y el radio de la zona de transición.
+
+## Precisión y verificación
+- Los cálculos de geometría siguen las fórmulas específicas para DIN 28011 (R=Da, r=0.1Da), DIN 28013 y SS 895.
+- Las tolerancias en el informe se derivan de DIN 28005-1 (Fondos conformados).
+- El peso se calcula utilizando densidades estándar (7.85 para acero al carbono, 7.9 para inoxidable).
+
+## FAQ
+- **¿Qué estándares son compatibles?** DIN 28011 (Torisférico), DIN 28013 (Elipsoidal) y SS 895.
+- **¿Calcula el diámetro del disco?** Sí. Estima el diámetro del disco utilizando factores estándar (p. ej., 1.09x o 1.14x Da) más la pestaña recta.
+- **¿Puedo configurar la preparación de la soldadura?** Sí. Puede seleccionar entre un corte recto (None) o un bisel en V con ángulo y cara de raíz configurables.
+- **¿Es personalizable el informe de QC?** El informe de QC se genera automáticamente en función de sus entradas e incluye tolerancias DIN 28005-1. Se imprime directamente desde el navegador.
+- **¿Se guardan mis entradas?** No. Cierre la página para borrarlo todo; solo permanece en la memoria de su navegador.
+
+## Herramientas relacionadas
+- [Cylindrical Shell Rolling](./cylindrical-shell-rolling)
+- [Bourdon Gauge Configurator](./bourdon-gauge)
+- [Embedding Calculators](./embedding-calculators)
+
+## Changelog
+- Se añadió la exportación 3D STEP basada en el navegador para fondos de recipientes.
+- **v0.1.3b**: Se añadió la generación de informes de QC, la configuración de boquillas y la visualización de la preparación de bordes.
+- Lanzamiento inicial.
+
+## Feedback / reporte de error
+- [Abrir un issue en GitHub](https://github.com/biosxxx/cadautoscript.com/issues)
+- Envíe un correo electrónico o un mensaje directo con el slug `pressure-vessel-dished-end-calc` para que podamos reproducir el problema.

@@ -1,0 +1,168 @@
+---
+title: Blind Flange Calculator
+description: Calcule el espesor de la brida ciega según EN 13445-3 con selección automática de PN según EN 1092-1, estimación de peso y exportación 3D STEP en el navegador.
+slug: /utilities/blind-flange-calculator
+image: /img/og/utilities/blind-flange-calculator.png
+keywords:
+  - blind flange
+  - EN 13445-3
+  - EN 1092-1
+  - flange thickness
+  - PN selection
+  - pressure vessel
+---
+
+import Head from '@docusaurus/Head';
+
+# Blind Flange Calculator
+
+Selección automática de la clase PN según EN 1092-1, cálculo del espesor mínimo según EN 13445-3 y generación de un modelo 3D STEP correspondiente directamente en el navegador.
+
+<a className="button button--primary" href="/utilities/blind-flange-calculator/" data-nobrokenlinkcheck>Abrir utilidad</a>
+
+![blind-flange-calculator utility screenshot](/img/og/utilities/blind-flange-calculator.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/blind-flange-calculator/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Blind Flange Calculator",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Selección automática de la clase PN de EN 1092-1, cálculo del espesor mínimo según EN 13445-3, recomendación de un espesor de placa estándar para bridas ciegas y exportación de un modelo 3D STEP correspondiente.",
+  "url": "https://cadautoscript.com/utilities/blind-flange-calculator/",
+  "featureList": [
+"Selección automática de PN",
+"Espesor mínimo y recomendado",
+"Datos del círculo de pernos y estimación de peso",
+"Exportación 3D STEP para bridas ciegas configuradas"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/blind-flange-calculator/",
+  "offers": {
+"@type": "Offer",
+"price": "0",
+"priceCurrency": "USD"
+  },
+  "author": {
+"@type": "Organization",
+"name": "CAD AutoScript"
+  }
+}`}</script>
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+{
+  "@type": "Question",
+  "name": "¿Cómo se selecciona la clase PN?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "La calculadora selecciona la clase PN de EN 1092-1 más cercana que cumpla o supere la presión de funcionamiento."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Puedo anular la presión de prueba?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Sí. La presión de prueba se actualiza automáticamente a partir de la presión de funcionamiento hasta que la edite manualmente."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Qué materiales están incluidos?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "El conjunto actual incluye P265GH, P355GH y 1.4404 (316L) con límites elásticos dependientes de la temperatura."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Se cargan mis datos?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "No. Todo se ejecuta localmente en su navegador."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Es esta una verificación de diseño final?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "No. Utilícela para el dimensionamiento preliminar y verifique las cargas de los pernos, la elección de la junta y el cumplimiento del código antes de la liberación."
+  }
+}
+  ]
+}`}</script>
+</Head>
+
+## Qué hace
+Seleccione un DN, establezca las presiones de funcionamiento y de prueba, la temperatura y el grado del material. La herramienta utiliza las dimensiones de la brida EN 1092-1 y las comprobaciones de tensión EN 13445-3 para calcular el espesor mínimo, recomendar un espesor de placa estándar y exportar un modelo 3D STEP correspondiente para la configuración de brida activa.
+
+## Cuándo usarlo (y cuándo no)
+**Úselo cuando:**
+- Necesite un espesor de brida ciega preliminar rápido para proyectos EN 13445.
+- Desee una búsqueda automática de PN en lugar de comprobaciones manuales de tablas.
+- Necesite una estimación de peso rápida para planes de adquisición o manipulación.
+- Desee un modelo 3D STEP simple del lado del navegador para la geometría de brida actual.
+
+**Evítelo cuando:**
+- Necesite un paquete de cálculo totalmente certificado o una verificación de terceros.
+- Su grado de material o estándar de brida no esté cubierto en el conjunto de datos.
+
+## Entradas y salidas
+### Entradas
+| Entrada | Descripción |
+| --- | --- |
+| DN | Diámetro nominal para las dimensiones EN 1092-1. |
+| Presión de funcionamiento | Se utiliza para seleccionar la clase PN. |
+| Presión de prueba | Por defecto se calcula a partir de la presión de funcionamiento, pero se puede anular. |
+| Temperatura | Se utiliza para elegir el límite elástico dependiente de la temperatura (deg C). |
+| Material | P265GH, P355GH o 1.4404 (316L). |
+| Margen de corrosión | Se añade al espesor mínimo. |
+
+### Salidas
+| Salida | Formato | Notas |
+| --- | --- | --- |
+| Espesor recomendado | mm | Redondeado al alza según una lista de placas estándar. |
+| Espesor mínimo | mm | Según EN 13445-3 con el margen de corrosión mostrado por separado. |
+| Clase PN y datos de pernos | En pantalla | Incluye número de pernos, tamaño y círculo de pernos. |
+| Estimación de peso | kg | Basada en el diámetro exterior de la brida, el espesor y la densidad del material. |
+| Modelo 3D STEP | STEP | Exporta el cuerpo de la brida ciega configurada y el patrón de orificios para pernos. |
+
+## Cómo usarlo
+1. Elija el DN e introduzca la presión de funcionamiento.
+2. Confirme o anule la presión de prueba.
+3. Seleccione la temperatura, el material y el margen de corrosión.
+4. Lea el espesor recomendado, la clase PN y los detalles de los pernos.
+5. Utilice la acción de exportación STEP cuando necesite un modelo 3D correspondiente de la geometría de brida actual.
+
+**Ejemplo de datos:** DN 100, presión de funcionamiento 10 bar, presión de prueba 14 bar, temperatura 20 C, material P265GH, corrosión 1 mm.
+- Resultado esperado: Espesor recomendado y clase PN con tamaño de perno y estimación de peso.
+
+## Precisión y verificación
+- La calculadora es una herramienta de dimensionamiento preliminar y no sustituye la verificación completa del código.
+- Confirme la selección de la clase de brida con las clasificaciones de presión del proyecto y los requisitos de las juntas.
+- Valide las propiedades del material, especialmente a temperaturas elevadas.
+- Las clasificaciones de alta presión EN 1092-1 (PN160+) solo están estandarizadas para un rango limitado de DN; las combinaciones no admitidas muestran "No data".
+
+## FAQ
+- **¿Cómo se selecciona la clase PN?** Se elige la clase PN de EN 1092-1 más cercana que cumpla o supere la presión de funcionamiento.
+- **¿Puedo anular la presión de prueba?** Sí. Al editar la presión de prueba se desactivan las actualizaciones automáticas.
+- **¿Qué materiales están incluidos?** P265GH, P355GH y 1.4404 (316L) con datos de límite elástico dependientes de la temperatura.
+- **¿Se cargan mis datos?** No. Todo se ejecuta localmente en el navegador.
+- **¿Es esta una verificación de diseño final?** No. Úselo para el dimensionamiento preliminar y verifíquelo con las especificaciones de su proyecto.
+
+## Herramientas relacionadas
+- [Dished End (Vessel Head) Calculator](./pressure-vessel-dished-end-calc)
+- [Cylindrical Shell Rolling Calculator](./cylindrical-shell-rolling)
+- [Pipe Cutter Visualizer](./pipe-cutter)
+
+## Changelog
+- Se añadió la exportación 3D STEP basada en el navegador para bridas ciegas configuradas.
+- Documentación inicial.
+
+## Feedback / reporte de error
+- [Abrir un issue en GitHub](https://github.com/biosxxx/cadautoscript.com/issues)
+- Envíe un correo electrónico o un mensaje directo con el slug `blind-flange-calculator` para que podamos reproducir el problema.

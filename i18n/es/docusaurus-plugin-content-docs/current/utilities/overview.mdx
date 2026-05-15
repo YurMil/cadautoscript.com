@@ -1,0 +1,55 @@
+---
+sidebar_position: 2
+title: Catálogo de utilidades
+---
+
+import Head from '@docusaurus/Head';
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/docs/utilities/overview/" />
+</Head>
+
+import UtilityAccessTable from '@site/src/components/Utilities/UtilityAccessTable';
+
+Cada calculadora a continuación lanza la misma página independiente que los maquinistas ya utilizan. La documentación permanece cerca, pero las aplicaciones en sí se ejecutan en Chromium con aceleración WebGL/WASM.
+
+<UtilityAccessTable />
+
+## Páginas de documentación de utilidades
+
+- [Visualizador de cortador de tubos](./pipe-cutter)
+- [Calculadora de laminado de carcasas cilíndricas](./cylindrical-shell-rolling)
+- [Calculadora de fondo toriesférico (cabezal de recipiente)](./pressure-vessel-dished-end-calc)
+- [Calculadora de brida ciega](./blind-flange-calculator)
+- [Generador de placas de tubos](./tube-sheet-generator)
+- [Visor WebSTEP](./webstep-viewer)
+- [Catálogo de prompts de ingeniería](./engineering-prompt-catalog)
+- [Generador de calendario laboral](./business-calendar-generator)
+- [Editor de tablas React](./react-table-editor)
+- [Planificador de enfoque](./focus-planner)
+- [Prototipo de plegado de metal](./metal-bending)
+- [Hoja de trucos de roscas interactiva](./interactive-thread)
+- [Extractor de números de PDF](./pdf-number-extractor)
+- [Firmador de PDF por lotes](./pdf-batch-signer)
+- [Editor WebDXF](./dxf-editor)
+- [PDF Master](./pdf-master)
+- [Maestro QR](./qr-master)
+- [Generador de placas de identificación QR](./qr-nameplate)
+- [Extractor de BOM de PDF](./pdf-bom-extractor)
+- [Renombrador de archivos por lotes](./file-renamer)
+- [Constructor de estructura de carpetas](./folder-structure-builder)
+- [Configurador de indicador de nivel magnético](./magnetic-level-gauge-configurator)
+- [Configurador de manómetro Bourdon](./bourdon-gauge-configurator)
+- [Configurador de termómetro industrial](./industrial-thermometer-configurator)
+
+## Versiones y telemetría
+
+- La mayoría de los paquetes de utilidades independientes viven bajo `static/utility-apps/*`.
+- Los activos de shell compartidos permanecen bajo `static/utilities/*`.
+- Actualice el proyecto de origen, actualice el paquete en el directorio correspondiente, luego realice commit y push.
+- Incluya un registro de cambios (changelog) conciso en los documentos cada vez que una calculadora o macro cambie de comportamiento.
+- Utilice las herramientas de desarrollo del navegador o puntos finales de registro personalizados si necesita telemetría; de forma predeterminada no se rastrea nada.
+
+## Incrustar utilidades dentro de los documentos
+
+Consulte [Embedding calculators](./embed-calculators.md) para fragmentos de iframe y envoltorios de React. MDX le permite importar componentes o iframes directamente, para que pueda mantener las instrucciones y la interfaz de usuario juntas.

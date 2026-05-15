@@ -1,0 +1,166 @@
+---
+title: Folder Structure Builder
+description: Entwerfen Sie Ordnerbäume von Grund auf oder auf Basis von Importen und exportieren Sie dann startbereite Bash/PowerShell-Skripte, JSON-Presets oder ein ZIP-Gerüst.
+slug: /utilities/folder-structure-builder
+image: /img/og/utilities/folder-structure-builder.png
+keywords:
+  - folder structure
+  - project scaffold
+  - bash script
+  - powershell script
+  - zip scaffold
+  - offline generator
+  - json preset
+  - tree builder
+---
+
+import Head from '@docusaurus/Head';
+
+# Folder Structure Builder
+
+Entwerfen Sie Ordnerbäume, importieren Sie JSON oder ZIP und exportieren Sie Bash/PowerShell-Skripte oder ein ZIP-Gerüst.
+
+<a className="button button--primary" href="/utilities/folder-structure-builder/" data-nobrokenlinkcheck>Dienstprogramm öffnen</a>
+
+![folder-structure-builder utility screenshot](/img/og/utilities/folder-structure-builder.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/folder-structure-builder/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Folder Structure Builder",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Entwerfen Sie Ordnerbäume von Grund auf oder auf Basis von Importen und exportieren Sie dann startbereite Bash/PowerShell-Skripte, JSON-Presets oder ein ZIP-Gerüst.",
+  "url": "https://cadautoscript.com/utilities/folder-structure-builder/",
+  "image": "https://cadautoscript.com/img/og/utilities/folder-structure-builder.png",
+  "featureList": [
+"Ordner/Dateien inline hinzufügen",
+"JSON- oder ZIP-Bäume importieren",
+"Bash/PowerShell-Skripte exportieren",
+"ZIP-Gerüst oder JSON-Preset herunterladen"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/folder-structure-builder/",
+  "offers": {
+"@type": "Offer",
+"price": "0",
+"priceCurrency": "USD"
+  },
+  "author": {
+"@type": "Organization",
+"name": "CAD AutoScript"
+  }
+}`}</script>
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+{
+  "@type": "Question",
+  "name": "Wird mein Laufwerk automatisch verändert?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Nein. Es werden nur Skripte oder ZIPs erstellt; Sie führen diese dort aus, wo Sie den Baum haben möchten."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Kann ich Presets teilen?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Ja. Exportieren Sie JSON und senden Sie es Ihrem Team oder speichern Sie es im Repository."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Läuft es offline?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Ja. Alles findet im Browser statt."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Wie werden Sonderzeichen gehandhabt?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Skripte setzen gängige Zeichen in Anführungszeichen, aber überprüfen Sie die Pfade, wenn Sie ungewöhnliche Benennungen verwenden."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Kann ich einen bestehenden Baum importieren?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Ja. Importieren Sie aus JSON oder einem ZIP-Gerüst, um von einer früheren Vorlage aus zu starten."
+  }
+}
+  ]
+}`}</script>
+</Head>
+
+## Was es tut
+Erstellen Sie einen Projektordnerbaum, importieren Sie bestehende JSON- oder ZIP-Dateien und exportieren Sie Bash- oder PowerShell-Skripte, die das Gerüst rekonstruieren. Laden Sie ein ZIP- oder JSON-Preset herunter, damit Teammitglieder dieselbe Struktur ohne manuelles Klicken aufbauen können.
+
+## Wann man es verwenden sollte (und wann nicht)
+**Verwenden Sie es, wenn:**
+- Sie ein Projektgerüst für Ihr Team standardisieren.
+- Sie ein schnelles ZIP-Gerüst für das Onboarding benötigen, ohne CLI-Tools auszuführen.
+- Sie ein Ordner-Preset über verschiedene Rechner oder Teams hinweg teilen möchten.
+
+**Vermeiden Sie es, wenn:**
+- Sie Server konfigurieren oder komplexe Berechtigungen vergeben müssen; der Fokus liegt auf Ordnerbäumen.
+- Ihr Baum Tausende von Knoten enthält; erwägen Sie stattdessen die Verwendung von Vorlagen im Code.
+
+## Eingaben und Ausgaben
+### Eingaben
+| Eingabe | Beschreibung |
+| --- | --- |
+| Ordner- und Dateiknoten | Fügen Sie Ordner oder Dateien inline hinzu, um den Baum zu entwerfen. |
+| JSON- oder ZIP-Import | Laden Sie eine bestehende Struktur, um sie zu ändern oder wiederzuverwenden. |
+| Skript-Optionen | Wählen Sie zwischen Bash- oder PowerShell-Export, je nach Ihrer Umgebung. |
+| Preset-Metadaten | Optionale Bezeichnungen oder Notizen für das Gerüst. |
+
+### Ausgaben
+| Ausgabe | Format | Notizen |
+| --- | --- | --- |
+| Bash-Skript | .sh | Skript zur Rekonstruktion des Baums auf Unix-ähnlichen Systemen. |
+| PowerShell-Skript | .ps1 | Skript zur Rekonstruktion des Baums unter Windows. |
+| ZIP-Gerüst | ZIP | Leere Ordner/Dateien als ZIP für eine schnelle Übergabe. |
+| JSON-Preset | JSON | Wiederverwendbares Preset für den späteren Import. |
+
+## Wie man es benutzt
+1. Starten Sie einen neuen Baum oder importieren Sie ein bestehendes JSON/ZIP.
+2. Fügen Sie Ordner und Dateien hinzu, bis das Gerüst Ihrer Projektvorlage entspricht.
+3. Wählen Sie Bash- oder PowerShell-Export (oder beides).
+4. Laden Sie das Skript, das ZIP oder das JSON-Preset herunter.
+5. Führen Sie das Skript in einem sicheren Verzeichnis aus, um die Struktur aufzubauen.
+
+**Beispieldatensatz:** Erstellen Sie ein Gerüst mit src/, docs/, tests/ und README.md-Platzhaltern; exportieren Sie ein PowerShell-Skript und ein ZIP für das Team.
+- Erwartetes Ergebnis: Stellt ein .ps1-Skript, ein Shell-Skript, ein ZIP-Gerüst und ein JSON-Preset bereit, die denselben Baum repräsentieren.
+
+## Genauigkeit und Verifizierung
+- Skripte erstellen Verzeichnisse, wenn Sie sie ausführen; überprüfen Sie die Pfade vor der Ausführung.
+- Sonderzeichen müssen in verschiedenen Shells möglicherweise in Anführungszeichen gesetzt werden; passen Sie dies an, wenn Ihre Umgebung streng ist.
+- Große Bäume sind durch den Browserspeicher begrenzt, wenn Sie ein ZIP exportieren.
+- Die gesamte Generierung erfolgt lokal; behalten Sie Presets bei Bedarf unter Versionskontrolle.
+
+## FAQ
+- **Wird mein Laufwerk automatisch verändert?** Nein. Es werden nur Skripte oder ZIPs erstellt; Sie führen diese dort aus, wo Sie den Baum haben möchten.
+- **Kann ich Presets teilen?** Ja. Exportieren Sie JSON und senden Sie es Ihrem Team.
+- **Läuft es offline?** Ja. Alles findet im Browser statt.
+- **Wie werden Sonderzeichen gehandhabt?** Skripte setzen gängige Zeichen in Anführungszeichen, aber überprüfen Sie die Pfade bei ungewöhnlichen Namen.
+- **Kann ich einen bestehenden Baum importieren?** Ja. Importieren Sie aus JSON oder einem ZIP-Gerüst.
+
+## Verwandte Tools
+- [Batch File Renamer](./file-renamer)
+- [PDF Master](./pdf-master)
+- [PDF Batch Signer](./pdf-batch-signer)
+
+## Changelog
+- Initiale Dokumentation.
+
+## Feedback / Fehlerbericht
+- [GitHub-Issue öffnen](https://github.com/biosxxx/cadautoscript.com/issues)
+- E-Mail oder DM mit dem Kürzel `folder-structure-builder`, damit wir das Problem reproduzieren können.

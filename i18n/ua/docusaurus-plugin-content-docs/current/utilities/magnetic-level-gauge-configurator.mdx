@@ -1,0 +1,166 @@
+---
+title: Magnetic Level Gauge Configurator
+description: Налаштовуйте розміри, з'єднання та опції магнітних покажчиків рівня (magnetic level gauges) з живим ескізом та експортом PDF-специфікації.
+slug: /utilities/magnetic-level-gauge-configurator
+image: /img/og/utilities/magnetic-level-gauge-configurator.png
+keywords:
+  - magnetic level gauge
+  - level gauge datasheet
+  - process connection
+  - instrument configurator
+  - PDF export
+  - SVG preview
+  - DIN
+  - ANSI
+---
+
+import Head from '@docusaurus/Head';
+
+# Magnetic Level Gauge Configurator
+
+Налаштовуйте розміри, з'єднання та опції магнітних покажчиків рівня (magnetic level gauges) з живим ескізом та експортом PDF-специфікації.
+
+<a className="button button--primary" href="/utilities/magnetic-level-gauge-configurator/" data-nobrokenlinkcheck>Відкрити утиліту</a>
+
+![magnetic-level-gauge-configurator utility screenshot](/img/og/utilities/magnetic-level-gauge-configurator.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/magnetic-level-gauge-configurator/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Magnetic Level Gauge Configurator",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Configure magnetic level gauge dimensions, connections, and options with a live sketch and PDF datasheet export.",
+  "url": "https://cadautoscript.com/utilities/magnetic-level-gauge-configurator/",
+  "image": "https://cadautoscript.com/img/og/utilities/magnetic-level-gauge-configurator.png",
+  "featureList": [
+"Process connection presets",
+"Live SVG preview",
+"PDF export with specs"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/magnetic-level-gauge-configurator/",
+  "offers": {
+"@type": "Offer",
+"price": "0",
+"priceCurrency": "USD"
+  },
+  "author": {
+"@type": "Organization",
+"name": "CAD AutoScript"
+  }
+}`}</script>
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+{
+  "@type": "Question",
+  "name": "Чи можна перемикатися між метричною та імперською системами?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Так. Вводьте значення в тих одиницях, які ви використовуєте; ескіз масштабується відповідно."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Чи готовий PDF для офіційного подання?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Це попередня специфікація; для отримання сертифікованих креслень зверніться до постачальника."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Чи зберігаються мої теги (Tags)?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Ні. Закриття сторінки очищає введені дані; зберігайте PDF для ведення записів."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Чи можна налаштувати типи дренажу та вентиляції?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Так. Обирайте заглушку (plug), клапан або фланець для верхньої та нижньої точок."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Чи надсилаються якісь дані на сервер?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Ні. Розрахунки та експорт виконуються в браузері."
+  }
+}
+  ]
+}`}</script>
+</Head>
+
+## Що це робить
+Обирайте технологічні з'єднання, розміри камери, параметри вентиляції та дренажу, а також матеріали. Переглядайте живий SVG-ескіз та експортуйте PDF-специфікацію (datasheet), яка фіксує всі параметри для закупівлі або перевірки постачальником.
+
+## Коли використовувати (і коли ні)
+**Використовуйте, коли:**
+- Ви складаєте специфікацію магнітного покажчика рівня для запиту ціни або внутрішньої перевірки.
+- Ви хочете перевірити міжосьову відстань (center-to-center) та стандарти з'єднань перед замовленням.
+- Вам потрібен швидкий PDF-datasheet для обміну даними з відділами трубопроводів або КВПіА.
+
+**Уникайте, коли:**
+- Вам потрібні сертифіковані розрахунки тиску або розрахунки поплавця від виробника.
+- Ви налаштовуєте радари з направленою хвилею (guided wave radar) або немагнітні прилади рівня.
+
+## Вхідні та вихідні дані
+### Вхідні дані
+| Параметр | Опис |
+| --- | --- |
+| Process connection standard and size | Опції DIN, ANSI, під зварювання або різьбові для бічних з'єднань. |
+| Center-to-center dimension | Довжина вимірювальної камери, що використовується для масштабування ескізу. |
+| Top and bottom connections | Варіанти вентиляції та дренажу (заглушка, клапан або фланець). |
+| Materials and ratings | Матеріал камери, клас тиску фланців та припущення щодо питомої ваги середовища. |
+| Instrumentation options | Перемикачі, віддалені трансмітери, обігрів та вподобання щодо індикатора. |
+| Project metadata | Тег (Tag), номер лінії, замовник та примітки для специфікації. |
+
+### Вихідні дані
+| Результат | Формат | Примітка |
+| --- | --- | --- |
+| PDF datasheet | PDF | Технічний лист з вибором параметрів та масштабованим ескізом. |
+| Live SVG preview | SVG | Ескіз на екрані, що оновлюється при введенні даних. |
+| Connection summary | На екрані | Список параметрів процесу, вентиляції та дренажу для перевірки. |
+
+## Як використовувати
+1. Оберіть стандарт, розмір та рейтинг технологічного з'єднання.
+2. Введіть міжосьову відстань, а також деталі вентиляції та дренажу.
+3. Встановіть матеріали, питому вагу середовища та опціональні датчики або трансмітери.
+4. Додайте метадані проекту для простежуваності.
+5. Перевірте ескіз та експортуйте PDF-специфікацію.
+
+**Приклад набору даних:** Бічні з'єднання: DIN DN25 PN40 RF, Міжосьова: 1800 мм, Верх: 1/2 in NPT plug, Низ: 1/2 in NPT valve, Матеріал: 316L, Опції: датчики увімкнені, обігрів вимкнений, Тег: MLG-101.
+- Очікуваний результат: Генерується PDF-специфікація з обраними з'єднаннями, розмірами, матеріалами та живим ескізом для MLG-101.
+
+## Точність та перевірка
+- Розміри на ескізі мають ілюстративний характер; уточнюйте фінальні розміри у постачальника перед виготовленням.
+- Класи тиску та температури мають бути перевірені на відповідність вашим стандартам проектування.
+- Питома вага та параметри поплавця прийняті за замовчуванням; підтвердьте їх даними процесу, якщо це критично.
+- Файли залишаються локальними до моменту завантаження PDF.
+
+## FAQ
+- **Чи можна перемикатися між метричною та імперською системами?** Так. Вводьте значення у ваших одиницях; ескіз адаптується.
+- **Чи готовий PDF для офіційного подання?** Це попередня специфікація; запитуйте сертифіковані креслення у виробника.
+- **Чи зберігаються мої теги?** Ні. Дані очищаються при закритті сторінки; зберігайте PDF.
+- **Чи можна налаштувати типи дренажу та вентиляції?** Так. Обирайте заглушку, клапан або фланець.
+- **Чи надсилаються дані на сервер?** Ні. Усі розрахунки локальні.
+
+## Пов'язані інструменти
+- [Bourdon Gauge Configurator](./bourdon-gauge-configurator)
+- [Industrial Thermometer Configurator](./industrial-thermometer-configurator)
+- [Pipe Cutter Visualizer](./pipe-cutter)
+
+## Список змін (Changelog)
+- Початкова документація.
+
+## Зворотній зв'язок / звіт про помилку
+- [Відкрити issue на GitHub](https://github.com/biosxxx/cadautoscript.com/issues)
+- Напишіть на Email або в DM з вказанням `magnetic-level-gauge-configurator`.

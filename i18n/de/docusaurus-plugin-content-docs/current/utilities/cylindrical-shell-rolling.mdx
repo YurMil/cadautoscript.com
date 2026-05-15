@@ -1,0 +1,167 @@
+---
+title: Cylindrical Shell Rolling Calculator
+description: Schätzung von Walzenabstand, Biegezugabe und gestreckter Länge für zylindrische Schalen mit EN 13445 / ASME VIII Voreinstellungen.
+slug: /utilities/cylindrical-shell-rolling
+image: /img/og/utilities/cylindrical-shell-rolling.png
+keywords:
+  - Blechwalzen
+  - gestreckte Länge
+  - EN 13445
+  - ASME VIII
+  - Walzenabstand
+  - Biegezugabe
+  - Schalenrechner
+  - Druckbehälter
+---
+
+import Head from '@docusaurus/Head';
+
+# Cylindrical Shell Rolling Calculator
+
+Schätzung von Walzenabstand, Biegezugabe und gestreckter Länge für zylindrische Schalen mit EN 13445 / ASME VIII Voreinstellungen.
+
+<a className="button button--primary" href="/utilities/cylindrical-shell-rolling/" data-nobrokenlinkcheck>Utility öffnen</a>
+
+![cylindrical-shell-rolling utility screenshot](/img/og/utilities/cylindrical-shell-rolling.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/cylindrical-shell-rolling/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Cylindrical Shell Rolling Calculator",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Schätzung von Walzenabstand, Biegezugabe und gestreckter Länge für zylindrische Schalen mit EN 13445 / ASME VIII Voreinstellungen.",
+  "url": "https://cadautoscript.com/utilities/cylindrical-shell-rolling/",
+  "image": "https://cadautoscript.com/img/og/utilities/cylindrical-shell-rolling.png",
+  "featureList": [
+"Walzenabstandshinweise",
+"Druckbare Offsets",
+"Toleranzführung"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/cylindrical-shell-rolling/",
+  "offers": {
+"@type": "Offer",
+"price": "0",
+"priceCurrency": "USD"
+  },
+  "author": {
+"@type": "Organization",
+"name": "CAD AutoScript"
+  }
+}`}</script>
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+{
+  "@type": "Question",
+  "name": "Unterstützt es sowohl Zoll als auch Metrik?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Ja. Geben Sie Zahlen in dem von Ihnen verwendeten Einheitensystem ein; Berechnungen sind einheitenunabhängig."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Kann ich die Ergebnisse exportieren?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Verwenden Sie den Druckdialog Ihres Browsers oder kopieren Sie Werte in Ihre eigene Vorlage; es wird nichts serverseitig gespeichert."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Berechnet es Kegel oder Rohrbogen?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Nein. Das aktuelle Modell geht von einem konstanten Zylinder aus."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Wie wird die Rückfederung gehandhabt?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Voreinstellungen enthalten typische Toleranzen. Passen Sie Überbiegung oder Zugaben für Ihre Materialcharge an."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Werden meine Eingaben gespeichert?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Nein. Schließen Sie die Seite, um alles zu löschen; es bleibt nur im Speicher Ihres Browsers."
+  }
+}
+  ]
+}`}</script>
+</Head>
+
+## Funktionen
+Berechnen Sie Walzenabstand, Biegezugabe und gestreckte Länge für zylindrische Schalen, bevor das Blech die Walzen berührt. Verwenden Sie Voreinstellungen im Stil von EN 13445 oder ASME VIII, fügen Sie Nahtspalt- oder Überbiegungszugaben hinzu und übergeben Sie die Zusammenfassung dem Bediener.
+
+## Wann man es verwendet (und wann nicht)
+**Verwenden Sie es, wenn:**
+- Sie Walzenabstand und gestreckte Länge für eine zylindrische Schale benötigen, bevor Sie einen Auftrag an die Werkstatt freigeben.
+- Sie die Richtlinien von EN 13445 und ASME VIII vergleichen oder Offsets mit einem Prüfer teilen möchten.
+- Sie eine druckbare Setup-Karte für Bediener ohne das Öffnen von Tabellenkalkulationen wünschen.
+
+**Vermeiden Sie es, wenn:**
+- Sie Kegel, Übergänge oder nicht-zylindrische Formen walzen.
+- Sie Finite-Elemente-Prüfungen oder Berechnungen der Maschinenkapazität über einfache Biegezugaben hinaus benötigen.
+
+## Eingaben und Ausgaben
+### Eingaben
+| Eingabe | Beschreibung |
+| --- | --- |
+| Ziel-Schalendurchmesser | Außen- oder Innendurchmesser, den die Schale nach dem Walzen erreichen muss. |
+| Blechdicke | Materialdicke, die die neutrale Achse und die Zugabe bestimmt. |
+| Schalenlänge und Nahtspalt | Fertige Länge plus etwaige Heft-/Passspalte, die Sie lassen möchten. |
+| Standard-Voreinstellung | Wählen Sie EN 13445, ASME VIII oder benutzerdefinierte Zugaben für Ihre Werkstatt. |
+| Überbiegung oder Flachauslauf-Zugabe | Wie viel extra Walzen Sie an den Enden wünschen, um Flachstellen zu minimieren. |
+| Walzenabstand oder Maschinengeometrie | Optionale Eingaben zur Plausibilitätsprüfung von Kapazität und Durchbiegung. |
+
+### Ausgaben
+| Ausgabe | Format | Hinweise |
+| --- | --- | --- |
+| Walzenabstandsführung | Auf dem Bildschirm | Empfohlener Abstand, um den Zieldurchmesser mit minimalen Flachstellen zu erreichen. |
+| Gestreckte Länge | Numerisch | Länge, auf die das Blech vor dem Walzen zugeschnitten werden muss, unter Berücksichtigung des Nahtspalts. |
+| Biegezugabe / Abzug | Numerisch | Zugabewerte, die Sie in Ihren Arbeitsplan oder Laufzettel kopieren können. |
+| Druckbare Setup-Notizen | Text | Direkt von der Seite kopieren oder drucken für den Walzenbediener. |
+
+## Bedienungsanleitung
+1. Geben Sie den Ziel-Schalendurchmesser und die fertige Länge ein.
+2. Legen Sie die Blechdicke fest und wählen Sie die Standard-Voreinstellung, die zu Ihrem Auftrag passt.
+3. Fügen Sie Nahtspalt und etwaige Überbiegungs- oder Flachauslauf-Anpassungen hinzu.
+4. Überprüfen Sie den Walzenabstand, die gestreckte Länge und die Zugabewerte.
+5. Drucken oder kopieren Sie die Werte in den Werkstattlaufzettel.
+
+**Beispieldatensatz:** Schalen-AD: 1500 mm, Dicke: 12 mm, Länge: 2500 mm, Nahtspalt: 3 mm, Voreinstellung: EN 13445, Überbiegung: kleiner Endbias zur Reduzierung von Flachstellen.
+- Erwartetes Ergebnis: Gibt eine gestreckte Länge, Vorschläge für den Walzenabstand und Zugabewerte aus, die dem Walzenbediener mitgeteilt werden können.
+
+## Genauigkeit und Verifizierung
+- Geht von einer zylindrischen Schale mit gleichmäßiger Dicke und moderater Rückfederung aus, die durch die Voreinstellung gehandhabt wird.
+- Ersetzt keine Prüfungen der Maschinenkapazität oder detaillierte Spannungsberechnungen.
+- Verwenden Sie Werkszeugnisdaten, um die Überbiegung für Legierungen zu verfeinern, die anders zurückfedern.
+- Führen Sie eine Stichprobenprüfung an einem Testcoupon durch, bevor Sie Bleche in voller Länge bearbeiten.
+
+## FAQ
+- **Unterstützt es sowohl Zoll als auch Metrik?** Ja. Geben Sie Zahlen in dem von Ihnen verwendeten Einheitensystem ein; Berechnungen sind einheitenunabhängig.
+- **Kann ich die Ergebnisse exportieren?** Verwenden Sie den Druckdialog Ihres Browsers oder kopieren Sie Werte in Ihre eigene Vorlage; es wird nichts serverseitig gespeichert.
+- **Berechnet es Kegel oder Rohrbogen?** Nein. Das aktuelle Modell geht von einem konstanten Zylinder aus.
+- **Wie wird die Rückfederung gehandhabt?** Voreinstellungen enthalten typische Toleranzen. Passen Sie Überbiegung oder Zugaben für Ihre Materialcharge an.
+- **Werden meine Eingaben gespeichert?** Nein. Schließen Sie die Seite, um alles zu löschen; es bleibt nur im Speicher Ihres Browsers.
+
+## Verwandte Tools
+- [Pipe Cutter Visualizer](./pipe-cutter)
+- [Metal Bending Prototype](./metal-bending)
+- [Interactive Thread Cheat Sheet](./interactive-thread)
+
+## Versionsлаборатория (Changelog)
+- Erstveröffentlichung der Dokumentation.
+
+## Feedback / Fehlermeldung
+- [GitHub-Issue öffnen](https://github.com/biosxxx/cadautoscript.com/issues)
+- E-Mail oder DM mit dem Slug `cylindrical-shell-rolling`, damit wir das Problem reproduzieren können

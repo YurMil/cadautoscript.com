@@ -1,0 +1,166 @@
+---
+title: Folder Structure Builder
+description: Diseñe árboles de carpetas desde cero o a partir de importaciones, luego exporte scripts de bash/PowerShell listos para ejecutar, ajustes preestablecidos de JSON o un andamio ZIP.
+slug: /utilities/folder-structure-builder
+image: /img/og/utilities/folder-structure-builder.png
+keywords:
+  - folder structure
+  - project scaffold
+  - bash script
+  - powershell script
+  - zip scaffold
+  - offline generator
+  - json preset
+  - tree builder
+---
+
+import Head from '@docusaurus/Head';
+
+# Folder Structure Builder
+
+Diseñe árboles de carpetas, importe JSON o ZIP, y exporte scripts de bash/PowerShell o un andamio ZIP.
+
+<a className="button button--primary" href="/utilities/folder-structure-builder/" data-nobrokenlinkcheck>Abrir utilidad</a>
+
+![folder-structure-builder utility screenshot](/img/og/utilities/folder-structure-builder.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/folder-structure-builder/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Folder Structure Builder",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Diseñe árboles de carpetas desde cero o a partir de importaciones, luego exporte scripts de bash/PowerShell listos para ejecutar, ajustes preestablecidos de JSON o un andamio ZIP.",
+  "url": "https://cadautoscript.com/utilities/folder-structure-builder/",
+  "image": "https://cadautoscript.com/img/og/utilities/folder-structure-builder.png",
+  "featureList": [
+"Agregar carpetas/archivos en línea",
+"Importar árboles JSON o ZIP",
+"Exportar scripts de bash/PowerShell",
+"Descargar andamio ZIP o ajuste preestablecido JSON"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/folder-structure-builder/",
+  "offers": {
+"@type": "Offer",
+"price": "0",
+"priceCurrency": "USD"
+  },
+  "author": {
+"@type": "Organization",
+"name": "CAD AutoScript"
+  }
+}`}</script>
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+{
+  "@type": "Question",
+  "name": "¿Modifica mi unidad automáticamente?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "No. Solo crea scripts o ZIPs; usted los ejecuta donde desee el árbol."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Puedo compartir ajustes preestablecidos?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Sí. Exporte JSON y envíelo por correo electrónico a su equipo o guárdelo en el repositorio."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Funciona sin conexión?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Sí. Todo sucede en el navegador."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Cómo se manejan los caracteres especiales?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Los scripts ponen entre comillas los caracteres comunes, pero revise las rutas si usa nombres inusuales."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Puedo importar un árbol existente?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Sí. Importe desde JSON o un andamio ZIP para comenzar desde una plantilla anterior."
+  }
+}
+  ]
+}`}</script>
+</Head>
+
+## Qué hace
+Diseñe un árbol de carpetas de proyecto, importe JSON o ZIP existentes y exporte scripts de bash o PowerShell que recrean el andamio. Descargue un ajuste preestablecido de ZIP o JSON para que los compañeros de equipo puedan construir la misma estructura sin clics manuales.
+
+## Cuándo usarlo (y cuándo no)
+**Úselo cuando:**
+- Esté estandarizando un andamio de proyecto para su equipo.
+- Necesite un andamio ZIP rápido para la incorporación sin ejecutar herramientas de CLI.
+- Quiera compartir un ajuste preestablecido de carpetas entre máquinas o equipos.
+
+**Evítelo cuando:**
+- Necesite aprovisionar servidores o permisos complejos; esto se enfoca en árboles de carpetas.
+- Su árbol contenga miles de nodos; considere el uso de plantillas con código en su lugar.
+
+## Entradas y salidas
+### Entradas
+| Entrada | Descripción |
+| --- | --- |
+| Nodos de carpeta y archivo | Agregue carpetas o archivos en línea para diseñar el árbol. |
+| Importación de JSON o ZIP | Cargue una estructura existente para modificarla o reutilizarla. |
+| Opciones de script | Elija la exportación de bash o PowerShell según su entorno. |
+| Metadatos del ajuste preestablecido | Etiquetas o notas opcionales para el andamio. |
+
+### Salidas
+| Salida | Formato | Notas |
+| --- | --- | --- |
+| Script de Bash | .sh | Script para recrear el árbol en sistemas tipo Unix. |
+| Script de PowerShell | .ps1 | Script para recrear el árbol en Windows. |
+| Andamio ZIP | ZIP | Carpetas/archivos vacíos comprimidos para una transferencia rápida. |
+| Ajuste preestablecido JSON | JSON | Ajuste preestablecido reutilizable para importar más tarde. |
+
+## Cómo usar
+1. Comience un nuevo árbol o importe un JSON/ZIP existente.
+2. Agregue carpetas y archivos hasta que el andamio coincida con la plantilla de su proyecto.
+3. Elija la exportación de bash o PowerShell (o ambas).
+4. Descargue el script, ZIP o ajuste preestablecido JSON.
+5. Ejecute el script en un directorio seguro para construir la estructura.
+
+**Ejemplo:** Cree un andamio con carpetas src/, docs/, tests/ y un archivo README.md; exporte un script de PowerShell y un ZIP para el equipo.
+- Resultado esperado: Proporciona un script .ps1, un script de shell, un andamio ZIP y un ajuste preestablecido JSON que representan el mismo árbol.
+
+## Precisión y verificación
+- Los scripts crean directorios cuando los ejecuta; revise las rutas antes de ejecutar.
+- Los caracteres especiales pueden requerir comillas en diferentes shells; ajústelos si su entorno es estricto.
+- Los árboles grandes están limitados por la memoria del navegador al exportar un ZIP.
+- Toda la generación se ejecuta localmente; mantenga los ajustes preestablecidos bajo control de versiones si es necesario.
+
+## FAQ
+- **¿Modifica mi unidad automáticamente?** No. Solo crea scripts o ZIPs; usted los ejecuta donde desee el árbol.
+- **¿Puedo compartir ajustes preestablecidos?** Sí. Exporte JSON y envíelo a su equipo.
+- **¿Funciona sin conexión?** Sí. Todo sucede en el navegador.
+- **¿Cómo se manejan los caracteres especiales?** Los scripts citan caracteres comunes, pero revise las rutas si usa nombres inusuales.
+- **¿Puedo importar un árbol existente?** Sí. Importe desde JSON o un andamio ZIP.
+
+## Herramientas relacionadas
+- [Batch File Renamer](./file-renamer)
+- [PDF Master](./pdf-master)
+- [PDF Batch Signer](./pdf-batch-signer)
+
+## Registro de cambios
+- Documentación inicial.
+
+## Comentarios / informe de errores
+- [Abrir un issue en GitHub](https://github.com/biosxxx/cadautoscript.com/issues)
+- Envíe un correo electrónico o DM con el slug `folder-structure-builder` para que podamos reproducir el problema.

@@ -1,0 +1,165 @@
+---
+title: Interactive Thread Cheat Sheet
+description: Filtern Sie ISO-, UNC- und UNF-Serien, schlagen Sie Bohrerdurchmesser nach und kopieren Sie Bezeichnungen für Zeichnungen direkt im Browser.
+slug: /utilities/interactive-thread
+image: /img/og/utilities/interactive-thread.png
+keywords:
+  - thread chart
+  - ISO metric thread
+  - UNC
+  - UNF
+  - tap drill size
+  - thread callout
+  - fastener reference
+  - drill lookup
+---
+
+import Head from '@docusaurus/Head';
+
+# Interactive Thread Cheat Sheet
+
+Filtern Sie ISO-, UNC- und UNF-Serien, schlagen Sie Bohrerdurchmesser nach und kopieren Sie Bezeichnungen für Zeichnungen, ohne ein Handbuch zu öffnen.
+
+<a className="button button--primary" href="/utilities/interactive-thread/" data-nobrokenlinkcheck>Dienstprogramm öffnen</a>
+
+![interactive-thread utility screenshot](/img/og/utilities/interactive-thread.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/interactive-thread/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Interactive Thread Cheat Sheet",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Filtern Sie ISO-, UNC- und UNF-Serien, schlagen Sie Bohrerdurchmesser nach und kopieren Sie Bezeichnungen für Zeichnungen direkt im Browser.",
+  "url": "https://cadautoscript.com/utilities/interactive-thread/",
+  "image": "https://cadautoscript.com/img/og/utilities/interactive-thread.png",
+  "featureList": [
+"Filterbare Tabellen",
+"Bohrer-Nachschlagewerk",
+"Kopierfertige Bezeichnungen"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/interactive-thread/",
+  "offers": {
+"@type": "Offer",
+"price": "0",
+"priceCurrency": "USD"
+  },
+  "author": {
+"@type": "Organization",
+"name": "CAD AutoScript"
+  }
+}`}</script>
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+{
+  "@type": "Question",
+  "name": "Kann ich benutzerdefinierte Zeilen hinzufügen?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Noch nicht. Verwenden Sie die bereitgestellten Serien; kopieren Sie die Ergebnisse dorthin, wo sie benötigt werden."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Sind Rohrgewinde enthalten?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Nein. Der aktuelle Satz deckt nur ISO, UNC und UNF ab."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Läuft es offline?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Ja. Die Tabellen werden lokal in Ihrem Browser geladen."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Kann ich Werte in CAD kopieren?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Ja. Kopieren Sie die Bezeichnung oder Bohrergröße direkt aus der Tabelle."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Zeigt es sowohl metrische als auch zöllige Maße?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Ja. Wechseln Sie die Serie, um zwischen ISO- und UNC/UNF-Listen zu wechseln."
+  }
+}
+  ]
+}`}</script>
+</Head>
+
+## Was es tut
+Durchsuchen Sie ISO-, UNC- und UNF-Gewinde und kopieren Sie dann Bezeichnungen oder Bohrerdurchmesser direkt in Ihre Zeichnung. Die Tabellen bleiben im Browser filterbar, sodass Sie zwischen Grob-, Fein- oder benutzerdefinierten Steigungswerten wechseln können, ohne in einem PDF-Handbuch blättern zu müssen.
+
+## Wann man es verwenden sollte (und wann nicht)
+**Verwenden Sie es, wenn:**
+- Sie eine schnelle Referenz für Kernlochbohrer oder Durchgangsbohrer für eine Zeichnung oder ein Einrichteblatt benötigen.
+- Sie eine korrekt formatierte Bezeichnung in CAD kopieren möchten, ohne sie neu tippen zu müssen.
+- Sie metrische und imperiale (zöllige) Serien vergleichen, um eine Ersatzgröße auszuwählen.
+
+**Vermeiden Sie es, wenn:**
+- Sie kegelige Rohrgewinde, Trapezgewinde oder nicht standardmäßige Formen benötigen.
+- Sie Toleranzklassenberechnungen über die bereitgestellten Referenzwerte hinaus benötigen.
+
+## Eingaben und Ausgaben
+### Eingaben
+| Eingabe | Beschreibung |
+| --- | --- |
+| Gewindeserie | Wählen Sie ISO, UNC oder UNF, um die Tabelle zu filtern. |
+| Nenngröße | Wählen Sie den Durchmesser oder die Lehre, die Sie bohren oder schneiden müssen. |
+| Steigung oder TPI | Wählen Sie Grob-, Fein- oder eine spezifische Steigung innerhalb der Serie. |
+| Toleranzklasse | Referenzpassung wie 6H/6g oder Klasse 2; verwenden Sie dies, um die Zeichnungsabsicht widerzuspiegeln. |
+| Bohrer-Präferenz | Wechseln Sie zwischen Referenzen für Kernlochbohrer und Durchgangsbohrer. |
+
+### Ausgaben
+| Ausgabe | Format | Notizen |
+| --- | --- | --- |
+| Kernlochbohrer-Durchmesser | Numerisch | Empfohlene Bohrergröße für das gewählte Gewinde. |
+| Außen-/Kern-/Flankendurchmesser | Numerisch | Referenzmaße für QS und Bezeichnungen. |
+| Formatierte Bezeichnung | Text | Kopierfertiger String zum Einfügen in CAD oder Arbeitspläne. |
+
+## Wie man es benutzt
+1. Wählen Sie die Gewindeserie und filtern Sie nach der benötigten Nenngröße.
+2. Wählen Sie die Steigung und Toleranzklasse.
+3. Wechseln Sie zu Kernloch- oder Durchgangsbohrer, um den richtigen Durchmesser zu sehen.
+4. Kopieren Sie die Bezeichnung oder Bohrergröße direkt in Ihre Zeichnung.
+5. Optional: Wechseln Sie zwischen metrischen und imperialen Listen, um Alternativen zu vergleichen.
+
+**Beispieldatensatz:** Gewinde: M12 x 1,75, Toleranz: 6H, Bohrer: Kernlochbohrer.
+- Erwartetes Ergebnis: Liefert eine Kernlochbohrer-Empfehlung (10,2 mm) und einen als M12x1,75-6H formatierten Bezeichnungsstring.
+
+## Genauigkeit und Verifizierung
+- Die Werte folgen gängigen ISO- und UNC/UNF-Referenztabellen; überprüfen Sie diese gegen Ihren geltenden Standard.
+- Deckt keine kegeligen Rohrgewinde oder Spezialformen ab.
+- Validieren Sie Bohrergrößen immer gegen Werkzeugverfügbarkeit und Material, bevor Sie schneiden.
+- Bestätigen Sie bei kritischen Passungen die Toleranzen mit der offiziellen Norm oder Endmaßen.
+
+## FAQ
+- **Kann ich benutzerdefinierte Zeilen hinzufügen?** Noch nicht. Verwenden Sie die bereitgestellten Serien; kopieren Sie die Ergebnisse dorthin, wo sie benötigt werden.
+- **Sind Rohrgewinde enthalten?** Nein. Der aktuelle Satz deckt nur ISO, UNC und UNF ab.
+- **Läuft es offline?** Ja. Die Tabellen werden lokal in Ihrem Browser geladen.
+- **Kann ich Werte in CAD kopieren?** Ja. Kopieren Sie die Bezeichnung oder Bohrergröße direkt aus der Tabelle.
+- **Zeigt es sowohl metrische als auch zöllige Maße?** Ja. Wechseln Sie die Serie, um zwischen Listen zu wechseln.
+
+## Verwandte Tools
+- [Metal Bending Prototype](./metal-bending)
+- [PDF Number Extractor](./pdf-number-extractor)
+- [PDF BOM Extractor](./pdf-bom-extractor)
+
+## Changelog
+- Initiale Dokumentation.
+
+## Feedback / Fehlerbericht
+- [GitHub-Issue öffnen](https://github.com/biosxxx/cadautoscript.com/issues)
+- E-Mail oder DM mit dem Kürzel `interactive-thread`, damit wir das Problem reproduzieren können.

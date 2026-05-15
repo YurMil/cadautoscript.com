@@ -1,0 +1,171 @@
+---
+title: Dished End (Vessel Head) Calculator
+description: Berechnung von Geometrie, Ronden-Durchmesser und Gewicht für Klöpper- und Korbbogenböden (DIN 28011, DIN 28013, SS 895) mit Stutzenkonfiguration, QC-Berichten und 3D STEP-Export.
+slug: /utilities/pressure-vessel-dished-end-calc
+image: /img/og/utilities/pressure-vessel-dished-end-calc.png
+keywords:
+  - dished end
+  - vessel head
+  - DIN 28011
+  - DIN 28013
+  - torispherical
+  - blank diameter
+  - pressure vessel
+---
+
+import Head from '@docusaurus/Head';
+
+# Dished End (Vessel Head) Calculator
+
+Berechnen Sie Geometrie, Ronden-Durchmesser und Gewicht für Klöpper- und Korbbogenböden (DIN 28011, DIN 28013, SS 895) mit Stutzenkonfiguration, QC-Berichten und browserbasiertem 3D STEP-Export.
+
+<a className="button button--primary" href="/utilities/pressure-vessel-dished-end-calc/" data-nobrokenlinkcheck>Utility öffnen</a>
+
+![pressure-vessel-dished-end-calc utility screenshot](/img/og/utilities/pressure-vessel-dished-end-calc.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/pressure-vessel-dished-end-calc/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Dished End (Vessel Head) Calculator",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Berechnung von Geometrie, Ronden-Durchmesser und Gewicht für Klöpper- und Korbbogenböden (DIN 28011, DIN 28013, SS 895) mit Stutzenkonfiguration, QC-Berichten und browserbasiertem 3D STEP-Export.",
+  "url": "https://cadautoscript.com/utilities/pressure-vessel-dished-end-calc/",
+  "image": "https://cadautoscript.com/img/og/utilities/pressure-vessel-dished-end-calc.png",
+  "featureList": [
+    "Automatische Geometrieberechnung (R, r, h1, h2)",
+    "Schätzung des Ronden-Durchmessers",
+    "Visualisierung der Stutzenpositionierung",
+    "Druckbarer Fertigungs-QC-Bericht",
+    "3D STEP-Export für Behälterböden"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/pressure-vessel-dished-end-calc/",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "CAD AutoScript"
+  }
+}`}</script>
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Welche Normen werden unterstützt?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Der Rechner unterstützt DIN 28011 (Klöpperböden), DIN 28013 (Korbbogenböden) und SS 895."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Berechnet er den Ronden-Durchmesser?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja. Er schätzt den Ronden-Durchmesser anhand von Standardfaktoren (z. B. 1,09x oder 1,14x Da) plus dem zylindrischen Bord."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Kann ich die Schweißnahtvorbereitung konfigurieren?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja. Sie können zwischen einem glatten Schnitt (None) oder einer V-Fuge mit konfigurierbarem Winkel und Steg wählen."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Ist der QC-Bericht anpassbar?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Der QC-Bericht wird automatisch basierend auf Ihren Eingaben generiert und enthält Toleranzen nach DIN 28005-1. Er wird direkt aus dem Browser gedruckt."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Werden meine Eingaben gespeichert?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nein. Schließen Sie die Seite, um alles zu löschen; es bleibt nur im Arbeitsspeicher Ihres Browsers."
+      }
+    }
+  ]
+}`}</script>
+</Head>
+
+## Funktionen
+Sofortige Berechnung von Geometrie, Gewicht und Volumen von Druckbehälterböden. Er generiert ein visuelles Profil einschließlich Stutzenpositionen, exportiert ein passendes 3D STEP-Modell und erstellt einen druckbaren „Fertigungsbericht“ mit den erwarteten Toleranzen für die Qualitätskontrolle.
+
+## Wann man es benutzt (und wann nicht)
+**Benutzen Sie es, wenn:**
+- Sie das Gewicht und den Ronden-Durchmesser für die Materialbestellung schätzen müssen.
+- Sie Stutzenpositionen relativ zur Bodenwölbung visualisieren möchten.
+- Sie ein schnelles QC-Blatt mit Standardtoleranzen (DIN 28005-1) für die Werkstatt benötigen.
+- Sie eine browserseitige 3D STEP-Datei des konfigurierten Bodens für die CAD-Weiterbearbeitung benötigen.
+
+**Vermeiden Sie es, wenn:**
+- Sie ASME 2:1 Ellipsoidböden konstruieren (außer die Geometrie entspricht manuell den DIN/SS-Vorgaben).
+- Sie ASME VIII Div 1 Druckstufen oder Spannungsanalysen benötigen.
+
+## Eingaben und Ausgaben
+### Eingaben
+| Eingabe | Beschreibung |
+| --- | --- |
+| Norm | Wählen Sie zwischen DIN 28011, DIN 28013 oder SS 895. |
+| Geometrie (Da, s, h1) | Außendurchmesser, Wandstärke und zylindrische Bordhöhe. |
+| Werkstoff | Wählen Sie aus gängigen Güten (P265GH, Edelstahl, Titan), um die Dichte zu bestimmen. |
+| Nahtvorbereitung | Konfigurierbarer V-Fugenwinkel und Steghöhe. |
+| Stutzen | Fügen Sie Stutzen mit spezifischen DN-Größen und Versatzpositionen hinzu. |
+
+### Ausgaben
+| Ausgabe | Format | Hinweise |
+| --- | --- | --- |
+| Geometrie (H, h2, R, r) | Numerisch | Gesamthöhe, Wölbungshöhe, Kalottenradius und Krempenradius. |
+| Gewicht & Volumen | Numerisch | Geschätztes Fertiggewicht und Innenvolumen. |
+| Ronden-Durchmesser | Numerisch | Theoretischer Durchmesser der flachen Platte, die für die Umformung benötigt wird. |
+| 3D STEP-Modell | STEP | Exportiert die konfigurierte Behälterbodengeometrie als 3D-Datei. |
+| QC-Bericht | PDF/Druck | Ein formatiertes Blatt mit Nennwerten und Leerfeldern für Ist-Maße. |
+
+## Bedienungsanleitung
+1. Wählen Sie die Fertigungsnorm (z. B. DIN 28011).
+2. Geben Sie den Außendurchmesser (Da), die Dicke (s) und den zylindrischen Bord (h1) ein.
+3. Konfigurieren Sie bei Bedarf Werkstoff und Nahtvorbereitung (Winkel/Steg).
+4. (Optional) Fügen Sie Stutzen hinzu, indem Sie die Größe (z. B. DN50) und den Versatz zur Mitte angeben.
+5. Laden Sie das 3D STEP-Modell herunter, wenn Sie den aktuellen Boden als CAD-Datei benötigen.
+6. Klicken Sie auf „QC Report (PDF)“, um das druckbare Fertigungsblatt zu erstellen.
+
+**Beispieldatensatz:** Norm: DIN 28011, Da: 1000 mm, s: 8 mm, h1: 25 mm, Werkstoff: P265GH.
+- Erwartetes Ergebnis: Gesamthöhe (H) berechnet, Gewichtsschätzung (~25 kg) und ein visuelles Profil mit Kalotten- und Krempenradius.
+
+## Genauigkeit und Verifizierung
+- Geometrieberechnungen folgen den spezifischen Formeln für DIN 28011 (R=Da, r=0,1Da), DIN 28013 und SS 895.
+- Toleranzen im Bericht leiten sich von der DIN 28005-1 (Geformte Böden) ab.
+- Das Gewicht wird mit Standarddichten berechnet (7,85 für C-Stahl, 7,9 für Edelstahl).
+
+## FAQ
+- **Welche Normen werden unterstützt?** DIN 28011 (Klöpperböden), DIN 28013 (Korbbogenböden) und SS 895.
+- **Berechnet er den Ronden-Durchmesser?** Ja. Er schätzt den Ronden-Durchmesser anhand von Standardfaktoren (z. B. 1,09x oder 1,14x Da) plus dem zylindrischen Bord.
+- **Kann ich die Schweißnahtvorbereitung konfigurieren?** Ja. Sie können zwischen einem glatten Schnitt (None) oder einer V-Fuge mit konfigurierbarem Winkel und Steg wählen.
+- **Ist der QC-Bericht anpassbar?** Der QC-Bericht wird automatisch basierend auf Ihren Eingaben generiert und enthält Toleranzen nach DIN 28005-1. Er wird direkt aus dem Browser gedruckt.
+- **Werden meine Eingaben gespeichert?** Nein. Schließen Sie die Seite, um alles zu löschen; es bleibt nur im Arbeitsspeicher Ihres Browsers.
+
+## Verwandte Tools
+- [Cylindrical Shell Rolling](./cylindrical-shell-rolling)
+- [Bourdon Gauge Configurator](./bourdon-gauge)
+- [Embedding Calculators](./embedding-calculators)
+
+## Changelog
+- Browser-basierter 3D STEP-Export für Behälterböden hinzugefügt.
+- **v0.1.3b**: Erstellung von QC-Berichten, Stutzenkonfiguration und Visualisierung der Nahtvorbereitung hinzugefügt.
+- Erstveröffentlichung.
+
+## Feedback / Fehlerbericht
+- [GitHub-Issue öffnen](https://github.com/biosxxx/cadautoscript.com/issues)
+- E-Mail oder DM mit dem Slug `pressure-vessel-dished-end-calc`, damit wir den Fehler reproduzieren können.

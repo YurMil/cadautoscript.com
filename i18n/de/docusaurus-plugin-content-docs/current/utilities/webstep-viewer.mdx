@@ -1,0 +1,86 @@
+---
+title: WebSTEP Viewer
+description: Laden Sie STEP-Baugruppen, inspizieren Sie Teile und messen Sie Geometrie lokal im Browser.
+slug: /utilities/webstep-viewer
+keywords:
+  - step viewer
+  - stp viewer
+  - step assembly
+  - cad inspector
+  - wasm cad
+  - geometry measurement
+---
+
+import Head from '@docusaurus/Head';
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/webstep-viewer/" />
+</Head>
+
+# WebSTEP Viewer
+
+Laden Sie STEP-Baugruppen, inspizieren Sie Teile und messen Sie Geometrie direkt im Browser.
+
+<a className="button button--primary" href="/utilities/webstep-viewer/" data-nobrokenlinkcheck>Utility öffnen</a>
+
+## Was es tut
+- Parst .step / .stp Dateien lokal mit WebAssembly.
+- Erstellt einen Baugruppenbaum, damit Sie Teile isolieren oder ausblenden können.
+- Misst Abstände, Radien und Winkel an der Geometrie.
+- Exportiert eine einfache Stückliste (BOM) im CSV-Format aus der Baugruppenstruktur.
+
+## Wann man es verwenden sollte (und wann nicht)
+**Verwenden Sie es, wenn:**
+- Sie eine schnelle visuelle Überprüfung einer STEP-Datei benötigen, bevor Sie diese weitergeben.
+- Sie ein Teil isolieren oder die Baugruppenstruktur überprüfen möchten.
+- Sie schnelle Messungen benötigen, ohne ein vollständiges CAD-System zu öffnen.
+
+**Vermeiden Sie es, wenn:**
+- Sie die Geometrie bearbeiten oder reparieren müssen.
+- Das Modell extrem groß ist und Sie die volle Leistung einer Workstation benötigen.
+
+## Eingaben und Ausgaben
+### Eingaben
+| Eingabe | Beschreibung |
+| --- | --- |
+| STEP-Datei | Laden Sie eine .step oder .stp Baugruppe hoch. |
+| Ansichtsumschalter | Steuern Sie Kanten, Raster und Ansichtsmodus. |
+| Messmodus | Wählen Sie Punkt-, Kanten-, Flächen- oder Winkelsonden. |
+
+### Ausgaben
+| Ausgabe | Format | Notizen |
+| --- | --- | --- |
+| On-Screen Viewer | UI | Inspizieren Sie das Modell und isolieren Sie Teile. |
+| Messanzeigen | Auf dem Bildschirm | Zeigt Werte in den ausgewählten Einheiten an. |
+| BOM-Export | CSV | Einfache Artikelliste aus dem Baugruppenbaum. |
+
+## Wie man es benutzt
+1. Ziehen Sie eine .step oder .stp Datei per Drag-and-Drop hinein.
+2. Verwenden Sie den Baugruppenbaum, um Komponenten zu erweitern, zu isolieren oder auszublenden.
+3. Schalten Sie Mess- oder Geometrieanalysetools nach Bedarf ein.
+4. Exportieren Sie die Stückliste (BOM), wenn Sie eine Artikelliste benötigen.
+
+**Beispiel:** Öffnen Sie eine Gerätebaugruppe, isolieren Sie die Stutzen-Unterbaugruppe, messen Sie den Mittenabstand der Stutzen und exportieren Sie eine BOM für QS-Notizen.
+
+## Genauigkeit und Verifizierung
+- Messungen basieren auf den Modelldaten; überprüfen Sie Einheiten und Toleranzen gegenüber Ihrem Quell-CAD.
+- Große Baugruppen können länger zum Parsen und Rendern benötigen.
+- Dateien werden lokal verarbeitet und nicht auf einen Server hochgeladen.
+
+## FAQ
+- **Welche Formate werden unterstützt?** STEP-Dateien (.step / .stp).
+- **Werden meine Dateien hochgeladen?** Nein. Alles läuft in Ihrem Browser.
+- **Kann ich Geometrie bearbeiten?** Nein, dies ist nur ein Viewer und Inspektor.
+- **Kann ich in andere Formate exportieren?** Das Tool exportiert nur CSV-Stücklisten (BOM).
+- **Warum ist es bei großen Baugruppen langsam?** WebAssembly-Parsing und Rendering können bei großen Modellen rechenintensiv sein.
+
+## Ähnliche Tools
+- [Tube Sheet Generator](./tube-sheet-generator)
+- [WebDXF Editor](./dxf-editor)
+
+## Changelog
+- Initiale Dokumentation.
+
+## Feedback / Fehlermeldung
+- [Öffnen Sie ein GitHub-Issue](https://github.com/biosxxx/cadautoscript.com/issues)
+- E-Mail oder DM mit dem Slug `webstep-viewer`, damit wir das Problem reproduzieren können.

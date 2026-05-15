@@ -1,0 +1,166 @@
+---
+title: Pipe Cutter Visualizer
+description: Previsualice las intersecciones de injertos de tubería, ajuste los desplazamientos y exporte plantillas DXF listas para mesas de plasma CNC o chorro de agua.
+slug: /utilities/pipe-cutter
+image: /img/og/utilities/pipe-cutter.png
+keywords:
+  - pipe saddle template
+  - dxf export
+  - pipe fitting
+  - branch connection
+  - CNC plasma
+  - waterjet
+  - 3D preview
+  - welding
+---
+
+import Head from '@docusaurus/Head';
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/pipe-cutter/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Pipe Cutter Visualizer",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Preview saddle intersections, adjust offsets, and export DXF templates ready for CNC plasma or waterjet tables.",
+  "url": "https://cadautoscript.com/utilities/pipe-cutter/",
+  "image": "https://cadautoscript.com/img/og/utilities/pipe-cutter.png",
+  "featureList": [
+"3D saddle preview",
+"DXF wrap and hole export",
+"Offset and padding controls",
+"Browser-only processing"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/pipe-cutter/",
+  "offers": {
+"@type": "Offer",
+"price": "0",
+"priceCurrency": "USD"
+  },
+  "author": {
+"@type": "Organization",
+"name": "CAD AutoScript"
+  }
+}`}</script>
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+{
+  "@type": "Question",
+  "name": "¿Puedo trabajar tanto en pulgadas como en sistema métrico?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Sí. Ingrese los valores en las unidades que utiliza, siempre que mantenga las entradas coherentes; el DXF seguirá sus números."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Son las plantillas DXF a escala real?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Sí. Las exportaciones se generan a escala 1:1. Desactive cualquier escalado de impresión al trazar."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Puedo ajustar la tolerancia de bisel o la brecha de raíz?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Use los controles de relleno (padding) o desplazamiento (offset) para dejar material extra, luego termine el bisel en CAM o en el banco."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Funciona sin conexión?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Sí. El cálculo y la exportación DXF se ejecutan en el navegador y permanecen en su dispositivo."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Qué herramientas CAD abren el DXF?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Cualquier herramienta compatible con DXF (AutoCAD, Fusion, SheetCAM, etc.) puede importar las polilíneas."
+  }
+}
+  ]
+}`}</script>
+</Head>
+
+# Pipe Cutter Visualizer
+
+Previsualice las intersecciones de injertos (bocas de pescado), ajuste los desplazamientos y exporte envolventes DXF y plantillas de agujeros para ajustes de tubería.
+
+<a className="button button--primary" href="/utilities/pipe-cutter/" data-nobrokenlinkcheck>Abrir utilidad</a>
+
+![pipe-cutter utility screenshot](/img/og/utilities/pipe-cutter.png)
+
+## Qué hace
+Pipe Cutter Visualizer renderiza intersecciones de tubo a tubo en 3D para que pueda verificar el ajuste del injerto antes de cortar. Ingrese los diámetros del tubo principal y del ramal, ajuste el ángulo de intersección y el desplazamiento, y descargue envolventes DXF a escala real para el ramal junto con el recorte correspondiente para el tubo principal.
+
+## Cuándo usarlo (y cuándo no)
+**Úselo cuando:**
+- Conozca los diámetros del tubo principal y del ramal y necesite una plantilla envolvente para corte con soplete, plasma o chorro de agua.
+- Quiera previsualizar el espacio libre y el desplazamiento antes de soldar carretes de tubería.
+- Necesite geometría DXF rápida para cargar en CAM o para imprimir a escala 1:1 para el taller.
+
+**Evítelo cuando:**
+- Necesite el dimensionamiento de placas de refuerzo o cálculos bajo código; esta herramienta se enfoca únicamente en la geometría.
+- La tubería esté muy ovalada o requiera tolerancias de bisel complejas más allá de los simples desplazamientos.
+
+## Entradas y salidas
+### Entradas
+| Entrada | Descripción |
+| --- | --- |
+| Diámetro exterior del tubo principal (D1) | Cilindro base sobre el que se envuelve el injerto. |
+| Diámetro exterior del tubo ramal (D2) | Tubo del ramal que será entallado y envuelto. |
+| Ángulo de intersección | Ángulo entre las líneas centrales del principal y el ramal; soporta juntas perpendiculares o sesgadas. |
+| Desplazamiento del ramal | Desplace el injerto hacia arriba o hacia abajo para coincidir con los desplazamientos reales antes de cortar. |
+| Relleno / margen de recorte | Margen extra añadido a la salida DXF para que las impresiones tengan espacio de purga para el corte. |
+
+### Salidas
+| Salida | Formato | Notas |
+| --- | --- | --- |
+| Plantilla envolvente del ramal | DXF | Injerto desplegado para envolver el tubo ramal a escala 1:1. |
+| Recorte del tubo principal | DXF | Polilínea abierta que muestra el agujero a cortar en el tubo principal, con un cuadro de referencia. |
+| Previsualización 3D | Visor | Vista interactiva para verificar la alineación antes de exportar la geometría. |
+
+## Cómo usarlo
+1. Abra la utilidad e ingrese los diámetros en el sistema de unidades con el que trabaja.
+2. Ingrese el DE del tubo principal, el DE del ramal y el ángulo de intersección.
+3. Agregue cualquier desplazamiento o relleno necesario para su ajuste.
+4. Revise la previsualización 3D en vivo para confirmar el espacio libre y la rotación.
+5. Exporte la envolvente DXF y la plantilla del agujero, luego imprima o envíe a CAM.
+
+**Ejemplo de datos:** DE del tubo principal: 114.3 mm, DE del ramal: 60.3 mm, Ángulo: 45 gr, Desplazamiento: 10 mm, Relleno: 5 mm.
+- Resultado esperado: Exporta pipe_template.dxf y hole_template.dxf dimensionados para una impresión 1:1 o importación en CAM.
+
+## Precisión y verificación
+- Asume tuberías redondas con una ovalidad insignificante; verifique contra el material real.
+- La exportación DXF es únicamente geométrica; añada brechas de bisel o preparaciones de soldadura en el programa del taller si es necesario.
+- Imprima con escala al 100% y verifique con una plantilla de papel rápida antes de comprometerse con el acero.
+- Las verificaciones de presión o refuerzo deben realizarse por separado.
+
+## FAQ
+- **¿Puedo trabajar tanto en pulgadas como en sistema métrico?** Sí. Ingrese los valores en las unidades que utiliza, siempre que mantenga las entradas coherentes; el DXF seguirá sus números.
+- **¿Son las plantillas DXF a escala real?** Sí. Las exportaciones se generan a escala 1:1. Desactive cualquier escalado de impresión al trazar.
+- **¿Puedo ajustar la tolerancia de bisel o la brecha de raíz?** Use los controles de relleno (padding) o desplazamiento (offset) para dejar material extra, luego termine el bisel en CAM o en el banco.
+- **¿Funciona sin conexión?** Sí. El cálculo y la exportación DXF se ejecutan en el navegador y permanecen en su dispositivo.
+- **¿Qué herramientas CAD abren el DXF?** Cualquier herramienta compatible con DXF (AutoCAD, Fusion, SheetCAM, etc.) puede importar las polilíneas.
+
+## Herramientas relacionadas
+- [Cylindrical Shell Rolling Calculator](./cylindrical-shell-rolling)
+- [Metal Bending Prototype](./metal-bending)
+- [Interactive Thread Cheat Sheet](./interactive-thread)
+
+## Registro de cambios
+- Documentación inicial.
+
+## Comentarios / informe de errores
+- [Abrir un issue en GitHub](https://github.com/biosxxx/cadautoscript.com/issues)
+- Envíe un correo electrónico o DM con el slug `pipe-cutter` para que podamos reproducir el problema.

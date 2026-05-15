@@ -1,0 +1,37 @@
+---
+slug: /utilities/tube-sheet-generator
+title: Tube Sheet Generator
+---
+
+import Head from '@docusaurus/Head';
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/tube-sheet-generator/" />
+</Head>
+
+Erstellen Sie Rohrboden-Lochmuster für Wärmetauscher, zeigen Sie das Layout in der Vorschau an und exportieren Sie DXF- oder STEP-Dateien direkt aus dem Browser.
+
+<a className="button button--primary" href="/utilities/tube-sheet-generator/" data-nobrokenlinkcheck>
+  Utility öffnen
+</a>
+
+## Funktionen
+
+- Erstellt quadratische oder dreieckige Teilungsmuster innerhalb eines kreisförmigen Rohrbodens.
+- Zeigt eine Live-2D-Vorschau mit optionalen Trennwänden für die Durchgänge.
+- Exportiert DXF für 2D-Layouts und STEP für 3D-Volumenkörper.
+
+## Einstellbare Parameter
+
+- Rohrbodendurchmesser, Dicke und Randabstand.
+- Rohrdurchmesser, Teilung und Layoutmuster.
+- Anzahl der Durchgänge, Breite der Trennwand und Ausrichtung (visuelle Orientierungshilfe).
+
+## Hinweise zum Export
+
+- Der DXF-Export umfasst den Rohrbodenumriss und alle Rohrbohrungen.
+- Der STEP-Export erfolgt über WebAssembly im Browser; bei einer hohen Anzahl von Bohrungen kann dies länger dauern.
+
+## Feedback
+
+Senden Sie eine E-Mail oder DM mit dem Slug `tube-sheet-generator`, damit wir eventuelle Probleme reproduzieren können.

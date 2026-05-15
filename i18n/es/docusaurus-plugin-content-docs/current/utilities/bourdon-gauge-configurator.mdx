@@ -1,0 +1,167 @@
+---
+title: Bourdon Gauge Configurator
+description: Elija tamaños nominales, rangos, conexiones y accesorios para manómetros de Bourdon tube, vea la vista previa y exporte una ficha técnica en PDF.
+slug: /utilities/bourdon-gauge-configurator
+image: /img/og/utilities/bourdon-gauge-configurator.png
+keywords:
+  - bourdon gauge
+  - pressure gauge
+  - gauge configurator
+  - pressure range
+  - process connection
+  - datasheet PDF
+  - instrument specification
+  - glycerin fill
+---
+
+import Head from '@docusaurus/Head';
+
+# Bourdon Gauge Configurator
+
+Elija tamaños nominales, rangos, conexiones y accesorios para manómetros de Bourdon tube, luego exporte una ficha técnica en PDF.
+
+<a className="button button--primary" href="/utilities/bourdon-gauge-configurator/" data-nobrokenlinkcheck>Abrir utilidad</a>
+
+![bourdon-gauge-configurator utility screenshot](/img/og/utilities/bourdon-gauge-configurator.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/bourdon-gauge-configurator/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Bourdon Gauge Configurator",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Pick nominal sizes, ranges, connections, and accessories for Bourdon tube gauges, view the preview, and export a PDF datasheet.",
+  "url": "https://cadautoscript.com/utilities/bourdon-gauge-configurator/",
+  "image": "https://cadautoscript.com/img/og/utilities/bourdon-gauge-configurator.png",
+  "featureList": [
+"Range presets with custom span",
+"Connection and case fill presets",
+"Accessory toggles",
+"Live gauge drawing",
+"PDF datasheet export"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/bourdon-gauge-configurator/",
+  "offers": {
+"@type": "Offer",
+"price": "0",
+"priceCurrency": "USD"
+  },
+  "author": {
+"@type": "Organization",
+"name": "CAD AutoScript"
+  }
+}`}</script>
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+{
+  "@type": "Question",
+  "name": "¿Puedo introducir un rango personalizado?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Sí. Utilice el rango personalizado (custom span) cuando los ajustes preestablecidos no coincidan con su necesidad."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Soporta unidades imperiales?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Sí. Introduzca psi o bar según sea necesario; la ficha técnica informa lo que usted introduce."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Puedo añadir el logotipo de mi empresa?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Utilice el PDF exportado y añada su marca posteriormente si es necesario."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿La vista previa está a escala?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Es ilustrativa; solicite dibujos certificados para dimensiones exactas."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Se cargan mis datos?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "No. Todo se ejecuta localmente en el navegador."
+  }
+}
+  ]
+}`}</script>
+</Head>
+
+## Qué hace
+Seleccione el tamaño de la esfera, el rango de presión, el estándar de conexión, el llenado de la caja y los accesorios para un manómetro de Bourdon tube. Previsualice el dibujo del manómetro, active las opciones de sifón o válvula y exporte una ficha técnica en PDF con sus selecciones.
+
+## Cuándo usarlo (y cuándo no)
+**Úselo cuando:**
+- Esté preparando una especificación de manómetro para una cotización o para aprobación interna.
+- Necesite comparar opciones de conexión o llenado rápidamente con una vista previa en vivo.
+- Quiera una ficha técnica en PDF para enviar a los proveedores sin esperar una solicitud de CAD.
+
+**Evítelo cuando:**
+- Necesite clasificaciones de presión certificadas o aprobaciones más allá de una ficha técnica preliminar.
+- Esté configurando transmisores electrónicos o sellos de diafragma (no cubiertos aquí).
+
+## Entradas y salidas
+### Entradas
+| Entrada | Descripción |
+| --- | --- |
+| Dial size | Diámetro nominal para la cara del manómetro. |
+| Pressure range and units | Seleccione rangos preestablecidos o introduzca un rango personalizado. |
+| Connection location and standard | Montaje inferior/posterior con opciones DIN, ANSI, NPT u otras. |
+| Case fill and window | Cajas secas o llenas más material de la ventana. |
+| Accessories | Sifón, válvula, brida u otras opciones a incluir. |
+| Project metadata | Tag, número de línea y notas para la ficha técnica. |
+
+### Salidas
+| Salida | Formato | Notas |
+| --- | --- | --- |
+| PDF datasheet | PDF | Resumen del manómetro con vista previa y selecciones. |
+| Gauge preview | En pantalla | Dibujo en vivo que se actualiza a medida que cambia las opciones. |
+
+## Cómo usar
+1. Elija el tamaño de la esfera (dial size) y el rango de presión (preestablecido o personalizado).
+2. Elija la ubicación de la conexión, el estándar y el llenado de la caja.
+3. Active accesorios como sifón, válvula o brida.
+4. Añada tags de proyecto o notas.
+5. Exporte la ficha técnica en PDF para su revisión o presentación.
+
+**Ejemplo de conjunto de datos:** Dial: 100 mm, Rango: 0 a 10 bar, Conexión: montaje posterior G 1/2, Llenado: glycerin, Accesorio: siphon, Tag: PG-204.
+- Resultado esperado: Crea una ficha técnica en PDF con el rango, conexión, llenado y accesorio seleccionados, junto con la imagen de vista previa para PG-204.
+
+## Precisión y verificación
+- La ficha técnica es preliminar; verifique las clasificaciones de presión y los materiales húmedos con el fabricante.
+- Los rangos y unidades son introducidos por el usuario; confirme que coinciden con los límites de su proceso.
+- Los accesorios son indicativos; compruebe el acoplamiento de la rosca y los espacios libres de montaje antes de la instalación.
+- Todos los cálculos permanecen locales; guarde el PDF para archivar sus selecciones.
+
+## FAQ
+- **¿Puedo introducir un rango personalizado?** Sí. Utilice el rango personalizado (custom span) cuando los ajustes preestablecidos no coincidan con su necesidad.
+- **¿Soporta unidades imperiales?** Sí. Introduzca psi o bar según sea necesario; la ficha técnica informa lo que usted introduce.
+- **¿Puedo añadir el logotipo de mi empresa?** Utilice el PDF exportado y añada su marca posteriormente si es necesario.
+- **¿La vista previa está a escala?** Es ilustrativa; solicite dibujos certificados para dimensiones exactas.
+- **¿Se cargan mis datos?** No. Todo se ejecuta localmente en el navegador.
+
+## Herramientas relacionadas
+- [Magnetic Level Gauge Configurator](./magnetic-level-gauge-configurator)
+- [Industrial Thermometer Configurator](./industrial-thermometer-configurator)
+- [Pipe Cutter Visualizer](./pipe-cutter)
+
+## Changelog
+- Documentación inicial.
+
+## Comentarios / informe de errores
+- [Abrir un issue en GitHub](https://github.com/biosxxx/cadautoscript.com/issues)
+- Envíe un correo electrónico o DM con el slug `bourdon-gauge-configurator` para que podamos reproducir el problema.

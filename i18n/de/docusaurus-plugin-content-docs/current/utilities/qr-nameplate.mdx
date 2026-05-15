@@ -1,0 +1,164 @@
+---
+title: QR Nameplate Generator
+description: Modellieren Sie serialisierte QR-fähige Geräteschilder mit anpassbaren Materialien, Gravurtiefen und Branding-Ebenen.
+slug: /utilities/qr-nameplate
+image: /img/og/utilities/qr-nameplate.png
+keywords:
+  - QR nameplate
+  - asset tag
+  - engraving preview
+  - SVG export
+  - traceability
+  - 3D preview
+  - nameplate design
+  - QR code
+---
+
+import Head from '@docusaurus/Head';
+
+# QR Nameplate Generator
+
+Modellieren Sie serialisierte QR-fähige Geräteschilder mit anpassbaren Materialien, Gravurtiefen und exportierbaren Grafiken.
+
+<a className="button button--primary" href="/utilities/qr-nameplate/" data-nobrokenlinkcheck>Dienstprogramm öffnen</a>
+
+![qr-nameplate utility screenshot](/img/og/utilities/qr-nameplate.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/qr-nameplate/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "QR Nameplate Generator",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Modellieren Sie serialisierte QR-fähige Geräteschilder mit anpassbaren Materialien, Gravurtiefen und Branding-Ebenen.",
+  "url": "https://cadautoscript.com/utilities/qr-nameplate/",
+  "image": "https://cadautoscript.com/img/og/utilities/qr-nameplate.png",
+  "featureList": [
+    "Three.js Vorschau",
+    "Material-Presets",
+    "QR-Gravur-Textur"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/qr-nameplate/",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "CAD AutoScript"
+  }
+}`}</script>
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Kann ich Materialien ändern?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja. Wählen Sie ein Preset, um Edelstahl-, lackierte oder Kunststoffschilder zu visualisieren."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Ist der QR Vektor oder Raster?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "SVG-Exporte sind Vektoren; PNG ist hochauflösendes Raster."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Funktioniert es offline?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja. Die Erstellung der Grafiken erfolgt im Browser."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Wie halte ich den QR scannbar?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Halten Sie eine Ruhezone ein und vermeiden Sie es, den Code unter die Grenzen Ihres Scanners zu verkleinern."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Kann ich viele Schilder gleichzeitig serialisieren?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Verwenden Sie den Generator pro Schild und verwenden Sie Ihre Payload-Vorlage wieder."
+      }
+    }
+  ]
+}`}</script>
+</Head>
+
+## Was es macht
+Erstellen Sie QR-fähige Geräteschilder mit anpassbaren Materialien, Gravurtiefen und Metadaten-Zeilen. Zeigen Sie das Schild in 3D an, passen Sie Abmessungen und Branding-Ebenen an und exportieren Sie hochauflösende PNG- oder SVG-Grafiken für die Lasermarkierung oder den UV-Druck.
+
+## Wann man es verwenden sollte (und wann nicht)
+**Verwenden Sie es, wenn:**
+- Sie eine schnelle Möglichkeit benötigen, serialisierte Tags für Ausrüstung oder Werkzeuge zu generieren.
+- Sie vektorgerechte Grafiken an eine Druckerei oder einen Gravurbetrieb übergeben möchten.
+- Sie die QR-Lesbarkeit bei verschiedenen Größen validieren möchten, bevor Sie einen Produktionslauf starten.
+
+**Vermeiden Sie es, wenn:**
+- Sie eine datenbankgestützte Serialisierung oder Produktionsverfolgung benötigen.
+- Sie Direkttreiber für Drucker oder Layout-Imposition für den Massendruck benötigen.
+
+## Eingaben und Ausgaben
+### Eingaben
+| Eingabe | Beschreibung |
+| --- | --- |
+| QR-Payload | URL, Asset-ID oder Text, der im QR kodiert ist. |
+| Schild-Metadaten | Asset-Name, Serie, Warnungen oder anderer Overlay-Text. |
+| Schildgröße und -dicke | Gesamtabmessungen plus Gravurtiefe-Presets. |
+| Material- oder Finish-Preset | Visueller Stil für Edelstahl-, Aluminium-, Kunststoff- oder lackierte Schilder. |
+| Layout-Einstellungen | QR-Größe, Ränder und Typografie für das gedruckte Schild. |
+
+### Ausgaben
+| Ausgabe | Format | Hinweise |
+| --- | --- | --- |
+| Nameplate-Grafik | PNG/SVG | Hochauflösender Export für Gravur oder Druck. |
+| 3D-Vorschau | Viewport | Visuelle Prüfung der Schildproportionen und der Gravurtiefe. |
+
+## Wie man es benutzt
+1. Geben Sie den QR-Payload und die Metadaten ein, die Sie auf dem Schild haben möchten.
+2. Legen Sie Schildabmessungen, Ränder und Gravurtiefe fest.
+3. Wählen Sie ein Material- oder Finish-Preset.
+4. Überprüfen Sie die 3D-Vorschau und passen Sie die Größe bei Bedarf an.
+5. Exportieren Sie PNG- oder SVG-Grafiken für die Produktion.
+
+**Beispiel-Datensatz:** Asset-Tag P-101 mit QR, der auf https://cadautoscript.com/utilities/qr-nameplate/ verweist, 100 x 40 mm Edelstahl-Optik, Gravurtiefe 0,3 mm.
+- Erwartete Ausgabe: Exportiert ein PNG und SVG des Tags plus eine Vorschau, die Proportionen und lesbare QR-Ränder zeigt.
+
+## Genauigkeit und Überprüfung
+- Stellen Sie sicher, dass die exportierte PNG/SVG-Auflösung den Anforderungen Ihres Druckers oder Graveurs entspricht.
+- Lassen Sie eine Ruhezone um den QR für zuverlässiges Scannen.
+- Testen Sie ein gedrucktes Muster, bevor Sie eine ganze Charge laufen lassen, um die Lesbarkeit zu bestätigen.
+- Das gesamte Rendering läuft lokal; behalten Sie eine Kopie der Exporte zur Rückverfolgbarkeit.
+
+## FAQ
+- **Kann ich Materialien ändern?** Ja. Wählen Sie ein Preset, um Edelstahl-, lackierte oder Kunststoffschilder zu visualisieren.
+- **Ist der QR Vektor oder Raster?** SVG-Exporte sind Vektoren; PNG ist hochauflösendes Raster.
+- **Funktioniert es offline?** Ja. Die Erstellung der Grafiken erfolgt im Browser.
+- **Wie halte ich den QR scannbar?** Halten Sie eine Ruhezone ein und vermeiden Sie es, den Code unter die Grenzen Ihres Scanners zu verkleinern.
+- **Kann ich viele Schilder gleichzeitig serialisieren?** Verwenden Sie den Generator pro Schild und verwenden Sie Ihre Payload-Vorlage wieder.
+
+## Verwandte Tools
+- [QR Master](./qr-master)
+- [PDF Master](./pdf-master)
+- [PDF Batch Signer](./pdf-batch-signer)
+
+## Changelog
+- Initiale Dokumentation.
+
+## Feedback / Fehlerbericht
+- [GitHub-Issue öffnen](https://github.com/biosxxx/cadautoscript.com/issues)
+- E-Mail oder DM mit dem Kürzel `qr-nameplate`, damit wir das Problem reproduzieren können

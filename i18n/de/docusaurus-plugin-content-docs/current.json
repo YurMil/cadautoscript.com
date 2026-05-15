@@ -1,0 +1,14 @@
+{
+  "version.label": {
+    "message": "Weiter",
+    "description": "The label for version current"
+  },
+  "sidebar.tutorialSidebar.category.Guides": {
+    "message": "Leitfäden",
+    "description": "The label for category 'Guides' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Utilities": {
+    "message": "Dienstprogramme",
+    "description": "The label for category 'Utilities' in sidebar 'tutorialSidebar'"
+  }
+}

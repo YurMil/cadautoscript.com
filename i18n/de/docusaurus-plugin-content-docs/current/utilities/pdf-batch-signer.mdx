@@ -1,0 +1,164 @@
+---
+title: PDF Batch Signer
+description: Laden Sie Zeichnungen hoch, entwerfen Sie eine Signatur, platzieren Sie sie per Drag-and-Drop und exportieren Sie ein ZIP mit signierten PDFs, ohne den Browser zu verlassen.
+slug: /utilities/pdf-batch-signer
+image: /img/og/utilities/pdf-batch-signer.png
+keywords:
+  - PDF Signatur
+  - Stapelsignierung
+  - ZIP-Export
+  - pdf-lib
+  - Offline-Signierung
+  - Schriftfeld
+  - Zeichnungsstempel
+  - Platzierungsvorschau
+---
+
+import Head from '@docusaurus/Head';
+
+# PDF Batch Signer
+
+Laden Sie Zeichnungen hoch, entwerfen Sie eine Signatur, platzieren Sie sie einmal und exportieren Sie ein ZIP mit signierten PDFs, ohne den Browser zu verlassen.
+
+<a className="button button--primary" href="/utilities/pdf-batch-signer/" data-nobrokenlinkcheck>Utility öffnen</a>
+
+![pdf-batch-signer utility screenshot](/img/og/utilities/pdf-batch-signer.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/pdf-batch-signer/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "PDF Batch Signer",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Upload drawings, design one signature, drag its placement, and export a ZIP of signed PDFs without leaving the browser.",
+  "url": "https://cadautoscript.com/utilities/pdf-batch-signer/",
+  "image": "https://cadautoscript.com/img/og/utilities/pdf-batch-signer.png",
+  "featureList": [
+"Multi-file upload",
+"Unified placement preview",
+"ZIP export",
+"Optional Gemini title-block extraction"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/pdf-batch-signer/",
+  "offers": {
+"@type": "Offer",
+"price": "0",
+"priceCurrency": "USD"
+  },
+  "author": {
+"@type": "Organization",
+"name": "CAD AutoScript"
+  }
+}`}</script>
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+{
+  "@type": "Question",
+  "name": "Handelt es sich um ein digitales Zertifikat?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Nein. Es ist eine grafische Signatur, die lokal angewendet wird."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Werden meine Dateien irgendwohin hochgeladen?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Nein. Das Signieren erfolgt mit pdf-lib und JSZip in Ihrem Browser."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Kann ich gemischte Seitengrößen verarbeiten?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Ja, aber bestätigen Sie die Platzierung auf einer Beispielseite, bevor Sie den gesamten Satz exportieren."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Wie kann ich den Stempel später ändern?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Laden Sie die Dateien erneut hoch, passen Sie die Signatur an und exportieren Sie sie erneut."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Was ist mit Zeitstempeln?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Fügen Sie Datumstext in Ihr Signaturbild ein oder führen Sie es mit einem aktualisierten Label erneut aus."
+  }
+}
+  ]
+}`}</script>
+</Head>
+
+## Funktionen
+Erstellen Sie eine wiederverwendbare Signatur durch Zeichnen, Tippen oder Hochladen eines Scans, platzieren Sie diese in einer Live-Vorschau und wenden Sie sie auf jede Seite in Ihrem PDF-Stapel an. Die optionale Gemini-Analyse kann Schriftfelder lesen, wenn Sie Ihren eigenen API key angeben; ansonsten bleibt alles lokal.
+
+## Wann man es verwendet (und wann nicht)
+**Verwenden Sie es, wenn:**
+- Sie mehrere Zeichnungen oder Berichte in einem Durchgang ohne Cloud-Dienst stempeln müssen.
+- Sie eine konsistente Platzierung für jede Seite in einem Paket wünschen.
+- Sie ein schnelles ZIP mit signierten PDFs benötigen, um es an Lieferanten oder die Qualitätssicherung zu senden.
+
+**Vermeiden Sie es, wenn:**
+- Sie kryptografische oder zertifikatsbasierte Signaturen benötigen.
+- Ihre Seiten stark unterschiedliche Größen verwenden, die eine individuelle Platzierung pro Seite erfordern.
+
+## Eingaben und Ausgaben
+### Eingaben
+| Eingabe | Beschreibung |
+| --- | --- |
+| PDF-Stapel | Eine oder mehrere PDFs, die in einem Durchgang gestempelt werden sollen. |
+| Signaturquelle | Signatur zeichnen, tippen oder ein Bild zur Wiederverwendung hochladen. |
+| Platzierung und Skalierung | Position und Größe der Signatur in der Vorschau festlegen, bevor sie angewendet wird. |
+| Optionaler Gemini API key | Für die Extraktion von Schriftfelddaten; ansonsten bleibt alles offline. |
+
+### Ausgaben
+| Ausgabe | Format | Hinweise |
+| --- | --- | --- |
+| Signierte PDFs | ZIP | Alle Eingabedateien mit der gleichen Platzierung gestempelt. |
+| Vorschau-Bestätigung | Auf dem Bildschirm | Visuelle Prüfung der angewendeten Signatur. |
+
+## Bedienung
+1. Laden Sie die PDFs hoch, die Sie signieren möchten.
+2. Erstellen oder laden Sie eine Signatur hoch und legen Sie deren Platzierung und Größe fest.
+3. Fügen Sie optional einen Gemini API key hinzu, wenn Sie Metadaten aus dem Schriftfeld extrahieren möchten.
+4. Wenden Sie die Signatur auf alle Seiten an.
+5. Laden Sie das ZIP mit den signierten PDFs herunter.
+
+**Beispieldatensatz:** Laden Sie zehn Zeichnungs-PDFs hoch, zeichnen Sie eine Signatur, platzieren Sie diese 20 mm von der unteren rechten Ecke entfernt, lassen Sie Gemini deaktiviert und exportieren Sie das ZIP.
+- Erwartetes Ergebnis: Lädt ein ZIP herunter, das alle Zeichnungen mit der gleichen sichtbaren Signaturplatzierung auf jeder Seite enthält.
+
+## Genauigkeit und Verifizierung
+- Verwendet einen grafischen Stempel, kein digitales Zertifikat; prüfen Sie die Akzeptanz für regulierte Dokumente.
+- Gemischte Seitengrößen erfordern möglicherweise eine kurze visuelle Prüfung nach dem Signieren.
+- Die optionale Gemini-Extraktion verwendet Ihren Key clientseitig; lassen Sie ihn leer, um alles offline zu halten.
+- Behalten Sie die Originale für einen Audit-Trail; das Tool überschreibt nur die heruntergeladenen Kopien.
+
+## FAQ
+- **Handelt es sich um ein digitales Zertifikat?** Nein. Es ist eine grafische Signatur, die lokal angewendet wird.
+- **Werden meine Dateien irgendwohin hochgeladen?** Nein. Das Signieren erfolgt mit pdf-lib und JSZip in Ihrem Browser.
+- **Kann ich gemischte Seitengrößen verarbeiten?** Ja, aber bestätigen Sie die Platzierung auf einer Beispielseite, bevor Sie den gesamten Satz exportieren.
+- **Wie kann ich den Stempel später ändern?** Laden Sie die Dateien erneut hoch, passen Sie die Signatur an und exportieren Sie sie erneut.
+- **Was ist mit Zeitstempeln?** Fügen Sie Datumstext in Ihr Signaturbild ein oder führen Sie es mit einem aktualisierten Label erneut aus.
+
+## Ähnliche Tools
+- [PDF Master](./pdf-master)
+- [PDF BOM Extractor](./pdf-bom-extractor)
+- [PDF Number Extractor](./pdf-number-extractor)
+
+## Changelog
+- Initiale Dokumentation.
+
+## Feedback / Fehlerbericht
+- [GitHub Issue öffnen](https://github.com/biosxxx/cadautoscript.com/issues)
+- E-Mail oder DM mit dem Slug `pdf-batch-signer`, damit wir den Fehler reproduzieren können

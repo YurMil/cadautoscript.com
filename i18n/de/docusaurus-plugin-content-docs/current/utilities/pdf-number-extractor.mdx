@@ -1,0 +1,165 @@
+---
+title: PDF Number Extractor
+description: Markieren Sie QA-Seriennummern, BOM-IDs und Inspektionsnummern lokal mit WASM-basiertem Parsing. Keine Uploads, keine Warteschlangen.
+slug: /utilities/pdf-number-extractor
+image: /img/og/utilities/pdf-number-extractor.png
+keywords:
+  - PDF-Nummernextraktion
+  - Regex-Filter
+  - CSV-Export
+  - Offline-PDF
+  - Seriennummernerfassung
+  - Inspektionsdaten
+  - WASM-Parser
+  - lokale Verarbeitung
+---
+
+import Head from '@docusaurus/Head';
+
+# PDF Number Extractor
+
+Markieren Sie QA-Seriennummern, BOM-IDs und Inspektionsnummern lokal mit WASM-Parsing und CSV-Export.
+
+<a className="button button--primary" href="/utilities/pdf-number-extractor/" data-nobrokenlinkcheck>Utility öffnen</a>
+
+![pdf-number-extractor utility screenshot](/img/og/utilities/pdf-number-extractor.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/pdf-number-extractor/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "PDF Number Extractor",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Highlight QA serials, BOM IDs, and inspection numbers locally with WASM-powered parsing. No uploads, no queues.",
+  "url": "https://cadautoscript.com/utilities/pdf-number-extractor/",
+  "image": "https://cadautoscript.com/img/og/utilities/pdf-number-extractor.png",
+  "featureList": [
+"WASM PDF parsing",
+"Regex filter controls",
+"CSV export",
+"Offline processing"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/pdf-number-extractor/",
+  "offers": {
+"@type": "Offer",
+"price": "0",
+"priceCurrency": "USD"
+  },
+  "author": {
+"@type": "Organization",
+"name": "CAD AutoScript"
+  }
+}`}</script>
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+{
+  "@type": "Question",
+  "name": "Unterstützt es OCR für gescannte PDFs?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Nein. Es liest vorhandenen Text; verwenden Sie zuerst OCR, wenn die PDF ein Bild ist."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Kann ich mehrere Dateien verarbeiten?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Ja. Laden Sie einen Stapel PDFs hoch und exportieren Sie kombinierte Ergebnisse."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Werden Daten hochgeladen?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Nein. Das Parsing erfolgt lokal in Ihrem Browser."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Kann ich die Regex anpassen?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Ja. Die Standard-JavaScript-Regex-Syntax wird unterstützt."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Kann ich die Markierungen speichern?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Exportieren Sie die CSV und behalten Sie die PDF-Kopie; Markierungen dienen nur der Überprüfung am Bildschirm."
+  }
+}
+  ]
+}`}</script>
+</Head>
+
+## Funktionen
+Laden Sie PDF-Dateien hoch, filtern Sie die erkannten Nummern mit Regex oder Längenregeln und exportieren Sie eine saubere Liste der Treffer. Das Parsing erfolgt im Browser mit WASM, sodass QA-Seriennummern, BOM-IDs und Inspektionsnummern niemals Ihr Gerät verlassen.
+
+## Wann man es verwendet (und wann nicht)
+**Verwenden Sie es, wenn:**
+- Sie Seriennummern oder IDs aus Produktions-PDFs für die Qualitätssicherung (QA) oder Rückverfolgbarkeit extrahieren müssen.
+- Sie Tabellenkalkulationen mit Inspektions-IDs vorbefüllen möchten, ohne sie neu zu tippen.
+- Sie einen Offline-Workflow ohne Uploads oder Warteschlangen bevorzugen.
+
+**Vermeiden Sie es, wenn:**
+- Ihre PDFs gescannte Bilder sind, die OCR anstelle von Text-Parsing erfordern.
+- Sie eine Volltextsuche über Tausende von Seiten gleichzeitig benötigen.
+
+## Eingaben und Ausgaben
+### Eingaben
+| Eingabe | Beschreibung |
+| --- | --- |
+| PDF-Dateien | Einzelne oder mehrere PDFs, die in den Browser gezogen werden. |
+| Regex- oder Filterregeln | Muster einschließen oder ausschließen, um die benötigten Nummern zu isolieren. |
+| Minimale/maximale Länge | Optionale Einschränkungen, um Rauschen wie Seitenzahlen zu vermeiden. |
+| Exportoptionen | Wählen Sie den CSV-Export oder das Kopieren in die Zwischenablage. |
+
+### Ausgaben
+| Ausgabe | Format | Hinweise |
+| --- | --- | --- |
+| Markierte Treffer | Auf dem Bildschirm | Visuelle Überlagerung der gefundenen Nummern für eine schnelle QA. |
+| CSV-Export | CSV | Liste der extrahierten Nummern pro Datei, bereit für Tabellenkalkulationen. |
+| In Zwischenablage kopieren | Text | Schnelles Kopieren von Treffern ohne Herunterladen einer Datei. |
+
+## Bedienung
+1. Ziehen Sie die PDF-Dateien per Drag-and-Drop in das Utility.
+2. Fügen Sie Regex- oder Längenfilter hinzu, um die benötigten IDs zu isolieren.
+3. Überprüfen Sie die markierten Treffer am Bildschirm.
+4. Exportieren Sie die Ergebnisse als CSV oder kopieren Sie sie in Ihre Zwischenablage.
+5. Löschen Sie die Sitzung, wenn Sie fertig sind; es wird nichts hochgeladen.
+
+**Beispieldatensatz:** Laden Sie einen Inspektionsbericht hoch, der IDs wie SN-2025-104 enthält; verwenden Sie eine Regex wie SN-\\d{4}-\\d{3} und exportieren Sie die CSV.
+- Erwartetes Ergebnis: Erzeugt eine CSV mit Treffern im Stil von SN-2025-104 und eine visuelle Markierung am Bildschirm zur Bestätigung.
+
+## Genauigkeit und Verifizierung
+- Funktioniert mit textbasierten PDFs; gescannte Bilder benötigen anderweitig OCR.
+- Filter berücksichtigen die Groß-/Kleinschreibung nur, wenn Sie dies so einstellen; prüfen Sie Muster vor dem Export doppelt.
+- Es werden keine Netzwerkaufrufe getätigt. Behalten Sie daher eine lokale Kopie Ihrer Ergebnisse für einen Audit-Trail.
+- Stichprobenartige Überprüfung einiger Zeilen gegen die PDF, um sicherzustellen, dass die Regex nicht zu stark gefiltert hat.
+
+## FAQ
+- **Unterstützt es OCR für gescannte PDFs?** Nein. Es liest vorhandenen Text; verwenden Sie zuerst OCR, wenn die PDF ein Bild ist.
+- **Kann ich mehrere Dateien verarbeiten?** Ja. Laden Sie einen Stapel PDFs hoch und exportieren Sie kombinierte Ergebnisse.
+- **Werden Daten hochgeladen?** Nein. Das Parsing erfolgt lokal in Ihrem Browser.
+- **Kann ich die Regex anpassen?** Ja. Die Standard-JavaScript-Regex-Syntax wird unterstützt.
+- **Kann ich die Markierungen speichern?** Exportieren Sie die CSV und behalten Sie die PDF-Kopie; Markierungen dienen nur der Überprüfung am Bildschirm.
+
+## Ähnliche Tools
+- [PDF BOM Extractor](./pdf-bom-extractor)
+- [PDF Master](./pdf-master)
+- [PDF Batch Signer](./pdf-batch-signer)
+
+## Changelog
+- Initiale Dokumentation.
+
+## Feedback / Fehlerbericht
+- [GitHub Issue öffnen](https://github.com/biosxxx/cadautoscript.com/issues)
+- E-Mail oder DM mit dem Slug `pdf-number-extractor`, damit wir den Fehler reproduzieren können

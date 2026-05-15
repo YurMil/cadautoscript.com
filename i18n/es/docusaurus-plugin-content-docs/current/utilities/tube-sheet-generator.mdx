@@ -1,0 +1,98 @@
+---
+title: Tube Sheet Generator
+description: Genere patrones de orificios de placas de tubos para intercambiadores de calor, obtenga una vista previa del diseño y exporte archivos DXF o STEP directamente desde el navegador.
+slug: /utilities/tube-sheet-generator
+image: /img/og/utilities/tube-sheet-generator.png
+keywords:
+  - tube sheet
+  - heat exchanger
+  - hole pattern
+  - triangular pitch
+  - square pitch
+  - DXF export
+  - STEP export
+---
+
+import Head from '@docusaurus/Head';
+
+# Tube Sheet Generator
+
+Genere patrones de orificios de placas de tubos para intercambiadores de calor, obtenga una vista previa del diseño y exporte archivos DXF o STEP directamente desde el navegador.
+
+<a className="button button--primary" href="/utilities/tube-sheet-generator/" data-nobrokenlinkcheck>
+  Abrir utilidad
+</a>
+
+![tube-sheet-generator utility screenshot](/img/og/utilities/tube-sheet-generator.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/tube-sheet-generator/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Tube Sheet Generator",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Genere patrones de orificios de placas de tubos para intercambiadores de calor, obtenga una vista previa del diseño y exporte archivos DXF o STEP.",
+  "url": "https://cadautoscript.com/utilities/tube-sheet-generator/",
+  "image": "https://cadautoscript.com/img/og/utilities/tube-sheet-generator.png",
+  "featureList": [
+    "Patrones de paso cuadrados y triangulares",
+    "Vista previa 2D en vivo",
+    "Exportación DXF para 2D",
+    "Exportación STEP para sólidos 3D"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/tube-sheet-generator/",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "CAD AutoScript"
+  }
+}`}</script>
+</Head>
+
+## Qué hace
+
+- Construye patrones de paso cuadrados o triangulares dentro de una placa de tubos circular.
+- Muestra una vista previa en 2D en vivo con particiones de paso opcionales.
+- Exporta DXF para diseños en 2D y STEP para sólidos en 3D.
+
+## Cuándo usarlo
+**Úselo cuando:**
+- Necesite generar rápidamente un patrón de tubos para un intercambiador de calor de carcasa y tubos.
+- Desee verificar el recuento de tubos para un diámetro de carcasa y paso específicos.
+- Necesite un modelo 3D STEP para su ensamblaje CAD sin dibujo manual.
+
+**Evítelo cuando:**
+- El diseño requiera análisis de tensiones según códigos (p. ej., ASME VIII-1) — use esto para geometría, no para validación de código.
+
+## Entradas que controla
+
+- **Dimensiones de la Placa**: Diámetro, espesor y margen del borde.
+- **Datos de los Tubos**: Diámetro del tubo, paso y patrón de diseño (Triangular/Cuadrado).
+- **Configuración de Pasos**: Número de pasos, ancho de la partición y orientación.
+
+## Notas de salida
+
+- **DXF**: Incluye el contorno de la placa de tubos y todos los orificios de los tubos como entidades de círculo.
+- **STEP**: Genera un sólido 3D. Los recuentos elevados de orificios pueden tardar más tiempo debido al procesamiento en el navegador.
+
+## Preguntas frecuentes
+- **¿Es gratuito?** Sí, es una utilidad gratuita basada en el navegador.
+- **¿Se cargan mis datos?** No. Todos los cálculos y exportaciones ocurren localmente.
+- **¿Qué estándares sigue?** Sigue las convenciones geométricas estándar de la industria (TEMA) para los patrones de paso.
+
+## Herramientas relacionadas
+- [Blind Flange Calculator](./blind-flange-calculator)
+- [Pressure Vessel Dished End Calc](./pressure-vessel-dished-end-calc)
+
+## Historial de cambios
+- Se añadió la exportación STEP.
+- Documentación inicial.
+
+## Comentarios
+Envíe un correo electrónico o DM con el slug `tube-sheet-generator` para que podamos reproducir cualquier problema.

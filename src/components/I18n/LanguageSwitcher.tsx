@@ -1,4 +1,5 @@
 import React, {useState, useRef, useEffect} from 'react';
+import {useAlternatePageUtils} from '@docusaurus/theme-common/internal';
 import {useI18n} from '@site/src/contexts/I18nContext';
 import {useUserSettings} from '@site/src/contexts/UserSettingsContext';
 import type {LocaleMeta} from '@site/src/i18n';
@@ -9,8 +10,9 @@ type LanguageSwitcherProps = {
 };
 
 export default function LanguageSwitcher({compact = false}: LanguageSwitcherProps) {
-  const {locale, setLocale, availableLocales} = useI18n();
+  const {locale, availableLocales} = useI18n();
   const {updateSettings} = useUserSettings();
+  const alternatePageUtils = useAlternatePageUtils();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -27,10 +29,24 @@ export default function LanguageSwitcher({compact = false}: LanguageSwitcherProp
     return () => document.removeEventListener('mousedown', handler);
   }, []);
 
+  // Navigate to the localized Docusaurus route so MDX docs (and other
+  // route-bound content) switch locale alongside our custom React i18n.
+  // localStorage is set synchronously so anonymous users keep the choice
+  // after the full reload; updateSettings persists it for signed-in users.
   const handleSelect = (meta: LocaleMeta) => {
-    setLocale(meta.code);
-    updateSettings({auto_translation_language: meta.code});
     setOpen(false);
+    if (meta.code === locale) return;
+    try {
+      localStorage.setItem('site-locale', meta.code);
+    } catch {
+      // ignore
+    }
+    updateSettings({auto_translation_language: meta.code});
+    const targetUrl = alternatePageUtils.createUrl({
+      locale: meta.code,
+      fullyQualified: false,
+    });
+    window.location.href = targetUrl;
   };
 
   return (

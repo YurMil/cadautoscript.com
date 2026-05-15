@@ -1,0 +1,22 @@
+{
+  "title": {
+    "message": "CAD AutoScript",
+    "description": "The title in the navbar"
+  },
+  "logo.alt": {
+    "message": "CAD AutoScript logo",
+    "description": "The alt text of navbar logo"
+  },
+  "item.label.Docs": {
+    "message": "Документация",
+    "description": "Navbar item with label Docs"
+  },
+  "item.label.Blog": {
+    "message": "Блог",
+    "description": "Navbar item with label Blog"
+  },
+  "item.label.Mini Games": {
+    "message": "Мини-игры",
+    "description": "Navbar item with label Mini Games"
+  }
+}
