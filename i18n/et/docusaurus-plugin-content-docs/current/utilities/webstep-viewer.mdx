@@ -1,0 +1,86 @@
+---
+title: WebSTEP Viewer
+description: Laadi STEP koostusid, inspekteeri osi ja mõõda geomeetriat lokaalselt brauseris.
+slug: /utilities/webstep-viewer
+keywords:
+  - step viewer
+  - stp viewer
+  - step assembly
+  - cad inspector
+  - wasm cad
+  - geometry measurement
+---
+
+import Head from '@docusaurus/Head';
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/webstep-viewer/" />
+</Head>
+
+# WebSTEP Viewer
+
+Laadi STEP koostusid, inspekteeri osi ja mõõda geomeetriat otse brauseris.
+
+<a className="button button--primary" href="/utilities/webstep-viewer/" data-nobrokenlinkcheck>Ava utiliit</a>
+
+## Mida see teeb
+- Pargib .step / .stp faile lokaalselt WebAssembly abil.
+- Koostab koostu puu, et saaksid osi isoleerida või peita.
+- Mõõdab geomeetrial vahemaid, raadiusi ja nurki.
+- Ekspordib koostu struktuurist lihtsa osade loendi (BOM) CSV-vormingus.
+
+## Millal seda kasutada (ja millal mitte)
+**Kasuta seda, kui:**
+- Vajad kiiret visuaalset kontrolli STEP-failile enne selle edasisaatmist.
+- Soovid isoleerida osa või kontrollida koostu struktuuri.
+- Vajad kiireid mõõtmisi ilma täielikku CAD-süsteemi avamata.
+
+**Väldi seda, kui:**
+- Sul on vaja geomeetriat muuta või parandada.
+- Mudel on erakordselt suur ja vajad täielikku tööjaama jõudlust.
+
+## Sisendid ja väljundid
+### Sisendid
+| Sisend | Kirjeldus |
+| --- | --- |
+| STEP fail | Laadi üles .step või .stp koost. |
+| Vaate lülitid | Kontrolli servasid, ruudustikku ja vaaterežiimi. |
+| Mõõtmisrežiim | Vali punkti, serva, tahul või nurga sondi vahel. |
+
+### Väljundid
+| Väljund | Vorming | Märkused |
+| --- | --- | --- |
+| Ekraanil olev vaatur | UI | Inspekteeri mudelit ja isoleeri osi. |
+| Mõõtmistulemused | Ekraanil | Näitab väärtusi valitud ühikutes. |
+| BOM eksport | CSV | Põhiline osade loend koostu puust. |
+
+## Kuidas kasutada
+1. Lohista ja lase lahti .step või .stp fail.
+2. Kasuta koostu puud komponentide laiendamiseks, isoleerimiseks või peitmiseks.
+3. Lülita sisse mõõtmis- või geomeetria analüüsi tööriistad vastavalt vajadusele.
+4. Ekspordi BOM, kui vajad osade loendit.
+
+**Näide:** Ava seadme koost, isoleeri düüsi alamkoost, mõõda düüside keskpunktide vahekaugus ja ekspordi BOM kvaliteedikontrolli märkmete jaoks.
+
+## Täpsus ja kontrollimine
+- Mõõtmised põhinevad mudeli andmetel; kontrolli ühikuid ja tolerantse oma algse CAD-faili suhtes.
+- Suurte koostude pargimine ja kuvamine võib võtta kauem aega.
+- Faile töödeldakse lokaalselt ja neid ei laadita serverisse.
+
+## FAQ
+- **Millised vormingud on toetatud?** STEP failid (.step / .stp).
+- **Kas see laadib minu failid üles?** Ei. Kõik töötab sinu brauseris.
+- **Kas ma saan geomeetriat muuta?** Ei, see on ainult vaatamiseks ja inspekteerimiseks.
+- **Kas ma saan eksportida teistesse vormingutesse?** Tööriist ekspordib ainult CSV BOM-i.
+- **Miks see on suurte koostude puhul aeglane?** WebAssembly pargimine ja kuvamine võib suurte mudelite puhul olla ressursimahukas.
+
+## Seotud tööriistad
+- [Tube Sheet Generator](./tube-sheet-generator)
+- [WebDXF Editor](./dxf-editor)
+
+## Muudatuste logi
+- Esmane dokumentatsioon.
+
+## Tagasiside / vearaport
+- [Ava GitHubi issue](https://github.com/biosxxx/cadautoscript.com/issues)
+- Saada e-kiri või DM märksõnaga `webstep-viewer`, et saaksime vea taastada.

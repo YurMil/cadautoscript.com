@@ -1,0 +1,165 @@
+---
+title: Interactive Thread Cheat Sheet
+description: Filtreerige ISO, UNC ja UNF seeriat, leidke puuri läbimõõdud ja kopeerige jooniste tähistused otse brauserist.
+slug: /utilities/interactive-thread
+image: /img/og/utilities/interactive-thread.png
+keywords:
+  - thread chart
+  - ISO metric thread
+  - UNC
+  - UNF
+  - tap drill size
+  - thread callout
+  - fastener reference
+  - drill lookup
+---
+
+import Head from '@docusaurus/Head';
+
+# Interactive Thread Cheat Sheet
+
+Filtreerige ISO, UNC ja UNF seeriat, leidke puuri läbimõõdud ja kopeerige jooniste tähistused ilma käsiraamatut avamata.
+
+<a className="button button--primary" href="/utilities/interactive-thread/" data-nobrokenlinkcheck>Ava utiliit</a>
+
+![interactive-thread utility screenshot](/img/og/utilities/interactive-thread.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/interactive-thread/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Interactive Thread Cheat Sheet",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Filtreerige ISO, UNC ja UNF seeriat, leidke puuri läbimõõdud ja kopeerige jooniste tähistused otse brauserist.",
+  "url": "https://cadautoscript.com/utilities/interactive-thread/",
+  "image": "https://cadautoscript.com/img/og/utilities/interactive-thread.png",
+  "featureList": [
+"Filtreeritavad tabelid",
+"Puuri otsing",
+"Kopeerimisvalmis tähistused"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/interactive-thread/",
+  "offers": {
+"@type": "Offer",
+"price": "0",
+"priceCurrency": "USD"
+  },
+  "author": {
+"@type": "Organization",
+"name": "CAD AutoScript"
+  }
+}`}</script>
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+{
+  "@type": "Question",
+  "name": "Kas ma saan lisada kohandatud ridu?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Veel mitte. Kasutage olemasolevaid seeriaid; kleepige tulemused sinna, kuhu vaja."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Kas torukeermed on lisatud?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Ei. Praegune komplekt katab ainult ISO, UNC ja UNF keermeid."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Kas see töötab võrguühenduseta?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Jah. Tabelid laetakse lokaalselt teie brauseris."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Kas ma saan väärtusi CAD-i kopeerida?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Jah. Kopeerige tähistus või puuri suurus otse tabelist."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Kas see näitab nii meetrilisi kui tollmõõte?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Jah. Vahetage seeriat, et liikuda ISO ja UNC/UNF loendite vahel."
+  }
+}
+  ]
+}`}</script>
+</Head>
+
+## Mida see teeb
+Otsige ISO, UNC ja UNF keermeid, seejärel kopeerige tähistused või puuri läbimõõdud otse oma joonisele. Tabelid on brauseris filtreeritavad, nii et saate liikuda jämekeerme, peenkeerme või kohandatud sammude vahel ilma PDF-käsiraamatut lehitsemata.
+
+## Millal seda kasutada (ja millal mitte)
+**Kasutage seda, kui:**
+- Vajate joonise või seadistuslehe jaoks kiiret infot keermepuuri või läbiva ava puuri kohta.
+- Soovite kopeerida korrektselt vormindatud tähistuse CAD-i ilma seda uuesti trükkimata.
+- Võrdlete meetrilisi ja tollmõõdus seeriaid, et valida asendussuurust.
+
+**Vältige seda, kui:**
+- Vajate koonilisi torukeermeid, trapetskeermeid või mittestandardseid vorme.
+- Vajate tolerantsiklassi arvutusi väljaspool pakutavaid kontrollväärtusi.
+
+## Sisendid ja väljundid
+### Sisendid
+| Sisend | Kirjeldus |
+| --- | --- |
+| Keerme seeria | Vali ISO, UNC või UNF tabeli filtreerimiseks. |
+| Nominaalmõõt | Vali läbimõõt või number, mida on vaja puurida või keermestada. |
+| Samm või TPI | Vali jämekeere, peenkeere või konkreetne samm seeria piires. |
+| Tolerantsiklass | Kontrollväärtus nagu 6H/6g või klass 2; kasuta joonise kavatsuse peegeldamiseks. |
+| Puuri valik | Vali keermepuuri ja läbiva ava puuri vahel. |
+
+### Väljundid
+| Väljund | Formaat | Märkused |
+| --- | --- | --- |
+| Keermepuuri läbimõõt | Numbriline | Soovitatav puuri suurus valitud keerme jaoks. |
+| Välis-/sise-/sammuläbimõõdud | Numbriline | Kontrollmõõdud kvaliteedikontrolli ja tähistuste jaoks. |
+| Vormindatud tähistus | Tekst | Kopeerimisvalmis string CAD-i või tehnoloogiakaartidele kleepimiseks. |
+
+## Kuidas kasutada
+1. Vali keerme seeria ja filtreeri vajalik nominaalmõõt.
+2. Vali samm ja tolerantsiklass.
+3. Vali keermepuuri või läbiva ava vaade, et näha õiget läbimõõtu.
+4. Kopeerige tähistus või puuri suurus otse oma joonisele.
+5. Valikuline: liikuge meetriliste ja tollmõõdus loendite vahel asenduste võrdlemiseks.
+
+**Näide:** Keere: M12 x 1.75, Tolerants: 6H, Puur: keermepuur.
+- Oodatud tulemus: Annab keermepuuri soovituse (10.2 mm) ja tähistuse kujul M12x1.75-6H.
+
+## Täpsus ja kontroll
+- Väärtused järgivad tavalisi ISO ja UNC/UNF kontrolltabeleid; kontrollige neid vastavalt oma kehtivale standardile.
+- Ei kata koonilisi torukeermeid ega erivorme.
+- Kontrollige alati puuride suurusi vastavalt tööriistade saadavusele ja materjalile enne lõikamist.
+- Kriitiliste istude puhul kinnitage tolerantsid ametliku standardi või mõõtplokkide abil.
+
+## FAQ
+- **Kas ma saan lisada kohandatud ridu?** Veel mitte. Kasutage olemasolevaid seeriaid; kleepige tulemused sinna, kuhu vaja.
+- **Kas torukeermed on lisatud?** Ei. Praegune komplekt katab ainult ISO, UNC ja UNF keermeid.
+- **Kas see töötab võrguühenduseta?** Jah. Tabelid laetakse lokaalselt teie brauseris.
+- **Kas ma saan väärtusi CAD-i kopeerida?** Jah. Kopeerige tähistus või puuri suurus otse tabelist.
+- **Kas see näitab nii meetrilisi kui tollmõõte?** Jah. Vahetage seeriat loendite vahel liikumiseks.
+
+## Seotud tööriistad
+- [Metal Bending Prototype](./metal-bending)
+- [PDF Number Extractor](./pdf-number-extractor)
+- [PDF BOM Extractor](./pdf-bom-extractor)
+
+## Muudatuste logi
+- Esialgne dokumentatsioon.
+
+## Tagasiside / veaaruanne
+- [Ava issue GitHubis](https://github.com/biosxxx/cadautoscript.com/issues)
+- Kirjutage e-kiri või DM märksõnaga `interactive-thread`, et saaksime probleemi taasesitada.

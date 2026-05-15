@@ -1,0 +1,166 @@
+---
+title: Folder Structure Builder
+description: Disainige kaustapuid nullist või importide põhjal, seejärel eksportige kasutusvalmis bash/PowerShell skripte, JSON-eelseadistusi või ZIP-struktuuri.
+slug: /utilities/folder-structure-builder
+image: /img/og/utilities/folder-structure-builder.png
+keywords:
+  - folder structure
+  - project scaffold
+  - bash script
+  - powershell script
+  - zip scaffold
+  - offline generator
+  - json preset
+  - tree builder
+---
+
+import Head from '@docusaurus/Head';
+
+# Folder Structure Builder
+
+Disainige kaustapuid, importige JSON või ZIP ning eksportige bash/PowerShell skripte või ZIP-struktuuri.
+
+<a className="button button--primary" href="/utilities/folder-structure-builder/" data-nobrokenlinkcheck>Ava utiliit</a>
+
+![folder-structure-builder utility screenshot](/img/og/utilities/folder-structure-builder.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/folder-structure-builder/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Folder Structure Builder",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Disainige kaustapuid nullist või importide põhjal, seejärel eksportige kasutusvalmis bash/PowerShell skripte, JSON-eelseadistusi või ZIP-struktuuri.",
+  "url": "https://cadautoscript.com/utilities/folder-structure-builder/",
+  "image": "https://cadautoscript.com/img/og/utilities/folder-structure-builder.png",
+  "featureList": [
+"Lisa kaustu/faile jooksvalt",
+"Impordi JSON või ZIP puid",
+"Ekspordi bash/PowerShell skripte",
+"Laadi alla ZIP-struktuur või JSON-eelseadistus"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/folder-structure-builder/",
+  "offers": {
+"@type": "Offer",
+"price": "0",
+"priceCurrency": "USD"
+  },
+  "author": {
+"@type": "Organization",
+"name": "CAD AutoScript"
+  }
+}`}</script>
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+{
+  "@type": "Question",
+  "name": "Kas see muudab minu ketast automaatselt?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Ei. See loob ainult skripte või ZIP-faile; käivitate need seal, kuhu soovite struktuuri luua."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Kas ma saan eelseadistusi jagada?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Jah. Eksportige JSON ja saatke see oma meeskonnale või salvestage repositooriumisse."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Kas see töötab võrguühenduseta?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Jah. Kõik toimub brauseris."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Kuidas käsitletakse erimärke?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Skriptid panevad tavalised märgid jutumärkidesse, kuid kontrollige teid, kui kasutate ebatavalist nimepanekut."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Kas ma saan importida olemasolevat puud?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Jah. Importige JSON-ist või ZIP-struktuurist, et alustada varasema malli põhjal."
+  }
+}
+  ]
+}`}</script>
+</Head>
+
+## Mida see teeb
+Kujundage projekti kaustapuu, importige olemasolev JSON või ZIP ning eksportige bash- või PowerShell-skripte, mis taastavad struktuuri. Laadige alla ZIP- või JSON-eelseadistus, et meeskonnakaaslased saaksid luua sama struktuuri ilma käsitsi klikkimiseta.
+
+## Millal seda kasutada (ja millal mitte)
+**Kasutage seda, kui:**
+- Standardiseerite oma meeskonna jaoks projekti struktuuri.
+- Vajate kiiret ZIP-struktuuri ilma CLI-tööriistu käivitamata.
+- Soovite jagada kaustade eelseadistust erinevate masinate või meeskondade vahel.
+
+**Vältige seda, kui:**
+- Peate seadistama servereid või keerulisi õigusi; see utiliit keskendub ainult kaustapuudele.
+- Teie puu sisaldab tuhandeid sõlmi; sel juhul kaaluge koodipõhiste mallide kasutamist.
+
+## Sisendid ja väljundid
+### Sisendid
+| Sisend | Kirjeldus |
+| --- | --- |
+| Kausta- ja failisõlmed | Lisage kaustu või faile jooksvalt puu kujundamiseks. |
+| JSON või ZIP import | Laadige olemasolev struktuur selle muutmiseks või taaskasutamiseks. |
+| Skripti valikud | Valige bash- või PowerShell-eksport sõltuvalt teie keskkonnast. |
+| Eelseadistuse metandmed | Valikulised sildid või märkmed struktuuri kohta. |
+
+### Väljundid
+| Väljund | Formaat | Märkused |
+| --- | --- | --- |
+| Bash skript | .sh | Skript puu taastamiseks Unix-laadsetes süsteemides. |
+| PowerShell skript | .ps1 | Skript puu taastamiseks Windowsis. |
+| ZIP-struktuur | ZIP | Tühjad kaustad/failid pakituna kiireks edastamiseks. |
+| JSON eelseadistus | JSON | Taaskasutatav eelseadistus hilisemaks importimiseks. |
+
+## Kuidas kasutada
+1. Alustage uut puud või importige olemasolev JSON/ZIP.
+2. Lisage kaustu ja faile, kuni struktuur vastab teie projekti mallile.
+3. Valige bash või PowerShell eksport (või mõlemad).
+4. Laadige alla skript, ZIP või JSON eelseadistus.
+5. Käivitage skript turvalises kataloogis struktuuri loomiseks.
+
+**Näide:** Looge struktuur kaustadega src/, docs/, tests/ ja README.md failiga; eksportige PowerShell skript ja ZIP meeskonna jaoks.
+- Oodatud tulemus: Pakutakse .ps1 skripti, shell skripti, ZIP-struktuuri ja JSON-eelseadistust, mis esindavad sama puud.
+
+## Täpsus ja kontroll
+- Skriptid loovad katalooge nende käivitamisel; kontrollige teid enne täitmist.
+- Erimärgid võivad vajada jutumärke erinevates kestades; kohandage neid, kui teie keskkond on range.
+- Suured puud on ZIP-i eksportimisel piiratud brauseri mäluga.
+- Kogu genereerimine toimub lokaalselt; hoidke eelseadistusi vajadusel versioonihalduses.
+
+## FAQ
+- **Kas see muudab minu ketast automaatselt?** Ei. See loob ainult skripte või ZIP-faile; käivitate need seal, kuhu soovite puud.
+- **Kas ma saan eelseadistusi jagada?** Jah. Eksportige JSON ja saatke see oma meeskonnale.
+- **Kas see töötab võrguühenduseta?** Jah. Kõik toimub brauseris.
+- **Kuidas käsitletakse erimärke?** Skriptid tsiteerivad tavalisi märke, kuid kontrollige teid ebatavaliste nimede puhul.
+- **Kas ma saan importida olemasolevat puud?** Jah. Importige JSON-ist või ZIP-struktuurist.
+
+## Seotud tööriistad
+- [Batch File Renamer](./file-renamer)
+- [PDF Master](./pdf-master)
+- [PDF Batch Signer](./pdf-batch-signer)
+
+## Muudatuste logi
+- Esialgne dokumentatsioon.
+
+## Tagasiside / veaaruanne
+- [Ava issue GitHubis](https://github.com/biosxxx/cadautoscript.com/issues)
+- Kirjutage e-kiri või DM märksõnaga `folder-structure-builder`, et saaksime probleemi taasesitada.

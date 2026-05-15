@@ -1,0 +1,92 @@
+---
+title: Pipe Cutter Visualizer
+description: Ennusta torude ristumisi, kohanda nihkeid ja ekspordi DXF malle CNC plasma või vesilõikuspinkide jaoks.
+slug: /utilities/pipe-cutter
+image: /img/og/utilities/pipe-cutter.png
+keywords:
+  - pipe saddle template
+  - dxf export
+  - pipe fitting
+  - branch connection
+  - CNC plasma
+  - waterjet
+  - 3D preview
+  - welding
+---
+
+import Head from '@docusaurus/Head';
+
+# Pipe Cutter Visualizer
+
+Ennusta torude ristumisi, kohanda nihkeid ja ekspordi DXF malle torude ettevalmistamiseks.
+
+<a className="button button--primary" href="/utilities/pipe-cutter/" data-nobrokenlinkcheck>Ava utiliit</a>
+
+![pipe-cutter utility screenshot](/img/og/utilities/pipe-cutter.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/pipe-cutter/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Pipe Cutter Visualizer",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Ennusta torude ristumisi, kohanda nihkeid ja ekspordi DXF malle CNC plasma või vesilõikuspinkide jaoks.",
+  "url": "https://cadautoscript.com/utilities/pipe-cutter/",
+  "image": "https://cadautoscript.com/img/og/utilities/pipe-cutter.png",
+  "featureList": [
+"3D sadula eelvaade",
+"DXF mähise ja ava eksport",
+"Nihke ja varu kontroll",
+"Töötab ainult brauseris"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/pipe-cutter/",
+  "offers": {
+"@type": "Offer",
+"price": "0",
+"priceCurrency": "USD"
+  },
+  "author": {
+"@type": "Organization",
+"name": "CAD AutoScript"
+  }
+}`}</script>
+</Head>
+
+## Mida see teeb
+Pipe Cutter Visualizer kuvab torude ristumisi 3D-s, et saaksid kontrollida sadula sobivust enne lõikamist. Sisesta pea- ja harutoru läbimõõdud, kohanda ristumisnurka ning nihet ja laadi alla tegelikus mõõtkavas DXF mallid harutoru mähkimiseks koos vastava avaga peatorul.
+
+## Millal seda kasutada (ja millal mitte)
+**Kasuta seda, kui:**
+- Tead pea- ja harutoru läbimõõtu ning vajad mähitavat malli põleti, plasma või vesilõikuse jaoks.
+- Soovid kontrollida vahesid ja nihkeid enne keevitamist.
+- Vajad kiiret DXF geomeetriat CAM tarkvara jaoks või 1:1 väljatrükki töökoja jaoks.
+
+**Väldi seda, kui:**
+- Vajad tugevdusplaatide suuruse määramist või surveanumate koode; see tööriist keskendub ainult geomeetriale.
+- Toru on tugevalt ovaalne või nõuab keerukaid faasimisvarusid peale lihtsate nihete.
+
+## Sisendid ja väljundid
+### Sisendid
+| Sisend | Kirjeldus |
+| --- | --- |
+| Peatoru välisläbimõõt (D1) | Silinder, mille ümber sadul mähitakse. |
+| Harutoru välisläbimõõt (D2) | Harutoru, mida lõigatakse. |
+| Ristumisnurk | Nurk pea- ja harutoru telgede vahel. |
+| Haru nihe | Nihuta sadulat üles või alla vastavalt tegelikele vajadustele. |
+| Varu / lõikevaru | DXF väljundile lisatav täiendav serv. |
+
+### Väljundid
+| Väljund | Formaat | Märkused |
+| --- | --- | --- |
+| Haru mähise mall | DXF | Lahtirullitud sadul harutoru mähkimiseks 1:1 mõõtkavas. |
+| Peatoru väljalõige | DXF | Avatud joon, mis näitab peatorusse lõigatavat ava. |
+| 3D eelvaade | Vaateaken | Interaktiivne vaade joonduse kontrollimiseks. |
+
+## FAQ
+- **Kas ma saan töötada tollides ja meetermõõdustikus?** Jah. Sisesta väärtused ühikutes, mida kasutad, eeldusel, et oled järjepidev.
+- **Kas DXF mallid on tegelikus mõõtkavas?** Jah. Ekspordid genereeritakse 1:1.
+- **Kas ma saan kohandada faasimisvaru?** Kasuta varu (padding) või nihke kontrolle täiendava materjali jätmiseks.
+- **Kas see töötab ilma internetita?** Jah. Arvutused ja DXF eksport toimuvad brauseris.
+---

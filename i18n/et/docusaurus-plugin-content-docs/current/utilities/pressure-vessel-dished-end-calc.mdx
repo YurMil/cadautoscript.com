@@ -1,0 +1,171 @@
+---
+title: Dished End (Vessel Head) Calculator
+description: Arvuta surveanuma põhja geomeetria, tooriku läbimõõt ja kaal torosfäärilistele ja ellipsoidsetele põhjadele (DIN 28011, DIN 28013, SS 895) koos stutside konfigureerimise, QC aruannete ja 3D STEP ekspordiga.
+slug: /utilities/pressure-vessel-dished-end-calc
+image: /img/og/utilities/pressure-vessel-dished-end-calc.png
+keywords:
+  - dished end
+  - vessel head
+  - DIN 28011
+  - DIN 28013
+  - torispherical
+  - blank diameter
+  - pressure vessel
+---
+
+import Head from '@docusaurus/Head';
+
+# Dished End (Vessel Head) Calculator
+
+Arvuta surveanuma põhja geomeetria, tooriku läbimõõt ja kaal torosfäärilistele ja ellipsoidsetele põhjadele (DIN 28011, DIN 28013, SS 895) koos stutside konfigureerimise, QC aruannete ja brauseripõhise 3D STEP ekspordiga.
+
+<a className="button button--primary" href="/utilities/pressure-vessel-dished-end-calc/" data-nobrokenlinkcheck>Ava rakendus</a>
+
+![pressure-vessel-dished-end-calc utility screenshot](/img/og/utilities/pressure-vessel-dished-end-calc.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/pressure-vessel-dished-end-calc/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Dished End (Vessel Head) Calculator",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Arvuta surveanuma põhja geomeetria, tooriku läbimõõt ja kaal torosfäärilistele ja ellipsoidsetele põhjadele (DIN 28011, DIN 28013, SS 895) koos stutside konfigureerimise, QC aruannete ja brauseripõhise 3D STEP ekspordiga.",
+  "url": "https://cadautoscript.com/utilities/pressure-vessel-dished-end-calc/",
+  "image": "https://cadautoscript.com/img/og/utilities/pressure-vessel-dished-end-calc.png",
+  "featureList": [
+    "Automaatne geomeetria arvutamine (R, r, h1, h2)",
+    "Tooriku läbimõõdu hindamine",
+    "Stutside positsioneerimise visualiseerija",
+    "Prinditav tootmise QC aruanne",
+    "3D STEP eksport anuma põhjadele"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/pressure-vessel-dished-end-calc/",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "CAD AutoScript"
+  }
+}`}</script>
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Millised standardid on toetatud?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Kalkulaator toetab standardeid DIN 28011 (torosfääriline), DIN 28013 (ellipsoidne) ja SS 895."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Kas see arvutab tooriku läbimõõdu?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Jah. See hindab tooriku läbimõõtu, kasutades standardseid tegureid (nt 1,09x või 1,14x Da) pluss sirge serva kõrgus."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Kas ma saan konfigureerida keevisliite ettevalmistust?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Jah. Saate valida sirge lõike (None) või V-faasi vahel koos konfigureeritava nurga ja juurepinnaga."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Kas QC aruanne on kohandatav?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "QC aruanne genereeritakse automaatselt teie sisestatud andmete põhjal ja sisaldab DIN 28005-1 tolerantsid. See prinditakse otse brauserist."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Kas minu andmed salvestatakse?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ei. Lehe sulgemisel kõik andmed kustutatakse; need jäävad ainult teie brauseri mällu."
+      }
+    }
+  ]
+}`}</script>
+</Head>
+
+## Mida see teeb
+Surveanuma põhja geomeetria, kaalu ja mahu kohene arvutamine. See genereerib visuaalse profiili koos stutside asukohtadega, ekspordib vastava 3D STEP mudeli ja koostab prinditava tootmisaruande koos oodatavate tolerantsidega kvaliteedikontrolli jaoks.
+
+## Millal seda kasutada (ja millal mitte)
+**Kasutage, kui:**
+- Teil on vaja hinnata kaalu ja tooriku läbimõõtu materjali tellimiseks.
+- Soovite visualiseerida stutside asukohti põhja kumeruse suhtes.
+- Vajate kiiret QC lehte standardsete tolerantsidega (DIN 28005-1) tootmistsehhi jaoks.
+- Soovite brauseripõhist 3D STEP faili konfigureeritud põhjast edasiseks tööks CAD-tarkvaras.
+
+**Vältige, kui:**
+- Projekteerite ASME 2:1 ellipsoidseid põhjasid (välja arvatud juhul, kui geomeetria ühtib käsitsi etteantud DIN/SS seadistustega).
+- Vajate ASME VIII Div 1 rõhuklasse või pingeanalüüsi.
+
+## Sisendid ja väljundid
+### Sisendid
+| Sisend | Kirjeldus |
+| --- | --- |
+| Standard | Valige DIN 28011, DIN 28013 või SS 895 vahel. |
+| Geomeetria (Da, s, h1) | Välisläbimõõt, seinapaksus ja sirge serva kõrgus. |
+| Materjal | Valige tavaliste markide seast (P265GH, roostevaba teras, titaan), et määrata tihedus. |
+| Serva ettevalmistus | Konfigureeritav V-faasi nurk ja juurepinna mõõtmed. |
+| Stutsid | Lisage stutsid spetsiifiliste DN suuruste ja asukohtadega. |
+
+### Väljundid
+| Väljund | Formaat | Märkused |
+| --- | --- | --- |
+| Geomeetria (H, h2, R, r) | Numbriline | Kogukõrguse, kumeruse kõrguse, sfääri raadiuse ja kumerusraadiuse arvutused. |
+| Kaal ja maht | Numbriline | Hinnanguline lõppkaal ja sisemaht. |
+| Tooriku läbimõõt | Numbriline | Teoreetiline lehe läbimõõt, mis on vajalik vormimiseks. |
+| 3D STEP mudel | STEP | Ekspordib konfigureeritud põhja geomeetria brauseris genereeritud 3D failina. |
+| QC aruanne | PDF/Print | Formaaditud leht nimiväärtustega ja tühjade väljadega tegelike mõõtmiste jaoks. |
+
+## Kuidas kasutada
+1. Valige tootmisstandard (nt DIN 28011).
+2. Sisestage välisläbimõõt (Da), paksus (s) ja sirge serv (h1).
+3. Konfigureerige vajadusel materjal ja serva ettevalmistus (faasi nurk/juurepind).
+4. (Valikuline) Lisage stutsid, määrates suurus (nt DN50) ja nihe keskmest.
+5. Laadige alla 3D STEP mudel, kui vajate praegust põhja CAD failina.
+6. Klõpsake "QC Report (PDF)", et genereerida prinditav tootmisleht.
+
+**Näidisandmed:** Standard: DIN 28011, Da: 1000 mm, s: 8 mm, h1: 25 mm, Materjal: P265GH.
+- Oodatav tulemus: Arvutatud kogukõrgus (H), kaalu hinnang (~25 kg) ja visuaalne profiil, mis näitab sfääri ja kumerusraadiust.
+
+## Täpsus ja kontroll
+- Geomeetria arvutused järgivad konkreetseid valemeid standarditele DIN 28011 (R=Da, r=0,1Da), DIN 28013 ja SS 895.
+- Aruande tolerantsid on tuletatud standardist DIN 28005-1 (vormitud põhjad).
+- Kaal arvutatakse standardsete tiheduste abil (7,85 süsinikterasele, 7,9 roostevabale terasele).
+
+## FAQ
+- **Millised standardid on toetatud?** DIN 28011 (torosfääriline), DIN 28013 (ellipsoidne) ja SS 895.
+- **Kas see arvutab tooriku läbimõõdu?** Jah. See hindab tooriku läbimõõtu, kasutades standardseid tegureid (nt 1,09x või 1,14x Da) pluss sirge serv.
+- **Kas ma saan konfigureerida keevisliite ettevalmistust?** Jah. Saate valida sirge lõike (None) või V-faasi vahel koos konfigureeritava nurga ja juurepinnaga.
+- **Kas QC aruanne on kohandatav?** QC aruanne genereeritakse automaatselt teie sisestatud andmete põhjal ja sisaldab DIN 28005-1 tolerantsid. See prinditakse otse brauserist.
+- **Kas minu andmed salvestatakse?** Ei. Lehe sulgemisel kõik andmed kustutatakse; need jäävad ainult teie brauseri mällu.
+
+## Seotud tööriistad
+- [Cylindrical Shell Rolling](./cylindrical-shell-rolling)
+- [Bourdon Gauge Configurator](./bourdon-gauge)
+- [Embedding Calculators](./embedding-calculators)
+
+## Changelog
+- Lisatud brauseripõhine 3D STEP eksport anuma põhjadele.
+- **v0.1.3b**: Lisatud QC aruande genereerimine, stutside konfigureerimine ja serva ettevalmistuse visualiseerimine.
+- Esmane väljalase.
+
+## Tagasiside / veateade
+- [Ava GitHubi issue](https://github.com/biosxxx/cadautoscript.com/issues)
+- Saada e-kiri või DM märksõnaga `pressure-vessel-dished-end-calc`, et saaksime vea taastada.

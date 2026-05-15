@@ -1,0 +1,164 @@
+---
+title: Batch File Renamer
+description: Failide hulgi ümbernimetamine otsingu/asenduse, eesliidete, tähesuuruse, nummerdamise ja kohese ZIP-allalaadimisega — kõik lokaalselt.
+slug: /utilities/file-renamer
+image: /img/og/utilities/file-renamer.png
+keywords:
+  - failide hulgi ümbernimetamine
+  - regex ümbernimetamine
+  - zip allalaadimine
+  - offline ümbernimetamine
+  - otsi asenda
+  - nummerdamine
+  - failide nimetamine
+  - lokaalne töötlemine
+---
+
+import Head from '@docusaurus/Head';
+
+# Batch File Renamer
+
+Failide hulgi ümbernimetamine otsingu/asenduse, eesliidete, tähesuuruse, nummerdamise ja kohese ZIP-allalaadimisega — kõik lokaalselt.
+
+<a className="button button--primary" href="/utilities/file-renamer/" data-nobrokenlinkcheck>Ava utiliit</a>
+
+![file-renamer utiliidi ekraanipilt](/img/og/utilities/file-renamer.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/file-renamer/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Batch File Renamer",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Failide hulgi ümbernimetamine otsingu/asenduse, eesliidete, tähesuuruse, nummerdamise ja kohese ZIP-allalaadimisega — kõik lokaalselt.",
+  "url": "https://cadautoscript.com/utilities/file-renamer/",
+  "image": "https://cadautoscript.com/img/og/utilities/file-renamer.png",
+  "featureList": [
+"Regex või tekstipõhine otsing/asendus",
+"Eesliide/järelliide ja nummerdamine",
+"ZIP-allalaadimine koos konfliktide haldamisega"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/file-renamer/",
+  "offers": {
+"@type": "Offer",
+"price": "0",
+"priceCurrency": "USD"
+  },
+  "author": {
+"@type": "Organization",
+"name": "CAD AutoScript"
+  }
+}`}</script>
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+{
+  "@type": "Question",
+  "name": "Kas regex-mustrid töötavad?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Jah. Kasutage standardset JavaScripti regexi täpsemaks ümbernimetamiseks."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Kas kaustade struktuur säilib?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Failid pakitakse ZIP-faili uute nimedega ilma kaustastruktuurita."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Kas andmed laaditakse üles?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Ei. Kõik toimub lokaalselt teie brauseris."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Kui palju faile saan korraga ümber nimetada?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "See sõltub brauseri mälust; väga suured failikomplektid tuleks jagada osadeks."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Mis saab failide sisust?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Sisu jääb muutmata; uuendatakse ainult failide nimesid."
+  }
+}
+  ]
+}`}</script>
+</Head>
+
+## Mida see teeb
+Laadige üles hulk faile, vaadake uute nimede eelvaadet regex- või tekstipõhise otsingu/asenduse abil, lisage eesliiteid, järelliiteid või nummerdust ning laadige ümbernimetatud komplekt alla ZIP-failina. Kõik toimub brauseris, nii et teie failid jäävad privaatseks.
+
+## Millal seda kasutada (ja millal mitte)
+**Kasutage seda, kui:**
+- Peate jooniste nimesid normaliseerima või lisama töönumbreid enne paketi saatmist.
+- Soovite rakendada hulgi nummerdamist või eesliiteid ilma skriptimiseta.
+- Eelistate failide ümbernimetamist võrguühenduseta ja kiiret ZIP-väljundit.
+
+**Vältige seda, kui:**
+- Peate ümber nimetama tuhandeid faile kettal; sellisel juhul kasutage pigem CLI-skripti.
+- Peate säilitama pesastatud kataloogide struktuuri; failide koondamine ühte kohta (flattening) ei pruugi olla soovitud.
+
+## Sisendid ja väljundid
+### Sisendid
+| Sisend | Kirjeldus |
+| --- | --- |
+| Ümbernimetatavad failid | Lohistage failid, mida soovite töödelda. |
+| Otsingu/asenduse reeglid | Kasutage tekstipõhiseid või regex-mustreid nimede muutmiseks. |
+| Eesliide/järelliide | Lisage töönumbreid, versioone või muid silte. |
+| Nummerdamine | Määrake jada algus, samm ja täitepikkus. |
+| Tähesuuruse valikud | Valikulised konversioonid suurteks/väikesteks tähtedeks või kebab-case vormingusse. |
+
+### Väljundid
+| Väljund | Vorming | Märkused |
+| --- | --- | --- |
+| Eelvaate tabel | Ekraanil | Näete vanu vs uusi nimesid enne eksportimist. |
+| Ümbernimetatud failid | ZIP | Allalaaditav arhiiv koos uuendatud failinimedega. |
+
+## Kuidas kasutada
+1. Lohistage failid ümbernimetamiseks.
+2. Rakendage otsing/asendus, eesliited, järelliited või nummerdus.
+3. Kontrollige eelvaadet, et veenduda nimede kattumiste (collisions) puudumises.
+4. Laadige alla ümbernimetatud failide ZIP-fail.
+5. Jagage või arhiveerige ümbernimetatud pakett.
+
+**Näide:** Laadige üles P-001.pdf, P-002.pdf; otsige 'P-' ja asendage see 'FAB-', lisage eesliide 2025_, alustage nummerdamist 10-st.
+- Oodatav tulemus: Allalaaditav ZIP-fail, milles on failid nimedega 2025_FAB-10.pdf ja 2025_FAB-11.pdf.
+
+## Täpsus ja kontroll
+- Ümbernimetamine toimub brauseris; hoidke originaalfaile alles kuni ZIP-faili kontrollimiseni.
+- Regex-mustrid on võimsad – testige neid esmalt väikese komplekti peal.
+- Nimede kattumisi hallatakse eelvaates; lahendage need enne eksportimist.
+- Suured partiid on piiratud brauseri mäluga; vajadusel jagage need osadeks.
+
+## FAQ
+- **Kas regex-mustrid töötavad?** Jah. Kasutage standardset JavaScripti regexi täpsemaks ümbernimetamiseks.
+- **Kas kaustade struktuur säilib?** Failid pakitakse ZIP-faili uute nimedega ilma kaustastruktuurita.
+- **Kas andmed laaditakse üles?** Ei. Kõik toimub lokaalselt teie brauseris.
+- **Kui palju faile saan korraga ümber nimetada?** See sõltub brauseri mälust; väga suured failikomplektid tuleks jagada osadeks.
+- **Mis saab failide sisust?** Sisu jääb muutmata; uuendatakse ainult failide nimesid.
+
+## Seotud tööriistad
+- [Folder Structure Builder](./folder-structure-builder)
+- [PDF Master](./pdf-master)
+- [PDF Batch Signer](./pdf-batch-signer)
+
+## Muudatuste logi
+- Esmane dokumentatsioon.
+
+## Tagasiside / veateade
+- [Ava GitHub issue](https://github.com/biosxxx/cadautoscript.com/issues)
+- Saada e-kiri või sõnum koos märkega `file-renamer`, et saaksime probleemi taasesitada

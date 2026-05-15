@@ -1,0 +1,75 @@
+---
+title: PDF Batch Signer
+description: Laadige üles joonised, koostage üks allkiri ja eksportige allkirjastatud PDF-ide ZIP brauseris.
+slug: /utilities/pdf-batch-signer
+image: /img/og/utilities/pdf-batch-signer.png
+keywords:
+  - pdf signature
+  - batch signing
+  - zip export
+  - offline signing
+---
+
+import Head from '@docusaurus/Head';
+
+# PDF Batch Signer
+
+Laadige üles joonised, koostage üks allkiri, paigutage see korraks ja eksportige allkirjastatud PDF-ide ZIP ilma brauserist lahkumata.
+
+<a className="button button--primary" href="/utilities/pdf-batch-signer/" data-nobrokenlinkcheck>Ava utiliit</a>
+
+![pdf-batch-signer utility screenshot](/img/og/utilities/pdf-batch-signer.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/pdf-batch-signer/" />
+</Head>
+
+## Mida see teeb
+Looge korduvkasutatav allkiri joonistamise, trükkimise või skannitud pildi üleslaadimisega, paigutage see eelvaates ja rakendage see kõigile PDF-paketi lehtedele. Kõik töötab lokaalselt brauseris.
+
+## Millal seda kasutada (ja millal mitte)
+**Kasutage seda, kui:**
+- Peate ühe sammuga tempima mitu joonist või aruannet ilma pilveteenuseta.
+- Soovite järjepidevat paigutust iga paketi lehekülje jaoks.
+- Vajate kiiret allkirjastatud PDF-ide ZIP-i tarnijatele või QA-le saatmiseks.
+
+**Vältige seda, kui:**
+- Vajate krüptograafilisi või sertifikaadipõhiseid allkirju.
+- Teie lehed kasutavad väga erinevaid suurusi, mis vajavad paigutust lehekülje kaupa.
+
+## Sisendid ja väljundid
+### Sisendid
+| Sisend | Kirjeldus |
+| --- | --- |
+| PDF-pakkett | Üks või mitu PDF-i ühe käituse jooksul tempimiseks. |
+| Allkirja allikas | Joonistage, trükkige või laadige üles allkirjapilt korduvkasutamiseks. |
+| Paigutus ja mõõtkava | Positsioonige ja suurendage allkiri eelvaates enne rakendamist. |
+
+### Väljundid
+| Väljund | Vorming | Märkused |
+| --- | --- | --- |
+| Allkirjastatud PDF-id | ZIP | Kõik sisendfailid, millel on sama paigutusega temp. |
+| Eelvaate kinnitus | Ekraanil | Visuaalne kontroll rakendatud allkirjast. |
+
+## Kuidas kasutada
+1. Laadige üles allkirjastatavad PDF-id.
+2. Looge või laadige üles allkiri ning seadke selle paigutus ja suurus.
+3. Rakendage allkiri kõigile lehtedele.
+4. Laadige alla allkirjastatud PDF-ide ZIP.
+
+## KKK
+- **Kas see on digitaalne sertifikaat?** Ei. See on lokaalselt rakendatav graafiline allkiri.
+- **Kas minu failid laaditakse kuhugi üles?** Ei. Allkirjastamine toimub teie brauseris.
+- **Kas saan käsitleda segasuuruseid lehti?** Jah, kuid kinnitage paigutus näidislehel enne kogu komplekti eksportimist.
+
+## Seotud tööriistad
+- [PDF Master](./pdf-master)
+- [PDF BOM Extractor](./pdf-bom-extractor)
+- [PDF Number Extractor](./pdf-number-extractor)
+
+## Muudatuste logi
+- Esialgne dokumentatsioon.
+
+## Tagasiside / vearaport
+- [Ava GitHubi probleem](https://github.com/biosxxx/cadautoscript.com/issues)
+- Saatke e-kiri või DM slugiga `pdf-batch-signer`.

@@ -1,0 +1,167 @@
+---
+title: Cylindrical Shell Rolling Calculator
+description: Hinda valtside vahekaugust, paindevaru ja arendatud pikkust silindriliste kestade jaoks koos EN 13445 / ASME VIII eelseadistustega.
+slug: /utilities/cylindrical-shell-rolling
+image: /img/og/utilities/cylindrical-shell-rolling.png
+keywords:
+  - plate rolling
+  - developed length
+  - EN 13445
+  - ASME VIII
+  - roll spacing
+  - bending allowance
+  - shell calculator
+  - pressure vessel
+---
+
+import Head from '@docusaurus/Head';
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/cylindrical-shell-rolling/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Cylindrical Shell Rolling Calculator",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Estimate roll spacing, bending allowance, and developed length for cylindrical shells with EN 13445 / ASME VIII presets.",
+  "url": "https://cadautoscript.com/utilities/cylindrical-shell-rolling/",
+  "image": "https://cadautoscript.com/img/og/utilities/cylindrical-shell-rolling.png",
+  "featureList": [
+"Roll spacing hints",
+"Printable offsets",
+"Tolerance guidance"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/cylindrical-shell-rolling/",
+  "offers": {
+"@type": "Offer",
+"price": "0",
+"priceCurrency": "USD"
+  },
+  "author": {
+"@type": "Organization",
+"name": "CAD AutoScript"
+  }
+}`}</script>
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+{
+  "@type": "Question",
+  "name": "Kas see toetab nii tollisüsteemi kui ka meetermõõdustikku?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Jah. Sisestage arvud süsteemis, mida kasutate; arvutused on ühikute suhtes agnostilised."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Kas ma saan tulemusi eksportida?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Kasutage oma brauseri prindidialoogi või kopeerige väärtused oma malli; serveri poolel midagi ei salvestata."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Kas see arvutab ka koonuseid või põlvi?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Ei. Praegune mudel eeldab konstantset silindrit."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Kuidas käsitletakse tagasivedrustust (springback)?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Eelseadistused sisaldavad tüüpilisi tolerantse. Kohandage ülepainet või varusid vastavalt oma materjalipartii omadustele."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Kas minu sisestused salvestatakse?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Ei. Sulgege leht, et kõik tühjendada; andmed jäävad ainult teie brauseri mällu."
+  }
+}
+  ]
+}`}</script>
+</Head>
+
+# Cylindrical Shell Rolling Calculator
+
+Hinda valtside vahekaugust, paindevaru ja arendatud pikkust silindriliste kestade jaoks koos EN 13445 / ASME VIII eelseadistustega.
+
+<a className="button button--primary" href="/utilities/cylindrical-shell-rolling/" data-nobrokenlinkcheck>Ava utiliit</a>
+
+![cylindrical-shell-rolling utility screenshot](/img/og/utilities/cylindrical-shell-rolling.png)
+
+## Mida see teeb
+Arvutage valtside vahekaugus, paindevaru ja arendatud pikkus silindriliste kestade jaoks enne, kui plaat jõuab valtside vahele. Kasutage EN 13445 või ASME VIII stiilis eelseadistusi, lisage õmbluse vahe või ülepaine varu ning andke seadistuse kokkuvõte operaatorile üle.
+
+## Millal seda kasutada (ja millal mitte)
+**Kasuta seda, kui:**
+- Vajad valtside vahekaugust ja arendatud pikkust silindrilise kesta jaoks enne töö tsehhi saatmist.
+- Soovid võrrelda EN 13445 ja ASME VIII suuniseid või jagada hälvete andmeid inspektoriga.
+- Soovid prinditavat seadistuskaarti operaatoritele ilma tabelarvutusprogramme avamata.
+
+**Väldi seda, kui:**
+- Valtsid koonuseid, üleminekuid või mittesilindrilisi kujundeid.
+- Vajad lõplike elementide kontrolli või masina võimsuse arvutusi, mis väljuvad lihtsate paindevarude raamest.
+
+## Sisendid ja väljundid
+### Sisendid
+| Sisend | Kirjeldus |
+| --- | --- |
+| Kesta sihtdiameeter | Välis- või sisediameeter, mille kest peab pärast valtsimist saavutama. |
+| Plaadi paksus | Materjali paksus, mis määrate neutraaltelje ja varu. |
+| Kesta pikkus ja õmbluse vahe | Valmis pikkus pluss mis tahes punktkeevituse või koostamise vahe, mida soovid jätta. |
+| Standardne eelseadistus | Vali EN 13445, ASME VIII või kohandatud varud vastavalt oma tsehhi praktikale. |
+| Ülepaine või sirge otsa varu | Kui palju lisavaltsimist soovid otstes, et minimeerida sirgeid kohti. |
+| Valtside vahe või masina geomeetria | Valikulised vahekauguse sisendid, et kontrollida masina suutlikkust ja läbipainet. |
+
+### Väljundid
+| Väljund | Vorming | Märkused |
+| --- | --- | --- |
+| Valtside vahe suunised | Ekraanil | Soovituslik vahekaugus sihtdiameetri saavutamiseks minimaalsete sirgete otstega. |
+| Arendatud pikkus | Arvuline | Pikkus, mille järgi plaat enne valtsimist lõigata, arvestades õmbluse vahet. |
+| Paindevaru / mahaarvamine | Arvuline | Varu väärtused, mida saad kopeerida oma tehnoloogilisse kaarti. |
+| Prinditavad seadistusmärkmed | Tekst | Kopeeri või prindi otse lehelt rullvaltsi operaatori jaoks. |
+
+## Kuidas kasutada
+1. Sisestage kesta sihtdiameeter ja valmis pikkus.
+2. Määrake plaadi paksus ja valige oma tööle vastav standardne eelseadistus.
+3. Lisage õmbluse vahe ja mis tahes ülepaine või sirge otsa kohandused.
+4. Vaadake üle valtside vahekaugus, arendatud pikkus ja varu väärtused.
+5. Prindige või kopeerige väärtused töökaardile.
+
+**Näidisandmed:** Kesta välisdiameeter: 1500 mm, Paksus: 12 mm, Pikkus: 2500 mm, Õmbluse vahe: 3 mm, Eelseadistus: EN 13445, Ülepaine: väike nihutus otstes sirgete kohtade vähendamiseks.
+- Oodatav tulemus: Väljastab arendatud pikkuse, rullide vahe soovitused ja varu väärtused, mis on valmis jagamiseks operaatoriga.
+
+## Täpsus ja kontrollimine
+- Eeldab ühtlase paksusega silindrilist kesta ja mõõdukat tagasivedrustust, mida käsitletakse eelseadistusega.
+- Ei asenda masina võimsuse kontrolli ega üksikasjalikke pingeanalüüse.
+- Kasutage tehase katseandmeid (mill test), et täpsustada ülepaine väärtusi sulamite puhul, mis vetruvad teisiti.
+- Tehke pistelist kontrolli proovitükil enne täispikkuses plaatide töötlemist.
+
+## FAQ
+- **Kas see toetab nii tollisüsteemi kui ka meetermõõdustikku?** Jah. Sisestage arvud süsteemis, mida kasutate; arvutused on ühikute suhtes agnostilised.
+- **Kas ma saan tulemusi eksportida?** Kasutage oma brauseri prindidialoogi või kopeerige väärtused oma malli; serveri poolel midagi ei salvestata.
+- **Kas see arvutab ka koonuseid või põlvi?** Ei. Praegune mudel eeldab konstantset silindrit.
+- **Kuidas käsitletakse tagasivedrustust (springback)?** Eelseadistused sisaldavad tüüpilisi tolerantse. Kohandage ülepainet või varusid vastavalt oma materjalipartii omadustele.
+- **Kas minu sisestused salvestatakse?** Ei. Sulgege leht, et kõik tühjendada; andmed jäävad ainult teie brauseri mällu.
+
+## Seotud tööriistad
+- [Pipe Cutter Visualizer](./pipe-cutter)
+- [Metal Bending Prototype](./metal-bending)
+- [Interactive Thread Cheat Sheet](./interactive-thread)
+
+## Muudatuste logi
+- Esmane dokumentatsioon.
+
+## Tagasiside / vearaport
+- [Ava GitHubi issue](https://github.com/biosxxx/cadautoscript.com/issues)
+- Saada e-kiri või DM märksõnaga `cylindrical-shell-rolling`, et saaksime vea taastada.

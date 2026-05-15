@@ -1,0 +1,80 @@
+---
+title: React Table Editor
+description: Redigeerige CSV- ja XLSX-tabeleid brauseris importimise/eksportimise ja reasisese valideerimisega.
+slug: /utilities/react-table-editor
+keywords:
+  - table editor
+  - csv editor
+  - xlsx editor
+  - spreadsheet in browser
+  - data cleanup
+---
+
+import Head from '@docusaurus/Head';
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/react-table-editor/" />
+</Head>
+
+# React Table Editor
+
+Avage CSV- või XLSX-failid, redigeerige andmeid reasiseselt ja eksportige puhastatud tabelid lokaalselt brauseris.
+
+<a className="button button--primary" href="/utilities/react-table-editor/" data-nobrokenlinkcheck>Ava utiliit</a>
+
+## Mida see teeb
+- Impordib tabeliandmeid CSV- ja XLSX-failidest.
+- Võimaldab lahtreid reasiseselt redigeerida ning ridu/veerge kohandada.
+- Toetab kliendipoolset eksporti tagasi CSV- või XLSX-vormingusse.
+- Hoiab andmed lokaalselt ilma serveripoolse üleslaadimiseta.
+
+## Millal seda kasutada (ja millal mitte)
+**Kasutage seda, kui:**
+- Vajate BOM-, QA- või tootmistabelite kiiret puhastamist.
+- Soovite tabeleid normaliseerida enne CAD/ERP-voogudega jagamist.
+- Vajate ainult brauseripõhist redigeerimist ilma töölaua kontoritarkvarata.
+
+**Vältige seda, kui:**
+- Vajate täiustatud tabelivasmeid ja pöördtabeleid.
+- Vajate reaalajalist mitmeosalejaga koostööd.
+
+## Sisendid ja väljundid
+### Sisendid
+| Sisend | Kirjeldus |
+| --- | --- |
+| CSV/XLSX-fail | Laadige üks tabel interaktiivseks redigeerimiseks. |
+| Käsitsi muudatused | Uuendage lahtreid, veergude silte ja ridade väärtusi. |
+
+### Väljundid
+| Väljund | Vorming | Märkused |
+| --- | --- | --- |
+| Redigeeritud tabel | Ekraanil | Reaalajas ruudustiku eelvaade koheste uuendustega. |
+| Eksporditud fail | CSV/XLSX | Salvestage puhastatud andmekogum allüritustele. |
+
+## Kuidas kasutada
+1. Importige CSV- või XLSX-fail.
+2. Vaadake tabel üle ja redigeerige lahtreid vastavalt vajadusele.
+3. Lisage/eemaldage ridu või veerge, kui teie töövoog nõuab ümberstruktureerimist.
+4. Eksportige lõplik tabel CSV- või XLSX-vormingusse.
+
+## Täpsus ja kontroll
+- Valideerige ühikud, eraldajad ja päiste nimed enne eksportimist.
+- Avage eksporditud fail oma sihtmärk-töövoos ühilduvuse kinnitamiseks.
+- Andmed jäävad teie brauseri seansi ajaks, kui te ei ekspordi.
+
+## KKK
+- **Kas see laadib minu faili üles?** Ei, töötlemine toimub lokaalselt teie brauseris.
+- **Milliseid vorminguid toetatakse?** CSV ja XLSX.
+- **Kas saan valemeid redigeerida?** See on optimeeritud väärtuste redigeerimiseks, mitte täiustatud tabelivasmete töövoogudeks.
+- **Kas saan seda kasutada võrguühenduseta?** Kui varad on vahemälus ja lokaalselt saadaval, siis jah.
+
+## Seotud tööriistad
+- [PDF BOM Extractor](./pdf-bom-extractor)
+- [Batch File Renamer](./file-renamer)
+
+## Muudatuste logi
+- Esialgne dokumentatsioon.
+
+## Tagasiside / vearaport
+- [Ava GitHubi probleem](https://github.com/biosxxx/cadautoscript.com/issues)
+- Saatke e-kiri või DM slugiga `react-table-editor`.

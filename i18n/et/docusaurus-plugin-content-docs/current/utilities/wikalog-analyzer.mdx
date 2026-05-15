@@ -1,0 +1,185 @@
+---
+title: WIKA CPG1500 Log Analyzer
+description: Analüüsige WIKA CPG1500 kalibraatori logifaile, vaadake seadme identiteeti ja mõõteandmeid, visualiseerige rõhukõveraid ja printige QC-aruandeid — seda kõike lokaalselt brauseris.
+slug: /utilities/wikalog-analyzer
+image: /img/og/utilities/wikalog-analyzer.png
+keywords:
+  - wika cpg1500
+  - pressure calibrator
+  - log analyzer
+  - calibration report
+  - measurement data
+  - qc report
+  - offline parser
+---
+
+import Head from '@docusaurus/Head';
+
+# WIKA CPG1500 Log Analyzer
+
+Analüüsige digitaalsete rõhukalibraatorite WIKA CPG1500 logifaile, kontrollige seadme metaandmeid, visualiseerige mõõtmiskõveraid ja koostage trükivalmis QC-aruandeid — seda kõike lokaalselt brauseris.
+
+<a className="button button--primary" href="/utilities/wikalog-analyzer/" data-nobrokenlinkcheck>Ava utiliit</a>
+
+![WIKA CPG1500 Log Analyzer](/img/og/utilities/wikalog-analyzer.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/wikalog-analyzer/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "WIKA CPG1500 Log Analyzer",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Analüüsige WIKA CPG1500 kalibraatori logifaile, vaadake seadme identiteeti ja mõõteandmeid, visualiseerige rõhukõveraid ja printige QC-aruandeid — seda kõike lokaalselt brauseris.",
+  "url": "https://cadautoscript.com/utilities/wikalog-analyzer/",
+  "image": "https://cadautoscript.com/img/og/utilities/wikalog-analyzer.png",
+  "featureList": [
+    "WIKA CPG1500 logifailide parsimine",
+    "Seadme identiteet ja kalibreerimise metaandmed",
+    "Mõõteandmete tabel otsinguga",
+    "Rõhugraafiku visualiseerimine",
+    "Trükkimiseks optimeeritud QC-aruande eksport"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/wikalog-analyzer/",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "CAD AutoScript"
+  }
+}`}</script>
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Millised logifailide vormingud on toetatud?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Utiliit aktsepteerib logifaile, mis on eksporditud digitaalsetest rõhukalibraatoritest WIKA CPG1500 (.log / .txt)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Kas minu andmed laaditakse serverisse?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ei. Kogu parsimine ja visualiseerimine toimub täielikult brauseris. Failid ei lahku kunagi teie seadmest."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Kas ma saan aruannet printida või salvestada?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Jah. Aruande vaade on optimeeritud printimiseks A4-lehekülgedele, sisaldades graafikuid, tabeleid ja seadme identifitseerimiskaarte."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Kas see töötab võrguühenduseta?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Jah, kui leht on laetud, ei vaja see internetiühendust."
+      }
+    }
+  ]
+}`}</script>
+</Head>
+
+## Mida see teeb
+
+Laadige üles digitaalsest rõhukalibraatorist **WIKA CPG1500** eksporditud logifail ja saage kohe:
+
+- **Seadme identifitseerimiskaart** — faili päisest parsitud seerianumber, mudel, püsivara versioon, kalibreerimiskuupäevad ja operaatori metaandmed.
+- **Mõõteandmete tabel** — otsitav ja sorditav tabel iga ajatempliga varustatud rõhu/temperatuuri näiduga logis.
+- **Rõhugraafik** — interaktiivne joongraafik salvestatud rõhukõvera kohta aja jooksul.
+- **Trükivalmis QC-aruanne** — mitmeleheküljeline, trükkimiseks optimeeritud küljendus (A4 portree tabelite jaoks, A4 maastik graafikute jaoks), mille saate saata otse printerisse või salvestada PDF-ina.
+
+Kõik töötab kliendi poolel Reacti ja Material UI abil. Brauserist andmeid välja ei saadeta.
+
+## Millal seda kasutada (ja millal mitte)
+
+**Kasutage seda, kui:**
+- Teil on vaja vaadata WIKA CPG1500 kalibreerimislogisid mis tahes brauseriga masinas.
+- Soovite enne sertifikaadi vormistamist rõhukõvera kiiret visuaalset kontrolli.
+- Teil on vaja printida või PDF-ina salvestada vormindatud QC-aruanne, et lisada see tööülesandele või kontrollipaketile.
+- Soovite otsida või sortida mõõtmistulemusi ilma toorfaili Excelisse importimata.
+
+**Vältige seda, kui:**
+- Teie logifailid pärinevad teiselt kalibraatori mudelilt (parser on CPG1500-spetsiifiline).
+- Vajate korraga kümnete logide hulgitöötlust (laadige üles üks fail korraga).
+
+## Sisendid ja väljundid
+
+### Sisendid
+| Sisend | Kirjeldus |
+| :--- | :--- |
+| **Logifail** | `.log` või `.txt` fail, mis on eksporditud WIKA CPG1500 kalibraatorist. |
+
+### Väljundid
+| Väljund | Vorming | Märkused |
+| :--- | :--- | :--- |
+| **Seadme identiteet** | Ekraanil olev kaart | Seeria, mudel, püsivara, kalibreerimiskuupäevad, operaator. |
+| **Mõõtmiste tabel** | Ekraanil olev tabel | Ajatempliga rõhu- ja temperatuurinäidud koos otsinguga. |
+| **Rõhugraafik** | Interaktiivne graafik | Rõhu ja aja suhte joongraafik. |
+| **QC-aruanne** | Print / PDF | A4-le optimeeritud mitmeleheküljeline aruanne brauseri printimisdialoogi kaudu. |
+
+## Kuidas kasutada
+
+1. **Avage utiliit** ja klõpsake üleslaadimisalal või lohistage CPG1500 logifail sinna.
+2. **Kontrollige seadme identifitseerimiskaarti** — kinnitage, et seerianumber, mudel ja kalibreerimiskuupäevad on õiged.
+3. **Sirvige mõõtmiste tabelit** — kasutage ridade filtreerimiseks otsingukasti või klõpsake sortimiseks veeru päistel.
+4. **Uurige rõhugraafikut** — täpsete väärtuste nägemiseks hõljutage kursorit andmepunktide kohal; kasutage suumi või nihutamist, kui see on saadaval.
+5. **Printige aruanne** — klõpsake brauseri printimisnupul (`Ctrl+P` / `Cmd+P`). Küljendus lülitub automaatselt A4-le optimeeritud aruandeks koos leheküljepiiridega identifitseerimiskaardi, andmetabeli ja graafiku jaoks.
+
+### Näidisvoog
+Laadige üles hiljutise rõhutesti logifail → kontrollige, kas seadme seerianumber ühtib kalibreerimissertifikaadiga → vaadake üle rõhukõver anomaaliate suhtes → printige vormindatud aruanne ja klammerdage see tööülesande juurde.
+
+## Aruande printimise küljendus
+
+Printimise stiilileht loob puhta, mitmeleheküljelise QC-aruande:
+
+| Lehekülg | Sisu | Orientatsioon |
+| :--- | :--- | :--- |
+| 1 | Seadme identiteet + kompaktne mõõtmiste kokkuvõte | Portree (A4) |
+| 2+ | Täielik mõõteandmete tabel | Portree (A4) |
+| Graafiku leht | Rõhugraafik legendiga | Maastik (A4) |
+
+:::tip
+Kasutage oma brauseri printimisdialoogis valikut "Salvesta PDF-ina", et arhiveerida aruanne digitaalselt koos kalibreerimissertifikaatidega.
+:::
+
+## Täpsus ja privaatsus
+
+- **Ainult parsitud andmed** — utiliit ei muuda algset logifaili; see loeb ja kuvab väärtusi nii, nagu need on.
+- **Null üleslaadimist** — kogu parsimine toimub brauseris kliendipoolse JavaScripti kaudu. Andmeid serverisse ei edastata.
+- **Ainult sessioonipõhine** — sulgege vaheleht ja kõik parsitud andmed on kadunud. Enne sulgemist salvestage või printige oma aruanne.
+- **Kontrollige allika suhtes** — kontrollige alati kriitilisi väärtusi (seerianumber, testrõhk) algse logifaili ja kalibreerimissertifikaadi suhtes.
+
+## FAQ
+
+- **Millised logifailide vormingud on toetatud?** WIKA CPG1500 digitaalsetest rõhukalibraatoritest eksporditud logifailid (`.log` / `.txt`).
+- **Kas minu andmed laaditakse serverisse?** Ei. Kõik jääb brauserisse.
+- **Kas ma saan aruannet printida või salvestada?** Jah. Kasutage `Ctrl+P` / `Cmd+P`, et printida või salvestada PDF-ina. Küljendus on optimeeritud A4-paberi jaoks.
+- **Kas see töötab võrguühenduseta?** Jah, kui leht on laetud, ei vaja see internetiühendust.
+- **Kas ma saan analüüsida mitut faili korraga?** Laadige üles üks fail korraga; teise logi analüüsimiseks laadige leht uuesti või tühjendage see.
+- **Mis siis, kui minu logifaili ei parsita?** Parser on spetsiifiline CPG1500 vormingule. Teiste seadmete faile ei pruugita tunnustada. Avage GitHubi probleem, kui usute, et teie CPG1500 fail peaks töötama, kuid ei tööta.
+
+---
+
+## Seotud tööriistad
+
+- [PDF BOM Extractor](./pdf-bom-extractor) — BOM-tabelite tõmbamine CAD-PDF-idest CSV-vormingusse.
+- [PDF Number Extractor](./pdf-number-extractor) — QA-seeria- ja kontrollnumbrite esiletõstmine PDF-idest.
+- [Blind Flange Calculator](./blind-flange-calculator) — EN 13445-3 pimeäärikute dimensioneerimine.
+
+## Tagasiside / veateade
+
+- [Avage GitHubi probleem](https://github.com/biosxxx/cadautoscript.com/issues)
+- Saatke e-kiri või DM koos slugiga `wikalog-analyzer`, et saaksime probleeme reprodutseerida.

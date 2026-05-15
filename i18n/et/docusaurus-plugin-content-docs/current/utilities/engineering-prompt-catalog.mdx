@@ -1,0 +1,85 @@
+---
+title: Engineering Prompt Catalog
+description: Sirvige, filtreerige ja eksportige prompte malle tehniliste inseneritööde voogude jaoks.
+slug: /utilities/engineering-prompt-catalog
+keywords:
+  - engineering prompts
+  - LLM templates
+  - instrumentation prompts
+  - mechanical design prompts
+  - procurement prompts
+---
+
+import Head from '@docusaurus/Head';
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/engineering-prompt-catalog/" />
+</Head>
+
+# Engineering Prompt Catalog
+
+Sirvige kureeritud prompte mallide raamatukogu automaatika (I&C), mehaanilise projekteerimise ja hangete jaoks.
+
+<a className="button button--primary" href="/utilities/engineering-prompt-catalog/" data-nobrokenlinkcheck>Ava utiliit</a>
+
+## Mida see teeb
+- Rühmitab prompte distsipliini ja alamkategooria järgi kiireks filtreerimiseks.
+- Tõstab esile kohatäitjad, et saaksite need sekunditega tegelike väärtustega asendada.
+- Kopeerib prompte lõikelauale või laadib need alla Markdown-vormingus.
+- Kasutab ülevaatlikku graafikut põhikategooriate vahel liikumiseks.
+
+## Millal kasutada (ja millal mitte)
+**Kasutage seda, kui:**
+- Vajate tehniliste ülesannete jaoks kiiret ja ühtset prompte struktuuri.
+- Soovite standardiseerida seda, kuidas teie meeskond küsib spetsifikatsioone, arvutusi või pakkumiskutseid (RFQ).
+- Vajate kiiret prompte malli ilma dokumendiraamatukogu avamata.
+
+**Vältige seda, kui:**
+- Töö nõuab konfidentsiaalseid andmeid, mida ei tohiks AI-tööriistadesse sisestada.
+- Vajate täielikku projekti konteksti või andmete väljavõtmist joonistelt.
+
+## Sisendid ja väljundid
+### Sisendid
+| Sisend | Kirjeldus |
+| --- | --- |
+| Kategooria filter | Valige tulemuste kitsendamiseks I&C, mehaanika või hanked. |
+| Alamkategooria filter | Süvenege sellistesse valdkondadesse nagu ventiilide arvutamine, SolidWorks või RFQ. |
+| Otsing | Leidke prompte eesmärgi või põhiteksti märksõnade järgi. |
+
+### Väljundid
+| Väljund | Vorming | Märkused |
+| --- | --- | --- |
+| Prompte kaardid | Ekraanil | Kopeerimisvalmis mallid koos kohatäitjatega. |
+| Lõikelauale kopeerimine | Tavatekst | Üks klõps kopeerib kogu prompte. |
+| Markdown fail | .md | Allalaaditud fail kasutab failinimena prompte pealkirja. |
+
+## Kuidas kasutada
+1. Avage utiliit ja valige külgribalt distsipliin.
+2. Valige alamkategooria või sisestage otsinguribale märksõna.
+3. Klõpsake **Copy**, et prompte kasutada, või **Save MD**, et see alla laadida.
+4. Asendage sulgudes olevad kohatäitjad projekti spetsiifiliste väärtustega.
+
+**Näide:** Filtreerige **I&C Engineer → Valve Sizing**, kopeerige Cv arvutamise prompte, asendage `[P1]`, `[P2]` ja `[Q]` ning kleepige see oma AI-tööriista.
+
+## Täpsus ja kontrollimine
+- Promptid on ainult mallid. Kontrollige väljundeid alati vastavalt oma standarditele ja arvutustele.
+- Eemaldage konfidentsiaalsed andmed enne prompte kleepimist mis tahes välistesse süsteemidesse.
+- Hoidke kohatäitjate täitmisel ühikusüsteemid ühtsed.
+
+## KKK
+- **Kas see töötab võrguühenduseta?** Jah. Prompte raamatukogu on sisse ehitatud ja töötab täielikult brauseris.
+- **Kas ma saan lisada oma prompte?** Veel mitte. See kataloog on fikseeritud algkomplekt.
+- **Kas see salvestab või laadib üles minu andmeid?** Ei. Kopeerimine ja allalaadimine toimub lokaalselt.
+- **Miks on kohatäitjad sulgudes?** Neid on lihtne märgata ja enne kasutamist asendada.
+
+## Seotud tööriistad
+- [PDF Master](./pdf-master)
+- [Folder Structure Builder](./folder-structure-builder)
+- [WebDXF Editor](./dxf-editor)
+
+## Muudatuste logi
+- Esialgne dokumentatsioon.
+
+## Tagasiside / veateade
+- [Ava GitHubi probleem](https://github.com/biosxxx/cadautoscript.com/issues)
+- Saada e-kiri või DM koos slugi-ga `engineering-prompt-catalog`, et saaksime probleemi taasesitada.

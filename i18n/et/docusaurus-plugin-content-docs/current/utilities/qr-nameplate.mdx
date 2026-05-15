@@ -1,0 +1,81 @@
+---
+title: QR Nameplate Generator
+description: Modellige serialiseeritud QR-toega seadmesiltide materjale, graveerimissügavusi ja kujunduskihte.
+slug: /utilities/qr-nameplate
+image: /img/og/utilities/qr-nameplate.png
+keywords:
+  - QR nameplate
+  - asset tag
+  - engraving preview
+  - SVG export
+  - traceability
+  - nameplate design
+---
+
+import Head from '@docusaurus/Head';
+
+# QR Nameplate Generator
+
+Modellige serialiseeritud QR-toega seadmesiltide materjale, graveerimissügavusi ja eksporditavat kujundust.
+
+<a className="button button--primary" href="/utilities/qr-nameplate/" data-nobrokenlinkcheck>Ava utiliit</a>
+
+![qr-nameplate utility screenshot](/img/og/utilities/qr-nameplate.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/qr-nameplate/" />
+</Head>
+
+## Mida see teeb
+Looge QR-toega seadmesildid kohandatavate materjalide, graveerimissügavuste ja metaandmeridade abil. Vaadake plaat 3D-s eelvaates, kohandage mõõtmeid ja kujunduskihte ning eksportige kõrge eraldusvõimega PNG- või SVG-kujundus lasermarkeerimiseks või UV-trükkimiseks.
+
+## Millal seda kasutada (ja millal mitte)
+**Kasutage seda, kui:**
+- Vajate kiiret viisi serialiseeritud siltide genereerimiseks seadmetele või tööriistadele.
+- Soovite edastada vektorvalmis kujunduse trükikojale või graveerimistöökojale.
+- Valideerisite QR-loetavust erinevates suurustes enne tootmispartii kinnitamist.
+
+**Vältige seda, kui:**
+- Vajate andmebaasipõhist serialiseerimist või tootmisjälgimist.
+- Vajate otseseid printeridraivureid või paigutusimpositsioonid masstrükkimiseks.
+
+## Sisendid ja väljundid
+### Sisendid
+| Sisend | Kirjeldus |
+| --- | --- |
+| QR sisu | URL, vara ID või tekst, mis on QR-koodi kodeeritud. |
+| Sildi metaandmed | Vara nimi, seerianumber, hoiatused või muu ülekattekiri. |
+| Plaadi suurus ja paksus | Üldmõõtmed koos graveerimissügavuse eelsätetega. |
+| Materjali või viimistluse eelsäte | Roostevaba, alumiiniumi, plasti või värvitud plaatide visuaalne stiil. |
+| Paigutuse sätted | QR-suurus, veerised ja tüpograafia trükitud plaadi jaoks. |
+
+### Väljundid
+| Väljund | Vorming | Märkused |
+| --- | --- | --- |
+| Sildi kujundus | PNG/SVG | Kõrge eraldusvõimega eksport graveerimiseks või trükkimiseks. |
+| 3D eelvaade | Vaateaken | Plaadi proportsioonide ja graveerimissügavuse visuaalne kontroll. |
+
+## Kuidas kasutada
+1. Sisestage QR-sisu ja metaandmed, mida soovite sildil.
+2. Seadke plaadi mõõtmed, veerised ja graveerimissügavus.
+3. Valige materjali või viimistluse eelsäte.
+4. Vaadake 3D-eelvaade üle ja kohandage suurust vajadusel.
+5. Eksportige PNG- või SVG-kujundus tootmiseks.
+
+## KKK
+- **Kas saan materjale muuta?** Jah. Valige eelsäte, et visualiseerida roostevaba, värvitud või plastplaate.
+- **Kas QR on vektor või raster?** SVG-ekspordid on vektorid; PNG on kõrge eraldusvõimega raster.
+- **Kas see töötab võrguühenduseta?** Jah. Kujunduse genereerimine toimub brauseris.
+- **Kuidas hoida QR skannitavana?** Hoidke vaikne tsoon ja vältige koodi kokkusurumist alla skanneri piiride.
+
+## Seotud tööriistad
+- [QR Master](./qr-master)
+- [PDF Master](./pdf-master)
+- [PDF Batch Signer](./pdf-batch-signer)
+
+## Muudatuste logi
+- Esialgne dokumentatsioon.
+
+## Tagasiside / vearaport
+- [Ava GitHubi probleem](https://github.com/biosxxx/cadautoscript.com/issues)
+- Saatke e-kiri või DM slugiga `qr-nameplate`.
