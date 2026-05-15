@@ -11,6 +11,12 @@ export const et: TranslationDict = {
     profile: 'Profiil',
   },
   home: {
+    heroEyebrow: 'CAD AutoScript',
+    heroTitleNew: 'CAD AutoScript on sujuvam keskus tootmise automatiseerimiseks.',
+    heroDescription:
+      'See tegeleb peamiste projekteerimisülesannetega - sealhulgas torude sadula visualiseerimine, DXF-eksport, PDF-pakettide töötlemine ja mõõteaparatuuri konfiguraatorid. Iga tööriist töötab lokaalselt kliendi poolel (WASM), pakkudes null-latentsusega jõudlust ja täielikku andmeturvet. Sisaldab põhjalikku dokumentatsiooni ja minimängude arkaadi.',
+    viewAllDocs: 'Vaata kogu dokumentatsiooni',
+    releaseNotes: 'Väljalaskemärkmed',
     heroTitle: 'Inseneririistad,\nveebilehitsejale loodud',
     heroSubtitle:
       'Tasuta veebirakendused mehaanikainseneridele — torulejad, silindrite valtsimisarvutus, keermeatlas ja palju muud. Ei vaja paigaldamist.',

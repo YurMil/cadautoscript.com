@@ -11,6 +11,12 @@ export const de: TranslationDict = {
     profile: 'Profil',
   },
   home: {
+    heroEyebrow: 'CAD AutoScript',
+    heroTitleNew: 'CAD AutoScript ist ein optimierter Knotenpunkt für die Fertigungsautomatisierung.',
+    heroDescription:
+      'Es erledigt wesentliche Konstruktionsaufgaben - einschließlich der Visualisierung von Rohrsätteln, DXF-Exporten, PDF-Paketverarbeitung und Instrumentierungskonfiguratoren. Jedes Werkzeug arbeitet lokal clientseitig (WASM) und bietet latenzfreie Leistung und vollständige Datensicherheit. Enthält eine umfassende Dokumentation und eine Mini-Spiele-Arcade.',
+    viewAllDocs: 'Alle Dokumentationen anzeigen',
+    releaseNotes: 'Versionshinweise',
     heroTitle: 'Ingenieurwerkzeuge,\nfür den Browser gebaut',
     heroSubtitle:
       'Kostenlose Web-Dienstprogramme für Maschinenbauer — Rohrschneider, Blechwalzen, Gewindeatlas und mehr. Keine Installation erforderlich.',

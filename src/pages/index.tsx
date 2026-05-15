@@ -489,20 +489,15 @@ export default function Home(): ReactNode {
           ) : (
             <>
               <div>
-                <p className={styles.eyebrow}>CAD AutoScript</p>
-                <h1>CAD AutoScript is a streamlined hub for fabrication automation.</h1>
-                <p>
-                  It handles essential design tasks - including pipe saddle visualization, DXF exports, PDF package
-                  processing, and instrumentation configurators. Every tool operates locally client-side (WASM),
-                  providing zero-latency performance and complete data security. Includes comprehensive documentation
-                  and a mini-games arcade.
-                </p>
+                <p className={styles.eyebrow}>{t('home.heroEyebrow')}</p>
+                <h1>{t('home.heroTitleNew')}</h1>
+                <p>{t('home.heroDescription')}</p>
                 <div className={styles.heroActions}>
                   <Link className="button button--primary" href="/docs/utilities/overview/">
-                    View all docs
+                    {t('home.viewAllDocs')}
                   </Link>
                   <Link className="button button--secondary" href="/blog/">
-                    Release notes
+                    {t('home.releaseNotes')}
                   </Link>
                 </div>
               </div>

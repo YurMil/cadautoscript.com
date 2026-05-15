@@ -11,6 +11,12 @@ export const es: TranslationDict = {
     profile: 'Perfil',
   },
   home: {
+    heroEyebrow: 'CAD AutoScript',
+    heroTitleNew: 'CAD AutoScript es un centro optimizado para la automatización de la fabricación.',
+    heroDescription:
+      'Maneja tareas esenciales de diseño, incluyendo visualización de bocas de tubo, exportaciones DXF, procesamiento de paquetes PDF y configuradores de instrumentación. Cada herramienta funciona localmente en el lado del cliente (WASM), proporcionando un rendimiento de latencia cero y una seguridad de datos completa. Incluye documentación exhaustiva y un arcade de minijuegos.',
+    viewAllDocs: 'Ver toda la documentación',
+    releaseNotes: 'Notas de la versión',
     heroTitle: 'Herramientas de ingeniería,\nconstruidas para el navegador',
     heroSubtitle:
       'Utilidades web gratuitas para ingenieros mecánicos — cortadores de tubos, laminado, atlas de roscas y más. Sin instalación.',

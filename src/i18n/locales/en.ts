@@ -9,6 +9,12 @@ export const en = {
     profile: 'Profile',
   },
   home: {
+    heroEyebrow: 'CAD AutoScript',
+    heroTitleNew: 'CAD AutoScript is a streamlined hub for fabrication automation.',
+    heroDescription:
+      'It handles essential design tasks - including pipe saddle visualization, DXF exports, PDF package processing, and instrumentation configurators. Every tool operates locally client-side (WASM), providing zero-latency performance and complete data security. Includes comprehensive documentation and a mini-games arcade.',
+    viewAllDocs: 'View all docs',
+    releaseNotes: 'Release notes',
     heroTitle: 'Engineering tools,\nbuilt for the browser',
     heroSubtitle:
       'Free web utilities for mechanical engineers — pipe cutters, shell rolling, thread atlases, and more. No install required.',
