@@ -1,0 +1,166 @@
+---
+title: Magnetic Level Gauge Configurator
+description: Konfigurieren Sie Abmessungen, Anschlüsse und Optionen von Magnetklappenanzeigern (magnetic level gauges) mit Live-Skizze und PDF-Datenblatt-Export.
+slug: /utilities/magnetic-level-gauge-configurator
+image: /img/og/utilities/magnetic-level-gauge-configurator.png
+keywords:
+  - magnetic level gauge
+  - level gauge datasheet
+  - process connection
+  - instrument configurator
+  - PDF export
+  - SVG preview
+  - DIN
+  - ANSI
+---
+
+import Head from '@docusaurus/Head';
+
+# Magnetic Level Gauge Configurator
+
+Konfigurieren Sie Abmessungen, Anschlüsse und Optionen von Magnetklappenanzeigern (magnetic level gauges) mit einer Live-Skizze und PDF-Datenblatt-Export.
+
+<a className="button button--primary" href="/utilities/magnetic-level-gauge-configurator/" data-nobrokenlinkcheck>Utility öffnen</a>
+
+![magnetic-level-gauge-configurator utility screenshot](/img/og/utilities/magnetic-level-gauge-configurator.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/magnetic-level-gauge-configurator/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Magnetic Level Gauge Configurator",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Configure magnetic level gauge dimensions, connections, and options with a live sketch and PDF datasheet export.",
+  "url": "https://cadautoscript.com/utilities/magnetic-level-gauge-configurator/",
+  "image": "https://cadautoscript.com/img/og/utilities/magnetic-level-gauge-configurator.png",
+  "featureList": [
+"Process connection presets",
+"Live SVG preview",
+"PDF export with specs"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/magnetic-level-gauge-configurator/",
+  "offers": {
+"@type": "Offer",
+"price": "0",
+"priceCurrency": "USD"
+  },
+  "author": {
+"@type": "Organization",
+"name": "CAD AutoScript"
+  }
+}`}</script>
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+{
+  "@type": "Question",
+  "name": "Kann ich zwischen metrisch und imperial wechseln?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Ja. Geben Sie die Werte in den Einheiten ein, die Sie verwenden; die Skizze wird entsprechend skaliert."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Ist das PDF für die Einreichung bereit?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Es ist ein vorläufiges Datenblatt; fordern Sie vom Lieferanten eine Bestätigung für zertifizierte Zeichnungen an."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Werden meine Tags gespeichert?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Nein. Schließen Sie die Seite, um die Einträge zu löschen, oder speichern Sie das PDF für Ihre Unterlagen."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Kann ich Entlüftungs- und Entleerungstypen anpassen?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Ja. Wählen Sie Stopfen-, Ventil- oder Flanschausführungen für oben und unten."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Werden Daten an einen Server gesendet?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Nein. Berechnungen und Export laufen im Browser."
+  }
+}
+  ]
+}`}</script>
+</Head>
+
+## Funktionen
+Wählen Sie Prozessanschlüsse, Kammerabmessungen, Entlüftungs- und Entleerungsoptionen sowie Materialien aus und sehen Sie sich eine Live-SVG-Skizze an. Exportieren Sie ein PDF-Datenblatt (datasheet), das die Auswahl für die Beschaffung oder die Überprüfung durch den Lieferanten festhält.
+
+## Wann man es verwendet (und wann nicht)
+**Verwenden Sie es, wenn:**
+- Sie eine Spezifikation für einen Magnetklappenanzeiger für ein Angebot oder eine interne Prüfung entwerfen.
+- Sie Mittenabstände (center-to-center) und Anschlussstandards vor der Bestellung überprüfen möchten.
+- Sie ein schnelles Datenblatt-PDF benötigen, um es mit Rohrleitungs- oder Instrumentierungsteams zu teilen.
+
+**Vermeiden Sie es, wenn:**
+- Sie zertifizierte Druck- oder Schwimmerberechnungen von einem Hersteller benötigen.
+- Sie geführte Radar-Level-Messgeräte (guided wave radar) oder nicht-magnetische Füllstandsinstrumente konfigurieren.
+
+## Eingaben und Ausgaben
+### Eingaben
+| Eingabe | Beschreibung |
+| --- | --- |
+| Process connection standard and size | DIN, ANSI, Schweiß- oder Gewindeoptionen für Seitenanschlüsse. |
+| Center-to-center dimension | Länge der Messkammer, die zur Skalierung der Skizze verwendet wird. |
+| Top and bottom connections | Entlüftungs- und Entleerungsoptionen wie Stopfen, Ventil oder Flansch. |
+| Materials and ratings | Kammermaterial, Flanschdruckstufe und Annahmen zur spezifischen Dichte. |
+| Instrumentation options | Schalter, Fernübertrager, Heizmäntel und Anzeigeeinstellungen. |
+| Project metadata | Tag, Leitungsnummer, Kunde und Notizen für das Datenblatt. |
+
+### Ausgaben
+| Ausgabe | Format | Notizen |
+| --- | --- | --- |
+| PDF datasheet | PDF | Technisches Blatt mit Auswahl und maßstäblicher Skizze. |
+| Live SVG preview | SVG | Skizze auf dem Bildschirm, die sich bei Ihren Eingaben aktualisiert. |
+| Connection summary | Bildschirm | Prozess-, Entlüftungs- und Entleerungsdetails zur Überprüfung. |
+
+## Bedienungsanleitung
+1. Wählen Sie den Prozessanschlussstandard, die Größe und die Druckstufe.
+2. Geben Sie die Mittenabstandslänge sowie Details zur Entlüftung und Entleerung ein.
+3. Legen Sie Materialien, die spezifische Dichte und optionale Schalter oder Übertrager fest.
+4. Fügen Sie Projektmetadaten zur Rückverfolgbarkeit hinzu.
+5. Überprüfen Sie die Skizze und exportieren Sie das PDF-Datenblatt.
+
+**Beispiel-Datensatz:** Side connections: DIN DN25 PN40 RF, Mittenabstand: 1800 mm, Oben: 1/2 in NPT plug, Unten: 1/2 in NPT valve, Material: 316L, Optionen: Sensoren oben/unten an, Heizmantel aus, Tag: MLG-101.
+- Erwartete Ausgabe: Erzeugt ein PDF-Datenblatt mit den gewählten Anschlüssen, Abmessungen, Materialien und einer Live-Skizze für MLG-101.
+
+## Genauigkeit und Verifizierung
+- Die Abmessungen in der Skizze dienen der Veranschaulichung; bestätigen Sie die endgültigen Abmessungen vor der Fertigung mit dem Lieferanten.
+- Druck- und Temperaturstufen müssen gegen Ihren Designcode validiert werden.
+- Die spezifische Dichte und die Schwimmerdimensionierung sind Annahmen; bestätigen Sie diese bei kritischen Anwendungen mit Prozessdaten.
+- Dateien bleiben lokal, bis Sie das PDF herunterladen.
+
+## FAQ
+- **Kann ich zwischen metrisch und imperial wechseln?** Ja. Geben Sie die Werte in den Einheiten ein, die Sie verwenden; die Skizze skaliert entsprechend.
+- **Ist das PDF für die Einreichung bereit?** Es ist ein vorläufiges Datenblatt; fordern Sie vom Lieferanten eine Bestätigung für zertifizierte Zeichnungen an.
+- **Werden meine Tags gespeichert?** Nein. Schließen Sie die Seite, um die Einträge zu löschen, oder speichern Sie das PDF.
+- **Kann ich Entlüftungs- und Entleerungstypen anpassen?** Ja. Wählen Sie Stopfen-, Ventil- oder Flanschausführungen.
+- **Werden Daten an einen Server gesendet?** Nein. Berechnungen und Export laufen im Browser.
+
+## Ähnliche Tools
+- [Bourdon Gauge Configurator](./bourdon-gauge-configurator)
+- [Industrial Thermometer Configurator](./industrial-thermometer-configurator)
+- [Pipe Cutter Visualizer](./pipe-cutter)
+
+## Changelog
+- Initialdokumentation.
+
+## Feedback / Fehlermeldung
+- [Öffnen Sie ein GitHub-Issue](https://github.com/biosxxx/cadautoscript.com/issues)
+- Senden Sie eine E-Mail oder DM mit dem Slug `magnetic-level-gauge-configurator`.

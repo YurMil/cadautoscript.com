@@ -1,0 +1,55 @@
+---
+sidebar_position: 2
+title: Каталог утилит
+---
+
+import Head from '@docusaurus/Head';
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/docs/utilities/overview/" />
+</Head>
+
+import UtilityAccessTable from '@site/src/components/Utilities/UtilityAccessTable';
+
+Каждая утилита ниже запускает ту же автономную страницу, которую уже используют машиностроители. Документация находится рядом, но сами приложения работают в Chromium с ускорением WebGL/WASM.
+
+<UtilityAccessTable />
+
+## Страницы документации утилит
+
+- [Pipe Cutter Visualizer](./pipe-cutter)
+- [Cylindrical Shell Rolling Calculator](./cylindrical-shell-rolling)
+- [Dished End (Vessel Head) Calculator](./pressure-vessel-dished-end-calc)
+- [Blind Flange Calculator](./blind-flange-calculator)
+- [Tube Sheet Generator](./tube-sheet-generator)
+- [WebSTEP Viewer](./webstep-viewer)
+- [Engineering Prompt Catalog](./engineering-prompt-catalog)
+- [Business Calendar Generator](./business-calendar-generator)
+- [React Table Editor](./react-table-editor)
+- [Focus Planner](./focus-planner)
+- [Metal Bending Prototype](./metal-bending)
+- [Interactive Thread Cheat Sheet](./interactive-thread)
+- [PDF Number Extractor](./pdf-number-extractor)
+- [PDF Batch Signer](./pdf-batch-signer)
+- [WebDXF Editor](./dxf-editor)
+- [PDF Master](./pdf-master)
+- [QR Master](./qr-master)
+- [QR Nameplate Generator](./qr-nameplate)
+- [PDF BOM Extractor](./pdf-bom-extractor)
+- [Batch File Renamer](./file-renamer)
+- [Folder Structure Builder](./folder-structure-builder)
+- [Magnetic Level Gauge Configurator](./magnetic-level-gauge-configurator)
+- [Bourdon Gauge Configurator](./bourdon-gauge-configurator)
+- [Industrial Thermometer Configurator](./industrial-thermometer-configurator)
+
+## Версионность и телеметрия
+
+- Большинство автономных пакетов утилит находятся в `static/utility-apps/*`.
+- Общие ресурсы оболочки остаются в `static/utilities/*`.
+- Обновите исходный проект, обновите пакет в соответствующем каталоге, затем закоммитьте и отправьте.
+- Включайте краткий список изменений в документацию при изменении поведения калькулятора или макроса.
+- Используйте инструменты разработчика браузера или пользовательские конечные точки логирования, если вам нужна телеметрия — по умолчанию использование не отслеживается.
+
+## Встраивание утилит в документацию
+
+См. [Встраивание калькуляторов](./embed-calculators.md) для фрагментов iframe и React-оберток. MDX позволяет импортировать компоненты или iframe напрямую, поэтому вы можете держать инструкции и интерфейс вместе.

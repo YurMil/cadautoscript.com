@@ -1,0 +1,55 @@
+---
+sidebar_position: 2
+title: Utility-Katalog
+---
+
+import Head from '@docusaurus/Head';
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/docs/utilities/overview/" />
+</Head>
+
+import UtilityAccessTable from '@site/src/components/Utilities/UtilityAccessTable';
+
+Jedes unten aufgeführte Dienstprogramm startet dieselbe eigenständige Seite, die Maschinisten bereits verwenden. Die Dokumentation bleibt in der Nähe, aber die Apps selbst laufen in Chromium mit WebGL/WASM-Beschleunigung.
+
+<UtilityAccessTable />
+
+## Dokumentationsseiten der Utilities
+
+- [Pipe Cutter Visualizer](./pipe-cutter)
+- [Cylindrical Shell Rolling Calculator](./cylindrical-shell-rolling)
+- [Dished End (Vessel Head) Calculator](./pressure-vessel-dished-end-calc)
+- [Blind Flange Calculator](./blind-flange-calculator)
+- [Tube Sheet Generator](./tube-sheet-generator)
+- [WebSTEP Viewer](./webstep-viewer)
+- [Engineering Prompt Catalog](./engineering-prompt-catalog)
+- [Business Calendar Generator](./business-calendar-generator)
+- [React Table Editor](./react-table-editor)
+- [Focus Planner](./focus-planner)
+- [Metal Bending Prototype](./metal-bending)
+- [Interactive Thread Cheat Sheet](./interactive-thread)
+- [PDF Number Extractor](./pdf-number-extractor)
+- [PDF Batch Signer](./pdf-batch-signer)
+- [WebDXF Editor](./dxf-editor)
+- [PDF Master](./pdf-master)
+- [QR Master](./qr-master)
+- [QR Nameplate Generator](./qr-nameplate)
+- [PDF BOM Extractor](./pdf-bom-extractor)
+- [Batch File Renamer](./file-renamer)
+- [Folder Structure Builder](./folder-structure-builder)
+- [Magnetic Level Gauge Configurator](./magnetic-level-gauge-configurator)
+- [Bourdon Gauge Configurator](./bourdon-gauge-configurator)
+- [Industrial Thermometer Configurator](./industrial-thermometer-configurator)
+
+## Versionierung & Telemetrie
+
+- Die meisten eigenständigen Utility-Pakete befinden sich unter `static/utility-apps/*`.
+- Gemeinsam genutzte Shell-Assets bleiben unter `static/utilities/*`.
+- Aktualisieren Sie das Quellprojekt, aktualisieren Sie das Paket im entsprechenden Verzeichnis und führen Sie dann Commit und Push durch.
+- Fügen Sie ein prägnantes Änderungsprotokoll in die Dokumentation ein, wenn ein Rechner oder Makro sein Verhalten ändert.
+- Verwenden Sie Browser-Devtools oder benutzerdefinierte Protokollierungsendpunkte, wenn Sie Telemetrie benötigen – standardmäßig wird die Nutzung nicht verfolgt.
+
+## Utilities in Dokumente einbetten
+
+Siehe [Embedding calculators](./embed-calculators.md) für iframe-Snippets und React-Wrapper. MDX ermöglicht den direkten Import von Komponenten oder iframes, sodass Sie Anweisungen und Benutzeroberfläche zusammenhalten können.

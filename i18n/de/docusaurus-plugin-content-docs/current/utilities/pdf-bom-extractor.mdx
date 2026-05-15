@@ -1,0 +1,165 @@
+---
+title: PDF BOM Extractor
+description: Extrahieren Sie Stücklisten (BOM) und Spezifikationstabellen aus Vektor-PDFs in saubere CSV-Dateien, lokal im Batch-Download verfügbar.
+slug: /utilities/pdf-bom-extractor
+image: /img/og/utilities/pdf-bom-extractor.png
+keywords:
+  - Stücklistenextraktion
+  - PDF zu CSV
+  - Tabellenerkennung
+  - Clientseitiges PDF
+  - Master-Bericht
+  - Offline-Parser
+  - CAD-Tabelle
+  - CSV-Export
+---
+
+import Head from '@docusaurus/Head';
+
+# PDF BOM Extractor
+
+Extrahieren Sie Stücklisten (BOM) und Spezifikationstabellen aus Vektor-PDFs in saubere CSV-Dateien, die Sie lokal herunterladen können.
+
+<a className="button button--primary" href="/utilities/pdf-bom-extractor/" data-nobrokenlinkcheck>Utility öffnen</a>
+
+![pdf-bom-extractor utility screenshot](/img/og/utilities/pdf-bom-extractor.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/pdf-bom-extractor/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "PDF BOM Extractor",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Extract BOM and specification tables from vector PDFs into clean CSVs, batch-downloadable locally.",
+  "url": "https://cadautoscript.com/utilities/pdf-bom-extractor/",
+  "image": "https://cadautoscript.com/img/og/utilities/pdf-bom-extractor.png",
+  "featureList": [
+"Smart header and column detection",
+"Trim revision and footer noise",
+"Batch upload with master report"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/pdf-bom-extractor/",
+  "offers": {
+"@type": "Offer",
+"price": "0",
+"priceCurrency": "USD"
+  },
+  "author": {
+"@type": "Organization",
+"name": "CAD AutoScript"
+  }
+}`}</script>
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+{
+  "@type": "Question",
+  "name": "Unterstützt es OCR für Bilder?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Nein. Es liest nur Vektor-Text."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Kann ich viele Dateien gleichzeitig verarbeiten?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Ja. Laden Sie ein Batch hoch und exportieren Sie pro Datei oder als einen Master-Bericht."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Werden Daten hochgeladen?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Nein. Alles bleibt im Browser."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Wie werden verbundene Zellen gehandhabt?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Der Parser flacht Spalten ab; prüfen Sie dies und passen Sie es nach dem Export bei Bedarf an."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Kann ich das Trennzeichen ändern?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Der Export erfolgt als CSV; passen Sie die Trennzeichen später in Ihrem Tabellenkalkulationsprogramm an."
+  }
+}
+  ]
+}`}</script>
+</Head>
+
+## Funktionen
+Laden Sie CAD-generierte PDFs hoch, erkennen Sie Kopfzeilen und Spalten automatisch, entfernen Sie Revisions- oder Fußzeilen-Rauschen und exportieren Sie CSVs pro Datei oder einen zusammengeführten Master-Bericht. Alles läuft clientseitig, sodass Zeichnungen und extrahierte Daten auf Ihrem Gerät bleiben.
+
+## Wann man es verwendet (und wann nicht)
+**Verwenden Sie es, wenn:**
+- Sie BOM-Tabellen aus Zeichnungs-PDFs extrahieren möchten, ohne sie manuell neu tippen zu müssen.
+- Sie einen schnellen CSV-Export für den Einkauf oder die Qualitätssicherung benötigen.
+- Sie lokales Parsing ohne Uploads bevorzugen.
+
+**Vermeiden Sie es, wenn:**
+- Ihre PDFs gescannte Bilder sind, die OCR benötigen würden.
+- Tabellen stark verbundene Zellen oder variable Spaltenanzahlen haben, die die automatische Erkennung stören.
+
+## Eingaben und Ausgaben
+### Eingaben
+| Eingabe | Beschreibung |
+| --- | --- |
+| PDF-Zeichnungen | Vektor-PDFs mit BOM- oder Spezifikationstabellen. |
+| Auswahl der Kopfzeile | Bestätigen oder passen Sie an, welche Zeile die Spaltenüberschriften definiert. |
+| Automatische Spaltenerkennung | Steuern Sie, wie der Parser Spalten gruppiert. |
+| Zeilenfilter | Überspringen Sie Revisions- oder Fußzeilen, die nicht in der CSV erscheinen sollen. |
+| Master-Bericht-Option | Kombinieren Sie Ausgaben bei Bedarf in einer einzigen CSV. |
+
+### Ausgaben
+| Ausgabe | Format | Hinweise |
+| --- | --- | --- |
+| CSV pro Datei | CSV | Eine CSV für jede verarbeitete PDF. |
+| Master-CSV | CSV | Optionaler kombinierter Bericht über alle hochgeladenen Dateien. |
+| Vorschau-Tabelle | Auf dem Bildschirm | Vor dem Herunterladen prüfen und anpassen. |
+
+## Bedienung
+1. Laden Sie eine oder mehrere Zeichnungs-PDFs hoch.
+2. Bestätigen Sie die erkannte Kopfzeile und passen Sie bei Bedarf die Spalten an.
+3. Entfernen Sie Fuß- oder Revisionszeilen.
+4. Laden Sie CSVs pro Datei oder einen Master-Bericht herunter.
+5. Archivieren Sie die CSVs zusammen mit Ihren Auftragsunterlagen.
+
+**Beispieldatensatz:** Laden Sie zwei Baugruppen-PDFs mit BOM-Tabellen hoch, behalten Sie Kopfzeile 2 bei, entfernen Sie Revisionsnotizen und exportieren Sie sowohl CSVs pro Datei als auch einen master_report.csv.
+- Erwartetes Ergebnis: Erzeugt zwei einzelne CSVs plus eine kombinierte Master-Datei mit ausgerichteten Spalten.
+
+## Genauigkeit und Verifizierung
+- Basiert auf auswählbarem Text; gescannte PDFs benötigen zuerst OCR.
+- Verbundene oder unregelmäßige Tabellen erfordern nach dem Export möglicherweise eine manuelle Bereinigung.
+- Überprüfen Sie die Vorschau vor dem Herunterladen, um sicherzustellen, dass die richtige Kopfzeile erkannt wurde.
+- Das gesamte Parsing läuft lokal; behalten Sie Ihre eigenen Backups der exportierten CSVs.
+
+## FAQ
+- **Unterstützt es OCR für Bilder?** Nein. Es liest nur Vektor-Text.
+- **Kann ich viele Dateien gleichzeitig verarbeiten?** Ja. Laden Sie ein Batch hoch und exportieren Sie pro Datei oder als einen Master-Bericht.
+- **Werden Daten hochgeladen?** Nein. Alles bleibt im Browser.
+- **Wie werden verbundene Zellen gehandhabt?** Der Parser flacht Spalten ab; prüfen Sie dies und passen Sie es nach dem Export bei Bedarf an.
+- **Kann ich das Trennzeichen ändern?** Der Export erfolgt als CSV; passen Sie die Trennzeichen später in Ihrem Tabellenkalkulationsprogramm an.
+
+## Ähnliche Tools
+- [PDF Number Extractor](./pdf-number-extractor)
+- [PDF Master](./pdf-master)
+- [PDF Batch Signer](./pdf-batch-signer)
+
+## Changelog
+- Initiale Dokumentation.
+
+## Feedback / Fehlerbericht
+- [GitHub Issue öffnen](https://github.com/biosxxx/cadautoscript.com/issues)
+- E-Mail oder DM mit dem Slug `pdf-bom-extractor`, damit wir den Fehler reproduzieren können

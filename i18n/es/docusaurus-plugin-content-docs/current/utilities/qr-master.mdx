@@ -1,0 +1,164 @@
+---
+title: Maestro QR
+description: Escanee códigos QR y códigos de barras al instante, genere códigos personalizados para enlaces o WiFi y gestione su historial de escaneo localmente.
+slug: /utilities/qr-master
+image: /img/og/utilities/qr-master.png
+keywords:
+  - escáner QR
+  - lector de código de barras
+  - generador QR
+  - WiFi QR
+  - escáner sin conexión
+  - escaneo con cámara
+  - exportar historial
+  - generador de códigos
+---
+
+import Head from '@docusaurus/Head';
+
+# Maestro QR
+
+Escanee códigos QR y códigos de barras, genere códigos personalizados para enlaces o WiFi y gestiónelo todo localmente.
+
+<a className="button button--primary" href="/utilities/qr-master/" data-nobrokenlinkcheck>Abrir utilidad</a>
+
+![captura de pantalla de la utilidad maestro QR](/img/og/utilities/qr-master.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/qr-master/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Maestro QR",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Escanee códigos QR y códigos de barras al instante, genere códigos personalizados para enlaces o WiFi y gestione su historial de escaneo localmente.",
+  "url": "https://cadautoscript.com/utilities/qr-master/",
+  "image": "https://cadautoscript.com/img/og/utilities/qr-master.png",
+  "featureList": [
+"Escaneo en vivo de QR y códigos de barras",
+"Escaneo mediante pegado o carga",
+"Generación de códigos para WiFi o enlaces",
+"Historial local con importación/exportación"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/qr-master/",
+  "offers": {
+"@type": "Offer",
+"price": "0",
+"priceCurrency": "USD"
+  },
+  "author": {
+"@type": "Organization",
+"name": "CAD AutoScript"
+  }
+}`}</script>
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+{
+  "@type": "Question",
+  "name": "¿Qué formatos son compatibles?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "QR más códigos de barras comunes; pruebe una muestra si depende de una simbología específica."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Funciona sin conexión?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Sí. El escaneo y la generación se ejecutan en el navegador."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Dónde se guarda el historial?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "En la memoria de su navegador hasta que lo exporte o lo borre."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Puedo escanear desde imágenes en lugar de la cámara?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Sí. Pegue o cargue una imagen y el decodificador la leerá."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Puedo exportar los escaneos?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Sí. Exporte el historial como JSON para copia de seguridad o para compartir."
+  }
+}
+  ]
+}`}</script>
+</Head>
+
+## Qué hace
+Utilice su cámara, imágenes pegadas o cargadas para escanear códigos QR y códigos de barras comunes, y luego genere sus propios códigos para WiFi, enlaces o contactos. Mantenga un historial local con importación y exportación para que los escaneos sigan siendo portátiles sin necesidad de sincronización en la nube.
+
+## Cuándo usarlo (y cuándo no)
+**Úselo cuando:**
+- Necesite escanear etiquetas de activos o códigos de barras sobre la marcha sin instalar una aplicación.
+- Quiera generar códigos QR de WiFi o enlaces para compartirlos rápidamente.
+- Necesite una forma ligera y sin conexión de registrar escaneos y exportarlos como JSON.
+
+**Evítelo cuando:**
+- Necesite funciones de inventario de nivel empresarial o sincronización en la nube.
+- La iluminación o la calidad de la cámara sean demasiado deficientes para lecturas de códigos de barras fiables.
+
+## Entradas y salidas
+### Entradas
+| Entrada | Descripción |
+| --- | --- |
+| Feed de cámara o imagen cargada | Escaneo en vivo o importación de una imagen para decodificar. |
+| Carga manual | Texto, URL, credenciales de WiFi o detalles de contacto para codificar. |
+| Importación de historial | Cargue escaneos previos desde JSON si desea continuidad entre sesiones. |
+
+### Salidas
+| Salida | Formato | Notas |
+| --- | --- | --- |
+| Resultados de escaneo decodificados | Texto | Contenido de los valores de QR o códigos de barras escaneados. |
+| Códigos generados | PNG | Imágenes de QR o códigos de barras descargables para compartir. |
+| Historial de escaneo | JSON | Exportación de escaneos pasados guardados localmente. |
+
+## Cómo usar
+1. Permita el acceso a la cámara o suelte una imagen para escanear.
+2. Revise los datos decodificados y opcionalmente guárdelos en el historial.
+3. Ingrese un enlace, inicio de sesión de WiFi o texto para generar un nuevo código.
+4. Descargue el PNG o manténgalo en el historial.
+5. Exporte el historial como JSON cuando necesite una copia de seguridad.
+
+**Conjunto de datos de ejemplo:** Escanee el código de barras de una etiqueta de equipo para capturar el número de serie, luego genere un QR de WiFi para el SSID 'Plant-Guest' con su contraseña y exporte el historial.
+- Salida esperada: Devuelve el texto del número de serie escaneado, un PNG de QR de WiFi descargable y una entrada de historial en JSON que puede guardar.
+
+## Precisión y verificación
+- La calidad del escaneo depende del enfoque de su cámara y de la iluminación.
+- Todos los escaneos permanecen locales; exporte el historial si necesita cambiar de dispositivo.
+- Los códigos generados siguen las especificaciones comunes de QR/códigos de barras; verifíquelos con un escaneo de prueba rápido antes de usarlos.
+- Borrar el historial elimina los datos locales; mantenga exportaciones si necesita un archivo.
+
+## Preguntas frecuentes
+- **¿Qué formatos son compatibles?** QR más códigos de barras comunes; pruebe una muestra si depende de una simbología específica.
+- **¿Funciona sin conexión?** Sí. El escaneo y la generación se ejecutan en el navegador.
+- **¿Dónde se guarda el historial?** En la memoria de su navegador hasta que lo exporte o lo borre.
+- **¿Puedo escanear desde imágenes en lugar de la cámara?** Sí. Pegue o cargue una imagen y el decodificador la leerá.
+- **¿Puedo exportar los escaneos?** Sí. Exporte el historial como JSON para copia de seguridad o para compartir.
+
+## Herramientas relacionadas
+- [Generador de placas de identificación QR](./qr-nameplate)
+- [PDF Master](./pdf-master)
+- [Firmador de PDF por lotes](./pdf-batch-signer)
+
+## Registro de cambios
+- Documentación inicial.
+
+## Comentarios / informe de errores
+- [Abrir un problema en GitHub](https://github.com/biosxxx/cadautoscript.com/issues)
+- Correo electrónico o DM con el slug `qr-master` para que podamos reproducir el problema

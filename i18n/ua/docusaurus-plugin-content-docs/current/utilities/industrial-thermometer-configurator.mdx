@@ -1,0 +1,168 @@
+---
+title: Industrial Thermometer Configurator
+description: Обирайте діапазони, штоки, захисні гільзи (thermowells) та з'єднання для промислових термометрів, переглядайте прев'ю та експортуйте PDF-специфікацію.
+slug: /utilities/industrial-thermometer-configurator
+image: /img/og/utilities/industrial-thermometer-configurator.png
+keywords:
+  - industrial thermometer
+  - bimetal thermometer
+  - thermowell
+  - datasheet PDF
+  - EN 13190
+  - stem length
+  - process connection
+  - instrument specification
+---
+
+import Head from '@docusaurus/Head';
+
+# Industrial Thermometer Configurator
+
+Обирайте діапазони, штоки, захисні гільзи (thermowells) та з'єднання для промислових термометрів, переглядайте прев'ю та експортуйте PDF-специфікацію.
+
+<a className="button button--primary" href="/utilities/industrial-thermometer-configurator/" data-nobrokenlinkcheck>Відкрити утиліту</a>
+
+![industrial-thermometer-configurator utility screenshot](/img/og/utilities/industrial-thermometer-configurator.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/industrial-thermometer-configurator/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Industrial Thermometer Configurator",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Select ranges, stems, thermowells, and connections for industrial thermometers, preview the build, and export a PDF datasheet.",
+  "url": "https://cadautoscript.com/utilities/industrial-thermometer-configurator/",
+  "image": "https://cadautoscript.com/img/og/utilities/industrial-thermometer-configurator.png",
+  "featureList": [
+"Range presets plus custom span",
+"Stem and thermowell options",
+"Mounting preview",
+"PDF datasheet export"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/industrial-thermometer-configurator/",
+  "offers": {
+"@type": "Offer",
+"price": "0",
+"priceCurrency": "USD"
+  },
+  "author": {
+"@type": "Organization",
+"name": "CAD AutoScript"
+  }
+}`}</script>
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+{
+  "@type": "Question",
+  "name": "Чи можна встановити власний діапазон?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Так. Перемкніться на власне введення (custom) та введіть мінімальне та максимальне значення."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Чи підтримуються градуси Фаренгейта?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Так. Оберіть одиницю вимірювання перед вибором діапазону."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Чи можна запустити утиліту офлайн?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Так. Відтворення прев'ю та експорт у PDF відбуваються в браузері."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Чи розраховує утиліта розміри захисних гільз (thermowells) автоматично?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Вона слідує вашим вхідним даним; перевіряйте їх на відповідність вимогам щодо тиску та глибини занурення."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Де зберігаються мої дані?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Тільки у вашому браузері до моменту експорту в PDF."
+  }
+}
+  ]
+}`}</script>
+</Head>
+
+## Що це робить
+Налаштовуйте біметалевий промисловий термометр (bimetal thermometer): обирайте розмір шкали, температурний діапазон, довжину та діаметр штока (stem), конструкцію кріплення та параметри захисної гільзи (thermowell). Переглядайте SVG-ескіз та експортуйте PDF-специфікацію (datasheet) з метаданими проекту.
+
+## Коли використовувати (і коли ні)
+**Використовуйте, коли:**
+- Ви формуєте пакет документації з КВПіА і вам потрібна швидка специфікація термометра.
+- Ви хочете перевірити довжину штока, з'єднання та параметри гільзи перед замовленням.
+- Вам потрібен PDF-лист для друку або відправки постачальникам та сервісним командам.
+
+**Уникайте, коли:**
+- Вам потрібні сертифіковані розрахунки на тиск або вібрацію крім попередньої специфікації.
+- Ви підбираєте електронні датчики RTD або перетворювачі замість біметалевих термометрів.
+
+## Вхідні та вихідні дані
+### Вхідні дані
+| Параметр | Опис |
+| --- | --- |
+| Dial nominal size and unit | Вибір 63, 100 або 160 мм; шкали Цельсія або Фаренгейта. |
+| Temperature range | Попередньо встановлені діапазони або введення min/max для робочих умов. |
+| Stem geometry and material | Вибір геометрії (довжина, діаметр) та матеріалу штока для занурення. |
+| Connection location and standard | Нижнє, заднє або регульоване кріплення з різьбами G, NPT або метричними. |
+| Case material and fill | Сухий або заповнений силіконом корпус, а також вибір скла. |
+| Thermowell options | Вибір цільноточеної або зварної гільзи, матеріалу, з'єднання з процесом, довжини занурення та розширення. |
+| Project metadata | Номер тегу (Tag), середовище, стандарт, сертифікати та опції (наприклад, контрольна стрілка). |
+
+### Вихідні дані
+| Результат | Формат | Примітка |
+| --- | --- | --- |
+| PDF datasheet | PDF | Генерується локально з обраними параметрами та ескізом. |
+| SVG preview | На екрані | Живе креслення, що оновлюється при зміні геометрії. |
+| Configuration summary | На екрані | Швидкий огляд обраного діапазону, штока, з'єднання та гільзи. |
+
+## Як використовувати
+1. Оберіть розмір шкали та температурний діапазон (попередньо встановлений або власний).
+2. Встановіть довжину, діаметр та матеріал штока відповідно до вимог занурення.
+3. Оберіть розташування з'єднання та стандарт різьби; оберіть заповнення корпусу та скло.
+4. Увімкніть та налаштуйте розміри захисної гільзи (thermowell), якщо вона необхідна.
+5. Перевірте прев'ю та експортуйте PDF-специфікацію.
+
+**Приклад набору даних:** Шкала: 100 мм, Діапазон: 0...200 C, Шток: 8 x 200 мм (нерж.), Кріплення: нижнє G 1/2, Корпус: заповнений силіконом, Гільза: цільноточена G 1/2, занурення 200 мм, Тег: TI-310.
+- Очікуваний результат: PDF-специфікація та прев'ю для TI-310 із вказаними параметрами.
+
+## Точність та перевірка
+- Специфікація є попередньою; підтверджуйте ліміти тиску та правила занурення у виробника.
+- Переконайтеся у достатній довжині занурення для точного вимірювання та захисту чутливого елемента.
+- Одиниці та діапазони відображають ваше введення; перевірте їх перед розміщенням замовлення.
+- Усі розрахунки виконуються локально до моменту збереження PDF.
+
+## FAQ
+- **Чи можна встановити власний діапазон?** Так. Перемкніться на власне введення (custom) та введіть min/max.
+- **Чи підтримуються градуси Фаренгейта?** Так. Оберіть одиницю вимірювання перед вибором діапазону.
+- **Чи можна запустити утиліту офлайн?** Так. Відтворення та експорт у PDF відбуваються в браузері.
+- **Чи розраховує утиліта розміри гільз автоматично?** Вона слідує вашим вхідним даним; перевіряйте їх на відповідність вимогам процесу.
+- **Де зберігаються мої дані?** Тільки у вашому браузері до експорту в PDF.
+
+## Пов'язані інструменти
+- [Bourdon Gauge Configurator](./bourdon-gauge-configurator)
+- [Magnetic Level Gauge Configurator](./magnetic-level-gauge-configurator)
+- [Pipe Cutter Visualizer](./pipe-cutter)
+
+## Список змін (Changelog)
+- Початкова документація.
+
+## Зворотній зв'язок / звіт про помилку
+- [Відкрити issue на GitHub](https://github.com/biosxxx/cadautoscript.com/issues)
+- Напишіть на Email або в DM з вказанням `industrial-thermometer-configurator`.

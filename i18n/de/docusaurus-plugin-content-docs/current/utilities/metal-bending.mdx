@@ -1,0 +1,167 @@
+---
+title: Metal Bending Prototype
+description: Modellieren Sie Flanschlängen, neutrale Achsenpositionen und Biegeverkürzungen für Bleche, bevor Sie CAM oder Werkzeuge festlegen.
+slug: /utilities/metal-bending
+image: /img/og/utilities/metal-bending.png
+keywords:
+  - Blechbiegen
+  - k-Faktor
+  - Biegeverkürzung
+  - gestreckte Länge
+  - Abkantpresse
+  - neutrale Achse
+  - Blech-Rechner
+  - Prototyp
+---
+
+import Head from '@docusaurus/Head';
+
+# Metal Bending Prototype
+
+Modellieren Sie Flanschlängen, neutrale Achsenpositionen und Biegeverkürzungen für Blecharbeiten, bevor Sie die Werkzeuge festlegen.
+
+<a className="button button--primary" href="/utilities/metal-bending/" data-nobrokenlinkcheck>Utility öffnen</a>
+
+![metal-bending utility screenshot](/img/og/utilities/metal-bending.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/metal-bending/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Metal Bending Prototype",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Model flange lengths, neutral axis positions, and bend deductions for sheet metal before locking CAM or tooling.",
+  "url": "https://cadautoscript.com/utilities/metal-bending/",
+  "image": "https://cadautoscript.com/img/og/utilities/metal-bending.png",
+  "featureList": [
+"K-factor tuning",
+"Press brake presets",
+"Metric and inch toggles"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/metal-bending/",
+  "offers": {
+"@type": "Offer",
+"price": "0",
+"priceCurrency": "USD"
+  },
+  "author": {
+"@type": "Organization",
+"name": "CAD AutoScript"
+  }
+}`}</script>
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+{
+  "@type": "Question",
+  "name": "Unterstützt es mehrere Biegungen?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Verwenden Sie es pro Biegung oder Schenkel; kombinieren Sie die Ergebnisse für komplexe Teile."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Kann ich in Zoll und Metrisch arbeiten?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Ja. Geben Sie die Werte in den Einheiten ein, die Sie verwenden; die Mathematik ist einheitenunabhängig."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Wie exportiere ich die Zahlen?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Kopieren Sie sie direkt aus der Zusammenfassung oder machen Sie einen schnellen Screenshot."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Läuft es offline?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Ja. Alles läuft lokal in Ihrem Browser."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Was ist, wenn meine Presse Biegeverkürzungstabellen verwendet?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Wählen Sie den Modus bend deduction und geben Sie den Tabellenwert ein, um die resultierende gestreckte Länge zu sehen."
+  }
+}
+  ]
+}`}</script>
+</Head>
+
+## Funktionen
+Experimentieren Sie mit K-factors, bend deductions und neutralen Achsenpositionen, bevor Sie Programme an die Abkantpresse senden. Geben Sie Dicke, Radius und Winkel ein, um die gesamte gestreckte Länge und die Biegezugaben zu sehen, die mit ISO 2768 oder ANSI-Toleranzblöcken übereinstimmen.
+
+## Wann man es verwendet (und wann nicht)
+**Verwenden Sie es, wenn:**
+- Sie Abkantpressenprogramme entwerfen oder überarbeiten und die Zugaben vor der Produktion validieren möchten.
+- Sie den K-factor oder die bend deductions an eine neue Materialcharge oder ein neues Werkzeug anpassen möchten.
+- Sie eine schnelle Lernhilfe für Auszubildende benötigen, um zu verstehen, wie sich Flanschlängen bei verschiedenen Radien ändern.
+
+**Vermeiden Sie es, wenn:**
+- Sie gestanzte, rollgeformte oder stark nichtlineare Biegungen modellieren, die FEA oder Herstellerdaten erfordern.
+- Sie automatische Abwicklungen für komplexe Teile mit mehreren Biegungen benötigen; führen Sie dies pro Biegung aus und kombinieren Sie die Ergebnisse.
+
+## Eingaben und Ausgaben
+### Eingaben
+| Eingabe | Beschreibung |
+| --- | --- |
+| Materialdicke | Gauge oder Dicke des Blechs, das Sie biegen. |
+| Innerer Biegeradius | Radius im Bereich der neutralen Achse; steuert die Zugabewerte. |
+| Biegewinkel | Geformter Winkel nach der Rückfederung; geben Sie konsistente Einheiten ein. |
+| Flanschlängen | Schenkellängen angrenzend an die Biegung, die in die gestreckte Länge einfließen. |
+| K-factor oder bend deduction | Wählen Sie, ob die Berechnungen über den K-factor oder eine bekannte Verkürzung gesteuert werden sollen. |
+| Material- oder Werkzeughinweise | Optionale Hinweise zur Matrizenbreite, Faserrichtung oder Presseneinstellung. |
+
+### Ausgaben
+| Ausgabe | Format | Hinweise |
+| --- | --- | --- |
+| Gesamte gestreckte Länge | Numerisch | Länge zum Programmieren oder Schneiden vor dem Formen. |
+| Biegezugabe / Verkürzung | Numerisch | Berechnet aus Dicke, Radius und Winkel für den angegebenen K-factor. |
+| Lage der neutralen Achse | Numerisch | Position ausgedrückt als Faktor der Dicke zur Referenz. |
+| Zusammenfassungskarte | Auf dem Bildschirm | Werte zum Kopieren in CAM-Notizen oder Arbeitspläne. |
+
+## Bedienung
+1. Geben Sie die Blechdicke und den inneren Biegeradius ein.
+2. Stellen Sie den Biegewinkel und die Flanschlängen ein, die flachgelegt werden müssen.
+3. Wählen Sie, ob die Berechnung über einen K-factor oder eine bend deduction erfolgen soll.
+4. Überprüfen Sie die resultierende gestreckte Länge und die Biegezugaben.
+5. Kopieren Sie die Werte in Ihr CAM-Programm oder speichern Sie einen Screenshot.
+
+**Beispieldatensatz:** Dicke: 3 mm, Innenradius: 4 mm, Biegewinkel: 90 Grad, Flansche: 50 mm und 75 mm, K-factor: 0,38.
+- Erwartetes Ergebnis: Zeigt die gestreckte Länge und Biegezugabe für die Biegung mit zwei Schenkeln an, damit Sie die Presse oder die CAM-Abwicklung programmieren können.
+
+## Genauigkeit und Verifizierung
+- Setzt Freibiegen mit einem einzigen K-factor über die Biegung voraus.
+- Berücksichtigt keine Faserrichtung oder Werkzeugverschleiß; verifizieren Sie dies mit einem Teststück vor einem vollen Durchlauf.
+- Halten Sie Ihre Eingabeeinheiten konsistent; das Tool konvertiert keine gemischten Werte.
+- Verwenden Sie Teststücke der Abkantpresse, um den K-factor für jede Materialcharge zu verfeinern.
+
+## FAQ
+- **Unterstützt es mehrere Biegungen?** Verwenden Sie es pro Biegung oder Schenkel; kombinieren Sie die Ergebnisse für komplexe Teile.
+- **Kann ich in Zoll und Metrisch arbeiten?** Ja. Geben Sie die Werte in den Einheiten ein, die Sie verwenden; die Mathematik ist einheitenunabhängig.
+- **Wie exportiere ich die Zahlen?** Kopieren Sie sie direkt aus der Zusammenfassung oder machen Sie einen schnellen Screenshot.
+- **Läuft es offline?** Ja. Alles läuft lokal in Ihrem Browser.
+- **Was ist, wenn meine Presse Biegeverkürzungstabellen verwendet?** Wählen Sie den Modus bend deduction und geben Sie den Tabellenwert ein, um die resultierende gestreckte Länge zu sehen.
+
+## Ähnliche Tools
+- [Cylindrical Shell Rolling Calculator](./cylindrical-shell-rolling)
+- [Pipe Cutter Visualizer](./pipe-cutter)
+- [Interactive Thread Cheat Sheet](./interactive-thread)
+
+## Changelog
+- Initiale Dokumentation.
+
+## Feedback / Fehlerbericht
+- [GitHub Issue öffnen](https://github.com/biosxxx/cadautoscript.com/issues)
+- E-Mail oder DM mit dem Slug `metal-bending`, damit wir den Fehler reproduzieren können

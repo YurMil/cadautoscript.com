@@ -1,0 +1,164 @@
+---
+title: Generador de placas de identificación QR
+description: Modele etiquetas de equipos con QR serializadas con materiales ajustables, profundidades de grabado y capas de marca.
+slug: /utilities/qr-nameplate
+image: /img/og/utilities/qr-nameplate.png
+keywords:
+  - placa de identificación QR
+  - etiqueta de activo
+  - vista previa de grabado
+  - exportación SVG
+  - trazabilidad
+  - vista previa 3D
+  - diseño de placa de identificación
+  - código QR
+---
+
+import Head from '@docusaurus/Head';
+
+# Generador de placas de identificación QR
+
+Modele etiquetas de equipos con QR serializadas con materiales ajustables, profundidades de grabado y arte exportable.
+
+<a className="button button--primary" href="/utilities/qr-nameplate/" data-nobrokenlinkcheck>Abrir utilidad</a>
+
+![captura de pantalla de la utilidad generador de placas de identificación QR](/img/og/utilities/qr-nameplate.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/qr-nameplate/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Generador de placas de identificación QR",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Modele etiquetas de equipos con QR serializadas con materiales ajustables, profundidades de grabado y capas de marca.",
+  "url": "https://cadautoscript.com/utilities/qr-nameplate/",
+  "image": "https://cadautoscript.com/img/og/utilities/qr-nameplate.png",
+  "featureList": [
+"Vista previa con Three.js",
+"Preajustes de materiales",
+"Textura de grabado QR"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/qr-nameplate/",
+  "offers": {
+"@type": "Offer",
+"price": "0",
+"priceCurrency": "USD"
+  },
+  "author": {
+"@type": "Organization",
+"name": "CAD AutoScript"
+  }
+}`}</script>
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+{
+  "@type": "Question",
+  "name": "¿Puedo cambiar los materiales?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Sí. Elija un preajuste para visualizar placas de acero inoxidable, pintadas o de plástico."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿El QR es vectorial o rasterizado?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Las exportaciones SVG son vectoriales; el PNG es un rasterizado de alta resolución."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Funciona sin conexión?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Sí. La generación del arte ocurre en el navegador."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Cómo mantengo el QR escaneable?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Mantenga una zona de silencio y evite reducir el código por debajo de los límites de su escáner."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Puedo serializar muchas etiquetas a la vez?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Utilice el generador por etiqueta y reutilice su plantilla de carga."
+  }
+}
+  ]
+}`}</script>
+</Head>
+
+## Qué hace
+Cree etiquetas de equipos con QR con materiales ajustables, profundidades de grabado y líneas de metadatos. Visualice la placa en 3D, ajuste las dimensiones y las capas de marca, y exporte arte en PNG o SVG de alta resolución para marcado láser o impresión UV.
+
+## Cuándo usarlo (y cuándo no)
+**Úselo cuando:**
+- Necesite una forma rápida de generar etiquetas serializadas para equipos o herramientas.
+- Quiera entregar arte listo para vectores a una imprenta o taller de grabado.
+- Esté validando la legibilidad del QR en diferentes tamaños antes de comprometerse con una serie de producción.
+
+**Evítelo cuando:**
+- Requiera serialización respaldada por una base de datos o seguimiento de producción.
+- Necesite controladores directos a la impresora o imposición de diseño para impresión masiva.
+
+## Entradas y salidas
+### Entradas
+| Entrada | Descripción |
+| --- | --- |
+| Carga de QR | URL, ID de activo o texto codificado en el QR. |
+| Metadatos de la etiqueta | Nombre del activo, serie, advertencias u otro texto superpuesto. |
+| Tamaño y grosor de la placa | Dimensiones generales más preajustes de profundidad de grabado. |
+| Preajuste de material o acabado | Estilo visual para placas de acero inoxidable, aluminio, plástico o pintadas. |
+| Configuración de diseño | Tamaño del QR, márgenes y tipografía para la placa impresa. |
+
+### Salidas
+| Salida | Formato | Notas |
+| --- | --- | --- |
+| Arte de la placa de identificación | PNG/SVG | Exportación de alta resolución para grabado o impresión. |
+| Vista previa 3D | Viewport | Comprobación visual de las proporciones de la placa y la profundidad del grabado. |
+
+## Cómo usar
+1. Ingrese la carga del QR y los metadatos que desee en la etiqueta.
+2. Establezca las dimensiones de la placa, los márgenes y la profundidad del grabado.
+3. Elija un preajuste de material o acabado.
+4. Revise la vista previa 3D y ajuste el tamaño si es necesario.
+5. Exporte el arte en PNG o SVG para la producción.
+
+**Conjunto de datos de ejemplo:** Etiqueta de activo P-101 con QR que apunta a https://cadautoscript.com/utilities/qr-nameplate/, aspecto de acero inoxidable de 100 x 40 mm, profundidad de grabado de 0,3 mm.
+- Salida esperada: Exporta un PNG y SVG de la etiqueta más una vista previa que muestra las proporciones y los márgenes legibles del QR.
+
+## Precisión y verificación
+- Asegúrese de que la resolución del PNG/SVG exportado se ajuste a los requisitos de su impresora o grabadora.
+- Deje una zona de silencio alrededor del QR para un escaneo fiable.
+- Pruebe una muestra impresa antes de ejecutar un lote completo para confirmar la legibilidad.
+- Todo el renderizado se ejecuta localmente; mantenga una copia de las exportaciones para trazabilidad.
+
+## Preguntas frecuentes
+- **¿Puedo cambiar los materiales?** Sí. Elija un preajuste para visualizar placas de acero inoxidable, pintadas o de plástico.
+- **¿El QR es vectorial o rasterizado?** Las exportaciones SVG son vectoriales; el PNG es un rasterizado de alta resolución.
+- **¿Funciona sin conexión?** Sí. La generación del arte ocurre en el navegador.
+- **¿Cómo mantengo el QR escaneable?** Mantenga una zona de silencio y evite reducir el código por debajo de los límites de su escáner.
+- **¿Puedo serializar muchas etiquetas a la vez?** Utilice el generador por etiqueta y reutilice su plantilla de carga.
+
+## Herramientas relacionadas
+- [Maestro QR](./qr-master)
+- [PDF Master](./pdf-master)
+- [Firmador de PDF por lotes](./pdf-batch-signer)
+
+## Registro de cambios
+- Documentación inicial.
+
+## Comentarios / informe de errores
+- [Abrir un problema en GitHub](https://github.com/biosxxx/cadautoscript.com/issues)
+- Correo electrónico o DM con el slug `qr-nameplate` para que podamos reproducir el problema

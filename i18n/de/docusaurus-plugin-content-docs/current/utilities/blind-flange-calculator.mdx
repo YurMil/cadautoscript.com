@@ -1,0 +1,165 @@
+---
+title: Blind Flange Calculator
+description: Berechnen Sie die Blindflanschdicke nach EN 13445-3 mit automatischer PN-Auswahl nach EN 1092-1, Gewichtsschätzung und browserbasiertem 3D STEP-Export.
+slug: /utilities/blind-flange-calculator
+keywords:
+  - blind flange
+  - EN 13445-3
+  - EN 1092-1
+  - flange thickness
+  - PN selection
+  - pressure vessel
+---
+
+import Head from '@docusaurus/Head';
+
+# Blind Flange Calculator
+
+Wählen Sie automatisch die PN-Klasse nach EN 1092-1, berechnen Sie die Mindestdicke nach EN 13445-3 und erstellen Sie direkt im Browser ein passendes 3D-STEP-Modell.
+
+<a className="button button--primary" href="/utilities/blind-flange-calculator/" data-nobrokenlinkcheck>Utility öffnen</a>
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/blind-flange-calculator/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Blind Flange Calculator",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Auto-select the PN class from EN 1092-1, calculate minimum thickness per EN 13445-3, recommend a standard plate thickness for blind flanges, and export a matching 3D STEP model.",
+  "url": "https://cadautoscript.com/utilities/blind-flange-calculator/",
+  "featureList": [
+"Automatic PN selection",
+"Minimum and recommended thickness",
+"Bolt circle data and weight estimate",
+"3D STEP export for configured blind flanges"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/blind-flange-calculator/",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "CAD AutoScript"
+  }
+}`}</script>
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+{
+  "@type": "Question",
+  "name": "Wie wird die PN-Klasse ausgewählt?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Der Rechner wählt die nächstgelegene EN 1092-1 PN-Klasse aus, die den Betriebsdruck erfüllt oder übersteigt."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Kann ich den Prüfdruck überschreiben?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Ja. Der Prüfdruck wird automatisch basierend auf dem Betriebsdruck aktualisiert, bis Sie ihn manuell bearbeiten."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Welche Materialien sind enthalten?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Der aktuelle Datensatz umfasst P265GH, P355GH und 1.4404 (316L) mit temperaturabhängigen Streckgrenzen."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Werden meine Daten hochgeladen?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Nein. Alles läuft lokal in Ihrem Browser."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Ist dies eine endgültige Designprüfung?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Nein. Verwenden Sie es für die vorläufige Dimensionierung und überprüfen Sie Schraubenlasten, Dichtungswahl und Code-Konformität vor der Freigabe."
+  }
+}
+  ]
+}`}</script>
+</Head>
+
+## Funktionen
+Wählen Sie eine Nennweite (DN), legen Sie Betriebs- und Prüfdruck, Temperatur und Werkstoff fest. Das Tool nutzt EN 1092-1 Flanschabmessungen und Spannungsprüfungen nach EN 13445-3, um die Mindestdicke zu berechnen, eine Standard-Plattendicke zu empfehlen und ein passendes 3D-STEP-Modell für die aktive Flanschkonfiguration zu exportieren.
+
+## Wann man es verwenden sollte (und wann nicht)
+**Verwenden Sie es, wenn:**
+- Sie eine schnelle vorläufige Blindflanschdicke für EN 13445-Projekte benötigen.
+- Sie eine automatische PN-Suche anstelle manueller Tabellenprüfungen wünschen.
+- Sie eine schnelle Gewichtsschätzung für die Beschaffung oder Handhabungsplanung benötigen.
+- Sie ein einfaches browserbasiertes 3D-STEP-Modell für die aktuelle Flanschgeometrie benötigen.
+
+**Vermeiden Sie es, wenn:**
+- Sie ein vollständig zertifiziertes Berechnungspaket oder eine Verifizierung durch Dritte benötigen.
+- Ihr Werkstoff oder Flanschstandard nicht im Datensatz enthalten ist.
+
+## Ein- und Ausgänge
+### Eingänge
+| Eingang | Beschreibung |
+| --- | --- |
+| DN | Nenndurchmesser für EN 1092-1 Abmessungen. |
+| Betriebsdruck | Wird zur Auswahl der PN-Klasse verwendet. |
+| Prüfdruck | Standardmäßig vom Betriebsdruck abgeleitet, kann aber überschrieben werden. |
+| Temperatur | Wird zur Auswahl der temperaturabhängigen Streckgrenze verwendet (°C). |
+| Werkstoff | P265GH, P355GH oder 1.4404 (316L). |
+| Korrosionszuschlag | Wird zur Mindestdicke addiert. |
+
+### Ausgänge
+| Ausgang | Format | Hinweise |
+| --- | --- | --- |
+| Empfohlene Dicke | mm | Aufgerundet auf eine Standard-Plattenliste. |
+| Mindestdicke | mm | Nach EN 13445-3, Korrosionszuschlag wird separat angezeigt. |
+| PN-Klasse und Schraubendaten | Bildschirm | Enthält Schraubenanzahl, Größe und Lochkreis. |
+| Gewichtsschätzung | kg | Basierend auf Flansch-Außendurchmesser, Dicke und Materialdichte. |
+| 3D-STEP-Modell | STEP | Exportiert den konfigurierten Blindflanschkörper und das Lochbild. |
+
+## Bedienungsanleitung
+1. Wählen Sie DN und geben Sie den Betriebsdruck ein.
+2. Bestätigen oder überschreiben Sie den Prüfdruck.
+3. Wählen Sie Temperatur, Werkstoff und Korrosionszuschlag.
+4. Lesen Sie die empfohlene Dicke, die PN-Klasse und die Schraubendaten ab.
+5. Nutzen Sie den STEP-Export, wenn Sie ein passendes 3D-Modell der aktuellen Flanschgeometrie benötigen.
+
+**Beispieldatensatz:** DN 100, Betriebsdruck 10 bar, Prüfdruck 14 bar, Temperatur 20 °C, Werkstoff P265GH, Korrosion 1 mm.
+- Erwartetes Ergebnis: Empfohlene Dicke und PN-Klasse mit Schraubengröße und Gewichtsschätzung.
+
+## Genauigkeit und Verifizierung
+- Der Rechner ist ein Werkzeug zur vorläufigen Dimensionierung und ersetzt keine vollständige Code-Verifizierung.
+- Bestätigen Sie die Auswahl der Flanschklasse anhand der Projektdruckstufen und Dichtungsanforderungen.
+- Validieren Sie die Materialeigenschaften, insbesondere bei erhöhten Temperaturen.
+- EN 1092-1 Hochdruckstufen (PN160+) sind nur für einen begrenzten DN-Bereich standardisiert; nicht unterstützte Kombinationen zeigen „Keine Daten“.
+
+## FAQ
+- **Wie wird die PN-Klasse ausgewählt?** Die nächstgelegene PN-Klasse aus EN 1092-1, die den Betriebsdruck erfüllt oder übersteigt, wird gewählt.
+- **Kann I den Prüfdruck überschreiben?** Ja. Das Bearbeiten des Prüfdrucks deaktiviert die automatische Aktualisierung.
+- **Welche Materialien sind enthalten?** P265GH, P355GH und 1.4404 (316L) mit temperaturabhängigen Streckgrenzendaten.
+- **Werden meine Daten hochgeladen?** Nein. Alles läuft lokal im Browser.
+- **Ist dies eine endgültige Designprüfung?** Nein. Verwenden Sie es für die vorläufige Dimensionierung und prüfen Sie es gegen Ihre Projektspezifikationen.
+
+## Verwandte Tools
+- [Dished End (Vessel Head) Calculator](./pressure-vessel-dished-end-calc)
+- [Cylindrical Shell Rolling Calculator](./cylindrical-shell-rolling)
+- [Pipe Cutter Visualizer](./pipe-cutter)
+
+## Changelog
+- Browserbasierter 3D-STEP-Export für konfigurierte Blindflansche hinzugefügt.
+- Erste Dokumentation.
+
+## Feedback / Fehlerbericht
+- [GitHub-Issue öffnen](https://github.com/biosxxx/cadautoscript.com/issues)
+- E-Mail oder DM mit dem Slug `blind-flange-calculator`, damit wir das Problem reproduzieren können.

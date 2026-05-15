@@ -1,0 +1,185 @@
+---
+title: WIKA CPG1500 Log Analyzer
+description: Analice los archivos de registro del calibrador WIKA CPG1500, revise la identidad del dispositivo y los datos de medición, visualice curvas de presión y imprima informes de QC — todo localmente en el navegador.
+slug: /utilities/wikalog-analyzer
+image: /img/og/utilities/wikalog-analyzer.png
+keywords:
+  - wika cpg1500
+  - pressure calibrator
+  - log analyzer
+  - calibration report
+  - measurement data
+  - qc report
+  - offline parser
+---
+
+import Head from '@docusaurus/Head';
+
+# WIKA CPG1500 Log Analyzer
+
+Analice archivos de registro de calibradores de presión digitales WIKA CPG1500, inspeccione metadatos del dispositivo, visualice curvas de medición y genere informes de QC listos para imprimir — todo localmente en el navegador.
+
+<a className="button button--primary" href="/utilities/wikalog-analyzer/" data-nobrokenlinkcheck>Abrir utilidad</a>
+
+![WIKA CPG1500 Log Analyzer](/img/og/utilities/wikalog-analyzer.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/wikalog-analyzer/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "WIKA CPG1500 Log Analyzer",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Analice los archivos de registro del calibrador WIKA CPG1500, revise la identidad del dispositivo y los datos de medición, visualice curvas de presión y imprima informes de QC — todo localmente en el navegador.",
+  "url": "https://cadautoscript.com/utilities/wikalog-analyzer/",
+  "image": "https://cadautoscript.com/img/og/utilities/wikalog-analyzer.png",
+  "featureList": [
+    "Análisis de archivos de registro WIKA CPG1500",
+    "Identidad del dispositivo y metadatos de calibración",
+    "Cuadrícula de datos de medición con búsqueda",
+    "Visualización de gráficos de presión",
+    "Exportación de informes de QC optimizados para impresión"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/wikalog-analyzer/",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "CAD AutoScript"
+  }
+}`}</script>
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Qué formatos de archivo de registro son compatibles?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "La utilidad acepta archivos de registro exportados desde calibradores de presión digitales WIKA CPG1500 (.log / .txt)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Mis datos se cargan en un servidor?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Todo el análisis y la visualización se ejecutan completamente en el navegador. Los archivos nunca salen de su dispositivo."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Puedo imprimir o guardar el informe?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí. La vista del informe está optimizada para impresión con saltos de página A4 para gráficos, tablas y tarjetas de identidad del dispositivo."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Funciona fuera de línea?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí, una vez cargada la página no requiere conexión a internet."
+      }
+    }
+  ]
+}`}</script>
+</Head>
+
+## Qué hace
+
+Cargue un archivo de registro exportado desde un calibrador de presión digital **WIKA CPG1500** y obtenga al instante:
+
+- **Tarjeta de identidad del dispositivo** — número de serie, modelo, versión de firmware, fechas de calibración y metadatos del operador analizados del encabezado del archivo.
+- **Cuadrícula de datos de medición** — una tabla que permite búsquedas y clasificación de cada lectura de presión/temperatura con marca de tiempo en el registro.
+- **Gráfico de presión** — un gráfico de líneas interactivo de la curva de presión registrada a lo largo del tiempo.
+- **Informe de QC listo para imprimir** — un diseño de varias páginas optimizado para impresión (A4 vertical para tablas, A4 horizontal para gráficos) que puede enviar directamente a una impresora o guardar como PDF.
+
+Todo se ejecuta en el lado del cliente con React y Material UI. Ningún dato sale del navegador.
+
+## Cuándo usarlo (y cuándo no)
+
+**Úselo cuando:**
+- Necesite revisar los registros de calibración de WIKA CPG1500 en cualquier máquina con un navegador.
+- Desee una verificación visual rápida de la curva de presión antes de archivar el certificado.
+- Necesite imprimir o guardar en PDF un informe de QC formateado para adjuntarlo a una orden de trabajo o paquete de inspección.
+- Desee buscar o clasificar lecturas de medición sin importar el archivo original a Excel.
+
+**Evítelo cuando:**
+- Sus archivos de registro provengan de un modelo de calibrador diferente (el analizador es específico para CPG1500).
+- Necesite procesamiento por lotes de docenas de registros a la vez (cargue un archivo a la vez).
+
+## Entradas y salidas
+
+### Entradas
+| Entrada | Descripción |
+| :--- | :--- |
+| **Archivo de registro** | Un archivo `.log` o `.txt` exportado desde un calibrador WIKA CPG1500. |
+
+### Salidas
+| Salida | Formato | Notas |
+| :--- | :--- | :--- |
+| **Identidad del dispositivo** | Tarjeta en pantalla | Serie, modelo, firmware, fechas de calibración, operador. |
+| **Tabla de mediciones** | Cuadrícula en pantalla | Lecturas de presión y temperatura con marcas de tiempo y búsqueda. |
+| **Gráfico de presión** | Gráfico interactivo | Gráfico de líneas de presión frente a tiempo. |
+| **Informe de QC** | Impresión / PDF | Informe de varias páginas optimizado para A4 a través del diálogo de impresión del navegador. |
+
+## Cómo usar
+
+1. **Abra la utilidad** y haga clic en el área de carga o arrastre y suelte un archivo de registro CPG1500.
+2. **Revise la tarjeta de identidad del dispositivo** — confirme que el número de serie, el modelo y las fechas de calibración sean correctos.
+3. **Explore la cuadrícula de mediciones** — use el cuadro de búsqueda para filtrar filas, o haga clic en los encabezados de las columnas para ordenar.
+4. **Inspeccione el gráfico de presión** — pase el cursor sobre los puntos de datos para ver valores exactos; use el zoom o el desplazamiento si está disponible.
+5. **Imprima el informe** — haga clic en el botón de impresión del navegador (`Ctrl+P` / `Cmd+P`). El diseño cambia automáticamente a un informe optimizado para A4 con saltos de página para la tarjeta de identidad, la tabla de datos y el gráfico.
+
+### Ejemplo de flujo de trabajo
+Cargue un archivo de registro de una prueba de presión reciente → verifique que el número de serie del dispositivo coincida con el certificado de calibración → revise la curva de presión en busca de anomalías → imprima el informe formateado y grápelo a la orden de trabajo.
+
+## Diseño de impresión del informe
+
+La hoja de estilos de impresión produce un informe de QC limpio y de varias páginas:
+
+| Página | Contenido | Orientación |
+| :--- | :--- | :--- |
+| 1 | Identidad del dispositivo + resumen compacto de mediciones | Vertical (A4) |
+| 2+ | Tabla completa de datos de medición | Vertical (A4) |
+| Página de gráfico | Gráfico de presión con leyenda | Horizontal (A4) |
+
+:::tip
+Use "Guardar como PDF" en el diálogo de impresión de su navegador para archivar el informe digitalmente junto con sus certificados de calibración.
+:::
+
+## Precisión y privacidad
+
+- **Solo datos analizados** — la utilidad no modifica el archivo de registro original; lee y muestra los valores tal como están.
+- **Cero cargas** — todo el análisis ocurre en el navegador a través de JavaScript en el lado del cliente. No se transmiten datos a ningún servidor.
+- **Solo por sesión** — cierre la pestaña y todos los datos analizados desaparecerán. Guarde o imprima su informe antes de cerrar.
+- **Verifique contra la fuente** — siempre coteje los valores críticos (número de serie, presión de prueba) con el archivo de registro original y el certificado de calibración.
+
+## FAQ
+
+- **¿Qué formatos de archivo de registro son compatibles?** Archivos de registro exportados desde calibradores de presión digitales WIKA CPG1500 (`.log` / `.txt`).
+- **¿Mis datos se cargan en un servidor?** No. Todo se queda en el navegador.
+- **¿Puedo imprimir o guardar el informe?** Sí. Use `Ctrl+P` / `Cmd+P` para imprimir o guardar como PDF. El diseño está optimizado para papel A4.
+- **¿Funciona fuera de línea?** Sí, una vez cargada la página no requiere conexión a internet.
+- **¿Puedo analizar varios archivos a la vez?** Cargue un archivo a la vez; recargue o limpie para analizar un registro diferente.
+- **¿Qué pasa si mi archivo de registro no se analiza?** El analizador es específico para el formato CPG1500. Es posible que no se reconozcan los archivos de otros instrumentos. Abra un problema en GitHub si cree que su archivo CPG1500 debería funcionar pero no es así.
+
+---
+
+## Herramientas relacionadas
+
+- [PDF BOM Extractor](./pdf-bom-extractor) — Extraer tablas de BOM de PDFs de CAD a CSV.
+- [PDF Number Extractor](./pdf-number-extractor) — Resaltar series de QA y números de inspección de PDFs.
+- [Blind Flange Calculator](./blind-flange-calculator) — Dimensionamiento de bridas ciegas según EN 13445-3.
+
+## Comentarios / informe de errores
+
+- [Abrir un problema en GitHub](https://github.com/biosxxx/cadautoscript.com/issues)
+- Envíe un correo electrónico o DM con el slug `wikalog-analyzer` para que podamos reproducir cualquier problema.

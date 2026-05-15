@@ -1,0 +1,80 @@
+---
+title: React Table Editor
+description: Bearbeiten Sie CSV- und XLSX-Tabellen im Browser mit Import/Export- und Inline-Validierungs-Workflows.
+slug: /utilities/react-table-editor
+keywords:
+  - Tabelleneditor
+  - CSV-Editor
+  - XLSX-Editor
+  - Tabellenkalkulation im Browser
+  - Datenbereinigung
+---
+
+import Head from '@docusaurus/Head';
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/react-table-editor/" />
+</Head>
+
+# React Table Editor
+
+Öffnen Sie CSV- oder XLSX-Dateien, bearbeiten Sie Daten inline und exportieren Sie saubere Tabellen lokal im Browser.
+
+<a className="button button--primary" href="/utilities/react-table-editor/" data-nobrokenlinkcheck>Utility öffnen</a>
+
+## Was es macht
+- Importiert tabellarische Daten aus CSV- und XLSX-Dateien.
+- Ermöglicht das Inline-Bearbeiten von Zellen und das Anpassen von Zeilen/Spalten.
+- Unterstützt den clientseitigen Export zurück nach CSV oder XLSX.
+- Hält die Daten lokal ohne serverseitigen Upload.
+
+## Wann man es verwendet (und wann nicht)
+**Verwenden Sie es, wenn:**
+- Sie eine schnelle Bereinigung von Stücklisten (BOM), QA- oder Produktionstabellen benötigen.
+- Sie Tabellen normalisieren möchten, bevor Sie sie mit CAD/ERP-Workflows teilen.
+- Sie eine rein browserbasierte Bearbeitung ohne Desktop-Office-Software benötigen.
+
+**Vermeiden Sie es, wenn:**
+- Sie fortgeschrittene Tabellenkalkulationsformeln und Pivots benötigen.
+- Sie eine Echtzeit-Zusammenarbeit mit mehreren Benutzern benötigen.
+
+## Ein- und Ausgänge
+### Eingänge
+| Eingang | Beschreibung |
+| --- | --- |
+| CSV/XLSX-Datei | Laden Sie eine Tabelle für die interaktive Bearbeitung. |
+| Manuelle Bearbeitungen | Aktualisieren Sie Zellen, Spaltenbeschriftungen und Zeilenwerte. |
+
+### Ausgänge
+| Ausgang | Format | Hinweise |
+| --- | --- | --- |
+| Editierte Tabelle | Auf dem Bildschirm | Live-Raster-Vorschau mit sofortigen Aktualisierungen. |
+| Exportierte Datei | CSV/XLSX | Speichern Sie einen bereinigten Datensatz für nachgelagerte Tools. |
+
+## Bedienungsanleitung
+1. Importieren Sie eine CSV- oder XLSX-Datei.
+2. Überprüfen Sie die Tabelle und bearbeiten Sie die Zellen nach Bedarf.
+3. Fügen Sie Zeilen oder Spalten hinzu oder entfernen Sie diese, falls Ihr Workflow eine Umstrukturierung erfordert.
+4. Exportieren Sie die endgültige Tabelle nach CSV oder XLSX.
+
+## Genauigkeit und Verifizierung
+- Validieren Sie Einheiten, Trennzeichen und Headernamen vor dem Export.
+- Öffnen Sie die exportierte Datei in Ihrem Ziel-Workflow erneut, um die Kompatibilität zu bestätigen.
+- Die Daten bleiben in Ihrer Browser-Sitzung, sofern Sie sie nicht exportieren.
+
+## FAQ
+- **Wird meine Datei hochgeladen?** Nein, die Verarbeitung erfolgt lokal in Ihrem Browser.
+- **Welche Formate werden unterstützt?** CSV und XLSX.
+- **Kann ich Formeln bearbeiten?** Es ist für die Bearbeitung von Werten optimiert, nicht für fortgeschrittene Tabellenkalkulationsformeln.
+- **Kann ich es offline verwenden?** Wenn die Assets im Browser zwischengespeichert und lokal verfügbar sind, ja.
+
+## Verwandte Tools
+- [PDF BOM Extractor](./pdf-bom-extractor)
+- [Batch File Renamer](./file-renamer)
+
+## Änderungsprotokoll
+- Erstmalige Dokumentation.
+
+## Feedback / Fehlermeldung
+- [Ein GitHub-Issue öffnen](https://github.com/biosxxx/cadautoscript.com/issues)
+- E-Mail oder DM mit dem Slug `react-table-editor`, damit wir das Problem reproduzieren können.

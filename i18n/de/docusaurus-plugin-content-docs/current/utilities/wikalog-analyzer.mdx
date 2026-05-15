@@ -1,0 +1,185 @@
+---
+title: WIKA CPG1500 Log Analyzer
+description: Analysieren Sie WIKA CPG1500 Kalibrator-Logdateien, überprüfen Sie die Geräteidentität und Messdaten, visualisieren Sie Druckkurven und drucken Sie QC-Berichte — alles lokal im Browser.
+slug: /utilities/wikalog-analyzer
+image: /img/og/utilities/wikalog-analyzer.png
+keywords:
+  - wika cpg1500
+  - pressure calibrator
+  - log analyzer
+  - calibration report
+  - measurement data
+  - qc report
+  - offline parser
+---
+
+import Head from '@docusaurus/Head';
+
+# WIKA CPG1500 Log Analyzer
+
+Analysieren Sie Logdateien von digitalen Druckkalibratoren des Typs WIKA CPG1500, inspizieren Sie Gerätemetadaten, visualisieren Sie Messkurven und erstellen Sie druckfertige QC-Berichte — alles lokal im Browser.
+
+<a className="button button--primary" href="/utilities/wikalog-analyzer/" data-nobrokenlinkcheck>Utility öffnen</a>
+
+![WIKA CPG1500 Log Analyzer](/img/og/utilities/wikalog-analyzer.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/wikalog-analyzer/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "WIKA CPG1500 Log Analyzer",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Parse WIKA CPG1500 calibrator log files, review device identity and measurement data, visualize pressure curves, and print QC reports — all locally in the browser.",
+  "url": "https://cadautoscript.com/utilities/wikalog-analyzer/",
+  "image": "https://cadautoscript.com/img/og/utilities/wikalog-analyzer.png",
+  "featureList": [
+    "WIKA CPG1500 log file parsing",
+    "Device identity and calibration metadata",
+    "Measurement data grid with search",
+    "Pressure chart visualization",
+    "Print-optimized QC report export"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/wikalog-analyzer/",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "CAD AutoScript"
+  }
+}`}</script>
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Welche Logdateiformate werden unterstützt?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Das Tool akzeptiert Logdateien, die von digitalen Druckkalibratoren des Typs WIKA CPG1500 exportiert wurden (.log / .txt)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Werden meine Daten auf einen Server hochgeladen?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nein. Das gesamte Parsing und die Visualisierung laufen vollständig im Browser. Dateien verlassen niemals Ihr Gerät."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Kann ich den Bericht drucken oder speichern?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja. Die Berichtsansicht ist für den Druck auf A4-Seiten optimiert, inklusive Seitenumbrüchen für Diagramme, Tabellen und Geräteidentifikationskarten."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Funktioniert es offline?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja, sobald die Seite geladen ist, wird keine Internetverbindung mehr benötigt."
+      }
+    }
+  ]
+}`}</script>
+</Head>
+
+## Funktionen
+
+Ziehen Sie eine Logdatei, die von einem digitalen Druckkalibrator **WIKA CPG1500** exportiert wurde, per Drag-and-Drop in das Tool und erhalten Sie sofort:
+
+- **Geräteidentifikationskarte** — Seriennummer, Modell, Firmware-Version, Kalibrierdaten und Operator-Metadaten, die aus dem Dateikopf gelesen wurden.
+- **Messdatentabelle** — eine durchsuchbare und sortierbare Tabelle aller mit Zeitstempel versehenen Druck- und Temperaturmesswerte im Log.
+- **Druckdiagramm** — ein interaktives Liniendiagramm der aufgezeichneten Druckkurve über die Zeit.
+- **Druckfertiger QC-Bericht** — ein mehrseitiges, für den Druck optimiertes Layout (A4-Hochformat für Tabellen, A4-Querformat für Diagramme), das Sie direkt an einen Drucker senden oder als PDF speichern können.
+
+Alles läuft clientseitig mit React und Material UI. Es verlassen keine Daten den Browser.
+
+## Wann man es verwenden sollte (und wann nicht)
+
+**Verwenden Sie es, wenn:**
+- Sie WIKA CPG1500 Kalibrierprotokolle auf einem beliebigen Rechner mit Browser überprüfen müssen.
+- Sie eine schnelle visuelle Kontrolle der Druckkurve benötigen, bevor Sie das Zertifikat einreichen.
+- Sie einen formatierten QC-Bericht drucken oder als PDF speichern möchten, um ihn an einen Laufzettel oder ein Inspektionspaket anzuhängen.
+- Sie Messwerte suchen oder sortieren möchten, ohne die Rohdatei in Excel importieren zu müssen.
+
+**Vermeiden Sie es, wenn:**
+- Ihre Logdateien von einem anderen Kalibratormodell stammen (der Parser ist spezifisch für CPG1500).
+- Sie eine Stapelverarbeitung von Dutzenden von Logs gleichzeitig benötigen (laden Sie die Dateien nacheinander hoch).
+
+## Ein- und Ausgänge
+
+### Eingänge
+| Eingang | Beschreibung |
+| :--- | :--- |
+| **Logdatei** | Eine `.log`- oder `.txt`-Datei, die von einem WIKA CPG1500 Kalibrator exportiert wurde. |
+
+### Ausgänge
+| Ausgang | Format | Hinweise |
+| :--- | :--- | :--- |
+| **Geräteidentität** | Karte auf dem Bildschirm | Seriennummer, Modell, Firmware, Kalibrierdaten, Operator. |
+| **Messtabelle** | Tabelle auf dem Bildschirm | Zeitgestempelte Druck- und Temperaturwerte mit Suchfunktion. |
+| **Druckdiagramm** | Interaktives Diagramm | Liniendiagramm von Druck vs. Zeit. |
+| **QC-Bericht** | Druck / PDF | A4-optimierter mehrseitiger Bericht über den Druckdialog des Browsers. |
+
+## Bedienungsanleitung
+
+1. **Öffnen Sie das Utility** und klicken Sie auf den Upload-Bereich oder ziehen Sie eine CPG1500-Logdatei per Drag-and-Drop hinein.
+2. **Überprüfen Sie die Geräteidentifikationskarte** — bestätigen Sie, dass Seriennummer, Modell und Kalibrierdaten korrekt sind.
+3. **Durchsuchen Sie die Messtabelle** — verwenden Sie das Suchfeld, um Zeilen zu filtern, oder klicken Sie auf die Spaltenüberschriften, um zu sortieren.
+4. **Prüfen Sie das Druckdiagramm** — bewegen Sie die Maus über Datenpunkte für exakte Werte; zoomen oder verschieben Sie die Ansicht, falls verfügbar.
+5. **Bericht drucken** — klicken Sie auf den Drucken-Button des Browsers (`Strg+P` / `Cmd+P`). Das Layout wechselt automatisch zu einem A4-optimierten Bericht mit Seitenumbrüchen für die Identifikationskarte, die Datentabelle und das Diagramm.
+
+### Beispiel-Workflow
+Laden Sie eine Logdatei eines kürzlich durchgeführten Drucktests hoch → Überprüfen Sie, ob die Geräteseriennummer mit dem Kalibrierzertifikat übereinstimmt → Überprüfen Sie die Druckkurve auf Anomalien → Drucken Sie den formatierten Bericht aus und heften Sie ihn an den Laufzettel.
+
+## Drucklayout des Berichts
+
+Das Druck-Stylesheet erzeugt einen sauberen, mehrseitigen QC-Bericht:
+
+| Seite | Inhalt | Orientierung |
+| :--- | :--- | :--- |
+| 1 | Geräteidentität + kompakte Messzusammenfassung | Hochformat (A4) |
+| 2+ | Vollständige Messdatentabelle | Hochformat (A4) |
+| Diagrammseite | Druckdiagramm mit Legende | Querformat (A4) |
+
+:::tip
+Verwenden Sie "Als PDF speichern" im Druckdialog Ihres Browsers, um den Bericht digital neben Ihren Kalibrierzertifikaten zu archivieren.
+:::
+
+## Genauigkeit und Datenschutz
+
+- **Nur geparste Daten** — das Tool verändert die ursprüngliche Logdatei nicht; es liest und zeigt die Werte so an, wie sie sind.
+- **Keine Uploads** — das gesamte Parsing erfolgt im Browser über clientseitiges JavaScript. Es werden keine Daten an einen Server übertragen.
+- **Nur für die Sitzung** — schließen Sie den Tab, und alle geparsten Daten sind weg. Speichern oder drucken Sie Ihren Bericht vor dem Schließen.
+- **Gegenquelle prüfen** — gleichen Sie kritische Werte (Seriennummer, Prüfdruck) immer mit der ursprünglichen Logdatei und dem Kalibrierzertifikat ab.
+
+## FAQ
+
+- **Welche Logdateiformate werden unterstützt?** Logdateien, die von digitalen Druckkalibratoren des Typs WIKA CPG1500 exportiert wurden (`.log` / `.txt`).
+- **Werden meine Daten auf einen Server hochgeladen?** Nein. Alles bleibt im Browser.
+- **Kann ich den Bericht drucken oder speichern?** Ja. Verwenden Sie `Strg+P` / `Cmd+P`, um zu drucken oder als PDF zu speichern. Das Layout ist für A4-Papier optimiert.
+- **Funktioniert es offline?** Ja, sobald die Seite geladen ist, wird keine Internetverbindung mehr benötigt.
+- **Kann ich mehrere Dateien gleichzeitig analysieren?** Laden Sie die Dateien nacheinander hoch; laden Sie die Seite neu oder löschen Sie die Daten, um ein anderes Log zu analysieren.
+- **Was ist, wenn meine Logdatei nicht geparst werden kann?** Der Parser ist spezifisch für das CPG1500-Format. Dateien von anderen Instrumenten werden möglicherweise nicht erkannt. Öffnen Sie ein GitHub-Issue, wenn Sie glauben, dass Ihre CPG1500-Datei funktionieren sollte, es aber nicht tut.
+
+---
+
+## Verwandte Tools
+
+- [PDF BOM Extractor](./pdf-bom-extractor) — BOM-Tabellen aus CAD-PDFs in CSV extrahieren.
+- [PDF Number Extractor](./pdf-number-extractor) — QA-Seriennummern und Inspektionsnummern aus PDFs hervorheben.
+- [Blind Flange Calculator](./blind-flange-calculator) — Blindflansch-Dimensionierung nach EN 13445-3.
+
+## Feedback / Fehlerbericht
+
+- [GitHub-Issue öffnen](https://github.com/biosxxx/cadautoscript.com/issues)
+- E-Mail oder DM mit dem Slug `wikalog-analyzer`, damit wir eventuelle Probleme reproduzieren können.

@@ -1,0 +1,14 @@
+{
+  "version.label": {
+    "message": "Далі",
+    "description": "The label for version current"
+  },
+  "sidebar.tutorialSidebar.category.Guides": {
+    "message": "Посібники",
+    "description": "The label for category 'Guides' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Utilities": {
+    "message": "Утиліти",
+    "description": "The label for category 'Utilities' in sidebar 'tutorialSidebar'"
+  }
+}

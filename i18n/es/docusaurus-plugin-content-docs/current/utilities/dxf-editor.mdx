@@ -1,0 +1,163 @@
+---
+title: Editor WebDXF
+description: Recorte geometría, anote longitudes y vuelva a guardar archivos DXF directamente en el navegador para un control de calidad rápido o pruebas de macros.
+slug: /utilities/dxf-editor
+image: /img/og/utilities/dxf-editor.png
+keywords:
+  - editor dxf
+  - cad en el navegador
+  - recortar dxf
+  - medir dxf
+  - cad sin conexión
+  - dxf r12
+  - limpieza de geometría
+  - control de calidad cad
+---
+
+import Head from '@docusaurus/Head';
+
+# Editor WebDXF
+
+Recorte geometría, anote longitudes y vuelva a guardar archivos DXF directamente en el navegador para un control de calidad rápido o pruebas de macros.
+
+<a className="button button--primary" href="/utilities/dxf-editor/" data-nobrokenlinkcheck>Abrir utilidad</a>
+
+![captura de pantalla de la utilidad editor de DXF](/img/og/utilities/dxf-editor.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/dxf-editor/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Editor WebDXF",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Recorte geometría, anote longitudes y vuelva a guardar archivos DXF directamente en el navegador para un control de calidad rápido o pruebas de macros.",
+  "url": "https://cadautoscript.com/utilities/dxf-editor/",
+  "image": "https://cadautoscript.com/img/og/utilities/dxf-editor.png",
+  "featureList": [
+"Selección por ventana",
+"Recorte y medida",
+"E/S de DXF fuera de línea"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/dxf-editor/",
+  "offers": {
+"@type": "Offer",
+"price": "0",
+"priceCurrency": "USD"
+  },
+  "author": {
+"@type": "Organization",
+"name": "CAD AutoScript"
+  }
+}`}</script>
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+{
+  "@type": "Question",
+  "name": "¿Qué versiones de DXF son compatibles?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Funciona con geometría común R12+ DXF."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Es compatible con bloques y sombreados?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Los bloques simples funcionan; los sombreados pesados pueden ser más lentos y deben verificarse después de la exportación."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Se guardan las ediciones en línea?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "No. Los archivos nunca salen de su navegador."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Puedo cambiar las unidades?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Utilice la referencia de escala en su DXF; la herramienta respeta la geometría de origen."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Mantendrá los nombres de las capas?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Los datos de las capas se preservan al volver a guardar."
+  }
+}
+  ]
+}`}</script>
+</Head>
+
+## Qué hace
+Abra archivos DXF en el navegador, recorte o mida entidades y guarde los cambios de nuevo en DXF sin tener que recurrir a un CAD pesado. Ideal para un control de calidad rápido, pruebas de macros o retoques antes de enviar la geometría a producción.
+
+## Cuándo usarlo (y cuándo no)
+**Úselo cuando:**
+- Necesite recortar líneas perdidas o agregar medidas rápidas sin iniciar un CAD de escritorio.
+- Esté probando macros de CAD y desee verificar la salida de DXF.
+- Desee un control de cordura de DXF fuera de línea antes de compartirlo con proveedores.
+
+**Evítelo cuando:**
+- Necesite modelado 3D, restricciones o funciones de dibujo avanzadas.
+- Su archivo sea extremadamente grande o esté muy cargado de sombreados y se beneficiaría de una estación de trabajo CAD completa.
+
+## Entradas y salidas
+### Entradas
+| Entrada | Descripción |
+| --- | --- |
+| Archivo DXF | Cargue el dibujo que desea inspeccionar o editar. |
+| Visibilidad de capas o colores | Alterne las capas para enfocarse en la geometría crítica. |
+| Selección y modo de snap | Elija cómo selecciona y mide las líneas. |
+| Referencia de unidades | Use las unidades del DXF de origen o su propia escala de referencia. |
+
+### Salidas
+| Salida | Formato | Notas |
+| --- | --- | --- |
+| DXF editado | DXF | Guarde la geometría actualizada localmente. |
+| Lecturas de medición | En pantalla | Longitudes y distancias para un control de calidad rápido. |
+
+## Cómo usar
+1. Cargue su archivo DXF en el editor.
+2. Alterne las capas o los snaps para aislar la geometría que necesita.
+3. Recorte, anote o mida según sea necesario.
+4. Revise el dibujo en pantalla para verificar la precisión.
+5. Descargue el DXF actualizado.
+
+**Conjunto de datos de ejemplo:** Abra flange.dxf, recorte las líneas de construcción sueltas, mida el círculo de pernos y guarde el DXF limpio.
+- Salida esperada: Devuelve un DXF limpio más mediciones en pantalla que puede referenciar en sus notas de control de calidad.
+
+## Precisión y verificación
+- Diseñado para flujos de trabajo DXF; mantenga una copia de seguridad del original antes de sobrescribirlo.
+- Los archivos grandes pueden sentirse más lentos en el navegador que en una estación de trabajo.
+- Las unidades siguen al DXF de origen; verifique la escala si importa desde fuentes con unidades mixtas.
+- Todas las ediciones permanecen locales; exporte para conservar sus cambios.
+
+## Preguntas frecuentes
+- **¿Qué versiones de DXF son compatibles?** Funciona con geometría común R12+ DXF.
+- **¿Es compatible con bloques y sombreados?** Los bloques simples funcionan; los sombreados pesados pueden ser más lentos y deben verificarse después de la exportación.
+- **¿Se guardan las ediciones en línea?** No. Los archivos nunca salen de su navegador.
+- **¿Puedo cambiar las unidades?** Utilice la referencia de escala en su DXF; la herramienta respeta la geometría de origen.
+- **¿Mantendrá los nombres de las capas?** Los datos de las capas se preservan al volver a guardar.
+
+## Herramientas relacionadas
+- [Visualizador de cortador de tubos](./pipe-cutter)
+- [PDF Master](./pdf-master)
+- [Extractor de BOM de PDF](./pdf-bom-extractor)
+
+## Registro de cambios
+- Documentación inicial.
+
+## Comentarios / informe de errores
+- [Abrir un problema en GitHub](https://github.com/biosxxx/cadautoscript.com/issues)
+- Correo electrónico o DM con el slug `dxf-editor` para que podamos reproducir el problema

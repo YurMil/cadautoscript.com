@@ -1,0 +1,34 @@
+{
+  "link.title.Docs": {
+    "message": "Documentación",
+    "description": "The title of the footer links column with title=Docs in the footer"
+  },
+  "link.title.Utilities": {
+    "message": "Utilidades",
+    "description": "The title of the footer links column with title=Utilities in the footer"
+  },
+  "link.title.More": {
+    "message": "Más",
+    "description": "The title of the footer links column with title=More in the footer"
+  },
+  "link.item.label.Automation overview": {
+    "message": "Resumen de automatización",
+    "description": "The label of footer link with label=Automation overview linking to /docs/intro/"
+  },
+  "link.item.label.Utility catalog": {
+    "message": "Catálogo de utilidades",
+    "description": "The label of footer link with label=Utility catalog linking to /docs/utilities/overview/"
+  },
+  "link.item.label.Blog": {
+    "message": "Blog",
+    "description": "The label of footer link with label=Blog linking to /blog/"
+  },
+  "link.item.label.GitHub": {
+    "message": "GitHub",
+    "description": "The label of footer link with label=GitHub linking to https://github.com/biosxxx/cadautoscript.com"
+  },
+  "copyright": {
+    "message": "Copyright 2026 CAD AutoScript. Creado con Docusaurus.",
+    "description": "The footer copyright"
+  }
+}

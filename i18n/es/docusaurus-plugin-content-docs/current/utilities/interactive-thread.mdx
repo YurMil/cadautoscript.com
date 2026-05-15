@@ -1,0 +1,165 @@
+---
+title: Interactive Thread Cheat Sheet
+description: Filtre las series ISO, UNC y UNF, consulte los diámetros de broca y copie leyendas para dibujos directamente desde el navegador.
+slug: /utilities/interactive-thread
+image: /img/og/utilities/interactive-thread.png
+keywords:
+  - thread chart
+  - ISO metric thread
+  - UNC
+  - UNF
+  - tap drill size
+  - thread callout
+  - fastener reference
+  - drill lookup
+---
+
+import Head from '@docusaurus/Head';
+
+# Interactive Thread Cheat Sheet
+
+Filtre las series ISO, UNC y UNF, consulte los diámetros de broca y copie leyendas para dibujos sin abrir un manual.
+
+<a className="button button--primary" href="/utilities/interactive-thread/" data-nobrokenlinkcheck>Abrir utilidad</a>
+
+![interactive-thread utility screenshot](/img/og/utilities/interactive-thread.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/interactive-thread/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Interactive Thread Cheat Sheet",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Filtre las series ISO, UNC y UNF, consulte los diámetros de broca y copie leyendas para dibujos directamente desde el navegador.",
+  "url": "https://cadautoscript.com/utilities/interactive-thread/",
+  "image": "https://cadautoscript.com/img/og/utilities/interactive-thread.png",
+  "featureList": [
+"Tablas filtrables",
+"Búsqueda de brocas",
+"Leyendas listas para copiar"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/interactive-thread/",
+  "offers": {
+"@type": "Offer",
+"price": "0",
+"priceCurrency": "USD"
+  },
+  "author": {
+"@type": "Organization",
+"name": "CAD AutoScript"
+  }
+}`}</script>
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+{
+  "@type": "Question",
+  "name": "¿Puedo agregar filas personalizadas?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Todavía no. Use las series proporcionadas; pegue los resultados donde sea necesario."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Se incluyen roscas de tubería?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "No. El conjunto actual cubre únicamente ISO, UNC y UNF."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Funciona sin conexión?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Sí. Las tablas se cargan localmente en su navegador."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Puedo copiar valores en CAD?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Sí. Copie la leyenda o el tamaño de la broca directamente de la tabla."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Muestra tanto métrico como imperial?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Sí. Cambie la serie para moverse entre las listas de ISO y UNC/UNF."
+  }
+}
+  ]
+}`}</script>
+</Head>
+
+## Qué hace
+Busque roscas ISO, UNC y UNF, luego copie leyendas o diámetros de broca directamente en su dibujo. Las tablas permanecen filtrables en el navegador para que pueda saltar entre valores de paso grueso, fino o personalizado sin tener que hojear un manual en PDF.
+
+## Cuándo usarlo (y cuándo no)
+**Úselo cuando:**
+- Necesite una referencia rápida de broca de roscado o broca de paso para un dibujo o una hoja de configuración.
+- Quiera copiar una leyenda correctamente formateada en CAD sin volver a escribirla.
+- Esté comparando series métricas e imperiales para elegir un tamaño sustituto.
+
+**Evítelo cuando:**
+- Necesite roscas de tubería cónicas, roscas trapezoidales o formas no estándar.
+- Requiera cálculos de clase de tolerancia más allá de los valores de referencia proporcionados.
+
+## Entradas y salidas
+### Entradas
+| Entrada | Descripción |
+| --- | --- |
+| Serie de roscas | Elija ISO, UNC o UNF para filtrar la tabla. |
+| Tamaño nominal | Seleccione el diámetro o calibre que necesita perforar o roscar. |
+| Paso o TPI | Elija paso grueso, fino o un paso específico dentro de la serie. |
+| Clase de tolerancia | Ajuste de referencia como 6H/6g o clase 2; utilícelo para reflejar la intención del dibujo. |
+| Preferencia de broca | Alterne entre referencias de broca de roscado y broca de paso. |
+
+### Salidas
+| Salida | Formato | Notas |
+| --- | --- | --- |
+| Diámetro de broca de roscado | Numérico | Tamaño de broca recomendado para la rosca seleccionada. |
+| Diámetros mayor/menor/de paso | Numérico | Dimensiones de referencia para QA y leyendas. |
+| Leyenda formateada | Texto | Cadena lista para copiar para pegar en CAD u hojas de proceso. |
+
+## Cómo usar
+1. Elija la serie de roscas y filtre por el tamaño nominal que necesita.
+2. Seleccione el paso y la clase de tolerancia.
+3. Cambie a broca de roscado o de paso para ver el diámetro correcto.
+4. Copie la leyenda o el tamaño de la broca directamente en su dibujo.
+5. Opcional: salte entre las listas métricas e imperiales para comparar sustitutos.
+
+**Ejemplo de datos:** Rosca: M12 x 1.75, Tolerancia: 6H, Broca: broca de roscado.
+- Resultado esperado: Devuelve una recomendación de broca de roscado (10.2 mm) y una cadena de leyenda formateada como M12x1.75-6H.
+
+## Precisión y verificación
+- Los valores siguen las tablas de referencia comunes ISO y UNC/UNF; verifique con su estándar vigente.
+- No cubre roscas de tubería cónicas ni formas especiales.
+- Valide siempre los tamaños de broca con la disponibilidad de herramientas y el material antes de cortar.
+- Para ajustes críticos, confirme las tolerancias con el estándar oficial o bloques patrón.
+
+## FAQ
+- **¿Puedo agregar filas personalizadas?** Todavía no. Use las series proporcionadas; pegue los resultados donde sea necesario.
+- **¿Se incluyen roscas de tubería?** No. El conjunto actual cubre únicamente ISO, UNC y UNF.
+- **¿Funciona sin conexión?** Sí. Las tablas se cargan localmente en su navegador.
+- **¿Puedo copiar valores en CAD?** Sí. Copie la leyenda o el tamaño de la broca directamente de la tabla.
+- **¿Muestra tanto métrico como imperial?** Sí. Cambie la serie para moverse entre las listas.
+
+## Herramientas relacionadas
+- [Metal Bending Prototype](./metal-bending)
+- [PDF Number Extractor](./pdf-number-extractor)
+- [PDF BOM Extractor](./pdf-bom-extractor)
+
+## Registro de cambios
+- Documentación inicial.
+
+## Comentarios / informe de errores
+- [Abrir un issue en GitHub](https://github.com/biosxxx/cadautoscript.com/issues)
+- Envíe un correo electrónico o DM con el slug `interactive-thread` para que podamos reproducir el problema.

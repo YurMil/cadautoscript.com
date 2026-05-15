@@ -1,0 +1,164 @@
+---
+title: QR Master
+description: Scannen Sie QR-Codes und Barcodes sofort, erstellen Sie benutzerdefinierte Codes für Links oder WiFi und verwalten Sie Ihren Scan-Verlauf lokal.
+slug: /utilities/qr-master
+image: /img/og/utilities/qr-master.png
+keywords:
+  - QR scanner
+  - barcode reader
+  - QR generator
+  - WiFi QR
+  - offline scanner
+  - camera scan
+  - history export
+  - code generator
+---
+
+import Head from '@docusaurus/Head';
+
+# QR Master
+
+Scannen Sie QR-Codes und Barcodes, erstellen Sie benutzerdefinierte Codes für Links oder WiFi und verwalten Sie alles lokal.
+
+<a className="button button--primary" href="/utilities/qr-master/" data-nobrokenlinkcheck>Dienstprogramm öffnen</a>
+
+![qr-master utility screenshot](/img/og/utilities/qr-master.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/qr-master/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "QR Master",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Scannen Sie QR-Codes und Barcodes sofort, erstellen Sie benutzerdefinierte Codes für Links oder WiFi und verwalten Sie Ihren Scan-Verlauf lokal.",
+  "url": "https://cadautoscript.com/utilities/qr-master/",
+  "image": "https://cadautoscript.com/img/og/utilities/qr-master.png",
+  "featureList": [
+    "Live-Scan von QR- und Barcodes",
+    "Scannen durch Einfügen oder Hochladen von Bildern",
+    "Erstellung von WiFi- oder Link-Codes",
+    "Lokaler Verlauf mit Import/Export"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/qr-master/",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "CAD AutoScript"
+  }
+}`}</script>
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Welche Formate werden unterstützt?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "QR plus gängige Barcodes; testen Sie ein Muster, wenn Sie eine spezifische Symbologie benötigen."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Funktioniert es offline?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja. Das Scannen und Generieren erfolgt im Browser."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Wo wird der Verlauf gespeichert?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Im Speicher Ihres Browsers, bis Sie ihn exportieren oder löschen."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Kann ich von Bildern statt von der Kamera scannen?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja. Fügen Sie ein Bild ein oder laden Sie es hoch, und der Decoder wird es lesen."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Kann ich Scans exportieren?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja. Exportieren Sie den Verlauf als JSON für Backups oder zum Teilen."
+      }
+    }
+  ]
+}`}</script>
+</Head>
+
+## Was es macht
+Verwenden Sie Ihre Kamera, eingefügte Bilder oder Uploads, um QR-Codes und gängige Barcodes zu scannen, und generieren Sie dann Ihre eigenen Codes für WiFi, Links oder Kontakte. Behalten Sie einen lokalen Verlauf mit Import und Export bei, damit Ihre Scans ohne Cloud-Synchronisierung tragbar bleiben.
+
+## Wann man es verwenden sollte (und wann nicht)
+**Verwenden Sie es, wenn:**
+- Sie Asset-Tags или Barcodes spontan scannen müssen, ohne eine App zu installieren.
+- Sie WiFi- oder Link-QR-Codes für schnelles Teilen generieren möchten.
+- Sie eine schlanke, Offline-Möglichkeit benötigen, Scans zu protokollieren und als JSON zu exportieren.
+
+**Vermeiden Sie es, wenn:**
+- Sie Funktionen für die Inventur auf Unternehmensebene oder Cloud-Synchronisierung benötigen.
+- Die Beleuchtung oder Kameraqualität für zuverlässiges Lesen von Barcodes zu schlecht ist.
+
+## Eingaben und Ausgaben
+### Eingaben
+| Eingabe | Beschreibung |
+| --- | --- |
+| Kamera-Feed oder hochgeladenes Bild | Live-Scan oder Bildimport zur Dekodierung. |
+| Manueller Payload | Text, URLs, WiFi-Zugangsdaten oder Kontaktdaten zum Kodieren. |
+| Verlaufs-Import | Laden Sie frühere Scans aus JSON, wenn Sie Kontinuität über Sitzungen hinweg wünschen. |
+
+### Ausgaben
+| Ausgabe | Format | Hinweise |
+| --- | --- | --- |
+| Dekodierte Scan-Ergebnisse | Text | Inhalt der gescannten QR- oder Barcode-Werte. |
+| Generierte Codes | PNG | Herunterladbare QR- oder Barcode-Bilder zum Teilen. |
+| Scan-Verlauf | JSON | Export vergangener Scans, die lokal gespeichert wurden. |
+
+## Wie man es benutzt
+1. Erlauben Sie den Kamerazugriff oder ziehen Sie ein Bild zum Scannen hinein.
+2. Überprüfen Sie die dekodierten Daten und speichern Sie sie optional im Verlauf.
+3. Geben Sie einen Link, WiFi-Login oder Text ein, um einen neuen Code zu generieren.
+4. Laden Sie das PNG herunter oder behalten Sie es im Verlauf.
+5. Exportieren Sie den Verlauf als JSON, wenn Sie ein Backup benötigen.
+
+**Beispiel-Datensatz:** Scannen Sie einen Barcode auf einem Geräteschild, um die Seriennummer zu erfassen, generieren Sie dann einen WiFi-QR für die SSID 'Plant-Guest' mit entsprechendem Passwort und exportieren Sie den Verlauf.
+- Erwartete Ausgabe: Gibt den gescannten Seriennummer-Text zurück, ein herunterladbares WiFi-QR-PNG und einen JSON-Verlaufseintrag, den Sie speichern können.
+
+## Genauigkeit und Überprüfung
+- Die Scan-Qualität hängt vom Fokus Ihrer Kamera und der Beleuchtung ab.
+- Alle Scans bleiben lokal; exportieren Sie den Verlauf, wenn Sie das Gerät wechseln müssen.
+- Generierte Codes folgen gängigen QR/Barcode-Spezifikationen; überprüfen Sie dies mit einem kurzen Test-Scan vor dem Einsatz.
+- Das Löschen des Verlaufs entfernt lokale Daten; behalten Sie Exporte, wenn Sie ein Archiv benötigen.
+
+## FAQ
+- **Welche Formate werden unterstützt?** QR plus gängige Barcodes; testen Sie ein Muster, wenn Sie eine spezifische Symbologie benötigen.
+- **Funktioniert es offline?** Ja. Das Scannen und Generieren erfolgt im Browser.
+- **Wo wird der Verlauf gespeichert?** Im Speicher Ihres Browsers, bis Sie ihn exportieren oder löschen.
+- **Kann ich von Bildern statt von der Kamera scannen?** Ja. Fügen Sie ein Bild ein oder laden Sie es hoch, und der Decoder wird es lesen.
+- **Kann ich Scans exportieren?** Ja. Exportieren Sie den Verlauf als JSON für Backups oder zum Teilen.
+
+## Verwandte Tools
+- [QR Nameplate Generator](./qr-nameplate)
+- [PDF Master](./pdf-master)
+- [PDF Batch Signer](./pdf-batch-signer)
+
+## Changelog
+- Initiale Dokumentation.
+
+## Feedback / Fehlerbericht
+- [GitHub-Issue öffnen](https://github.com/biosxxx/cadautoscript.com/issues)
+- E-Mail oder DM mit dem Kürzel `qr-master`, damit wir das Problem reproduzieren können

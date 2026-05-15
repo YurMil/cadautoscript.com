@@ -1,0 +1,57 @@
+---
+title: "Engineering Web: Chromium und HTML5 als Umgebung für CAD und Berechnungen"
+sidebar_position: 3
+description: Warum die Chromium-Engine, HTML5 und Web-APIs die neue Plattform für technische Utilities sind.
+---
+
+import Head from '@docusaurus/Head';
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/docs/utilities/engineering-web/" />
+</Head>
+
+Traditionelle Engineering-Software leidet oft unter zwei Extremen: Sie ist entweder eine **schwere Desktop-CAD-Anwendung**, die leistungsstarke Hardware und Lizenzen erfordert, oder es handelt sich um **verstreute Tabellenkalkulationen**, die schwer zu warten sind. Moderne Webtechnologien — Chromium, HTML5, WebAssembly — ermöglichen vollwertige technische Utilities, die vollständig im Browser laufen. Der Browser wird zum Betriebssystem für Berechnungen.
+
+## Warum das wichtig ist
+
+### Mühelose Cross-Platform-Kompatibilität
+Ein HTML/JS-Build läuft auf Windows, Linux, macOS oder Werkstatt-Tablets gleichermaßen. Keine Installer oder DLL-Probleme.
+
+### Visualisierung und Interaktivität
+DOM, Canvas, SVG und WebGL ermöglichen das Rendern von Diagrammen und 3D-Vorschauen in Echtzeit. Das Anpassen einer Balkenlänge oder Wanddicke baut die Ansicht sofort neu auf.
+
+### Hardware-Zugriff
+APIs wie Web Serial, Web Bluetooth und WebHID kommunizieren mit SPS, Controllern und Instrumenten über USB/COM. Perfekt für Elektromechanik oder Fertigungsdiagnose.
+
+### Lokaler Betrieb (PWA)
+Progressive Web Apps cachen das Utility, sodass es offline an der Maschine läuft. Es verhält sich wie ein natives Tool, lässt sich aber durch einfaches Deployment aktualisieren.
+
+## Praktische Implementierungsbeispiele
+
+### 1. Interaktive Passungen & Toleranzen (Mechanik)
+- **Eingaben:** Nenndurchmesser + Toleranzklasse (z. B. `50 H7/g6`).
+- **Logik:** JavaScript berechnet Abmaße, Spiel, Übermaßbänder.
+- **Visualisierung:** Canvas zeichnet Toleranzzonen; Tooltips zeigen Ausfallwahrscheinlichkeiten.
+- **Ergebnis:** Ingenieure sehen die Passung, anstatt statische Tabellen auszuwerten.
+
+### 2. Kabelquerschnittsrechner (Elektrik)
+- **Schnittstelle:** Drag-and-Drop von Lastknoten auf einer SVG-Route.
+- **Dynamik:** Die Kabelfarbe wechselt von grün zu rot, wenn der Spannungsabfall den zulässigen Prozentsatz überschreitet.
+- **Automatisierung:** `jspdf` exportiert eine formatierte Spezifikation zur Abnahme.
+
+### 3. Controller-Diagnosepanel (Elektromechanik)
+- **Szenario:** Motorsteuerungseinheiten auf Basis von STM32/Arduino.
+- **Lösung:** Seite mit „Connect“-Button; Browser fordert COM-Port über Web Serial an.
+- **Funktionalität:** Live-Telemetriediagramme (Chart.js/uPlot) plus editierbare PID-Felder, die über Serial zurückgeschrieben werden.
+- **Vorteil:** Keine herstellerspezifischen Runtimes oder Treiberinstallationen — Chrome + USB-Kabel genügen.
+
+## Tech-Stack für den Einstieg
+
+- **UI:** HTML + CSS (Tailwind/Bootstrap optional).
+- **Logik:** Vanilla JavaScript oder TypeScript für typisierte physikalische Werte.
+- **Grafik:** SVG/Canvas für 2D-Schemata; Three.js für 3D-Knoten.
+- **Compute:** WebAssembly für komplexe Mathematik aus C++/Rust, wobei JS die meisten Anwendungsfälle abdeckt.
+
+## Fazit
+
+Die Verlagerung technischer Berechnungen ins Web ist kein Trend — es ist eine Distributionsstrategie. Ein Rechner wird zu einem Link, den man in ein Unternehmensportal einbetten, mit einem Kollegen teilen oder auf einem Tablet neben der Maschine öffnen kann. Das reduziert menschliche Fehler und beschleunigt den Engineering-Zyklus.

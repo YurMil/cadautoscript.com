@@ -1,0 +1,168 @@
+---
+title: Industrial Thermometer Configurator
+description: Wählen Sie Bereiche, Fühlerrohre, Schutzrohre (thermowells) und Anschlüsse für Industriethermometer, sehen Sie sich die Vorschau an und exportieren Sie ein PDF-Datenblatt.
+slug: /utilities/industrial-thermometer-configurator
+image: /img/og/utilities/industrial-thermometer-configurator.png
+keywords:
+  - industrial thermometer
+  - bimetal thermometer
+  - thermowell
+  - datasheet PDF
+  - EN 13190
+  - stem length
+  - process connection
+  - instrument specification
+---
+
+import Head from '@docusaurus/Head';
+
+# Industrial Thermometer Configurator
+
+Wählen Sie Bereiche, Fühlerrohre, Schutzrohre (thermowells) und Anschlüsse für Industriethermometer, sehen Sie sich die Vorschau des Aufbaus an und exportieren Sie ein PDF-Datenblatt.
+
+<a className="button button--primary" href="/utilities/industrial-thermometer-configurator/" data-nobrokenlinkcheck>Utility öffnen</a>
+
+![industrial-thermometer-configurator utility screenshot](/img/og/utilities/industrial-thermometer-configurator.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/industrial-thermometer-configurator/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Industrial Thermometer Configurator",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Select ranges, stems, thermowells, and connections for industrial thermometers, preview the build, and export a PDF datasheet.",
+  "url": "https://cadautoscript.com/utilities/industrial-thermometer-configurator/",
+  "image": "https://cadautoscript.com/img/og/utilities/industrial-thermometer-configurator.png",
+  "featureList": [
+"Range presets plus custom span",
+"Stem and thermowell options",
+"Mounting preview",
+"PDF datasheet export"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/industrial-thermometer-configurator/",
+  "offers": {
+"@type": "Offer",
+"price": "0",
+"priceCurrency": "USD"
+  },
+  "author": {
+"@type": "Organization",
+"name": "CAD AutoScript"
+  }
+}`}</script>
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+{
+  "@type": "Question",
+  "name": "Kann ich einen benutzerdefinierten Bereich festlegen?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Ja. Wechseln Sie auf benutzerdefiniert (custom) und geben Sie Ihr Minimum und Maximum ein."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Unterstützt es Fahrenheit?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Ja. Wählen Sie die Einheit aus, bevor Sie einen Bereich auswählen."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Kann ich es offline ausführen?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Ja. Das Rendering und der PDF-Export finden im Browser statt."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Dimensioniert es Schutzrohre (thermowells) automatisch?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Es folgt Ihren Eingaben; verifizieren Sie diese gegen Druck- und Eintauchanforderungen."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Wo werden meine Daten gespeichert?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Nur in Ihrem Browser, bis Sie das PDF exportieren."
+  }
+}
+  ]
+}`}</script>
+</Head>
+
+## Funktionen
+Konfigurieren Sie ein Bimetall-Industriethermometer (bimetal thermometer): Wählen Sie Gehäusegröße, Temperaturbereich, Fühlerlänge und -durchmesser (stem), Montageform und Schutzrohr-Optionen (thermowell). Sehen Sie sich die SVG-Skizze an und exportieren Sie ein PDF-Datenblatt (datasheet) mit Projektmetadaten.
+
+## Wann man es verwendet (und wann nicht)
+**Verwenden Sie es, wenn:**
+- Sie ein Instrumentierungspaket zusammenstellen und schnell ein Thermometer-Datenblatt benötigen.
+- Sie Fühlerlänge, Anschluss und Schutzrohr-Optionen vor der Bestellung überprüfen möchten.
+- Sie ein druckbares PDF für Lieferanten oder Wartungsteams benötigen.
+
+**Vermeiden Sie es, wenn:**
+- Sie zertifizierte Druck- oder Vibrationsberechnungen benötigen, die über ein vorläufiges Datenblatt hinausgehen.
+- Sie elektronische RTDs oder Messumformer anstelle von Bimetall-Thermometern spezifizieren.
+
+## Eingaben und Ausgaben
+### Eingaben
+| Eingabe | Beschreibung |
+| --- | --- |
+| Dial nominal size and unit | Wählen Sie 63, 100 oder 160 mm und Celsius- oder Fahrenheit-Bereiche. |
+| Temperature range | Voreingestellte Spannen oder benutzerdefinierte Min/Max-Werte passend zu den Prozessbedingungen. |
+| Stem length, diameter, and material | Wählen Sie Fühlergeometrie und Material für die Eintauchanforderungen. |
+| Connection location, design, and standard | Anschluss unten, hinten oder verstellbar mit G-, NPT- oder metrischen Gewinden. |
+| Case material and fill | Trockene oder silikongefüllte Gehäuse sowie Sichtfensterauswahl. |
+| Thermowell options | Aktivieren Sie massive oder gebaute Schutzrohre, wählen Sie Design, Material, Prozessanschluss, Einbau- und Halslängen. |
+| Project metadata and accessories | Tag-Nummer, Medium, Standard, Zertifikate und Optionen wie roter Schleppzeiger oder Kalibrierzertifikat. |
+
+### Ausgaben
+| Ausgabe | Format | Notizen |
+| --- | --- | --- |
+| PDF datasheet | PDF | Lokal generiert mit den konfigurierten Auswahlen und Skizze. |
+| SVG preview | Bildschirm | Live-Zeichnung, die sich bei Änderung der Geometrie aktualisiert. |
+| Configuration summary | Bildschirm | Schnelle Überprüfung von Bereich, Fühler, Anschluss und Schutzrohrwahl. |
+
+## Bedienungsanleitung
+1. Wählen Sie Gehäusegröße und Temperaturbereich (voreingestellt oder benutzerdefiniert).
+2. Legen Sie Fühlerlänge, -durchmesser und -material passend zur Eintauchtiefe fest.
+3. Wählen Sie Anschlusslage und Gewindestandard; wählen Sie Gehäusefüllung und Sichtfenster.
+4. Aktivieren und dimensionieren Sie bei Bedarf ein Schutzrohr (thermowell) und fügen Sie Projektmetadaten hinzu.
+5. Überprüfen Sie die Vorschau und exportieren Sie das PDF-Datenblatt.
+
+**Beispiel-Datensatz:** Dial: 100 mm, Bereich: 0 bis 200 C, Fühler: 8 x 200 mm Edelstahl, Montage: unten G 1/2, Gehäuse: silikongefüllt, Schutzrohr: massiv G 1/2 mit 200 mm Einbaulänge, Tag: TI-310.
+- Erwartete Ausgabe: Erzeugt ein PDF-Datenblatt und eine Vorschau für TI-310 mit den gewählten Parametern.
+
+## Genauigkeit und Verifizierung
+- Das Datenblatt ist vorläufig; bestätigen Sie Druckgrenzen und Eintauchregeln mit dem Hersteller.
+- Stellen Sie eine ausreichende Eintauchtiefe für eine genaue Messung und zum Schutz des Elements sicher.
+- Einheiten und Bereiche spiegeln Ihre Eingabe wider; vor der Bestellung doppelt prüfen.
+- Die gesamte Verarbeitung bleibt lokal, bis Sie das PDF speichern.
+
+## FAQ
+- **Kann ich einen benutzerdefinierten Bereich festlegen?** Ja. Wechseln Sie auf benutzerdefiniert (custom) und geben Sie Ihr Min und Max ein.
+- **Unterstützt es Fahrenheit?** Ja. Wählen Sie die Einheit aus, bevor Sie einen Bereich auswählen.
+- **Kann ich es offline ausführen?** Ja. Rendering und PDF-Export finden im Browser statt.
+- **Dimensioniert es Schutzrohre automatisch?** Es folgt Ihren Eingaben; verifizieren Sie diese gegen Druck- und Eintauchanforderungen.
+- **Wo werden meine Daten gespeichert?** Nur in Ihrem Browser, bis Sie das PDF exportieren.
+
+## Ähnliche Tools
+- [Bourdon Gauge Configurator](./bourdon-gauge-configurator)
+- [Magnetic Level Gauge Configurator](./magnetic-level-gauge-configurator)
+- [Pipe Cutter Visualizer](./pipe-cutter)
+
+## Changelog
+- Initialdokumentation.
+
+## Feedback / Fehlermeldung
+- [Öffnen Sie ein GitHub-Issue](https://github.com/biosxxx/cadautoscript.com/issues)
+- Senden Sie eine E-Mail oder DM mit dem Slug `industrial-thermometer-configurator`.

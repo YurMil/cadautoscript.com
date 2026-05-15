@@ -1,0 +1,167 @@
+---
+title: Prototipo de doblado de metal
+description: Modele longitudes de brida, posiciones del eje neutro y deducciones de doblado para chapa metálica antes de bloquear el CAM o el utillaje.
+slug: /utilities/metal-bending
+image: /img/og/utilities/metal-bending.png
+keywords:
+  - doblado de chapa
+  - factor k
+  - deducción de doblado
+  - longitud plana
+  - prensa plegadora
+  - eje neutro
+  - calculadora de chapa
+  - prototipo
+---
+
+import Head from '@docusaurus/Head';
+
+# Prototipo de doblado de metal
+
+Modele longitudes de brida, posiciones del eje neutro y deducciones de doblado para trabajos de chapa metálica antes de comprometer el utillaje.
+
+<a className="button button--primary" href="/utilities/metal-bending/" data-nobrokenlinkcheck>Abrir utilidad</a>
+
+![captura de pantalla de la utilidad prototipo de doblado de metal](/img/og/utilities/metal-bending.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/metal-bending/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Prototipo de doblado de metal",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Modele longitudes de brida, posiciones del eje neutro y deducciones de doblado para chapa metálica antes de bloquear el CAM o el utillaje.",
+  "url": "https://cadautoscript.com/utilities/metal-bending/",
+  "image": "https://cadautoscript.com/img/og/utilities/metal-bending.png",
+  "featureList": [
+"Ajuste del factor K",
+"Ajustes preestablecidos de prensa plegadora",
+"Alternancia entre sistema métrico e inglés"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/metal-bending/",
+  "offers": {
+"@type": "Offer",
+"price": "0",
+"priceCurrency": "USD"
+  },
+  "author": {
+"@type": "Organization",
+"name": "CAD AutoScript"
+  }
+}`}</script>
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+{
+  "@type": "Question",
+  "name": "¿Admite múltiples dobleces?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Úselo por doblez o por tramo; combine los resultados para piezas complejas."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Puedo trabajar en pulgadas y sistema métrico?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Sí. Ingrese los valores en las unidades que utiliza; las matemáticas son independientes de las unidades."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Cómo exporto los números?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Cópielos directamente del resumen o tome una captura de pantalla rápida."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Funciona sin conexión?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Sí. Todo se ejecuta localmente en su navegador."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Qué pasa si mi prensa utiliza tablas de deducción de doblado?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Seleccione el modo de deducción de doblado e ingrese el valor de la tabla para ver la longitud plana resultante."
+  }
+}
+  ]
+}`}</script>
+</Head>
+
+## Qué hace
+Experimente con factores K, deducciones de doblado y posiciones del eje neutro antes de enviar programas a la prensa plegadora. Ingrese el espesor, el radio y los ángulos para ver la longitud plana total y las tolerancias por doblez que se alinean con los bloques de tolerancia de estilo ISO 2768 o ANSI.
+
+## Cuándo usarlo (y cuándo no)
+**Úselo cuando:**
+- Esté redactando o revisando programas de prensa plegadora y quiera validar las tolerancias antes de la producción.
+- Quiera ajustar el factor K o las deducciones de doblado para que coincidan con un nuevo lote de material o utillaje de la prensa.
+- Necesite una ayuda de capacitación rápida para aprendices que están aprendiendo cómo cambian las longitudes de brida con diferentes radios.
+
+**Evítelo cuando:**
+- Esté modelando dobleces estampados, conformados por rodillos o altamente no lineales que necesiten datos de FEA o del proveedor.
+- Necesite patrones planos automáticos para piezas complejas de múltiples dobleces; ejecute esto por doblez y combine los resultados.
+
+## Entradas y salidas
+### Entradas
+| Entrada | Descripción |
+| --- | --- |
+| Espesor del material | Calibre o espesor de la chapa que está doblando. |
+| Radio de doblado interior | Radio en la región del eje neutro; impulsa los valores de tolerancia. |
+| Ángulo de doblado | Ángulo formado después del retorno elástico; ingrese unidades consistentes. |
+| Longitudes de brida | Longitudes de los tramos adyacentes al doblez que se integran en la longitud plana. |
+| Factor K o deducción de doblado | Elija impulsar los cálculos con el factor K o una deducción conocida. |
+| Notas de material o utillaje | Notas opcionales para recordarle el ancho de la matriz, la dirección del grano o la configuración de la prensa. |
+
+### Salidas
+| Salida | Formato | Notas |
+| --- | --- | --- |
+| Longitud plana total | Numérico | Longitud para programar o cortar antes del conformado. |
+| Tolerancia / deducción de doblado | Numérico | Calculado a partir del espesor, el radio y el ángulo para el factor K especificado. |
+| Ubicación del eje neutro | Numérico | Posición expresada como un factor del espesor para referencia. |
+| Tarjeta de resumen | En pantalla | Valores para copiar en las notas del CAM o en las hojas de ruta. |
+
+## Cómo usar
+1. Ingrese el espesor de la chapa y el radio de doblado interior.
+2. Establezca el ángulo de doblado y las longitudes de brida que deben aplanarse.
+3. Elija si desea impulsar las matemáticas a partir de un factor K o una deducción de doblado.
+4. Revise los números de longitud plana y tolerancia resultantes.
+5. Copie los valores en su programa de CAM o guarde una captura de pantalla para el taller.
+
+**Conjunto de datos de ejemplo:** Espesor: 3 mm, Radio interior: 4 mm, Ángulo de doblado: 90 grados, Bridas: 50 mm y 75 mm, Factor K: 0.38.
+- Salida esperada: Muestra la longitud plana y la tolerancia de doblado para el doblez de dos tramos para que pueda programar la prensa o el patrón plano de CAM.
+
+## Precisión y verificación
+- Supone doblado al aire con un único factor K en todo el doblez.
+- No tiene en cuenta la dirección del grano ni el desgaste del utillaje; verifique con una probeta doblada antes de una ejecución completa.
+- Mantenga consistentes sus unidades de entrada; la herramienta no convierte valores mixtos.
+- Utilice piezas de prueba de la prensa plegadora para refinar el factor K para cada lote de material.
+
+## Preguntas frecuentes
+- **¿Admite múltiples dobleces?** Úselo por doblez o por tramo; combine los resultados para piezas complejas.
+- **¿Puedo trabajar en pulgadas y sistema métrico?** Sí. Ingrese los valores en las unidades que utiliza; las matemáticas son independientes de las unidades.
+- **¿Cómo exporto los números?** Cópielos directamente del resumen o tome una captura de pantalla rápida.
+- **¿Funciona sin conexión?** Sí. Todo se ejecuta localmente en su navegador.
+- **¿Qué pasa si mi prensa utiliza tablas de deducción de doblado?** Seleccione el modo de deducción de doblado e ingrese el valor de la tabla para ver la longitud plana resultante.
+
+## Herramientas relacionadas
+- [Calculadora de laminado de virolas cilíndricas](./cylindrical-shell-rolling)
+- [Visualizador de cortador de tubos](./pipe-cutter)
+- [Hoja de trucos interactiva de roscas](./interactive-thread)
+
+## Registro de cambios
+- Documentación inicial.
+
+## Comentarios / informe de errores
+- [Abrir un problema en GitHub](https://github.com/biosxxx/cadautoscript.com/issues)
+- Correo electrónico o DM con el slug `metal-bending` para que podamos reproducir el problema

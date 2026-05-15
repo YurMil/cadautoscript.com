@@ -1,0 +1,165 @@
+---
+title: PDF Number Extractor
+description: Виділяйте серійні номери QA, ідентифікатори BOM та номери інспекцій локально за допомогою парсингу на базі WASM. Без завантажень, без черг.
+slug: /utilities/pdf-number-extractor
+image: /img/og/utilities/pdf-number-extractor.png
+keywords:
+  - pdf number extraction
+  - regex filter
+  - csv export
+  - offline pdf
+  - serial capture
+  - inspection data
+  - wasm parser
+  - local processing
+---
+
+import Head from '@docusaurus/Head';
+
+# PDF Number Extractor
+
+Виділяйте серійні номери QA, ідентифікатори BOM та номери інспекцій локально за допомогою парсингу WASM та експорту в CSV.
+
+<a className="button button--primary" href="/utilities/pdf-number-extractor/" data-nobrokenlinkcheck>Відкрити утиліту</a>
+
+![pdf-number-extractor utility screenshot](/img/og/utilities/pdf-number-extractor.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/pdf-number-extractor/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "PDF Number Extractor",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Highlight QA serials, BOM IDs, and inspection numbers locally with WASM-powered parsing. No uploads, no queues.",
+  "url": "https://cadautoscript.com/utilities/pdf-number-extractor/",
+  "image": "https://cadautoscript.com/img/og/utilities/pdf-number-extractor.png",
+  "featureList": [
+"WASM PDF parsing",
+"Regex filter controls",
+"CSV export",
+"Offline processing"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/pdf-number-extractor/",
+  "offers": {
+"@type": "Offer",
+"price": "0",
+"priceCurrency": "USD"
+  },
+  "author": {
+"@type": "Organization",
+"name": "CAD AutoScript"
+  }
+}`}</script>
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+{
+  "@type": "Question",
+  "name": "Чи розпізнає він текст на відсканованих PDF (OCR)?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Ні. Він читає існуючий текст; якщо PDF є зображенням, спочатку використайте OCR."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Чи можу я обробити кілька файлів?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Так. Завантажте пакет PDF та експортуйте комбіновані результати."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Чи завантажуються дані на сервер?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Ні. Парсинг відбувається локально у вашому браузері."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Чи можу я налаштувати регулярний вираз (regex)?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Так. Підтримується стандартний синтаксис JavaScript regex."
+  }
+},
+{
+  "@type": "Question",
+  "name": "Чи можу я зберегти виділення (highlights)?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Експортуйте CSV та збережіть копію PDF; виділення призначене лише для перевірки на екрані."
+  }
+}
+  ]
+}`}</script>
+</Head>
+
+## Що вона робить
+Завантажуйте PDF-файли, фільтруйте знайдені числа за допомогою регулярних виразів (regex) або правил довжини та експортуйте чистий список збігів. Парсинг відбувається в браузері за допомогою WASM, тому серійні номери QA, ідентифікатори BOM та номери інспекцій ніколи не залишають ваш пристрій.
+
+## Коли використовувати (і коли не використовувати)
+**Використовуйте, коли:**
+- Вам потрібно витягти серійні номери або ідентифікатори з виробничих PDF для контролю якості (QA) або простежуваності.
+- Ви хочете попередньо заповнити таблиці ідентифікаторами інспекцій без ручного введення.
+- Ви віддаєте перевагу автономному робочому процесу без завантажень або черг.
+
+**Уникайте, коли:**
+- Ваші PDF — це відскановані зображення, що потребують OCR, а не парсингу тексту.
+- Вам потрібен повнотекстовий пошук відразу за тисячами сторінок.
+
+## Вхідні та вихідні дані
+### Вхідні дані
+| Вхід | Опис |
+| --- | --- |
+| PDF-файли | Один або кілька PDF, перетягнутих у браузер. |
+| Правила Regex або фільтри | Включайте або виключайте шаблони, щоб ізолювати потрібні числа. |
+| Мін/макс довжина | Необов'язкові обмеження, щоб уникнути шуму, такого як номери сторінок. |
+| Опції експорту | Виберіть експорт у CSV або копіювання в буфер обміну. |
+
+### Вихідні дані
+| Вихід | Формат | Примітки |
+| --- | --- | --- |
+| Виділені збіги | На екрані | Візуальне накладання знайдених чисел для швидкої перевірки QA. |
+| Експорт у CSV | CSV | Список витягнутих чисел для кожного файлу, готовий для таблиць. |
+| Копіювання в буфер | Текст | Швидке копіювання збігів без завантаження файлу. |
+
+## Як використовувати
+1. Перетягніть PDF-файли в утиліту.
+2. Додайте фільтри за регулярним виразом (regex) або довжиною для вибору потрібних ID.
+3. Перевірте виділені збіги на екрані.
+4. Експортуйте результати в CSV або скопіюйте їх у буфер обміну.
+5. Очистьте сесію по закінченні; нічого не завантажується в інтернет.
+
+**Приклад даних:** Завантажте звіт про інспекцію, що містить ID типу SN-2025-104; використовуйте regex виду SN-\\d{4}-\\d{3} та експортуйте CSV.
+- Очікуваний результат: Створюється CSV зі списком збігів у стилі SN-2025-104 та візуальне виділення на екрані для підтвердження.
+
+## Точність та перевірка
+- Працює з текстовими PDF; відскановані зображення потребують OCR сторонніми засобами.
+- Фільтри чутливі до регістру тільки якщо ви це вкажете; двічі перевірте шаблони перед експортом.
+- Мережеві виклики не виконуються, тому зберігайте локальну копію результатів для аудиту.
+- Вибірково перевірте кілька рядків за PDF, щоб переконатися, що regex не відфільтрував зайвого.
+
+## FAQ
+- **Чи розпізнає він текст на відсканованих PDF (OCR)?** Ні. Він читає існуючий текст; якщо PDF є зображенням, спочатку використайте OCR.
+- **Чи можу я обробити кілька файлів?** Так. Завантажте пакет PDF та експортуйте комбіновані результати.
+- **Чи завантажуються дані на сервер?** Ні. Парсинг відбувається локально у вашому браузері.
+- **Чи можу я налаштувати регулярний вираз (regex)?** Так. Підтримується стандартний синтаксис JavaScript regex.
+- **Чи можу я зберегти виділення (highlights)?** Експортуйте CSV та збережіть копію PDF; виділення призначене лише для перевірки на екрані.
+
+## Схожі інструменти
+- [PDF BOM Extractor](./pdf-bom-extractor)
+- [PDF Master](./pdf-master)
+- [PDF Batch Signer](./pdf-batch-signer)
+
+## Список змін
+- Початкова документація.
+
+## Зворотний зв'язок / звіт про помилку
+- [Відкрити GitHub issue](https://github.com/biosxxx/cadautoscript.com/issues)
+- Напишіть на email або в особисті повідомлення із зазначенням слага `pdf-number-extractor`, щоб ми могли відтворити проблему

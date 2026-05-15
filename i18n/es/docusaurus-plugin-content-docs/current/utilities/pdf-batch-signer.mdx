@@ -1,0 +1,164 @@
+---
+title: Firmador de PDF por lotes
+description: Cargue dibujos, diseñe una firma, arrastre su ubicación y exporte un ZIP de los PDF firmados sin salir del navegador.
+slug: /utilities/pdf-batch-signer
+image: /img/og/utilities/pdf-batch-signer.png
+keywords:
+  - firma pdf
+  - firma por lotes
+  - exportación zip
+  - pdf-lib
+  - firma sin conexión
+  - bloque de título
+  - sello de dibujo
+  - vista previa de ubicación
+---
+
+import Head from '@docusaurus/Head';
+
+# Firmador de PDF por lotes
+
+Cargue dibujos, diseñe una firma, colóquela una vez y exporte un ZIP de los PDF firmados sin salir del navegador.
+
+<a className="button button--primary" href="/utilities/pdf-batch-signer/" data-nobrokenlinkcheck>Abrir utilidad</a>
+
+![captura de pantalla de la utilidad firmador de PDF por lotes](/img/og/utilities/pdf-batch-signer.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/pdf-batch-signer/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Firmador de PDF por lotes",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Cargue dibujos, diseñe una firma, arrastre su ubicación y exporte un ZIP de los PDF firmados sin salir del navegador.",
+  "url": "https://cadautoscript.com/utilities/pdf-batch-signer/",
+  "image": "https://cadautoscript.com/img/og/utilities/pdf-batch-signer.png",
+  "featureList": [
+"Carga de múltiples archivos",
+"Vista previa de ubicación unificada",
+"Exportación ZIP",
+"Extracción opcional de bloque de título con Gemini"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/pdf-batch-signer/",
+  "offers": {
+"@type": "Offer",
+"price": "0",
+"priceCurrency": "USD"
+  },
+  "author": {
+"@type": "Organization",
+"name": "CAD AutoScript"
+  }
+}`}</script>
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+{
+  "@type": "Question",
+  "name": "¿Es este un certificado digital?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "No. Es una firma gráfica aplicada localmente."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Se cargarán mis archivos en algún lugar?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "No. El firmado se ejecuta con pdf-lib y JSZip en su navegador."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Puedo manejar tamaños de página mixtos?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Sí, pero confirme la ubicación en una página de muestra antes de exportar el conjunto completo."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Cómo cambio el sello más tarde?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Cargue los archivos nuevamente, ajuste la firma y vuelva a exportar."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Qué pasa con las marcas de tiempo?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Agregue texto de fecha dentro de la imagen de su firma o vuelva a ejecutarlo con una etiqueta actualizada."
+  }
+}
+  ]
+}`}</script>
+</Head>
+
+## Qué hace
+Cree una firma reutilizable dibujando, escribiendo o cargando un escaneo, colóquela en una vista previa en vivo y aplíquela en cada página de su conjunto de PDF. El análisis opcional de Gemini puede leer los bloques de título cuando proporciona su propia clave API; de lo contrario, todo permanece local.
+
+## Cuándo usarlo (y cuándo no)
+**Úselo cuando:**
+- Necesite sellar múltiples dibujos o informes en una sola pasada sin un servicio en la nube.
+- Quiera una ubicación consistente para cada página en un paquete.
+- Necesite un ZIP rápido de PDF firmados para enviar a proveedores o control de calidad.
+
+**Evítelo cuando:**
+- Requiera firmas criptográficas o basadas en certificados.
+- Sus páginas utilicen tamaños muy diferentes que necesiten ubicaciones únicas por página.
+
+## Entradas y salidas
+### Entradas
+| Entrada | Descripción |
+| --- | --- |
+| Conjunto de PDF | Uno o más PDF para sellar en una sola ejecución. |
+| Fuente de la firma | Dibuje, escriba o cargue una imagen de firma para reutilizarla. |
+| Ubicación y escala | Posicione y dimensione la firma en la vista previa antes de aplicar. |
+| Clave API de Gemini opcional | Si desea la extracción del bloque de título; de lo contrario, todo permanece sin conexión. |
+
+### Salidas
+| Salida | Formato | Notas |
+| --- | --- | --- |
+| PDF firmados | ZIP | Todos los archivos de entrada sellados con la misma ubicación. |
+| Confirmación de vista previa | En pantalla | Comprobación visual de la firma aplicada. |
+
+## Cómo usar
+1. Cargue los PDF que necesita firmar.
+2. Cree o cargue una firma y establezca su ubicación y tamaño.
+3. Opcionalmente, agregue una clave API de Gemini si desea la extracción de metadatos del bloque de título.
+4. Aplique la firma en todas las páginas.
+5. Descargue el ZIP de los PDF firmados.
+
+**Conjunto de datos de ejemplo:** Cargue diez PDF de dibujos, dibuje una firma, colóquela a 20 mm de la esquina inferior derecha, deje Gemini desactivado y exporte el ZIP.
+- Salida esperada: Descarga un ZIP que contiene todos los dibujos con la misma ubicación de firma visible en cada página.
+
+## Precisión y verificación
+- Aplica un sello gráfico, no un certificado digital; verifique la aceptación para documentos regulados.
+- Los tamaños de página mixtos pueden necesitar una comprobación visual rápida después del firmado.
+- La extracción opcional de Gemini utiliza su clave en el lado del cliente; déjela vacía para mantener todo sin conexión.
+- Conserve los originales si necesita una pista de auditoría; la herramienta sobrescribe solo las copias descargadas.
+
+## Preguntas frecuentes
+- **¿Es este un certificado digital?** No. Es una firma gráfica aplicada localmente.
+- **¿Se cargarán mis archivos en algún lugar?** No. El firmado se ejecuta con pdf-lib y JSZip en su navegador.
+- **¿Puedo manejar tamaños de página mixtos?** Sí, pero confirme la ubicación en una página de muestra antes de exportar el conjunto completo.
+- **¿Cómo cambio el sello más tarde?** Cargue los archivos nuevamente, ajuste la firma y vuelva a exportar.
+- **¿Qué pasa con las marcas de tiempo?** Agregue texto de fecha dentro de la imagen de su firma o vuelva a ejecutarlo con una etiqueta actualizada.
+
+## Herramientas relacionadas
+- [PDF Master](./pdf-master)
+- [Extractor de BOM de PDF](./pdf-bom-extractor)
+- [Extractor de números de PDF](./pdf-number-extractor)
+
+## Registro de cambios
+- Documentación inicial.
+
+## Comentarios / informe de errores
+- [Abrir un problema en GitHub](https://github.com/biosxxx/cadautoscript.com/issues)
+- Correo electrónico o DM con el slug `pdf-batch-signer` para que podamos reproducir el problema

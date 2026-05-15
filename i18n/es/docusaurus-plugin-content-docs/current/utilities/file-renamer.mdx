@@ -1,0 +1,164 @@
+---
+title: Batch File Renamer
+description: Renombre archivos en masa con búsqueda/reemplazo, prefijos, mayúsculas/minúsculas, numeración y descarga instantánea en ZIP, todo de forma local.
+slug: /utilities/file-renamer
+image: /img/og/utilities/file-renamer.png
+keywords:
+  - renombrado por lotes
+  - renombrado regex
+  - descarga zip
+  - renombrado offline
+  - buscar reemplazar
+  - numeración
+  - nombrado de archivos
+  - procesamiento local
+---
+
+import Head from '@docusaurus/Head';
+
+# Batch File Renamer
+
+Renombre archivos en masa con búsqueda/reemplazo, prefijos, mayúsculas/minúsculas, numeración y descarga instantánea en ZIP, todo de forma local.
+
+<a className="button button--primary" href="/utilities/file-renamer/" data-nobrokenlinkcheck>Abrir utilidad</a>
+
+![file-renamer utility screenshot](/img/og/utilities/file-renamer.png)
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/file-renamer/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Batch File Renamer",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Renombre archivos en masa con búsqueda/reemplazo, prefijos, mayúsculas/minúsculas, numeración y descarga instantánea en ZIP, todo de forma local.",
+  "url": "https://cadautoscript.com/utilities/file-renamer/",
+  "image": "https://cadautoscript.com/img/og/utilities/file-renamer.png",
+  "featureList": [
+"Búsqueda/reemplazo literal o por Regex",
+"Prefijo/sufijo y numeración",
+"Descarga en ZIP con manejo de conflictos"
+  ],
+  "mainEntityOfPage": "https://cadautoscript.com/utilities/file-renamer/",
+  "offers": {
+"@type": "Offer",
+"price": "0",
+"priceCurrency": "USD"
+  },
+  "author": {
+"@type": "Organization",
+"name": "CAD AutoScript"
+  }
+}`}</script>
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+{
+  "@type": "Question",
+  "name": "¿Funcionan los patrones regex?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Sí. Utilice regex estándar de JavaScript para renombres avanzados."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Se preserva la estructura de carpetas?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Los archivos se aplanan en un ZIP con los nuevos nombres."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Se cargan los datos?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "No. Todo se ejecuta localmente."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Cuántos archivos puedo renombrar?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Depende de la memoria del navegador; divida conjuntos muy grandes."
+  }
+},
+{
+  "@type": "Question",
+  "name": "¿Qué pasa con el contenido de los archivos?",
+  "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "El contenido permanece sin cambios; solo se actualizan los nombres."
+  }
+}
+  ]
+}`}</script>
+</Head>
+
+## Qué hace
+Cargue una pila de archivos, obtenga una vista previa de los nuevos nombres con búsqueda/reemplazo literal o por regex, añada prefijos, sufijos o numeración, y descargue el conjunto renombrado como un ZIP. Todo se ejecuta en el navegador para que sus archivos permanezcan locales.
+
+## Cuándo usarlo (y cuándo no)
+**Úselo cuando:**
+- Necesite normalizar nombres de planos o añadir números de trabajo antes de enviar un paquete.
+- Quiera aplicar numeración o prefijos en masa sin necesidad de scripts.
+- Prefiera mantener el renombrado fuera de línea con una salida rápida en ZIP.
+
+**Evítelo cuando:**
+- Necesite renombrar miles de archivos en el disco; use un script CLI en su lugar.
+- Deba mantener la jerarquía de carpetas de directorios anidados; el aplanamiento puede no ser deseado.
+
+## Entradas y salidas
+### Entradas
+| Entrada | Descripción |
+| --- | --- |
+| Archivos a renombrar | Arrastre los archivos que desea procesar. |
+| Reglas de buscar/reemplazar | Use patrones literales o regex para transformar nombres. |
+| Prefijo/sufijo | Añada números de trabajo, revisiones u otras etiquetas. |
+| Numeración | Establezca el inicio, el incremento y el relleno para secuencias numéricas. |
+| Opciones de caja | Conversiones opcionales a mayúsculas/minúsculas/kebab. |
+
+### Salidas
+| Salida | Formato | Notas |
+| --- | --- | --- |
+| Tabla de vista previa | En pantalla | Vea los nombres antiguos frente a los nuevos antes de exportar. |
+| Archivos renombrados | ZIP | Archivo descargable con los nombres de archivo actualizados. |
+
+## Cómo usarlo
+1. Arrastre los archivos para renombrar.
+2. Aplique buscar/reemplazar, prefijos, sufijos o numeración.
+3. Revise la vista previa para confirmar que se manejan las colisiones.
+4. Descargue el ZIP de los archivos renombrados.
+5. Comparta o archive el paquete renombrado.
+
+**Ejemplo de conjunto de datos:** Cargue P-001.pdf, P-002.pdf; busque 'P-' y reemplace con 'FAB-', añada el prefijo 2025_, comience la numeración en 10.
+- Resultado esperado: Descarga un ZIP con archivos llamados 2025_FAB-10.pdf and 2025_FAB-11.pdf.
+
+## Precisión y verificación
+- El renombrado ocurre en el navegador; conserve los originals hasta que verifique el ZIP.
+- Los patrones regex son potentes: pruébelos primero con un conjunto pequeño.
+- Las colisiones de nombres se manejan en la vista previa; resuélvalas antes de exportar.
+- Los lotes grandes están limitados por la memoria del navegador; divídalos si es necesario.
+
+## FAQ
+- **¿Funcionan los patrones regex?** Sí. Utilice regex estándar de JavaScript para renombres avanzados.
+- **¿Se preserva la estructura de carpetas?** Los archivos se aplanan en un ZIP con los nuevos nombres.
+- **¿Se cargan los datos?** No. Todo se ejecuta localmente.
+- **¿Cuántos archivos puedo renombrar?** Depende de la memoria del navegador; divida conjuntos muy grandes.
+- **¿Qué pasa con el contenido de los archivos?** El contenido permanece sin cambios; solo se actualizan los nombres.
+
+## Herramientas relacionadas
+- [Folder Structure Builder](./folder-structure-builder)
+- [PDF Master](./pdf-master)
+- [PDF Batch Signer](./pdf-batch-signer)
+
+## Changelog
+- Documentación inicial.
+
+## Feedback / reporte de errores
+- [Abrir un issue en GitHub](https://github.com/biosxxx/cadautoscript.com/issues)
+- Envíe un correo electrónico o MD con el slug `file-renamer` para que podamos reproducir el problema
