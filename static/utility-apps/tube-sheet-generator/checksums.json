@@ -2,23 +2,23 @@
   "files": [
     {
       "path": "app.html",
-      "sha256": "21f0d17ed068367c3e5e5257ff1e747ce099cdb081df147022c43df5ae37b29a",
+      "sha256": "3fac6e1e5dfb3fe9e05b420554b3f4a846aebdadb3b750ffa02aafdf91ce7fd3",
       "bytes": 407
     },
     {
-      "path": "assets/cad-worker-kiheFctN.js",
-      "sha256": "21e6460abf05cb5c8e4a30141060a719c4004ff96f45edc5b5f8facaa6d25079",
-      "bytes": 4111
+      "path": "assets/cad-worker-DMkubTGE.js",
+      "sha256": "ddc8e3c3df94cea87fe5cdae5a31095593ebcfca056e9fa7efed4471065f0fe6",
+      "bytes": 4894
     },
     {
-      "path": "assets/index-B0n04mHF.css",
-      "sha256": "89138cfc7914941f9ce45661b68a88df885350c36056680a1417b05bcf84a6a8",
-      "bytes": 2622
+      "path": "assets/index-3KqKCYuk.css",
+      "sha256": "1da677f3b630c68f70461057d7cfce4672c076fa446eb8900aa230adfd9a617c",
+      "bytes": 8744
     },
     {
-      "path": "assets/index-Bfhx7k99.js",
-      "sha256": "6f36de810a653d2ade95ab26d218d4ae8263c8f4f681444be78759d602f2917c",
-      "bytes": 205061
+      "path": "assets/index-BIP6cN3x.js",
+      "sha256": "c88755c7faad1bd4027b1a8d2e4f24904477621453c5309b53a9ff944a54c505",
+      "bytes": 214536
     },
     {
       "path": "assets/replicad_single-BXInhmaQ.wasm",
@@ -37,7 +37,7 @@
     },
     {
       "path": "manifest.json",
-      "sha256": "75d182a051f823259fc89a277c190745f18a8e2563f07a7c7e990ad983b7ad50",
+      "sha256": "3d215be4c0bb564a5de5afdc5a8f6231888ffeed737d8eaafffc6a68d10f56bb",
       "bytes": 670
     }
   ]
