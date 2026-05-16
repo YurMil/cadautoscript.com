@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import clsx from 'clsx';
-import {getSupportDestination, SUPPORT_LINK, SUPPORT_TEXT} from '@site/src/constants/support';
+import {getSupportDestination, SUPPORT_LINK} from '@site/src/constants/support';
+import {useI18n} from '@site/src/contexts/I18nContext';
 import styles from './SupportButton.module.css';
 
 type SupportButtonProps = {
@@ -130,9 +131,10 @@ export default function SupportButton({
   className,
   compact = false,
   href,
-  label = SUPPORT_TEXT.buttonLabel,
+  label,
   newTab,
 }: SupportButtonProps): React.JSX.Element {
+  const {t} = useI18n();
   const [resolvedLink, setResolvedLink] = useState(() => getSupportDestination());
 
   useEffect(() => {
@@ -144,6 +146,7 @@ export default function SupportButton({
 
   const finalHref = href ?? resolvedLink.href ?? SUPPORT_LINK;
   const shouldOpenInNewTab = newTab ?? (!href && resolvedLink.openInNewTab);
+  const finalLabel = label ?? t('support.buttonLabel');
 
   return (
     <a
@@ -153,7 +156,7 @@ export default function SupportButton({
       rel={shouldOpenInNewTab ? 'noreferrer noopener' : undefined}
     >
       <SupportIcon />
-      <span>{label}</span>
+      <span>{finalLabel}</span>
     </a>
   );
 }

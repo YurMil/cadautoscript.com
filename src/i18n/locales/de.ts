@@ -109,6 +109,15 @@ export const de: TranslationDict = {
     error: 'Fehler',
     success: 'Erfolgreich',
   },
+  support: {
+    buttonLabel: 'Spenden',
+    eyebrow: 'Spenden',
+    title: 'Mit deiner Spende unterstützt du das Projekt',
+    description: 'Wenn dir dieses Projekt hilft, kannst du seine Entwicklung unterstützen.',
+    paypalSub: 'Mit PayPal spenden',
+    stripeSub: 'Mit Karte über Stripe zahlen',
+    floatingDonate: 'Mit PayPal spenden',
+  },
   utilities: {
     'pipe-cutter': {
       name: 'Pipe Cutter Visualizer',

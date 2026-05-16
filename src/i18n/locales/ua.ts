@@ -109,6 +109,15 @@ export const ua: TranslationDict = {
     error: 'Помилка',
     success: 'Успішно',
   },
+  support: {
+    buttonLabel: 'Підтримати',
+    eyebrow: 'Підтримка',
+    title: 'Ваша пожертва допомагає розвитку проєкту',
+    description: 'Якщо цей проєкт корисний вам, ви можете підтримати його розвиток.',
+    paypalSub: 'Пожертвувати через PayPal',
+    stripeSub: 'Оплата карткою через Stripe',
+    floatingDonate: 'Пожертвувати через PayPal',
+  },
   utilities: {
     'pipe-cutter': {
       name: 'Pipe Cutter Visualizer',

@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
-import {SUPPORT_TEXT} from '@site/src/constants/support';
+import {useI18n} from '@site/src/contexts/I18nContext';
 import SupportButton from './SupportButton';
 import styles from './SupportSection.module.css';
 
 // Keep section actions pointing to /support page where user chooses PayPal or Stripe
 
 export default function SupportSection(): React.JSX.Element {
+  const {t} = useI18n();
   const [floatingBtnPos, setFloatingBtnPos] = useState<{x: number; y: number} | null>(null);
 
   const handleHeartClick = (e: React.MouseEvent<SVGGElement>) => {
@@ -61,9 +62,9 @@ export default function SupportSection(): React.JSX.Element {
         </svg>
       </svg>
       <div className={styles.content}>
-        <p className={styles.eyebrow}>Support</p>
-        <h2>Support the Project</h2>
-        <p className={styles.description}>{SUPPORT_TEXT.description}</p>
+        <p className={styles.eyebrow}>{t('support.eyebrow')}</p>
+        <h2>{t('support.title')}</h2>
+        <p className={styles.description}>{t('support.description')}</p>
       </div>
       <div className={styles.actions}>
         <SupportButton />

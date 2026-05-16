@@ -107,6 +107,15 @@ export const en = {
     error: 'Error',
     success: 'Success',
   },
+  support: {
+    buttonLabel: 'Donate',
+    eyebrow: 'Donate',
+    title: 'Your donation helps support the project',
+    description: 'If this project helps you, you can support its development.',
+    paypalSub: 'Donate via PayPal',
+    stripeSub: 'Pay with card via Stripe',
+    floatingDonate: 'Donate via PayPal',
+  },
   utilities: {
     'pipe-cutter': {
       name: 'Pipe Cutter Visualizer',
