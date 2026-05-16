@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import Layout from '@theme/Layout';
-import {PAYPAL_LINK, STRIPE_LINK, SUPPORT_TEXT} from '@site/src/constants/support';
+import {PAYPAL_LINK, STRIPE_LINK} from '@site/src/constants/support';
+import {useI18n} from '@site/src/contexts/I18nContext';
 import styles from './support.module.css';
 
 function PayPalIcon(): React.JSX.Element {
@@ -30,7 +31,7 @@ type PaymentMethod = 'paypal' | 'stripe';
 interface PaymentOption {
   id: PaymentMethod;
   label: string;
-  sublabel: string;
+  sublabelKey: string;
   href: string;
   icon: React.JSX.Element;
   accentColor: string;
@@ -42,7 +43,7 @@ const PAYMENT_OPTIONS: PaymentOption[] = [
   {
     id: 'paypal',
     label: 'PayPal',
-    sublabel: 'Donate via PayPal',
+    sublabelKey: 'support.paypalSub',
     href: PAYPAL_LINK,
     icon: <PayPalIcon />,
     accentColor: '#009cde',
@@ -52,7 +53,7 @@ const PAYMENT_OPTIONS: PaymentOption[] = [
   {
     id: 'stripe',
     label: 'Stripe',
-    sublabel: 'Pay with card via Stripe',
+    sublabelKey: 'support.stripeSub',
     href: STRIPE_LINK,
     icon: <StripeIcon />,
     accentColor: '#635BFF',
@@ -62,6 +63,7 @@ const PAYMENT_OPTIONS: PaymentOption[] = [
 ];
 
 export default function SupportPage(): React.JSX.Element {
+  const {t} = useI18n();
   const [floatingBtnPos, setFloatingBtnPos] = useState<{x: number; y: number} | null>(null);
   const [hovered, setHovered] = useState<PaymentMethod | null>(null);
 
@@ -70,7 +72,7 @@ export default function SupportPage(): React.JSX.Element {
   };
 
   return (
-    <Layout title="Support" description="Support CAD AutoScript development.">
+    <Layout title={t('support.buttonLabel')} description={t('support.description')}>
       <main className={styles.main}>
         <section className={styles.card} onMouseLeave={() => setFloatingBtnPos(null)}>
           <svg className={styles.bgSvg} width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
@@ -115,9 +117,9 @@ export default function SupportPage(): React.JSX.Element {
             </svg>
           </svg>
 
-          <p className={styles.eyebrow}>Support</p>
-          <h1>Support the Project</h1>
-          <p className={styles.lead}>{SUPPORT_TEXT.description}</p>
+          <p className={styles.eyebrow}>{t('support.eyebrow')}</p>
+          <h1>{t('support.title')}</h1>
+          <p className={styles.lead}>{t('support.description')}</p>
 
           <div className={styles.paymentOptions}>
             {PAYMENT_OPTIONS.map((opt) => (
@@ -138,7 +140,7 @@ export default function SupportPage(): React.JSX.Element {
                 <span className={styles.paymentIcon}>{opt.icon}</span>
                 <span className={styles.paymentLabels}>
                   <span className={styles.paymentName}>{opt.label}</span>
-                  <span className={styles.paymentSub}>{opt.sublabel}</span>
+                  <span className={styles.paymentSub}>{t(opt.sublabelKey)}</span>
                 </span>
                 <svg className={styles.paymentArrow} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                   <path d="M3 8H13M9 4L13 8L9 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -160,7 +162,7 @@ export default function SupportPage(): React.JSX.Element {
                 className={styles.floatingBtn}
               >
                 <PayPalIcon />
-                <span>Donate via PayPal</span>
+                <span>{t('support.floatingDonate')}</span>
               </a>
             </div>
           )}

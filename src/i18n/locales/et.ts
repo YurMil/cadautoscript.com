@@ -109,6 +109,15 @@ export const et: TranslationDict = {
     error: 'Viga',
     success: 'Edukalt',
   },
+  support: {
+    buttonLabel: 'Anneta',
+    eyebrow: 'Annetus',
+    title: 'Sinu annetus aitab projekti edasi arendada',
+    description: 'Kui see projekt on sulle kasulik, võid toetada selle arendamist.',
+    paypalSub: 'Anneta PayPaliga',
+    stripeSub: 'Maksa kaardiga Stripe’i kaudu',
+    floatingDonate: 'Anneta PayPaliga',
+  },
   utilities: {
     'pipe-cutter': {
       name: 'Pipe Cutter Visualizer',
