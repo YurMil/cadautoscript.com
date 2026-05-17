@@ -17,11 +17,11 @@ export type LocaleMeta = {
 
 export const LOCALES: LocaleMeta[] = [
   {code: 'en', label: 'English', htmlLang: 'en', flag: '🇬🇧', dir: 'ltr'},
-  {code: 'ru', label: 'Русский', htmlLang: 'ru', flag: '🇷🇺', dir: 'ltr'},
-  {code: 'ua', label: 'Українська', htmlLang: 'uk', flag: '🇺🇦', dir: 'ltr'},
-  {code: 'de', label: 'Deutsch', htmlLang: 'de', flag: '🇩🇪', dir: 'ltr'},
-  {code: 'es', label: 'Español', htmlLang: 'es', flag: '🇪🇸', dir: 'ltr'},
   {code: 'et', label: 'Eesti', htmlLang: 'et', flag: '🇪🇪', dir: 'ltr'},
+  {code: 'es', label: 'Español', htmlLang: 'es', flag: '🇪🇸', dir: 'ltr'},
+  {code: 'de', label: 'Deutsch', htmlLang: 'de', flag: '🇩🇪', dir: 'ltr'},
+  {code: 'ua', label: 'Українська', htmlLang: 'uk', flag: '🇺🇦', dir: 'ltr'},
+  {code: 'ru', label: 'Русский', htmlLang: 'ru', flag: '🇷🇺', dir: 'ltr'},
 ];
 
 export const DEFAULT_LOCALE: Locale = 'en';
