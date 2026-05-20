@@ -211,6 +211,10 @@ export const de: TranslationDict = {
       name: 'Blind Flange Calculator',
       description: 'PN-Klasse automatisch auswählen und EN 13445-3-Wanddicke mit Gewichtsschätzungen berechnen.',
     },
+    'busbar-calculator': {
+      name: 'Busbar Calculator',
+      description: 'Kupfer- und Aluminiumsammelschienen auslegen, Erwärmung prognostizieren und PDF-Berichte lokal exportieren.',
+    },
     'pressure-vessel-dished-end-calc': {
       name: 'Dished End Calculator',
       description: 'DIN 28011/28013-Böden dimensionieren, Stutzenbeschriftungen hinzufügen und QC-Arbeitsblatt drucken.',

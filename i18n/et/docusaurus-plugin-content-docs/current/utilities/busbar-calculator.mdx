@@ -1,0 +1,103 @@
+---
+title: Busbar Calculator
+description: Arvuta vasest ja alumiiniumist ristkülikukujulisi siinlatte, hinda temperatuuri ja vahekaugusi ning ekspordi PDF-raport lokaalselt.
+slug: /utilities/busbar-calculator
+image: /img/og/utilities/busbar-calculator.png
+keywords:
+  - siinlati kalkulaator
+  - vasest siinlatt
+  - alumiiniumist siinlatt
+  - elektriskilp
+  - termiline arvutus
+  - lühis
+  - PDF raport
+---
+
+import Head from '@docusaurus/Head';
+
+# Busbar Calculator
+
+Busbar Calculator aitab teha elektriskilbi ristkülikukujuliste siinlattide eelvalikut: võrrelda vaske ja alumiiniumi, hinnata kuumenemist, kontrollida vahekaugusi ning eksportida PDF-raport ilma projektiandmeid üles laadimata.
+
+![Busbar Calculator screenshot](/img/og/utilities/busbar-calculator.png)
+
+<a className="button button--primary" href="/utilities/busbar-calculator/" data-nobrokenlinkcheck>Ava utiliit</a>
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/busbar-calculator/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Busbar Calculator",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Arvuta ristkülikukujulisi siinlatte, võrdle vasest ja alumiiniumist kandidaate, prognoosi temperatuuri, kontrolli vahekaugusi ja lühise eeldusi ning ekspordi lokaalne PDF-raport.",
+  "url": "https://cadautoscript.com/utilities/busbar-calculator/",
+  "image": "https://cadautoscript.com/img/og/utilities/busbar-calculator.png",
+  "featureList": [
+    "Vase ja alumiiniumi profiilikandidaadid",
+    "Siinlati ristlõike eelvaade",
+    "Temperatuuriprognoos",
+    "Vahekauguse ja lühise kontrollid",
+    "Lokaalne PDF eksport"
+  ],
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "CAD AutoScript"
+  }
+}`}</script>
+</Head>
+
+## Mida utiliit teeb
+
+See utiliit on kliendipoolne inseneriabivahend madalpingekilpide ja jaotussüsteemide siinlattide eelanalüüsiks. Kasutaja sisestab AC/DC süsteemi, pinge, voolu, faasid, materjali, ristkülikuprofiili, siinlattide arvu faasi kohta, paigutuse, jahutuse eelduse ja lühise andmed. Rakendus arvutab ümber voolutiheduse, takistuse, kaod, temperatuuriprognoosi, kanali gabariidi, vahekauguste staatuse ja lühise marginaalid.
+
+Rakendus on ühendatud iseseisva micro-appina kataloogis `static/utility-apps/busbar-calculator`. CAD AutoScripti kest kuvab seda nagu teisi utiliite: kataloogikaardi, artikli, reaktsioonide, kommentaaride ja ühise ligipääsukihiga.
+
+## Millal kasutada
+
+- Vase või alumiiniumi ristkülikukujuliste siinlattide eelvalikuks.
+- Ühe kuni nelja siinlati võrdlemiseks faasi kohta enne kilbi paigutuse lukustamist.
+- Meetri kohta tekkivate kadude ja tasakaalutemperatuuri hindamiseks valitud jahutusega.
+- Faaside vahekauguste ja korpuse marginaalide kiireks kontrolliks.
+- PDF-arvutusmärkme loomiseks disainiaruteluks või QA-kontrolliks.
+
+## Sisendid ja väljundid
+
+| Ala | Sisendid | Väljundid |
+| --- | --- | --- |
+| Elektrisüsteem | AC/DC, pinge, vool, sagedus, faasid | Voolutihedus, takistus, kaod meetri kohta |
+| Materjal ja profiil | Vask, alumiinium, laius, paksus, siinlatte faasi kohta | Pindala, mass, kandidaatide järjestus |
+| Paigutus | Horisontaalne/vertikaalne, flatwise/edgewise, vahed | Ristlõike eelvaade, faasikeskmed, kanali ulatus |
+| Keskkond | Temperatuur, jahutus, korpuse kordaja | Tasakaalutemperatuur ja prognoosikõver |
+| Lühis | RMS-vool, kestus, tipuvool, tugede samm | Termiline ja mehaaniline staatus |
+| Raportid | Projekt, kilp, tag, revisjon, insener | PDF, JSON import/eksport, CAD payload |
+
+## Olulised piirangud
+
+Kaasasolevad materjalikonstandid, profiilide nimiväärtused, jahutuse eelseaded ja vahekauguse reeglid on märgitud kui example-only. Need teevad töövoo testitavaks, kuid ei ole sertifitseeritud projekteerimisalus. Enne päris projekti väljastamist asendage need kinnitatud DIN-, IEC-, tootja- või projektiandmetega ja valideerige tulemused oma organisatsiooni reeglite järgi.
+
+## Tüüpiline töövoog
+
+1. Sisestage projekti metaandmed ja elektrilised väärtused.
+2. Valige vask või alumiinium ja vaadake pakutud profiile.
+3. Muutke siinlattide arvu faasi kohta, orientatsiooni, faasivahesid ja korpuse marginaale.
+4. Kontrollige ristlõiget, voolutihedust, kadusid ja temperatuuriprognoosi.
+5. Lisage lühise eeldused, kui need on teada.
+6. Eksportige PDF-raport või JSON-konfiguratsioon edasiseks ülevaatuseks.
+
+## Seotud tööriistad
+
+- [Bourdon Gauge Configurator](./bourdon-gauge-configurator)
+- [Industrial Thermometer Configurator](./industrial-thermometer-configurator)
+- [PDF Batch Signer](./pdf-batch-signer)
+
+## Tagasiside / veateade
+
+- [Ava GitHub issue](https://github.com/YurMil/cadautoscript.com/issues)
+- Kirjas või sõnumis kasutage slug'i `busbar-calculator`, et saaksime probleemi taasesitada.

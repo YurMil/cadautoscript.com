@@ -211,6 +211,10 @@ export const et: TranslationDict = {
       name: 'Blind Flange Calculator',
       description: 'Vali automaatselt PN-klass ja arvuta EN 13445-3 seina paksus koos kaaluhinnangu.',
     },
+    'busbar-calculator': {
+      name: 'Busbar Calculator',
+      description: 'Dimensioneeri vasest ja alumiiniumist siinlatte, prognoosi kuumenemist ja ekspordi PDF-aruandeid lokaalselt.',
+    },
     'pressure-vessel-dished-end-calc': {
       name: 'Dished End Calculator',
       description: 'Arvuta DIN 28011/28013 põhjad, lisa stutserite tähistused ja prindi QC-tööleht.',
