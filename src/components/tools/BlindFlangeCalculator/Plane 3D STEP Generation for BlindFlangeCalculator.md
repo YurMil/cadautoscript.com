@@ -834,5 +834,5 @@ A few implementation notes based on the current codebase:
 
 ```
 
-[1]: https://github.com/biosxxx/cadautoscript.com/tree/main/src/components/tools/BlindFlangeCalculator "cadautoscript.com/src/components/tools/BlindFlangeCalculator at main · biosxxx/cadautoscript.com · GitHub"
-[2]: https://github.com/biosxxx/cadautoscript.com/raw/refs/heads/main/src/components/tools/BlindFlangeCalculator/index.tsx "raw.githubusercontent.com"
+[1]: https://github.com/YurMil/cadautoscript.com/tree/main/src/components/tools/BlindFlangeCalculator "cadautoscript.com/src/components/tools/BlindFlangeCalculator at main · YurMil/cadautoscript.com · GitHub"
+[2]: https://github.com/YurMil/cadautoscript.com/raw/refs/heads/main/src/components/tools/BlindFlangeCalculator/index.tsx "raw.githubusercontent.com"

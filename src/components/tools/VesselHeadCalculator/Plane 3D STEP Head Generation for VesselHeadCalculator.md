@@ -750,4 +750,4 @@ Start with a **scaffold PR** that introduces only:
 * placeholder STEP generation path
 
 
-[1]: https://github.com/biosxxx/cadautoscript.com/tree/main/src/components/tools/TubeSheetGenerator "cadautoscript.com/src/components/tools/TubeSheetGenerator at main · biosxxx/cadautoscript.com · GitHub"
+[1]: https://github.com/YurMil/cadautoscript.com/tree/main/src/components/tools/TubeSheetGenerator "cadautoscript.com/src/components/tools/TubeSheetGenerator at main · YurMil/cadautoscript.com · GitHub"

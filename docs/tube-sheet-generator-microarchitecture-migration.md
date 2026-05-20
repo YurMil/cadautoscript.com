@@ -173,7 +173,7 @@ Start in `apps/tube-sheet-generator` because:
 After stabilization, move the app to a dedicated repository such as:
 
 ```text
-biosxxx/tube-sheet-generator-app
+YurMil/tube-sheet-generator-app
 ```
 
 The standalone repository should publish a release artifact containing:

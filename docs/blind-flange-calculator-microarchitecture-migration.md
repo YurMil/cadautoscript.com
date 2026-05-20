@@ -154,7 +154,7 @@ Starting inside the same repository reduces risk because:
 After the Vite app is stable, move it to a separate repository, for example:
 
 ```text
-biosxxx/blind-flange-calculator-app
+YurMil/blind-flange-calculator-app
 ```
 
 That repository should publish a versioned static artifact containing:

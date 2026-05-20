@@ -15,7 +15,7 @@ const config: Config = {
   url: 'https://cadautoscript.com',
   baseUrl: '/',
   trailingSlash: true,
-  organizationName: 'biosxxx',
+  organizationName: 'YurMil',
   projectName: 'cadautoscript.com',
   customFields: {
     SUPABASE_URL: process.env.SUPABASE_URL,
@@ -68,7 +68,7 @@ const config: Config = {
       {
         docs: {
           sidebarPath: './sidebars.ts',
-          editUrl: 'https://github.com/biosxxx/cadautoscript.com/tree/main/',
+          editUrl: 'https://github.com/YurMil/cadautoscript.com/tree/main/',
         },
         blog: {
           showReadingTime: true,
@@ -76,7 +76,7 @@ const config: Config = {
             type: ['rss', 'atom'],
             xslt: true,
           },
-          editUrl: 'https://github.com/biosxxx/cadautoscript.com/tree/main/',
+          editUrl: 'https://github.com/YurMil/cadautoscript.com/tree/main/',
           onInlineTags: 'warn',
           onInlineAuthors: 'warn',
           onUntruncatedBlogPosts: 'warn',
@@ -150,7 +150,7 @@ const config: Config = {
           title: 'More',
           items: [
             {label: 'Blog', to: '/blog/'},
-            {label: 'GitHub', href: 'https://github.com/biosxxx/cadautoscript.com'},
+            {label: 'GitHub', href: 'https://github.com/YurMil/cadautoscript.com'},
           ],
         },
       ],

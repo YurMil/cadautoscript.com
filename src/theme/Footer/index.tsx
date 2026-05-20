@@ -26,7 +26,7 @@ export default function FooterWrapper(props: FooterProps): React.JSX.Element {
           LinkedIn
         </a>
         <a
-          href="https://github.com/biosxxx"
+          href="https://github.com/YurMil"
           target="_blank"
           rel="noopener noreferrer"
           style={{display: 'inline-flex', alignItems: 'center', gap: '0.35rem'}}

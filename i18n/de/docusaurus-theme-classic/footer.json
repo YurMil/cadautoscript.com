@@ -25,7 +25,7 @@
   },
   "link.item.label.GitHub": {
     "message": "GitHub",
-    "description": "The label of footer link with label=GitHub linking to https://github.com/biosxxx/cadautoscript.com"
+    "description": "The label of footer link with label=GitHub linking to https://github.com/YurMil/cadautoscript.com"
   },
   "copyright": {
     "message": "Copyright 2026 CAD AutoScript. Erstellt mit Docusaurus.",
