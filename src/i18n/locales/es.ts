@@ -211,6 +211,10 @@ export const es: TranslationDict = {
       name: 'Blind Flange Calculator',
       description: 'Selecciona automáticamente la clase PN y calcula el espesor EN 13445-3 con estimaciones de peso.',
     },
+    'busbar-calculator': {
+      name: 'Busbar Calculator',
+      description: 'Dimensiona barras colectoras de cobre y aluminio, predice el calentamiento y exporta informes PDF localmente.',
+    },
     'pressure-vessel-dished-end-calc': {
       name: 'Dished End Calculator',
       description: 'Dimensiona fondos DIN 28011/28013, añade designaciones de boquillas e imprime una hoja QC.',

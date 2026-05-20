@@ -1,0 +1,103 @@
+---
+title: Busbar Calculator
+description: Dimensiona barras colectoras rectangulares de cobre y aluminio, revisa temperatura, distancias y exporta informes PDF locales.
+slug: /utilities/busbar-calculator
+image: /img/og/utilities/busbar-calculator.png
+keywords:
+  - calculadora de barras colectoras
+  - barra de cobre
+  - barra de aluminio
+  - cuadro eléctrico
+  - cálculo térmico
+  - cortocircuito
+  - informe PDF
+---
+
+import Head from '@docusaurus/Head';
+
+# Busbar Calculator
+
+Busbar Calculator ayuda a predimensionar barras colectoras rectangulares para cuadros eléctricos: compara cobre y aluminio, estima el calentamiento, revisa distancias y exporta un informe PDF sin subir datos del proyecto.
+
+![Busbar Calculator screenshot](/img/og/utilities/busbar-calculator.png)
+
+<a className="button button--primary" href="/utilities/busbar-calculator/" data-nobrokenlinkcheck>Abrir utilidad</a>
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/busbar-calculator/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Busbar Calculator",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Dimensiona barras colectoras rectangulares, compara candidatos de cobre y aluminio, predice temperatura, revisa distancias y cortocircuito, y exporta un informe PDF local.",
+  "url": "https://cadautoscript.com/utilities/busbar-calculator/",
+  "image": "https://cadautoscript.com/img/og/utilities/busbar-calculator.png",
+  "featureList": [
+    "Candidatos de perfil en cobre y aluminio",
+    "Vista previa de sección de barras",
+    "Predicción de temperatura",
+    "Revisiones de distancia y cortocircuito",
+    "Exportación PDF local"
+  ],
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "CAD AutoScript"
+  }
+}`}</script>
+</Head>
+
+## Qué hace
+
+La utilidad es una ayuda de ingeniería del lado del cliente para cuadros de baja tensión y sistemas de distribución. El usuario define AC/DC, tensión, corriente, fases, material, perfil rectangular, barras por fase, disposición, condición de refrigeración y supuestos de cortocircuito. La app recalcula densidad de corriente, resistencia, pérdidas, pronóstico de temperatura, envolvente del canal, estado de distancias y márgenes de cortocircuito.
+
+La aplicación está integrada como micro-app independiente en `static/utility-apps/busbar-calculator`. La shell de CAD AutoScript la muestra igual que las otras utilidades: con ficha de catálogo, artículo, reacciones, comentarios y capa de acceso común.
+
+## Cuándo usarla
+
+- Para seleccionar preliminarmente barras rectangulares de cobre o aluminio.
+- Para comparar una, dos, tres o cuatro barras por fase antes del layout del cuadro.
+- Para estimar pérdidas por metro y temperatura estacionaria con una refrigeración elegida.
+- Para detectar rápidamente distancias entre fases o márgenes de envolvente que requieren revisión.
+- Para preparar una nota PDF para discusión de diseño o revisión QA.
+
+## Entradas y salidas
+
+| Área | Entradas | Salidas |
+| --- | --- | --- |
+| Sistema eléctrico | AC/DC, tensión, corriente, frecuencia, fases | Densidad de corriente, resistencia, pérdidas por metro |
+| Material y perfil | Cobre, aluminio, ancho, espesor, barras por fase | Área, masa, ranking de candidatos |
+| Disposición | Horizontal/vertical, flatwise/edgewise, separaciones | Vista de sección, centros de fase, envolvente del canal |
+| Ambiente | Temperatura, refrigeración, multiplicador de envolvente | Temperatura estacionaria y curva prevista |
+| Cortocircuito | Corriente RMS, duración, pico, distancia entre soportes | Estado térmico y mecánico |
+| Informes | Proyecto, cuadro, tag, revisión, ingeniero | PDF, importación/exportación JSON, CAD payload |
+
+## Límites importantes
+
+Las constantes de material, ratings de perfiles, presets de refrigeración y reglas de distancia incluidas están marcadas como example-only. Sirven para probar el flujo, pero no son una base certificada de diseño. Para una liberación real, sustitúyalas por datos DIN, IEC, de fabricante o de proyecto aprobados y valide los resultados con las reglas de su organización.
+
+## Flujo recomendado
+
+1. Introduzca metadatos del proyecto y valores eléctricos.
+2. Elija cobre o aluminio y revise los perfiles propuestos.
+3. Ajuste barras por fase, orientación, distancias entre fases y márgenes de envolvente.
+4. Revise sección, densidad de corriente, pérdidas y pronóstico térmico.
+5. Agregue datos de cortocircuito cuando estén disponibles.
+6. Exporte un PDF o una configuración JSON para revisión posterior.
+
+## Herramientas relacionadas
+
+- [Bourdon Gauge Configurator](./bourdon-gauge-configurator)
+- [Industrial Thermometer Configurator](./industrial-thermometer-configurator)
+- [PDF Batch Signer](./pdf-batch-signer)
+
+## Feedback / reporte de error
+
+- [Abrir un issue en GitHub](https://github.com/YurMil/cadautoscript.com/issues)
+- En el mensaje indique el slug `busbar-calculator` para que podamos reproducir el problema.

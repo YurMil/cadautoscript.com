@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img" aria-labelledby="title desc">
+  <title id="title">Busbar Calculator icon</title>
+  <desc id="desc">Copper and aluminium busbars with electrical sizing marks.</desc>
+  <defs>
+    <linearGradient id="bg" x1="96" y1="80" x2="704" y2="720" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#102235"/>
+      <stop offset="1" stop-color="#071018"/>
+    </linearGradient>
+    <linearGradient id="copper" x1="192" y1="0" x2="608" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f59e4c"/>
+      <stop offset=".52" stop-color="#d96f2b"/>
+      <stop offset="1" stop-color="#8f3f1f"/>
+    </linearGradient>
+    <linearGradient id="aluminium" x1="176" y1="0" x2="624" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#e5edf5"/>
+      <stop offset=".5" stop-color="#93a7b9"/>
+      <stop offset="1" stop-color="#5e7080"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="24" stdDeviation="24" flood-color="#020617" flood-opacity=".35"/>
+    </filter>
+  </defs>
+  <rect width="800" height="800" rx="168" fill="url(#bg)"/>
+  <path d="M110 604h580M110 485h580M110 366h580M110 247h580" fill="none" stroke="#213a50" stroke-width="2"/>
+  <path d="M190 132v536M310 132v536M430 132v536M550 132v536" fill="none" stroke="#213a50" stroke-width="2"/>
+  <g filter="url(#shadow)">
+    <rect x="170" y="194" width="460" height="78" rx="20" fill="url(#copper)" stroke="#ffc27a" stroke-opacity=".55" stroke-width="4"/>
+    <rect x="170" y="328" width="460" height="78" rx="20" fill="url(#aluminium)" stroke="#f8fafc" stroke-opacity=".45" stroke-width="4"/>
+    <rect x="170" y="462" width="460" height="78" rx="20" fill="url(#copper)" stroke="#ffc27a" stroke-opacity=".55" stroke-width="4"/>
+  </g>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M198 627h404" stroke="#38bdf8" stroke-width="14"/>
+    <path d="M400 590v74" stroke="#38bdf8" stroke-width="14"/>
+    <path d="M252 628l-34 34M548 628l34 34" stroke="#38bdf8" stroke-width="14"/>
+    <path d="M214 154h372" stroke="#f8fafc" stroke-opacity=".7" stroke-width="5" stroke-dasharray="18 18"/>
+    <path d="M214 284h372M214 418h372" stroke="#f8fafc" stroke-opacity=".28" stroke-width="4" stroke-dasharray="12 18"/>
+  </g>
+  <g font-family="Inter, Arial, sans-serif" font-weight="800" text-anchor="middle">
+    <text x="400" y="248" fill="#fff7ed" font-size="48">A</text>
+    <text x="400" y="383" fill="#0f172a" font-size="48">V</text>
+    <text x="400" y="516" fill="#fff7ed" font-size="48">kA</text>
+  </g>
+  <g transform="translate(556 544)">
+    <rect x="0" y="0" width="136" height="136" rx="30" fill="#f8fafc" opacity=".96"/>
+    <rect x="25" y="25" width="86" height="18" rx="9" fill="#0f172a" opacity=".88"/>
+    <g fill="#0f172a" opacity=".82">
+      <rect x="27" y="61" width="20" height="20" rx="6"/>
+      <rect x="58" y="61" width="20" height="20" rx="6"/>
+      <rect x="89" y="61" width="20" height="20" rx="6"/>
+      <rect x="27" y="92" width="20" height="20" rx="6"/>
+      <rect x="58" y="92" width="20" height="20" rx="6"/>
+      <rect x="89" y="92" width="20" height="20" rx="6"/>
+    </g>
+  </g>
+</svg>

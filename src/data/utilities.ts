@@ -260,6 +260,17 @@ export const utilities: UtilityDescriptor[] = [
     thumbnail: '/img/utilities/blind-flange-calculator.png',
   },
   {
+    id: 'busbar-calculator',
+    name: 'Busbar Calculator',
+    description:
+      'Size copper and aluminium busbars, forecast heating, and export PDF reports locally.',
+    tech: 'React + Calc',
+    standards: 'DIN 43670 / 43671 · IEC 60664',
+    features: ['Cu/Al candidates', 'Thermal forecast', 'PDF report export'],
+    href: '/utilities/busbar-calculator/',
+    thumbnail: '/img/utilities/busbar-calculator.svg',
+  },
+  {
     id: 'pressure-vessel-dished-end-calc',
     name: 'Dished End Calculator',
     description:

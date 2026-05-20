@@ -37,6 +37,7 @@ const sidebars: SidebarsConfig = {
         'utilities/cylindrical-shell-rolling',
         'utilities/pressure-vessel-dished-end-calc',
         'utilities/blind-flange-calculator',
+        'utilities/busbar-calculator',
         'utilities/tube-sheet-generator',
         'utilities/webstep-viewer',
         'utilities/engineering-prompt-catalog',

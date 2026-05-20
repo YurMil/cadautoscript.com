@@ -210,6 +210,10 @@ export const ru: TranslationDict = {
       name: 'Blind Flange Calculator',
       description: 'Автовыбор класса PN и расчёт толщины по EN 13445-3 с оценкой массы.',
     },
+    'busbar-calculator': {
+      name: 'Busbar Calculator',
+      description: 'Расчёт медных и алюминиевых шин, прогноз нагрева и локальный экспорт PDF-отчётов.',
+    },
     'pressure-vessel-dished-end-calc': {
       name: 'Dished End Calculator',
       description: 'Расчёт днищ по DIN 28011 / 28013, добавление выносок штуцеров и печать QC-листа.',

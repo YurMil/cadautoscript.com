@@ -1,0 +1,103 @@
+---
+title: Busbar Calculator
+description: Rechteckige Kupfer- und Aluminiumsammelschienen auslegen, thermisch bewerten, Abstände prüfen und lokale PDF-Berichte exportieren.
+slug: /utilities/busbar-calculator
+image: /img/og/utilities/busbar-calculator.png
+keywords:
+  - Sammelschienen Rechner
+  - Kupferschiene
+  - Aluminiumschiene
+  - Schaltschrank
+  - thermische Berechnung
+  - Kurzschlussprüfung
+  - PDF Bericht
+---
+
+import Head from '@docusaurus/Head';
+
+# Busbar Calculator
+
+Busbar Calculator hilft bei der Vorbemessung rechteckiger Sammelschienen für Schaltschränke: Kupfer und Aluminium vergleichen, Erwärmung abschätzen, Abstände prüfen und einen PDF-Bericht lokal exportieren.
+
+![Busbar Calculator screenshot](/img/og/utilities/busbar-calculator.png)
+
+<a className="button button--primary" href="/utilities/busbar-calculator/" data-nobrokenlinkcheck>Utility öffnen</a>
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/busbar-calculator/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Busbar Calculator",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Rechteckige Sammelschienen auslegen, Kupfer- und Aluminiumvarianten vergleichen, Temperatur prognostizieren, Abstände und Kurzschlussannahmen prüfen und einen lokalen PDF-Bericht exportieren.",
+  "url": "https://cadautoscript.com/utilities/busbar-calculator/",
+  "image": "https://cadautoscript.com/img/og/utilities/busbar-calculator.png",
+  "featureList": [
+    "Profilkandidaten aus Kupfer und Aluminium",
+    "Querschnittsvorschau der Sammelschienen",
+    "Temperaturprognose",
+    "Abstands- und Kurzschlussprüfungen",
+    "Lokaler PDF-Export"
+  ],
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "CAD AutoScript"
+  }
+}`}</script>
+</Head>
+
+## Was die Utility macht
+
+Die Utility ist eine clientseitige Engineering-Hilfe für Niederspannungsschaltanlagen und Verteilerschränke. Sie erfassen AC/DC-System, Spannung, Strom, Phasenmodus, Material, rechteckiges Profil, Anzahl der Schienen pro Phase, Layout, Kühlannahme und Kurzschlussdaten. Danach berechnet die App Stromdichte, Widerstand, Verluste, Temperaturprognose, Kanalabmessungen, Abstandstatus und Kurzschlussreserven neu.
+
+Die Anwendung ist als eigenständiger micro-app unter `static/utility-apps/busbar-calculator` eingebunden. Die CAD AutoScript Shell zeigt sie wie die anderen Utilities mit Katalogeintrag, Artikel, Reaktionen, Kommentaren und gemeinsamer Zugriffsschicht.
+
+## Wann verwenden
+
+- Für die Vorwahl von Kupfer- oder Aluminium-Rechteckschienen.
+- Zum Vergleich von einer bis vier Schienen pro Phase vor dem Schaltschranklayout.
+- Zur Abschätzung von Verlusten pro Meter und stationärer Temperatur für eine Kühlannahme.
+- Zur schnellen Prüfung, welche Phasenabstände und Gehäuseabstände Aufmerksamkeit brauchen.
+- Für einen PDF-Rechenvermerk zur Designbesprechung oder QA-Prüfung.
+
+## Eingaben und Ergebnisse
+
+| Bereich | Eingaben | Ergebnisse |
+| --- | --- | --- |
+| Elektrisches System | AC/DC, Spannung, Strom, Frequenz, Phasen | Stromdichte, Widerstand, Verluste pro Meter |
+| Material und Profil | Kupfer, Aluminium, Breite, Dicke, Schienen pro Phase | Fläche, Masse, Kandidatenranking |
+| Layout | Horizontal/vertikal, flatwise/edgewise, Abstände | Querschnittsvorschau, Phasenzentren, Kanalhülle |
+| Umgebung | Temperatur, Kühlung, Gehäusemultiplikator | Stationäre Temperatur und Prognosekurve |
+| Kurzschluss | RMS-Strom, Dauer, Spitzenstrom, Stützabstand | Thermischer und mechanischer Status |
+| Berichte | Projekt, Schaltschrank, Tag, Revision, Ingenieur | PDF, JSON Import/Export, CAD payload |
+
+## Wichtige Grenzen
+
+Die mitgelieferten Materialdaten, Profilratings, Kühlpresets und Abstandsregeln sind als example-only markiert. Sie machen den Workflow testbar, bilden aber keine zertifizierte Auslegungsgrundlage. Für reale Freigaben müssen sie durch genehmigte DIN-, IEC-, Hersteller- oder Projektdaten ersetzt und gegen interne Engineering-Regeln validiert werden.
+
+## Typischer Ablauf
+
+1. Projektdaten und elektrische Werte eingeben.
+2. Kupfer oder Aluminium wählen und vorgeschlagene Profile prüfen.
+3. Schienen pro Phase, Orientierung, Phasenabstände und Gehäuseabstände anpassen.
+4. Querschnitt, Stromdichte, Verluste und Temperaturprognose kontrollieren.
+5. Kurzschlussannahmen ergänzen, wenn sie bekannt sind.
+6. PDF-Bericht oder JSON-Konfiguration für die weitere Prüfung exportieren.
+
+## Verwandte Tools
+
+- [Bourdon Gauge Configurator](./bourdon-gauge-configurator)
+- [Industrial Thermometer Configurator](./industrial-thermometer-configurator)
+- [PDF Batch Signer](./pdf-batch-signer)
+
+## Feedback / Fehlerbericht
+
+- [GitHub issue öffnen](https://github.com/YurMil/cadautoscript.com/issues)
+- Nennen Sie im Bericht den slug `busbar-calculator`, damit wir das Problem reproduzieren können.

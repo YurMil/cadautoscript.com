@@ -24,6 +24,7 @@ export type UtilityPageSlug =
   | 'react-table-editor'
   | 'focus-planner'
   | 'blind-flange-calculator'
+  | 'busbar-calculator'
   | 'pressure-vessel-dished-end-calc'
   | 'wikalog-analyzer';
 
@@ -411,6 +412,27 @@ export const utilityPageConfigs: Record<UtilityPageSlug, UtilityPageConfig> = {
       'Bolt circle data and weight estimate',
     ],
     scriptType: 'module',
+  },
+  'busbar-calculator': {
+    slug: 'busbar-calculator',
+    title: 'Busbar Calculator',
+    subtitle: 'Web utility - Busbar sizing, thermal forecast, and reports',
+    description:
+      'Size copper and aluminium rectangular busbars, compare bar-per-phase candidates, check clearances and short-circuit constraints, and export a local PDF report.',
+    about:
+      'Configure AC or DC rectangular busbar assemblies, compare copper and aluminium candidates, review current density, losses, temperature forecast, clearance status, and short-circuit checks, then export a PDF report without uploading project data.',
+    tags: ['Electrical panels', 'Busbars', 'Thermal sizing', 'PDF reports'],
+    note:
+      'Bundled datasets are example-only engineering aids. Replace them with approved DIN, IEC, vendor, or project data before final design release.',
+    features: [
+      'Copper and aluminium profile candidates',
+      'Live busbar cross-section and channel envelope',
+      'Temperature forecast and losses per meter',
+      'Clearance and short-circuit status checks',
+      'Local PDF, JSON, and CAD payload exports',
+    ],
+    scriptType: 'module',
+    appPath: '/utility-apps/busbar-calculator/',
   },
   'pressure-vessel-dished-end-calc': {
     slug: 'pressure-vessel-dished-end-calc',

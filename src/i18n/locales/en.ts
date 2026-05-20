@@ -209,6 +209,10 @@ export const en = {
       name: 'Blind Flange Calculator',
       description: 'Auto-select PN class and calculate EN 13445-3 thickness with weight estimates.',
     },
+    'busbar-calculator': {
+      name: 'Busbar Calculator',
+      description: 'Size copper and aluminium busbars, forecast heating, and export PDF reports locally.',
+    },
     'pressure-vessel-dished-end-calc': {
       name: 'Dished End Calculator',
       description: 'Size DIN 28011 / 28013 heads, add nozzle callouts, and print a QC worksheet.',

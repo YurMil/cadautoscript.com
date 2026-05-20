@@ -1,0 +1,103 @@
+---
+title: Busbar Calculator
+description: Size copper and aluminium rectangular busbars, compare thermal and clearance checks, and export local PDF reports.
+slug: /utilities/busbar-calculator
+image: /img/og/utilities/busbar-calculator.png
+keywords:
+  - busbar calculator
+  - copper busbar
+  - aluminium busbar
+  - electrical panel
+  - thermal forecast
+  - short-circuit check
+  - PDF report
+---
+
+import Head from '@docusaurus/Head';
+
+# Busbar Calculator
+
+Size rectangular busbar assemblies in the browser, compare copper and aluminium candidates, review heating and clearance status, and export a PDF report without uploading project data.
+
+![Busbar Calculator screenshot](/img/og/utilities/busbar-calculator.png)
+
+<a className="button button--primary" href="/utilities/busbar-calculator/" data-nobrokenlinkcheck>Open utility</a>
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/busbar-calculator/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Busbar Calculator",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Size rectangular busbar assemblies, compare copper and aluminium candidates, forecast temperature rise, check clearance and short-circuit constraints, and export a local PDF report.",
+  "url": "https://cadautoscript.com/utilities/busbar-calculator/",
+  "image": "https://cadautoscript.com/img/og/utilities/busbar-calculator.png",
+  "featureList": [
+    "Copper and aluminium profile candidates",
+    "Busbar cross-section preview",
+    "Temperature forecast",
+    "Clearance and short-circuit checks",
+    "Local PDF report export"
+  ],
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "CAD AutoScript"
+  }
+}`}</script>
+</Head>
+
+## What it does
+
+Busbar Calculator is a client-side engineering aid for low-voltage panel and distribution busbar studies. Enter the electrical system, rated voltage, current, phase mode, material, rectangular profile, bar count, layout, cooling preset, and short-circuit assumptions. The utility then recalculates the selected profile, current density, resistance, losses, temperature forecast, channel envelope, clearance rule status, and short-circuit margins.
+
+The app is built as a standalone micro-application under `static/utility-apps/busbar-calculator`. The CAD AutoScript shell embeds it in an iframe, so the calculator can evolve independently while sharing the same catalog, article, reactions, comments, and access layer as the other utilities.
+
+## When to use it
+
+- Preliminary selection of copper or aluminium rectangular busbar sizes.
+- Comparing one, two, three, or four bars per phase before panel layout work.
+- Estimating losses per meter and steady-state temperature for a chosen cooling assumption.
+- Checking whether phase gaps and enclosure clearances need review.
+- Producing a quick PDF calculation note for design discussion or QA review.
+
+## Inputs and outputs
+
+| Area | Inputs | Outputs |
+| --- | --- | --- |
+| Electrical system | AC/DC, voltage, current, frequency, phase mode | Current density, resistance, losses per meter |
+| Material and profile | Copper, aluminium, width, thickness, bars per phase | Area, mass, candidate ranking |
+| Layout | Horizontal/vertical arrangement, flatwise/edgewise bars, gaps | Cross-section preview, phase centers, channel envelope |
+| Environment | Ambient temperature, cooling preset, enclosure multiplier | Steady-state temperature, temperature forecast chart |
+| Short circuit | RMS current, duration, peak current, support spacing | Thermal and mechanical pass/warn/fail status |
+| Reports | Project, panel, tag, revision, engineer | PDF report, JSON import/export, CAD payload copy |
+
+## Important limits
+
+The bundled material constants, profile ratings, cooling presets, and clearance rules are marked as example-only development datasets. They make the workflow testable, but they are not a certified design basis. Before releasing a real panel design, replace them with approved DIN, IEC, vendor, or project-specific data and validate the results against your engineering rules.
+
+## Workflow
+
+1. Enter project metadata and electrical ratings.
+2. Pick copper or aluminium and review the proposed profile candidates.
+3. Adjust bars per phase, phase spacing, orientation, and enclosure margins.
+4. Check the cross-section, current density, losses, and temperature forecast.
+5. Add short-circuit assumptions when they are known.
+6. Export a PDF report or JSON configuration for later review.
+
+## Related tools
+
+- [Bourdon Gauge Configurator](./bourdon-gauge-configurator)
+- [Industrial Thermometer Configurator](./industrial-thermometer-configurator)
+- [PDF Batch Signer](./pdf-batch-signer)
+
+## Feedback / bug report
+
+- [Open a GitHub issue](https://github.com/YurMil/cadautoscript.com/issues)
+- Email or DM with the slug `busbar-calculator` so we can reproduce the issue.
