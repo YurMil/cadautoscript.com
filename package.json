@@ -97,7 +97,8 @@
   "pnpm": {
     "onlyBuiltDependencies": [
       "core-js",
-      "core-js-pure"
+      "core-js-pure",
+      "sharp"
     ]
   }
 }
