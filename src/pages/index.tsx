@@ -11,6 +11,7 @@ import {usePauseWhenOffscreen} from '@site/src/hooks/usePauseWhenOffscreen';
 import {listUtilityUsage, type UtilityUsageStat} from '@site/src/shared/utility-usage';
 import styles from './index.module.css';
 import AnimatedLogo from '@site/src/components/AnimatedLogo/AnimatedLogo';
+import ThumbnailPicture from '@site/src/components/ThumbnailPicture';
 import {useUserSettings} from '@site/src/contexts/UserSettingsContext';
 import {useI18n} from '@site/src/contexts/I18nContext';
 import HreflangHead from '@site/src/components/I18n/HreflangHead';
@@ -96,14 +97,12 @@ function UtilityCard({utility, index, isAuthenticated, authChecked, utilitiesPub
           className={styles.iconLink}
           title={isLocked ? 'Sign in to open' : `Open ${utility.name}`}
         >
-          <img
+          <ThumbnailPicture
             src={utility.thumbnail}
             alt={utility.name}
             className={styles.utilityIcon}
-            loading="lazy"
-            decoding="async"
-            width="56"
-            height="56"
+            width={56}
+            height={56}
           />
           <span className={styles.iconOverlay}>
             {isLocked ? '🔒' : '▶'}
@@ -607,14 +606,12 @@ export default function Home(): ReactNode {
                     }}
                   >
                     {utility.thumbnail ? (
-                      <img
+                      <ThumbnailPicture
                         src={utility.thumbnail}
                         alt={utility.name}
                         className={styles.iconTileImg}
-                        loading="lazy"
-                        decoding="async"
-                        width="60"
-                        height="60"
+                        width={60}
+                        height={60}
                       />
                     ) : (
                       <span className={styles.iconTilePlaceholder}>
