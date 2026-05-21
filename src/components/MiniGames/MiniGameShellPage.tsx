@@ -29,7 +29,7 @@ export default function MiniGameShellPage(config: MiniGamePageConfig) {
   const iframeSrc = useBaseUrl(`/mini-games/${slug}/app.html`);
   const stylesHref = useBaseUrl('/styles.css');
   const shellCssHref = useBaseUrl('/utilities/util-shell.css');
-  const shellLightHref = useBaseUrl('/utilities/util-shell.light.css');
+  // Light-theme overrides are now merged into util-shell.css.
   const shellScriptSrc = useBaseUrl('/utilities/util-shell.js');
 
   const heroLinks: HeroLink[] = [
@@ -65,7 +65,6 @@ export default function MiniGameShellPage(config: MiniGamePageConfig) {
         <meta property="og:url" content={canonicalUrl} />
         <link rel="stylesheet" href={stylesHref} />
         <link rel="stylesheet" href={shellCssHref} />
-        <link rel="stylesheet" href={shellLightHref} />
         {scriptType === 'module' ? (
           <script type="module" src={shellScriptSrc}></script>
         ) : (

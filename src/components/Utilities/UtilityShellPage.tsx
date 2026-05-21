@@ -40,7 +40,7 @@ export default function UtilityShellPage({tool, ...config}: UtilityShellPageProp
   const iframeSrc = useBaseUrl(appPath ?? `/utility-apps/${slug}/app.html`);
   const stylesHref = useBaseUrl('/styles.css');
   const shellCssHref = useBaseUrl('/utilities/util-shell.css');
-  const shellLightHref = useBaseUrl('/utilities/util-shell.light.css');
+  // Light-theme overrides are now merged into util-shell.css.
   const shellScriptSrc = useBaseUrl('/utilities/util-shell.js');
   const {user, isAuthenticated, authChecked} = useAuthStatus();
   const {utilitiesPublicAccess} = useUtilitiesAccess();
@@ -115,7 +115,6 @@ export default function UtilityShellPage({tool, ...config}: UtilityShellPageProp
         <meta property="og:url" content={canonicalUrl} />
         <link rel="stylesheet" href={stylesHref} />
         <link rel="stylesheet" href={shellCssHref} />
-        <link rel="stylesheet" href={shellLightHref} />
         {scriptType === 'module' ? (
           <script type="module" src={shellScriptSrc}></script>
         ) : (

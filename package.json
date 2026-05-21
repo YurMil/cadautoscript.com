@@ -11,8 +11,10 @@
   "scripts": {
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
+    "prebuild": "node scripts/optimize-thumbnails.js",
     "build": "docusaurus build",
     "postbuild": "node scripts/sitemap-sections.js",
+    "optimize:thumbnails": "node scripts/optimize-thumbnails.js",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
@@ -73,6 +75,7 @@
     "@types/react-dom": "^19.2.3",
     "gh-pages": "^6.3.0",
     "postcss": "^8.5.6",
+    "sharp": "^0.34.5",
     "tailwindcss": "^4.2.1",
     "typescript": "~5.6.2"
   },
@@ -94,7 +97,8 @@
   "pnpm": {
     "onlyBuiltDependencies": [
       "core-js",
-      "core-js-pure"
+      "core-js-pure",
+      "sharp"
     ]
   }
 }
