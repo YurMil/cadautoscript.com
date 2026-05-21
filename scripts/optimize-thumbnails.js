@@ -75,12 +75,15 @@ async function main() {
     return;
   }
 
+  // sharp manages its own libvips thread pool, so running conversions in
+  // parallel is safe and noticeably faster than a sequential loop.
+  const all = await Promise.all(pngs.map((png) => convertOne(png)));
+
   let generated = 0;
   let skipped = 0;
   let totalOut = 0;
 
-  for (const png of pngs) {
-    const results = await convertOne(png);
+  for (const results of all) {
     for (const r of results) {
       if (r.skipped) {
         skipped += 1;
