@@ -1,5 +1,17 @@
-import type {ReactNode} from 'react';
-import EcoSortGame from '@site/src/components/EcoSortGame';
+import React, {Suspense, lazy, type ReactNode} from 'react';
+import BrowserOnly from '@docusaurus/BrowserOnly';
+
+const EcoSortGame = lazy(() => import('@site/src/components/EcoSortGame'));
+
+const LazyEcoSortGame = (): ReactNode => (
+  <BrowserOnly fallback={<div className="utility-loading" aria-busy="true" />}>
+    {() => (
+      <Suspense fallback={<div className="utility-loading" aria-busy="true" />}>
+        <EcoSortGame />
+      </Suspense>
+    )}
+  </BrowserOnly>
+);
 
 export type MiniGameSlug =
   | 'engineering-blueprint-ncr'
@@ -128,6 +140,6 @@ export const miniGamePageConfigs: Record<MiniGameSlug, MiniGamePageConfig> = {
     tags: ['Mini game', 'Recycling', 'First-person'],
     note: 'Runs in-browser with Three.js + Rapier (WASM). No sign-in required.',
     features: ['Drag-look movement', 'Dynamic weather effects', 'Trajectory preview and scoring'],
-    stage: <EcoSortGame />,
+    stage: <LazyEcoSortGame />,
   },
 };
