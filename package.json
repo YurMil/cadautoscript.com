@@ -101,6 +101,9 @@
       "core-js",
       "core-js-pure",
       "sharp"
-    ]
+    ],
+    "overrides": {
+      "dompurify@<3.4.5": "^3.4.5"
+    }
   }
 }
