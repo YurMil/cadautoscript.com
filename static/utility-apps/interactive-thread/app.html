@@ -739,7 +739,7 @@
         function populateList(element, items) {
             if (items.length > 0) {
                 element.parentElement.parentElement.style.display = 'block';
-                element.innerHTML = items.map(item => `<li>${item}</li>`).join('');
+                element.innerHTML = items.map(item => `<li>${escHtml(item)}</li>`).join('');
             } else {
                 element.parentElement.parentElement.style.display = 'none';
             }
@@ -776,11 +776,11 @@
             selects.right.size.value = r_sz || "1/2";
         }
 
-        // Escape HTML entities. Used to sanitize dropdown .value before
+        // Escape HTML entities. Used to sanitize dropdown .value (and anything
+        // downstream of it via evaluateCompatibility().notes) before
         // interpolating into innerHTML (CodeQL: js/xss-through-dom).
-        const escHtml = (s) => String(s).replace(/[&<>"']/g, (c) => ({
-            '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-        }[c]));
+        const HTML_ESCAPES = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+        const escHtml = (s) => String(s).replace(/[&<>"']/g, (c) => HTML_ESCAPES[c]);
 
         // Функция: Обновление результата
         function updateResult() {
@@ -806,11 +806,13 @@
             // 2. Обновить описание пары (escape user-controlled select values)
             results.pair.innerHTML = `${tr.selectedPair} <b>${escHtml(left.standard)} ${tr.maleShort}</b> → <b>${escHtml(right.standard)} ${tr.femaleShort}</b> (${escHtml(left.size)}")`;
 
-            // 3. Обновить примечания (Alert)
+            // 3. Обновить примечания (Alert) — escape notes; evaluateCompatibility
+            //    interpolates select sizes into "Size mismatch" strings (taint flow
+            //    from .value → notes → innerHTML).
             if (result.notes.length > 0) {
                 results.notes.style.display = 'block';
                 results.notes.className = `alert ${meta.alertClass}`;
-                results.notesList.innerHTML = `<ul class="list-disc ml-4 space-y-1">${result.notes.map(n => `<li>${n}</li>`).join('')}</ul>`;
+                results.notesList.innerHTML = `<ul class="list-disc ml-4 space-y-1">${result.notes.map(n => `<li>${escHtml(n)}</li>`).join('')}</ul>`;
             } else {
                 results.notes.style.display = 'none';
             }
@@ -819,11 +821,12 @@
             populateList(results.sealList, result.seal);
             populateList(results.adaptersList, result.adapters);
 
-            // 5. Обновить нормативы
+            // 5. Обновить нормативы — defensive escape (currently static, but
+            //    same downstream sink as notes).
             if (result.standards.length > 0) {
                 results.standards.style.display = 'flex';
                 results.standardsList.innerHTML = result.standards.map(s =>
-                    `<span class="badge bg-slate-100 text-slate-800 border-slate-300">${s}</span>`
+                    `<span class="badge bg-slate-100 text-slate-800 border-slate-300">${escHtml(s)}</span>`
                 ).join('');
             } else {
                 results.standards.style.display = 'none';
