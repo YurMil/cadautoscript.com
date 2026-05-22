@@ -62,9 +62,16 @@ const config: Config = {
         name: 'docusaurus-replicad-config',
         configureWebpack(_config, _isServer) {
           return {
+            // replicad-opencascadejs requires async-WebAssembly streaming.
             experiments: {
               asyncWebAssembly: true,
-              layers: true,
+            },
+            // Vendor wasm bindings reference __filename / __dirname. webpack 5
+            // defaults to 'warn-mock', which mocks them AND emits a warning per
+            // locale build. 'mock' keeps the same runtime behaviour silently.
+            node: {
+              __filename: 'mock',
+              __dirname: 'mock',
             },
             resolve: {
               fallback: {
