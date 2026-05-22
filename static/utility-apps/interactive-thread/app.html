@@ -776,6 +776,12 @@
             selects.right.size.value = r_sz || "1/2";
         }
 
+        // Escape HTML entities. Used to sanitize dropdown .value before
+        // interpolating into innerHTML (CodeQL: js/xss-through-dom).
+        const escHtml = (s) => String(s).replace(/[&<>"']/g, (c) => ({
+            '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+        }[c]));
+
         // Функция: Обновление результата
         function updateResult() {
             const tr = translations[currentLang];
@@ -797,8 +803,8 @@
             results.badge.className = `badge ${meta.badgeClass}`;
             results.badge.innerHTML = `<i data-lucide="${meta.icon}" class="w-3.5 h-3.5"></i> ${meta.label}`;
 
-            // 2. Обновить описание пары
-            results.pair.innerHTML = `${tr.selectedPair} <b>${left.standard} ${tr.maleShort}</b> → <b>${right.standard} ${tr.femaleShort}</b> (${left.size}")`;
+            // 2. Обновить описание пары (escape user-controlled select values)
+            results.pair.innerHTML = `${tr.selectedPair} <b>${escHtml(left.standard)} ${tr.maleShort}</b> → <b>${escHtml(right.standard)} ${tr.femaleShort}</b> (${escHtml(left.size)}")`;
 
             // 3. Обновить примечания (Alert)
             if (result.notes.length > 0) {
