@@ -2,12 +2,23 @@ import React, {Suspense, lazy, type ReactNode} from 'react';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 
 const EcoSortGame = lazy(() => import('@site/src/components/EcoSortGame'));
+const SmashBottlesGame = lazy(() => import('@site/src/components/SmashBottlesGame'));
 
 const LazyEcoSortGame = (): ReactNode => (
   <BrowserOnly fallback={<div className="utility-loading" aria-busy="true" />}>
     {() => (
       <Suspense fallback={<div className="utility-loading" aria-busy="true" />}>
         <EcoSortGame />
+      </Suspense>
+    )}
+  </BrowserOnly>
+);
+
+const LazySmashBottlesGame = (): ReactNode => (
+  <BrowserOnly fallback={<div className="utility-loading" aria-busy="true" />}>
+    {() => (
+      <Suspense fallback={<div className="utility-loading" aria-busy="true" />}>
+        <SmashBottlesGame />
       </Suspense>
     )}
   </BrowserOnly>
@@ -121,6 +132,7 @@ export const miniGamePageConfigs: Record<MiniGameSlug, MiniGamePageConfig> = {
     tags: ['Mini game', 'Physics', 'Destruction'],
     note: 'Runs in-browser with Three.js + cannon-es. No sign-in required.',
     features: ['Click-to-throw stone launcher', 'Seasonal world variations', 'Glass shatter physics'],
+    stage: <LazySmashBottlesGame />,
   },
   'eco-sort-game': {
     slug: 'eco-sort-game',
