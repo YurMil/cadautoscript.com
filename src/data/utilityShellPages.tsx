@@ -446,6 +446,7 @@ export const utilityPageConfigs: Record<UtilityPageSlug, UtilityPageConfig> = {
     note: 'All calculations run in the browser. Use the QC report view to print or save as PDF.',
     features: ['DIN 28011 / 28013 geometry presets', 'Nozzle offset callouts', 'Printable QC worksheet'],
     scriptType: 'module',
+    appPath: '/utility-apps/pressure-vessel-dished-end-calc/app.html',
   },
   'wikalog-analyzer': {
     slug: 'wikalog-analyzer',
