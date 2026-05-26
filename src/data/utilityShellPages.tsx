@@ -412,6 +412,7 @@ export const utilityPageConfigs: Record<UtilityPageSlug, UtilityPageConfig> = {
       'Bolt circle data and weight estimate',
     ],
     scriptType: 'module',
+    appPath: '/utility-apps/blind-flange-calculator/app.html',
   },
   'busbar-calculator': {
     slug: 'busbar-calculator',
