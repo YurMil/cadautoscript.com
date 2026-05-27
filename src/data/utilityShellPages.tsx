@@ -26,6 +26,7 @@ export type UtilityPageSlug =
   | 'blind-flange-calculator'
   | 'busbar-calculator'
   | 'pressure-vessel-dished-end-calc'
+  | 'gear-pair-calculator'
   | 'wikalog-analyzer';
 
 export type UtilityPageConfig = {
@@ -448,6 +449,28 @@ export const utilityPageConfigs: Record<UtilityPageSlug, UtilityPageConfig> = {
     features: ['DIN 28011 / 28013 geometry presets', 'Nozzle offset callouts', 'Printable QC worksheet'],
     scriptType: 'module',
     appPath: '/utility-apps/pressure-vessel-dished-end-calc/app.html',
+  },
+  'gear-pair-calculator': {
+    slug: 'gear-pair-calculator',
+    title: 'Visual Gear Pair Calculator',
+    subtitle: 'Web utility — Spur gear sizing and CAD exports',
+    description:
+      'Calculate external spur gear pair geometry, search candidates by target ratio, check forces and bending stress, and export PDF, DXF, and STEP files locally.',
+    about:
+      'Configure external cylindrical involute spur gears, solve profile shifts and operating center distance, analyze mesh safety and contact ratios, and export manufacturing DXF profiles and 3D STEP CAD models entirely in your browser.',
+    tags: ['Gears', 'CAD', 'DXF', 'STEP', 'PDF reports'],
+    note:
+      'STEP models are generated locally using OpenCascade.js WebAssembly. All calculations run client-side.',
+    features: [
+      'Profile shift and operating center distance solver',
+      'Ratio-driven gear set proposal engine',
+      'Interactive 2D mesh & 3D WebGL preview',
+      'Lewis tooth bending stress validation',
+      'DXF profile and STEP 3D CAD model exports',
+      'Print-ready PDF calculation reports with formulas'
+    ],
+    scriptType: 'module',
+    appPath: '/utility-apps/gear-pair-calculator/app.html',
   },
   'wikalog-analyzer': {
     slug: 'wikalog-analyzer',

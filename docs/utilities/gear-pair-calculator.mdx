@@ -1,0 +1,74 @@
+---
+title: Visual Gear Pair Calculator
+description: Calculate external cylindrical spur gear pair geometry, solve profile shifts, evaluate preliminary forces/bending stress, and export DXF or STEP files.
+slug: /utilities/gear-pair-calculator
+image: /img/og/utilities/gear-pair-calculator.png
+keywords:
+  - gear calculator
+  - spur gear design
+  - profile shift solver
+  - dxf gear profile
+  - step gear model
+  - gear bending check
+  - engineering calculators
+---
+
+import Head from '@docusaurus/Head';
+
+# Visual Gear Pair Calculator
+
+Calculate external cylindrical spur gear pair geometry, solve profile shifts and operating center distance, inspect the engaged tooth mesh in 2D and 3D, check forces and preliminary bending safety, and export manufacturing DXF files or 3D STEP CAD files—all locally in the browser.
+
+![Gear Calculator Preview](/img/og/utilities/gear-pair-calculator.png)
+
+<a className="button button--primary" href="/utilities/gear-pair-calculator/" data-nobrokenlinkcheck>Open utility</a>
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/gear-pair-calculator/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Visual Gear Pair Calculator",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Calculate external spur gear pair geometry, solve profile shifts, check mesh safety, and export DXF / STEP models.",
+  "url": "https://cadautoscript.com/utilities/gear-pair-calculator/",
+  "image": "https://cadautoscript.com/img/og/utilities/gear-pair-calculator.png"
+}`}</script>
+</Head>
+
+## Key Features
+
+- **Geometry Solver**: Handles standard and profile-shifted ($x_1, x_2$) external spur gears. Computes operating pressure angle $\alpha_w$ and center distance $a_w$.
+- **Mesh Integrity Checks**: Instant feedback on contact ratio, undercut warnings, gear-body/bore checks, and teeth interference.
+- **Ratio Search Engine**: Suggests suitable combinations of tooth counts and modules to achieve a desired transmission ratio and center distance.
+- **Engaged 2D & 3D Previews**: Dynamic previews with animation speeds matching input RPM, allowing visual inspection of mesh quality.
+- **CAD Exports**: Export 2D closed polylines to DXF (with layers for profiles, pitch/base/outside/root circles) and 3D solids to STEP via a browser Web Worker (OpenCascade.js).
+- **PDF Calculation Reports**: Generates print-ready documentation including formula derivations, warnings, assumptions, and dimension tables.
+
+## Supported Calculations
+
+| Area | Parameters | Standards & Outputs |
+|---|---|---|
+| **Geometry** | Module, teeth count, pressure angle, shifts, backlash, face width | Pitch, base, outside, root diameters, operating center distance |
+| **Mesh Quality** | Contact ratio, undercut bounds, overlap constraints | Transverse contact ratio ($\epsilon_\alpha$), profile integrity |
+| **Loads & Forces** | Torque, speed (RPM), efficiency, service factor | Tangential force ($F_t$), radial ($F_r$), normal ($F_n$), pitch velocity ($v$) |
+| **Bending Safety** | Allowable material stresses, service assumptions | Estimated bending stress ($\sigma_b$) and safety factor via Lewis check |
+
+## Important Notice
+
+The calculations, stress estimates, and CAD files provided by this utility are for preliminary engineering reference, prototyping, and CAD mockups. Bending checks use a simplified Lewis formula and do not constitute a full ISO 6336 or AGMA rating. Always verify your final gear design against certified standards using specialized software before production release.
+
+## Basic Workflow
+
+1. **Choose Sizing Mode**: Select **Existing Gear Pair Check** to review specific dimensions, or **Ratio-driven Sizing** to search for candidates.
+2. **Configure Sizing Inputs**: Define basic gear parameters: module, pressure angle, tooth counts, face width, and profile shifts.
+3. **Verify Warnings & Validation**: Ensure the contact ratio badge is green ($> 1.4$) and that no undercut or interference errors are flagged.
+4. **Inspect Visual Engagements**: Check the 2D mesh sketch and 3D preview tabs. Toggle the animation to verify gear engagement direction.
+5. **Download CAD and Reports**: Export DXF files for cutting profiles, STEP files for CAD assemblies, and the PDF report for project records.
+
+## Related Utilities
+
+- [Tube Sheet Generator](./tube-sheet-generator)
+- [WebSTEP Viewer](./webstep-viewer)
+- [Blind Flange Calculator](./blind-flange-calculator)
