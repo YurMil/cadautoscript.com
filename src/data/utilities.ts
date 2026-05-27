@@ -282,6 +282,17 @@ export const utilities: UtilityDescriptor[] = [
     thumbnail: '/img/utilities/pressure-vessel-dished-end-calc.png',
   },
   {
+    id: 'gear-pair-calculator',
+    name: 'Visual Gear Pair Calculator',
+    description:
+      'Calculate external spur gear pair geometry, solve profile shifts, check forces, and export DXF / STEP files.',
+    tech: 'Three.js + R3F + WASM',
+    standards: 'ISO 21771-1 · ISO 6336 · AGMA',
+    features: ['Operating geometry solver', '2D / 3D engaged preview', 'DXF + STEP exports', 'PDF report with formulas'],
+    href: '/utilities/gear-pair-calculator/',
+    thumbnail: '/img/utilities/gear-pair-calculator.png',
+  },
+  {
     id: 'wikalog-analyzer',
     name: 'WIKA Log Analyzer',
     description:

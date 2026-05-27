@@ -1,0 +1,75 @@
+{
+  "slug": "gear-pair-calculator",
+  "entry": "app.html",
+  "generatedAt": "2026-05-27T06:17:56.768Z",
+  "files": [
+    {
+      "path": "app.html",
+      "bytes": 414
+    },
+    {
+      "path": "assets/cad-worker-BCTIDUaZ.js",
+      "bytes": 3228
+    },
+    {
+      "path": "assets/cad-worker-BCTIDUaZ.js.map",
+      "bytes": 12734
+    },
+    {
+      "path": "assets/html2canvas.esm-QH1iLAAe.js",
+      "bytes": 202432
+    },
+    {
+      "path": "assets/html2canvas.esm-QH1iLAAe.js.map",
+      "bytes": 603247
+    },
+    {
+      "path": "assets/index-CHJvZimC.js",
+      "bytes": 1552562
+    },
+    {
+      "path": "assets/index-CHJvZimC.js.map",
+      "bytes": 6473687
+    },
+    {
+      "path": "assets/index-OEsD9RB4.css",
+      "bytes": 9155
+    },
+    {
+      "path": "assets/index.es-DNihWKcy.js",
+      "bytes": 159644
+    },
+    {
+      "path": "assets/index.es-DNihWKcy.js.map",
+      "bytes": 649180
+    },
+    {
+      "path": "assets/purify.es-BG-cG56M.js",
+      "bytes": 26121
+    },
+    {
+      "path": "assets/purify.es-BG-cG56M.js.map",
+      "bytes": 118968
+    },
+    {
+      "path": "assets/replicad_single-BXInhmaQ.wasm",
+      "bytes": 10800306
+    },
+    {
+      "path": "assets/replicad_single-C8eAV7Qf.js",
+      "bytes": 82442
+    },
+    {
+      "path": "assets/replicad_single-C8eAV7Qf.js.map",
+      "bytes": 268576
+    },
+    {
+      "path": "assets/replicad-TVkMgKFd.js",
+      "bytes": 287731
+    },
+    {
+      "path": "assets/replicad-TVkMgKFd.js.map",
+      "bytes": 1041853
+    }
+  ]
+}
