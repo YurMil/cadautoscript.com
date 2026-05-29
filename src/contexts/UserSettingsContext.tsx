@@ -59,9 +59,18 @@ function getInitialSettings(): UserSettings {
 }
 
 export function UserSettingsProvider({children}: {children: React.ReactNode}) {
-  const [settings, setSettings] = useState<UserSettings>(getInitialSettings);
+  // Start from deterministic defaults so the server-rendered HTML matches the
+  // client's first render. Reading localStorage during the initial render would
+  // produce different markup on the client (e.g. the compact/detailed view
+  // toggle) and trigger a hydration mismatch (React error #418).
+  const [settings, setSettings] = useState<UserSettings>(defaultSettings);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<User | null>(null);
+
+  // Apply guest preferences from localStorage only after hydration.
+  useEffect(() => {
+    setSettings((prev) => ({...prev, ...getInitialSettings()}));
+  }, []);
 
   useEffect(() => {
     let isMounted = true;
