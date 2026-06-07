@@ -1,4 +1,16 @@
-/* Share Tech Mono is loaded via <link> preconnect+stylesheet declared in docusaurus.config.ts to avoid an @import render-blocking chain. */
+/*
+ * Share Tech Mono is self-hosted (static/fonts) instead of loaded from Google
+ * Fonts. It is only used by the decorative blueprint SVG on the homepage hero,
+ * so the browser fetches the woff2 lazily on that page only and never on
+ * docs/blog pages — and there is no render-blocking external stylesheet/connect.
+ */
+@font-face {
+  font-family: 'Share Tech Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/share-tech-mono-latin.woff2') format('woff2');
+}
 @layer theme, base, components, utilities;
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/utilities.css" layer(utilities);

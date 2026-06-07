@@ -11,10 +11,11 @@
   "scripts": {
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
-    "prebuild": "node scripts/optimize-thumbnails.js",
+    "prebuild": "node scripts/optimize-thumbnails.js && node scripts/optimize-screenshots.js",
     "build": "docusaurus build",
     "postbuild": "node scripts/sitemap-sections.js",
     "optimize:thumbnails": "node scripts/optimize-thumbnails.js",
+    "optimize:screenshots": "node scripts/optimize-screenshots.js",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",

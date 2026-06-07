@@ -23,22 +23,9 @@ const config: Config = {
     AUTH_REDIRECT_URL: process.env.AUTH_REDIRECT_URL,
   },
   onBrokenLinks: 'ignore',
-  headTags: [
-    {
-      tagName: 'link',
-      attributes: {rel: 'preconnect', href: 'https://fonts.googleapis.com'},
-    },
-    {
-      tagName: 'link',
-      attributes: {rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: 'anonymous'},
-    },
-  ],
-  stylesheets: [
-    {
-      href: 'https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap',
-      rel: 'stylesheet',
-    },
-  ],
+  // Share Tech Mono is self-hosted via @font-face in src/css/custom.css
+  // (see static/fonts) and only used by the homepage hero SVG, so there is no
+  // render-blocking Google Fonts stylesheet/preconnect on any page.
   markdown: {
     hooks: {
       onBrokenMarkdownLinks: 'ignore',
