@@ -41,9 +41,16 @@ let clientPromise: Promise<SupabaseClient> | null = null;
  */
 export function getSupabase(): Promise<SupabaseClient> {
   if (!clientPromise) {
-    clientPromise = import('@supabase/supabase-js').then(({createClient}) =>
-      createClient(SUPABASE_URL as string, SUPABASE_ANON_KEY as string),
-    );
+    clientPromise = import('@supabase/supabase-js')
+      .then(({createClient}) =>
+        createClient(SUPABASE_URL as string, SUPABASE_ANON_KEY as string),
+      )
+      .catch((err) => {
+        // Allow a later call to retry the dynamic import instead of being
+        // permanently stuck on a rejected promise (e.g. transient CDN failure).
+        clientPromise = null;
+        throw err;
+      });
   }
   return clientPromise;
 }
@@ -59,6 +66,13 @@ function lazyBuilder(getRoot: () => Promise<any>): any {
     {},
     {
       get(_target, prop: string | symbol) {
+        // Inspection/serialization (util.inspect & console.log probe symbol
+        // keys like Symbol.toStringTag/inspect; JSON.stringify probes toJSON).
+        // Returning a chainable function for those would recurse infinitely, so
+        // answer `undefined`. Neither is a PostgREST query method.
+        if (typeof prop === 'symbol' || prop === 'toJSON') {
+          return undefined;
+        }
         if (prop === 'then') {
           return (onFulfilled?: any, onRejected?: any) =>
             getRoot()
@@ -98,6 +112,54 @@ function lazyBuilder(getRoot: () => Promise<any>): any {
   return proxy;
 }
 
+/**
+ * Lazy RealtimeChannel: records `.on(...)` bindings synchronously, then on
+ * `.subscribe()` loads the library, builds the real channel, replays the
+ * bindings and subscribes. `removeChannel` (below) tears it down, honouring a
+ * teardown that happens before the library finishes loading.
+ */
+function lazyChannel(name: string, opts?: unknown): any {
+  const bindings: Array<[string, unknown[]]> = [];
+  let realChannel: any = null;
+  let cancelled = false;
+  const channel: any = {
+    on: (...args: unknown[]) => {
+      bindings.push(['on', args]);
+      return channel;
+    },
+    subscribe: (callback?: (status: string) => void) => {
+      void getSupabase()
+        .then((client) => {
+          if (cancelled) {
+            return;
+          }
+          let rc =
+            opts !== undefined
+              ? (client as any).channel(name, opts)
+              : (client as any).channel(name);
+          for (const [method, args] of bindings) {
+            rc = rc[method](...args);
+          }
+          realChannel = rc;
+          rc.subscribe(callback);
+        })
+        .catch((err) => {
+          console.error(
+            '[Supabase Realtime] Failed to lazy-load Supabase for channel',
+            err,
+          );
+        });
+      return channel;
+    },
+    // Internal hooks used by removeChannel().
+    __getRealChannel: () => realChannel,
+    __cancel: () => {
+      cancelled = true;
+    },
+  };
+  return channel;
+}
+
 const facade = {
   auth: {
     getSession: (...args: unknown[]) =>
@@ -124,12 +186,19 @@ const facade = {
     ): {data: {subscription: Subscription}} => {
       let realSubscription: Subscription | null = null;
       let cancelled = false;
-      void getSupabase().then((c) => {
-        if (cancelled) {
-          return;
-        }
-        realSubscription = c.auth.onAuthStateChange(callback).data.subscription;
-      });
+      void getSupabase()
+        .then((c) => {
+          if (cancelled) {
+            return;
+          }
+          realSubscription = c.auth.onAuthStateChange(callback).data.subscription;
+        })
+        .catch((err) => {
+          console.error(
+            '[Supabase Auth] Failed to lazy-load Supabase for onAuthStateChange',
+            err,
+          );
+        });
       const subscription = {
         id: 'lazy-supabase-subscription',
         callback,
@@ -147,6 +216,14 @@ const facade = {
   functions: {
     invoke: (...args: unknown[]) =>
       getSupabase().then((c) => (c.functions.invoke as any)(...args)),
+  },
+  channel: (name: string, opts?: unknown) => lazyChannel(name, opts),
+  removeChannel: (channel: any) => {
+    channel?.__cancel?.();
+    const realChannel = channel?.__getRealChannel?.();
+    return getSupabase().then((c) =>
+      realChannel ? (c as any).removeChannel(realChannel) : 'ok',
+    );
   },
 };
 
