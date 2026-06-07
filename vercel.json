@@ -18,18 +18,13 @@
       "permanent": true
     },
     {
+      "source": "/games/eco-sort",
+      "destination": "/mini-games/eco-sort-game/",
+      "permanent": true
+    },
+    {
       "source": "/games/:slug*",
       "destination": "/mini-games/:slug*/",
-      "permanent": true
-    },
-    {
-      "source": "/blog/tags/:tag",
-      "destination": "/blog/:tag/",
-      "permanent": true
-    },
-    {
-      "source": "/blog/tags/:tag/",
-      "destination": "/blog/:tag/",
       "permanent": true
     }
   ]

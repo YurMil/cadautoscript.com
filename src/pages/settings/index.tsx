@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import clsx from 'clsx';
 import type {User} from '@supabase/supabase-js';
 import Layout from '@theme/Layout';
+import Head from '@docusaurus/Head';
 import {supabase} from '@site/src/lib/supabaseClient';
 import {useAuthModal} from '@site/src/contexts/AuthModalContext';
 import {useI18n} from '@site/src/contexts/I18nContext';
@@ -323,6 +324,9 @@ export default function SettingsPage(): React.JSX.Element {
   const {t} = useI18n();
   return (
     <Layout title={t('settings.title')} description="Manage your CAD AutoScript settings.">
+      <Head>
+        <meta name="robots" content="noindex" />
+      </Head>
       <SettingsContent />
     </Layout>
   );
