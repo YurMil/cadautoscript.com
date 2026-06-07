@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import Layout from '@theme/Layout';
+import Head from '@docusaurus/Head';
 import Link from '@docusaurus/Link';
 import {supabase} from '@site/src/lib/supabaseClient';
 import {consumeReturnTo} from '@site/src/utils/authRedirect';
@@ -60,6 +61,9 @@ export default function AuthCallbackPage() {
 
   return (
     <Layout title="Completing sign in">
+      <Head>
+        <meta name="robots" content="noindex" />
+      </Head>
       <main className="site-container margin-vert--lg">
         {status === 'working' ? (
           <>

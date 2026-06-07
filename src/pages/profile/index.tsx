@@ -2,6 +2,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 import clsx from 'clsx';
 import type {User} from '@supabase/supabase-js';
 import Layout from '@theme/Layout';
+import Head from '@docusaurus/Head';
 import {supabase} from '@site/src/lib/supabaseClient';
 import {useAuthModal} from '@site/src/contexts/AuthModalContext';
 import styles from './index.module.css';
@@ -304,6 +305,9 @@ export default function ProfilePage(): React.JSX.Element {
 
   return (
     <Layout title="Profile" description="Manage your CAD AutoScript profile.">
+      <Head>
+        <meta name="robots" content="noindex" />
+      </Head>
       <main className={styles.main}>
         <div className={styles.workspaceWrapper}>
           <button
