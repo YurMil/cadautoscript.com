@@ -41,4 +41,4 @@ MDX võimaldab meil importida React komponente või iframe-laadseid utiliite ots
 
 ## Mis edasi
 
-Sirvi [Utiliitide kataloogi](./utilities/overview), et näha iga kalkulaatorit koos spetsifikatsioonide, toetatud standardite ja käivituslinkidega. Iga kirje selgitab, millal seda kasutada ja kuidas seda MDX-i sisse panna.
+Sirvi [Utiliitide kataloogi](./utilities/overview.mdx), et näha iga kalkulaatorit koos spetsifikatsioonide, toetatud standardite ja käivituslinkidega. Iga kirje selgitab, millal seda kasutada ja kuidas seda MDX-i sisse panna.

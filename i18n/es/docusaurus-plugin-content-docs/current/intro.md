@@ -41,4 +41,4 @@ MDX nos permite importar componentes de React o utilidades tipo iframe directame
 
 ## Qué sigue
 
-Explora el [Catálogo de utilidades](./utilities/overview) para ver cada calculadora con especificaciones, estándares compatibles y enlaces de lanzamiento. Cada entrada explica cuándo usarla y cómo incrustarla dentro de MDX.
+Explora el [Catálogo de utilidades](./utilities/overview.mdx) para ver cada calculadora con especificaciones, estándares compatibles y enlaces de lanzamiento. Cada entrada explica cuándo usarla y cómo incrustarla dentro de MDX.

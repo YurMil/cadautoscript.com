@@ -41,4 +41,4 @@ MDX ermöglicht es uns, React-Komponenten oder iframe-ähnliche Utilities direkt
 
 ## Nächste Schritte
 
-Durchsuche den [Utility-Katalog](./utilities/overview), um jeden Rechner mit Spezifikationen, unterstützten Standards und Launch-Links zu sehen. Jeder Eintrag erklärt, wann er zu verwenden ist und wie er in MDX eingebettet wird.
+Durchsuche den [Utility-Katalog](./utilities/overview.mdx), um jeden Rechner mit Spezifikationen, unterstützten Standards und Launch-Links zu sehen. Jeder Eintrag erklärt, wann er zu verwenden ist und wie er in MDX eingebettet wird.

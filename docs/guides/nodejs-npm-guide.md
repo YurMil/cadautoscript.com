@@ -159,5 +159,5 @@ Use this after cloning a repository.
 
 ## Related guides
 
-- [Publishing Your First Website on GitHub](./deploy-guide)
-- [Mastering package.json for React and Node.js](./package-json-guide)
+- [Publishing Your First Website on GitHub](./deploy-guide.md)
+- [Mastering package.json for React and Node.js](./package-json-guide.md)

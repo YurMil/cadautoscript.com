@@ -22,13 +22,13 @@ const config: Config = {
     SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY,
     AUTH_REDIRECT_URL: process.env.AUTH_REDIRECT_URL,
   },
-  onBrokenLinks: 'ignore',
+  onBrokenLinks: 'warn',
   // Share Tech Mono is self-hosted via @font-face in src/css/custom.css
   // (see static/fonts) and only used by the homepage hero SVG, so there is no
   // render-blocking Google Fonts stylesheet/preconnect on any page.
   markdown: {
     hooks: {
-      onBrokenMarkdownLinks: 'ignore',
+      onBrokenMarkdownLinks: 'warn',
     },
   },
   i18n: {

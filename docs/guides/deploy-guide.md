@@ -155,5 +155,5 @@ Wait 1-2 minutes. Your site will be available at:
 
 ## Related guides
 
-- [Beginner's Guide to Node.js and NPM](./nodejs-npm-guide)
-- [Mastering package.json for React and Node.js](./package-json-guide)
+- [Beginner's Guide to Node.js and NPM](./nodejs-npm-guide.md)
+- [Mastering package.json for React and Node.js](./package-json-guide.md)
