@@ -205,5 +205,5 @@ If omitted, Node defaults to CommonJS (`require`).
 
 ## Related guides
 
-- [Publishing Your First Website on GitHub](./deploy-guide)
-- [Beginner's Guide to Node.js and NPM](./nodejs-npm-guide)
+- [Publishing Your First Website on GitHub](./deploy-guide.md)
+- [Beginner's Guide to Node.js and NPM](./nodejs-npm-guide.md)
