@@ -28,7 +28,7 @@ const config: Config = {
   // render-blocking Google Fonts stylesheet/preconnect on any page.
   markdown: {
     hooks: {
-      onBrokenMarkdownLinks: 'warn',
+      onBrokenMarkdownLinks: 'throw',
     },
   },
   i18n: {
