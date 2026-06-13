@@ -32,6 +32,14 @@ function getUsageTimestamp(value: string | null | undefined): number {
   return Number.isFinite(timestamp) ? timestamp : 0;
 }
 
+// Default curated order, precomputed once so sort comparators can resolve a
+// utility's base position in O(1) instead of O(n) via Array.indexOf.
+const utilityDefaultIndexById = new Map(utilities.map((u, index) => [u.id, index]));
+
+function defaultOrderIndex(id: string): number {
+  return utilityDefaultIndexById.get(id) ?? Number.MAX_SAFE_INTEGER;
+}
+
 type UtilityCardProps = {
   utility: (typeof utilities)[number];
   index: number;
@@ -177,7 +185,7 @@ export default function Home(): ReactNode {
           return timeDiff;
         }
 
-        return utilities.indexOf(a) - utilities.indexOf(b);
+        return defaultOrderIndex(a.id) - defaultOrderIndex(b.id);
       });
     }
 
@@ -191,7 +199,7 @@ export default function Home(): ReactNode {
           return aRank - bRank;
         }
 
-        return utilities.indexOf(a) - utilities.indexOf(b);
+        return defaultOrderIndex(a.id) - defaultOrderIndex(b.id);
       });
     }
 

@@ -25,7 +25,8 @@ const formatRelative = (value?: string | null): string | undefined => {
   if (!value) return undefined;
   const time = new Date(value).getTime();
   if (Number.isNaN(time)) return undefined;
-  const diffMs = Date.now() - time;
+  // Clamp at 0 so minor client/server clock skew can't yield a negative diff.
+  const diffMs = Math.max(0, Date.now() - time);
   const minutes = Math.floor(diffMs / 60000);
   if (minutes < 1) return 'Last opened just now';
   if (minutes < 60) return `Last opened ${minutes} min ago`;
