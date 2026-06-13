@@ -5,6 +5,8 @@ import Layout from '@theme/Layout';
 import Head from '@docusaurus/Head';
 import {supabase} from '@site/src/lib/supabaseClient';
 import {useAuthModal} from '@site/src/contexts/AuthModalContext';
+import {listUtilityUsage, type UtilityUsageStat} from '@site/src/shared/utility-usage';
+import UsageRanking from '@site/src/components/UtilityUsage/UsageRanking';
 import styles from './index.module.css';
 
 type Profile = {
@@ -18,6 +20,19 @@ type Profile = {
 
 const shouldSilence = (message?: string | null) =>
   !message || message.toLowerCase().includes('auth session missing');
+
+const formatRelative = (value?: string | null): string | undefined => {
+  if (!value) return undefined;
+  const diffMs = Date.now() - new Date(value).getTime();
+  const minutes = Math.floor(diffMs / 60000);
+  if (minutes < 1) return 'Last opened just now';
+  if (minutes < 60) return `Last opened ${minutes} min ago`;
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `Last opened ${hours} hr${hours > 1 ? 's' : ''} ago`;
+  const days = Math.floor(hours / 24);
+  if (days < 30) return `Last opened ${days} day${days > 1 ? 's' : ''} ago`;
+  return `Last opened ${new Date(value).toLocaleDateString()}`;
+};
 
 export default function ProfilePage(): React.JSX.Element {
   const [user, setUser] = useState<User | null>(null);
@@ -36,6 +51,8 @@ export default function ProfilePage(): React.JSX.Element {
   const [success, setSuccess] = useState<string | null>(null);
   const [promptedLogin, setPromptedLogin] = useState(false);
   const [isWorkspaceOpen, setIsWorkspaceOpen] = useState(false);
+  const [usageStats, setUsageStats] = useState<UtilityUsageStat[]>([]);
+  const [usageLoading, setUsageLoading] = useState(false);
   const {openLoginModal} = useAuthModal();
 
   const fallbackName = useMemo(
@@ -152,6 +169,60 @@ export default function ProfilePage(): React.JSX.Element {
       isMounted = false;
     };
   }, [fallbackName, user]);
+
+  useEffect(() => {
+    if (!user) {
+      setUsageStats([]);
+      return;
+    }
+
+    let isMounted = true;
+    setUsageLoading(true);
+
+    const loadUsage = async () => {
+      try {
+        const stats = await listUtilityUsage();
+        if (isMounted) {
+          setUsageStats(stats);
+        }
+      } catch (err) {
+        const message = err instanceof Error ? err.message : 'Unable to load utility usage.';
+        if (!shouldSilence(message)) {
+          console.warn('[Profile] Unable to load utility usage', message);
+        }
+        if (isMounted) {
+          setUsageStats([]);
+        }
+      } finally {
+        if (isMounted) {
+          setUsageLoading(false);
+        }
+      }
+    };
+
+    void loadUsage();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [user]);
+
+  const usageRankingItems = useMemo(
+    () =>
+      [...usageStats]
+        .sort((a, b) => b.launchCount - a.launchCount)
+        .map((stat) => ({
+          utilityId: stat.utilityId,
+          count: stat.launchCount,
+          meta: formatRelative(stat.lastOpenedAt),
+        })),
+    [usageStats],
+  );
+
+  const totalLaunches = useMemo(
+    () => usageStats.reduce((sum, stat) => sum + stat.launchCount, 0),
+    [usageStats],
+  );
 
   const handleInputChange = (field: keyof typeof formState) => (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormState((prev) => ({
@@ -501,6 +572,28 @@ export default function ProfilePage(): React.JSX.Element {
             </>
           )}
         </section>
+
+        {user ? (
+          <section className={styles.panel}>
+            <header className={styles.usageHeader}>
+              <div>
+                <p className={styles.eyebrow}>Activity</p>
+                <h2 className={styles.usageTitle}>Your most used utilities</h2>
+              </div>
+              {totalLaunches > 0 ? (
+                <span className={styles.usageTotal}>{totalLaunches} total launches</span>
+              ) : null}
+            </header>
+            {usageLoading ? (
+              <p className={styles.subtle}>Loading your activity…</p>
+            ) : (
+              <UsageRanking
+                items={usageRankingItems}
+                emptyLabel="Launch a utility and it will show up here, ranked by how often you use it."
+              />
+            )}
+          </section>
+        ) : null}
       </main>
     </Layout>
   );

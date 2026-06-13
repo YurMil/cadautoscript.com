@@ -8,7 +8,11 @@ import {useAuthModal} from '@site/src/contexts/AuthModalContext';
 import {useAuthStatus} from '@site/src/hooks/useAuthStatus';
 import {useUtilitiesAccess} from '@site/src/hooks/useUtilitiesAccess';
 import {usePauseWhenOffscreen} from '@site/src/hooks/usePauseWhenOffscreen';
-import {listUtilityUsage, type UtilityUsageStat} from '@site/src/shared/utility-usage';
+import {
+  listUtilityUsage,
+  listGlobalUtilityPopularity,
+  type UtilityUsageStat,
+} from '@site/src/shared/utility-usage';
 import styles from './index.module.css';
 import AnimatedLogo from '@site/src/components/AnimatedLogo/AnimatedLogo';
 import ThumbnailPicture from '@site/src/components/ThumbnailPicture';
@@ -140,6 +144,7 @@ export default function Home(): ReactNode {
   const [heroReady, setHeroReady] = useState(false);
   const [filterQuery, setFilterQuery] = useState('');
   const [usageStats, setUsageStats] = useState<UtilityUsageStat[]>([]);
+  const [globalOrder, setGlobalOrder] = useState<string[]>([]);
 
   const hero = usePauseWhenOffscreen<HTMLElement>();
   const utilSection = usePauseWhenOffscreen<HTMLElement>();
@@ -149,30 +154,56 @@ export default function Home(): ReactNode {
     return new Map(usageStats.map((stat) => [stat.utilityId, stat]));
   }, [usageStats]);
 
+  const globalRankByUtilityId = useMemo(() => {
+    return new Map(globalOrder.map((id, index) => [id, index]));
+  }, [globalOrder]);
+
   const orderedUtilities = useMemo(() => {
-    if (!isAuthenticated || usageStats.length === 0 || !settings.smart_sorting) {
-      return utilities;
+    // Logged-in users with smart sorting on: personal order by their own usage.
+    if (isAuthenticated && settings.smart_sorting && usageStats.length > 0) {
+      return [...utilities].sort((a, b) => {
+        const aUsage = usageByUtilityId.get(a.id);
+        const bUsage = usageByUtilityId.get(b.id);
+        const countDiff = (bUsage?.launchCount ?? 0) - (aUsage?.launchCount ?? 0);
+
+        if (countDiff !== 0) {
+          return countDiff;
+        }
+
+        const timeDiff =
+          getUsageTimestamp(bUsage?.lastOpenedAt) - getUsageTimestamp(aUsage?.lastOpenedAt);
+
+        if (timeDiff !== 0) {
+          return timeDiff;
+        }
+
+        return utilities.indexOf(a) - utilities.indexOf(b);
+      });
     }
 
-    return [...utilities].sort((a, b) => {
-      const aUsage = usageByUtilityId.get(a.id);
-      const bUsage = usageByUtilityId.get(b.id);
-      const countDiff = (bUsage?.launchCount ?? 0) - (aUsage?.launchCount ?? 0);
+    // Anonymous visitors: fall back to the global popularity ranking when loaded.
+    if (!isAuthenticated && globalOrder.length > 0) {
+      return [...utilities].sort((a, b) => {
+        const aRank = globalRankByUtilityId.get(a.id) ?? Number.MAX_SAFE_INTEGER;
+        const bRank = globalRankByUtilityId.get(b.id) ?? Number.MAX_SAFE_INTEGER;
 
-      if (countDiff !== 0) {
-        return countDiff;
-      }
+        if (aRank !== bRank) {
+          return aRank - bRank;
+        }
 
-      const timeDiff =
-        getUsageTimestamp(bUsage?.lastOpenedAt) - getUsageTimestamp(aUsage?.lastOpenedAt);
+        return utilities.indexOf(a) - utilities.indexOf(b);
+      });
+    }
 
-      if (timeDiff !== 0) {
-        return timeDiff;
-      }
-
-      return utilities.indexOf(a) - utilities.indexOf(b);
-    });
-  }, [isAuthenticated, usageByUtilityId, usageStats.length]);
+    return utilities;
+  }, [
+    isAuthenticated,
+    usageByUtilityId,
+    usageStats.length,
+    settings.smart_sorting,
+    globalOrder,
+    globalRankByUtilityId,
+  ]);
 
   const filteredUtilities = useMemo(() => {
     const q = filterQuery.trim().toLowerCase();
@@ -218,6 +249,34 @@ export default function Home(): ReactNode {
       isMounted = false;
     };
   }, [authChecked, isAuthenticated, user?.id]);
+
+  useEffect(() => {
+    // Global popularity is only used as the anonymous fallback order.
+    if (!authChecked || isAuthenticated) {
+      return;
+    }
+
+    let isMounted = true;
+
+    const loadGlobalRanking = async () => {
+      try {
+        const order = await listGlobalUtilityPopularity();
+        if (isMounted) {
+          setGlobalOrder(order);
+        }
+      } catch (err) {
+        const message =
+          err instanceof Error ? err.message : 'Unable to load global utility ranking.';
+        console.warn('[UtilityUsage] Unable to load global ranking', message);
+      }
+    };
+
+    void loadGlobalRanking();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [authChecked, isAuthenticated]);
 
   useEffect(() => {
     try {
