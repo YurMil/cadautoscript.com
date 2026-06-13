@@ -11,6 +11,14 @@ import {
   parseBooleanSetting,
   serializeBooleanSetting,
 } from '@site/src/utils/siteSettings';
+import {
+  listUtilityPopularity,
+  listAdminUtilityUsage,
+  type UtilityPopularity,
+  type AdminUtilityUsageRow,
+} from '@site/src/shared/utility-usage';
+import {utilities} from '@site/src/data/utilities';
+import UsageRanking from '@site/src/components/UtilityUsage/UsageRanking';
 import styles from './index.module.css';
 
 type RoleValue = 'user' | 'author' | 'admin';
@@ -39,7 +47,9 @@ type CommentRow = {
   } | null;
 };
 
-type TabKey = 'users' | 'comments' | 'settings';
+type TabKey = 'users' | 'comments' | 'usage' | 'settings';
+
+const utilityNameById = new Map(utilities.map((u) => [u.id, u.name]));
 
 const formatDate = (value?: string | null) =>
   value
@@ -80,6 +90,10 @@ export default function AdminPage(): React.JSX.Element {
   const [utilitiesPublicAccess, setUtilitiesPublicAccess] = useState(DEFAULT_UTILITIES_PUBLIC_ACCESS);
   const [settingsLoading, setSettingsLoading] = useState(false);
   const [settingsSaving, setSettingsSaving] = useState(false);
+  const [globalUsage, setGlobalUsage] = useState<UtilityPopularity[]>([]);
+  const [perUserUsage, setPerUserUsage] = useState<AdminUtilityUsageRow[]>([]);
+  const [usageLoading, setUsageLoading] = useState(false);
+  const [usageLoaded, setUsageLoaded] = useState(false);
 
   const normalizeProfile = useCallback(
     (value: CommentRow['profiles'] | CommentRow['profiles'][] | null | undefined) =>
@@ -153,6 +167,27 @@ export default function AdminPage(): React.JSX.Element {
       setError('Unable to load site settings.');
     } finally {
       setSettingsLoading(false);
+    }
+  }, []);
+
+  const loadUsage = useCallback(async () => {
+    setUsageLoading(true);
+    try {
+      const [global, perUser] = await Promise.all([
+        listUtilityPopularity(),
+        listAdminUtilityUsage(),
+      ]);
+      setGlobalUsage(global);
+      setPerUserUsage(perUser);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Unable to load usage analytics.';
+      console.error('[Admin] Unable to load usage analytics', message);
+      setError('Unable to load usage analytics.');
+    } finally {
+      // Mark as loaded even on failure so the lazy-load effect doesn't retry
+      // in a loop; the Refresh button still allows a manual retry.
+      setUsageLoaded(true);
+      setUsageLoading(false);
     }
   }, []);
 
@@ -252,6 +287,17 @@ export default function AdminPage(): React.JSX.Element {
     void loadComments();
   }, [loadingAuth, profile?.role]);
 
+  // Lazy-load usage analytics only when the admin opens the Usage tab.
+  useEffect(() => {
+    if (loadingAuth || profile?.role !== 'admin') {
+      return;
+    }
+    if (activeTab !== 'usage' || usageLoaded || usageLoading) {
+      return;
+    }
+    void loadUsage();
+  }, [activeTab, loadingAuth, profile?.role, usageLoaded, usageLoading, loadUsage]);
+
   const handleDeleteComment = async (commentId: string) => {
     if (!commentId) return;
     setActionState({kind: 'deleting', targetId: commentId});
@@ -273,6 +319,46 @@ export default function AdminPage(): React.JSX.Element {
     () => profile?.full_name || profile?.username || sessionUser?.email || 'Admin',
     [profile?.full_name, profile?.username, sessionUser?.email],
   );
+
+  const globalRankingItems = useMemo(
+    () => globalUsage.map((row) => ({utilityId: row.utilityId, count: row.totalLaunches})),
+    [globalUsage],
+  );
+
+  const totalLaunches = useMemo(
+    () => globalUsage.reduce((sum, row) => sum + row.totalLaunches, 0),
+    [globalUsage],
+  );
+
+  const perUserGroups = useMemo(() => {
+    const byUser = new Map<
+      string,
+      {userId: string; label: string; email: string | null; total: number; items: AdminUtilityUsageRow[]}
+    >();
+
+    for (const row of perUserUsage) {
+      const existing = byUser.get(row.userId);
+      if (existing) {
+        existing.total += row.launchCount;
+        existing.items.push(row);
+      } else {
+        byUser.set(row.userId, {
+          userId: row.userId,
+          label: row.fullName || row.username || row.email || 'Unknown user',
+          email: row.email,
+          total: row.launchCount,
+          items: [row],
+        });
+      }
+    }
+
+    return Array.from(byUser.values())
+      .map((group) => ({
+        ...group,
+        items: [...group.items].sort((a, b) => b.launchCount - a.launchCount),
+      }))
+      .sort((a, b) => b.total - a.total);
+  }, [perUserUsage]);
 
   const formatRelative = (value?: string | null) => {
     if (!value) return '-';
@@ -417,6 +503,13 @@ export default function AdminPage(): React.JSX.Element {
               onClick={() => setActiveTab('comments')}
             >
               Comments
+            </button>
+            <button
+              type="button"
+              className={`${styles.tab} ${activeTab === 'usage' ? styles.tabActive : ''}`}
+              onClick={() => setActiveTab('usage')}
+            >
+              Usage
             </button>
             <button
               type="button"
@@ -568,6 +661,74 @@ export default function AdminPage(): React.JSX.Element {
                 </tbody>
               </table>
             )}
+          </section>
+        ) : null}
+
+        {activeTab === 'usage' ? (
+          <section className={styles.panel}>
+            <div className={styles.toolbar}>
+              <div className={styles.toolbarLeft}>
+                {usageLoading
+                  ? 'Loading usage analytics...'
+                  : `${totalLaunches} launches · ${perUserGroups.length} active users`}
+              </div>
+              <div className={styles.toolbarRight}>
+                <button
+                  type="button"
+                  className={styles.secondaryBtn}
+                  onClick={() => void loadUsage()}
+                  disabled={usageLoading}
+                >
+                  {usageLoading ? 'Refreshing...' : 'Refresh'}
+                </button>
+              </div>
+            </div>
+
+            <div className={styles.usageGrid}>
+              <div className={styles.usageCard}>
+                <h2 className={styles.usageHeading}>Global ranking</h2>
+                <p className={styles.muted}>Most popular utilities across all users.</p>
+                {usageLoading && !usageLoaded ? (
+                  <p className={styles.muted}>Loading…</p>
+                ) : (
+                  <UsageRanking items={globalRankingItems} emptyLabel="No launches recorded yet." />
+                )}
+              </div>
+
+              <div className={styles.usageCard}>
+                <h2 className={styles.usageHeading}>By user</h2>
+                <p className={styles.muted}>Per-account breakdown of utility launches.</p>
+                {usageLoading && !usageLoaded ? (
+                  <p className={styles.muted}>Loading…</p>
+                ) : perUserGroups.length === 0 ? (
+                  <p className={styles.muted}>No user activity yet.</p>
+                ) : (
+                  <div className={styles.userUsageList}>
+                    {perUserGroups.map((group) => (
+                      <details key={group.userId} className={styles.userUsage}>
+                        <summary className={styles.userUsageSummary}>
+                          <span className={styles.userUsageName}>
+                            {group.label}
+                            {group.email ? (
+                              <span className={styles.userUsageEmail}> · {group.email}</span>
+                            ) : null}
+                          </span>
+                          <span className={styles.userUsageTotal}>{group.total}</span>
+                        </summary>
+                        <ul className={styles.userUsageItems}>
+                          {group.items.map((item) => (
+                            <li key={item.utilityId} className={styles.userUsageItem}>
+                              <span>{utilityNameById.get(item.utilityId) ?? item.utilityId}</span>
+                              <span className={styles.userUsageCount}>{item.launchCount}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </details>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
           </section>
         ) : null}
 

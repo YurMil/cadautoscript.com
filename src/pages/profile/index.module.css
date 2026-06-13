@@ -25,6 +25,27 @@
   flex-wrap: wrap;
 }
 
+.usageHeader {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.1rem;
+}
+
+.usageTitle {
+  margin: 0.15rem 0 0;
+  font-size: 1.3rem;
+}
+
+.usageTotal {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ifm-color-primary);
+  white-space: nowrap;
+}
+
 .identity {
   display: flex;
   align-items: center;

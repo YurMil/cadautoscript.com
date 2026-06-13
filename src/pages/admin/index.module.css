@@ -282,3 +282,96 @@
   background: var(--light-surface-strong);
   box-shadow: 0 22px 50px rgba(15, 23, 42, 0.16);
 }
+
+/* Usage analytics tab */
+.usageGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-top: 0.75rem;
+}
+
+.usageCard {
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  padding: 1rem 1.1rem 1.25rem;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.usageHeading {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.usageCard .muted {
+  margin: 0.25rem 0 1rem;
+}
+
+.userUsageList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.userUsage {
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 0.55rem 0.75rem;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.userUsageSummary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  cursor: pointer;
+  list-style: none;
+}
+
+.userUsageSummary::-webkit-details-marker {
+  display: none;
+}
+
+.userUsageName {
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.userUsageEmail {
+  font-weight: 400;
+  color: var(--ifm-color-emphasis-600);
+  font-size: 0.85rem;
+}
+
+.userUsageTotal {
+  flex: 0 0 auto;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--ifm-color-primary);
+}
+
+.userUsageItems {
+  list-style: none;
+  margin: 0.6rem 0 0.2rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.userUsageItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+  padding: 0.15rem 0;
+  border-bottom: 1px dashed var(--card-border);
+}
+
+.userUsageCount {
+  font-variant-numeric: tabular-nums;
+  color: var(--ifm-color-emphasis-700);
+}
