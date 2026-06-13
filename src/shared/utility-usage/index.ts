@@ -95,7 +95,7 @@ export async function listGlobalUtilityPopularity(): Promise<string[]> {
   }
 
   const order = ((data ?? []) as UtilityPopularityRow[])
-    .map((row) => row.utility_id)
+    .map((row) => row?.utility_id)
     .filter((id): id is string => typeof id === 'string' && id.length > 0);
 
   writePopularityCache(order);
@@ -119,7 +119,7 @@ export async function listUtilityPopularity(): Promise<UtilityPopularity[]> {
   }
 
   return ((data ?? []) as UtilityPopularityRow[])
-    .filter((row) => typeof row.utility_id === 'string' && row.utility_id.length > 0)
+    .filter((row) => row && typeof row.utility_id === 'string' && row.utility_id.length > 0)
     .map((row) => ({
       utilityId: row.utility_id,
       totalLaunches: row.total_launches ?? 0,
@@ -157,15 +157,17 @@ export async function listAdminUtilityUsage(): Promise<AdminUtilityUsageRow[]> {
     throw new Error(`listAdminUtilityUsage: ${error.message}`);
   }
 
-  return ((data ?? []) as AdminUtilityUsageRpcRow[]).map((row) => ({
-    userId: row.user_id,
-    fullName: row.full_name,
-    username: row.username,
-    email: row.email,
-    utilityId: row.utility_id,
-    launchCount: row.launch_count ?? 0,
-    lastOpenedAt: row.last_opened_at,
-  }));
+  return ((data ?? []) as AdminUtilityUsageRpcRow[])
+    .filter((row) => row && typeof row.user_id === 'string' && typeof row.utility_id === 'string')
+    .map((row) => ({
+      userId: row.user_id,
+      fullName: row.full_name,
+      username: row.username,
+      email: row.email,
+      utilityId: row.utility_id,
+      launchCount: row.launch_count ?? 0,
+      lastOpenedAt: row.last_opened_at,
+    }));
 }
 
 export async function incrementUtilityUsage(utilityId: string): Promise<void> {

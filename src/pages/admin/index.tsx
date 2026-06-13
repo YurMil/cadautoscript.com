@@ -179,12 +179,14 @@ export default function AdminPage(): React.JSX.Element {
       ]);
       setGlobalUsage(global);
       setPerUserUsage(perUser);
-      setUsageLoaded(true);
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Unable to load usage analytics.';
       console.error('[Admin] Unable to load usage analytics', message);
       setError('Unable to load usage analytics.');
     } finally {
+      // Mark as loaded even on failure so the lazy-load effect doesn't retry
+      // in a loop; the Refresh button still allows a manual retry.
+      setUsageLoaded(true);
       setUsageLoading(false);
     }
   }, []);

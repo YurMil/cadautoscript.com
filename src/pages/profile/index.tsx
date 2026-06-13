@@ -23,7 +23,9 @@ const shouldSilence = (message?: string | null) =>
 
 const formatRelative = (value?: string | null): string | undefined => {
   if (!value) return undefined;
-  const diffMs = Date.now() - new Date(value).getTime();
+  const time = new Date(value).getTime();
+  if (Number.isNaN(time)) return undefined;
+  const diffMs = Date.now() - time;
   const minutes = Math.floor(diffMs / 60000);
   if (minutes < 1) return 'Last opened just now';
   if (minutes < 60) return `Last opened ${minutes} min ago`;
