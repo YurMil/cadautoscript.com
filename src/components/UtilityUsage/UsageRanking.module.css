@@ -26,6 +26,49 @@
   background: var(--ifm-color-primary);
 }
 
+.icon {
+  flex: 0 0 36px;
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  overflow: visible;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 0;
+}
+
+.icon img,
+.iconFallback {
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  object-fit: cover;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  background: var(--ifm-color-emphasis-100);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transform-origin: center;
+}
+
+/* Grow the icon 1.5x on hover. */
+.icon:hover img,
+.icon:hover .iconFallback {
+  transform: scale(1.5);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
+  z-index: 3;
+  position: relative;
+}
+
+.iconFallback {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--ifm-color-primary);
+}
+
 .body {
   flex: 1 1 auto;
   min-width: 0;
@@ -86,4 +129,22 @@
   margin: 0;
   color: var(--ifm-color-emphasis-600);
   font-size: 0.9rem;
+}
+
+.toggle {
+  margin-top: 0.85rem;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ifm-color-primary);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.toggle:hover {
+  background: var(--ifm-color-emphasis-100);
+  border-color: var(--ifm-color-primary);
 }
