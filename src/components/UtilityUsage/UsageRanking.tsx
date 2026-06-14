@@ -1,5 +1,6 @@
 import React, {useMemo, useState} from 'react';
 import {utilities} from '@site/src/data/utilities';
+import ThumbnailPicture from '@site/src/components/ThumbnailPicture';
 import styles from './UsageRanking.module.css';
 
 export type UsageRankingItem = {
@@ -60,10 +61,10 @@ export default function UsageRanking({
               <span className={styles.rank}>{index + 1}</span>
               <span className={styles.icon}>
                 {thumbnail ? (
-                  <img src={thumbnail} alt="" loading="lazy" />
+                  <ThumbnailPicture src={thumbnail} alt="" width={36} height={36} />
                 ) : (
                   <span className={styles.iconFallback}>
-                    {name.charAt(0).toUpperCase()}
+                    {(name || '?').charAt(0).toUpperCase()}
                   </span>
                 )}
               </span>
