@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import Layout from '@theme/Layout';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import {PAYPAL_LINK, STRIPE_CHECKOUT_API} from '@site/src/constants/support';
@@ -20,6 +20,7 @@ declare global {
       execute: (widgetId: string) => void;
       remove: (widgetId: string) => void;
     };
+    __turnstileLoadingPromise?: Promise<void>;
   }
 }
 
@@ -87,32 +88,48 @@ export default function SupportPage(): React.JSX.Element {
   const [floatingBtnPos, setFloatingBtnPos] = useState<{x: number; y: number} | null>(null);
   const [hovered, setHovered] = useState<PaymentMethod | null>(null);
   const [stripeStatus, setStripeStatus] = useState<'idle' | 'loading' | 'error'>('idle');
+  const turnstileContainerRef = useRef<HTMLDivElement | null>(null);
+  const turnstileWidgetIdRef = useRef<string | null>(null);
+
+  useEffect(() => () => {
+    if (turnstileWidgetIdRef.current) {
+      window.turnstile?.remove(turnstileWidgetIdRef.current);
+      turnstileWidgetIdRef.current = null;
+    }
+  }, []);
 
   const handleHeartClick = (e: React.MouseEvent<SVGGElement>) => {
     setFloatingBtnPos({x: e.clientX, y: e.clientY});
   };
 
-  const loadTurnstile = () => new Promise<void>((resolve, reject) => {
+  const loadTurnstile = () => {
+    if (typeof window === 'undefined') {
+      return Promise.resolve();
+    }
+
     if (window.turnstile) {
-      resolve();
-      return;
+      return Promise.resolve();
     }
 
-    const existingScript = document.querySelector<HTMLScriptElement>('script[src^="https://challenges.cloudflare.com/turnstile/v0/api.js"]');
-    if (existingScript) {
-      existingScript.addEventListener('load', () => resolve(), {once: true});
-      existingScript.addEventListener('error', () => reject(new Error('Turnstile failed to load')), {once: true});
-      return;
+    if (window.__turnstileLoadingPromise) {
+      return window.__turnstileLoadingPromise;
     }
 
-    const script = document.createElement('script');
-    script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
-    script.async = true;
-    script.defer = true;
-    script.onload = () => resolve();
-    script.onerror = () => reject(new Error('Turnstile failed to load'));
-    document.head.appendChild(script);
-  });
+    window.__turnstileLoadingPromise = new Promise<void>((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+      script.async = true;
+      script.defer = true;
+      script.onload = () => resolve();
+      script.onerror = () => {
+        window.__turnstileLoadingPromise = undefined;
+        reject(new Error('Turnstile failed to load'));
+      };
+      document.head.appendChild(script);
+    });
+
+    return window.__turnstileLoadingPromise;
+  };
 
   const getTurnstileToken = async (): Promise<string> => {
     if (!TURNSTILE_SITE_KEY) {
@@ -121,34 +138,38 @@ export default function SupportPage(): React.JSX.Element {
 
     await loadTurnstile();
 
-    const container = document.createElement('div');
-    container.style.position = 'fixed';
-    container.style.left = '-9999px';
-    container.style.top = '0';
-    document.body.appendChild(container);
+    const container = turnstileContainerRef.current;
+    if (!container) {
+      throw new Error('Turnstile container is not available');
+    }
 
     return new Promise((resolve, reject) => {
+      if (turnstileWidgetIdRef.current) {
+        window.turnstile?.remove(turnstileWidgetIdRef.current);
+        turnstileWidgetIdRef.current = null;
+      }
+
       const widgetId = window.turnstile?.render(container, {
         sitekey: TURNSTILE_SITE_KEY,
         size: 'invisible',
         callback: (token) => {
+          turnstileWidgetIdRef.current = null;
           window.turnstile?.remove(widgetId);
-          container.remove();
           resolve(token);
         },
         'error-callback': () => {
+          turnstileWidgetIdRef.current = null;
           window.turnstile?.remove(widgetId);
-          container.remove();
           reject(new Error('Turnstile verification failed'));
         },
       });
 
       if (!widgetId) {
-        container.remove();
         reject(new Error('Turnstile is not available'));
         return;
       }
 
+      turnstileWidgetIdRef.current = widgetId;
       window.turnstile?.execute(widgetId);
     });
   };
@@ -256,9 +277,9 @@ export default function SupportPage(): React.JSX.Element {
                     <span className={styles.paymentName}>{opt.label}</span>
                     <span className={styles.paymentSub}>
                       {opt.id === 'stripe' && stripeStatus === 'loading'
-                        ? 'Preparing secure checkout...'
+                        ? t('support.stripeLoading')
                         : opt.id === 'stripe' && stripeStatus === 'error'
-                          ? 'Checkout blocked or unavailable. Please try again.'
+                          ? t('support.stripeError')
                           : t(opt.sublabelKey)}
                     </span>
                   </span>
@@ -301,6 +322,8 @@ export default function SupportPage(): React.JSX.Element {
               );
             })}
           </div>
+
+          <div ref={turnstileContainerRef} className={styles.turnstileContainer} />
 
           {floatingBtnPos && (
             <div

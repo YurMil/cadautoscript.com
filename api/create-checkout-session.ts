@@ -1,16 +1,9 @@
-const RATE_LIMIT_WINDOW_MS = 60 * 1000;
+const RATE_LIMIT_WINDOW_SECONDS = 60;
 const RATE_LIMIT_MAX_REQUESTS = 3;
-
-type RateLimitBucket = {
-  count: number;
-  resetAt: number;
-};
 
 type CheckoutRequestBody = {
   turnstileToken?: string;
 };
-
-const rateLimitBuckets = new Map<string, RateLimitBucket>();
 
 function getHeader(req: any, name: string): string | undefined {
   const value = req.headers?.[name.toLowerCase()] ?? req.headers?.[name];
@@ -18,32 +11,67 @@ function getHeader(req: any, name: string): string | undefined {
 }
 
 function getClientIp(req: any): string {
+  const realIp = getHeader(req, 'x-real-ip');
+  if (realIp) {
+    return realIp;
+  }
+
   const forwardedFor = getHeader(req, 'x-forwarded-for');
   if (forwardedFor) {
     return forwardedFor.split(',')[0].trim();
   }
 
-  return (
-    getHeader(req, 'x-real-ip') ??
-    req.socket?.remoteAddress ??
-    'unknown'
-  );
+  return req.socket?.remoteAddress ?? 'unknown';
 }
 
-function isRateLimited(ip: string): boolean {
-  const now = Date.now();
-  const bucket = rateLimitBuckets.get(ip);
+async function incrementUpstashRateLimit(key: string): Promise<number> {
+  const url = process.env.UPSTASH_REDIS_REST_URL;
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN;
 
-  if (!bucket || bucket.resetAt <= now) {
-    rateLimitBuckets.set(ip, {
-      count: 1,
-      resetAt: now + RATE_LIMIT_WINDOW_MS,
-    });
-    return false;
+  if (!url || !token) {
+    throw new Error('Upstash Redis rate limiting is not configured');
   }
 
-  bucket.count += 1;
-  return bucket.count > RATE_LIMIT_MAX_REQUESTS;
+  const request = async (command: string, ...args: string[]) => {
+    const path = [command, ...args].map(encodeURIComponent).join('/');
+    const response = await fetch(`${url.replace(/\/$/, '')}/${path}`, {
+      method: 'POST',
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Upstash ${command} failed with ${response.status}`);
+    }
+
+    return response.json() as Promise<{result?: unknown}>;
+  };
+
+  const incrementResult = await request('incr', key);
+  const count = Number(incrementResult.result);
+
+  if (!Number.isFinite(count)) {
+    throw new Error('Upstash incr returned an invalid counter');
+  }
+
+  if (count === 1) {
+    await request('expire', key, String(RATE_LIMIT_WINDOW_SECONDS));
+  }
+
+  return count;
+}
+
+async function isRateLimited(ip: string): Promise<boolean> {
+  const key = `checkout-rate-limit:${ip}`;
+
+  try {
+    const count = await incrementUpstashRateLimit(key);
+    return count > RATE_LIMIT_MAX_REQUESTS;
+  } catch (error) {
+    console.error('Centralized rate limit failed:', error);
+    return true;
+  }
 }
 
 function parseBody(req: any): CheckoutRequestBody {
@@ -136,31 +164,36 @@ async function createStripeCheckoutSession(origin: string): Promise<string | nul
 }
 
 export default async function handler(req: any, res: any) {
-  if (req.method !== 'POST') {
-    res.setHeader('Allow', 'POST');
-    return res.status(405).json({error: 'Method not allowed'});
-  }
+  try {
+    if (req.method !== 'POST') {
+      res.setHeader('Allow', 'POST');
+      return res.status(405).json({error: 'Method not allowed'});
+    }
 
-  const ip = getClientIp(req);
-  if (isRateLimited(ip)) {
-    return res.status(429).json({error: 'Too many requests'});
-  }
+    const expectedHeader = process.env.PAYMENT_REQUEST_HEADER_VALUE ?? 'support-page';
+    if (getHeader(req, 'x-cadautoscript-payment') !== expectedHeader) {
+      return res.status(403).json({error: 'Forbidden'});
+    }
 
-  const expectedHeader = process.env.PAYMENT_REQUEST_HEADER_VALUE ?? 'support-page';
-  if (getHeader(req, 'x-cadautoscript-payment') !== expectedHeader) {
-    return res.status(403).json({error: 'Forbidden'});
-  }
+    const ip = getClientIp(req);
+    if (await isRateLimited(ip)) {
+      return res.status(429).json({error: 'Too many requests'});
+    }
 
-  const {turnstileToken} = parseBody(req);
-  const isHuman = await verifyTurnstileToken(turnstileToken, ip);
-  if (!isHuman) {
-    return res.status(403).json({error: 'CAPTCHA validation failed'});
-  }
+    const {turnstileToken} = parseBody(req);
+    const isHuman = await verifyTurnstileToken(turnstileToken, ip);
+    if (!isHuman) {
+      return res.status(403).json({error: 'CAPTCHA validation failed'});
+    }
 
-  const checkoutUrl = await createStripeCheckoutSession(getOrigin(req));
-  if (!checkoutUrl) {
-    return res.status(500).json({error: 'Unable to create checkout session'});
-  }
+    const checkoutUrl = await createStripeCheckoutSession(getOrigin(req));
+    if (!checkoutUrl) {
+      return res.status(500).json({error: 'Unable to create checkout session'});
+    }
 
-  return res.status(200).json({url: checkoutUrl});
+    return res.status(200).json({url: checkoutUrl});
+  } catch (error) {
+    console.error('Checkout session handler failed:', error);
+    return res.status(500).json({error: 'Internal server error'});
+  }
 }

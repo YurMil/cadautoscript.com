@@ -179,6 +179,12 @@
   transform: none;
 }
 
+.turnstileContainer {
+  position: fixed;
+  left: -9999px;
+  top: 0;
+}
+
 .paymentIcon {
   flex: 0 0 auto;
   display: flex;
