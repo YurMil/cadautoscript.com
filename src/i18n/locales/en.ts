@@ -114,6 +114,8 @@ export const en = {
     description: 'If this project helps you, you can support its development.',
     paypalSub: 'Donate via PayPal',
     stripeSub: 'Pay with card via Stripe',
+    stripeLoading: 'Preparing secure checkout...',
+    stripeError: 'Checkout blocked or unavailable. Please try again.',
     floatingDonate: 'Donate via PayPal',
   },
   utilities: {

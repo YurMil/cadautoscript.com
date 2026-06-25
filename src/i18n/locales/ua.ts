@@ -116,6 +116,8 @@ export const ua: TranslationDict = {
     description: 'Якщо цей проєкт корисний вам, ви можете підтримати його розвиток.',
     paypalSub: 'Пожертвувати через PayPal',
     stripeSub: 'Оплата карткою через Stripe',
+    stripeLoading: 'Готуємо безпечну оплату...',
+    stripeError: 'Оплату заблоковано або вона недоступна. Спробуйте ще раз.',
     floatingDonate: 'Пожертвувати через PayPal',
   },
   utilities: {

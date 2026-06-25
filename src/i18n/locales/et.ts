@@ -116,6 +116,8 @@ export const et: TranslationDict = {
     description: 'Kui see projekt on sulle kasulik, võid toetada selle arendamist.',
     paypalSub: 'Anneta PayPaliga',
     stripeSub: 'Maksa kaardiga Stripe’i kaudu',
+    stripeLoading: 'Turvalise makse ettevalmistamine...',
+    stripeError: 'Makse on blokeeritud või pole saadaval. Proovi uuesti.',
     floatingDonate: 'Anneta PayPaliga',
   },
   utilities: {

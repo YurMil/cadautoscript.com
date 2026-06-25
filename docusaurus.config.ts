@@ -21,6 +21,7 @@ const config: Config = {
     SUPABASE_URL: process.env.SUPABASE_URL,
     SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY,
     AUTH_REDIRECT_URL: process.env.AUTH_REDIRECT_URL,
+    TURNSTILE_SITE_KEY: process.env.TURNSTILE_SITE_KEY,
   },
   onBrokenLinks: 'warn',
   // Share Tech Mono is self-hosted via @font-face in src/css/custom.css

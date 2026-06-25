@@ -1,9 +1,5 @@
 export const PAYPAL_LINK = 'https://www.paypal.com/donate/?hosted_button_id=ZDAWJ7N234PWE';
-/**
- * Stripe Payment Link URL — create at dashboard.stripe.com/payment-links
- * test mode: 'https://buy.stripe.com/test_00weVd1uSceGgXrb4W8k800'
- */
-export const STRIPE_LINK = 'https://buy.stripe.com/4gM9AT1ve2PG76OaZ7dZ600';
+export const STRIPE_CHECKOUT_API = '/api/create-checkout-session';
 export const SUPPORT_LOCAL_PATH = '/support';
 
 /** @deprecated Use PAYPAL_LINK directly */

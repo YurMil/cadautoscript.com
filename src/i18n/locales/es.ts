@@ -116,6 +116,8 @@ export const es: TranslationDict = {
     description: 'Si este proyecto te resulta útil, puedes apoyar su desarrollo.',
     paypalSub: 'Donar con PayPal',
     stripeSub: 'Pagar con tarjeta vía Stripe',
+    stripeLoading: 'Preparando pago seguro...',
+    stripeError: 'El pago está bloqueado o no disponible. Inténtalo de nuevo.',
     floatingDonate: 'Donar con PayPal',
   },
   utilities: {
