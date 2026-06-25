@@ -12,7 +12,9 @@ declare global {
         container: HTMLElement,
         options: {
           sitekey: string;
-          size: 'invisible';
+          execution?: 'render' | 'execute';
+          appearance?: 'always' | 'execute' | 'interaction-only';
+          size?: 'normal' | 'flexible' | 'compact';
           callback: (token: string) => void;
           'error-callback': () => void;
         },
@@ -151,7 +153,11 @@ export default function SupportPage(): React.JSX.Element {
 
       const widgetId = window.turnstile?.render(container, {
         sitekey: TURNSTILE_SITE_KEY,
-        size: 'invisible',
+        // Run the challenge only when execute() is called and stay invisible
+        // unless Cloudflare decides interaction is required. ('invisible' is not
+        // a valid `size`; the prior value made render() throw and broke checkout.)
+        execution: 'execute',
+        appearance: 'interaction-only',
         callback: (token) => {
           turnstileWidgetIdRef.current = null;
           window.turnstile?.remove(widgetId);
