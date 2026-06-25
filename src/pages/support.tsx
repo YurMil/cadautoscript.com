@@ -1,8 +1,27 @@
 import React, {useState} from 'react';
 import Layout from '@theme/Layout';
-import {PAYPAL_LINK, STRIPE_LINK} from '@site/src/constants/support';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import {PAYPAL_LINK, STRIPE_CHECKOUT_API} from '@site/src/constants/support';
 import {useI18n} from '@site/src/contexts/I18nContext';
 import styles from './support.module.css';
+
+declare global {
+  interface Window {
+    turnstile?: {
+      render: (
+        container: HTMLElement,
+        options: {
+          sitekey: string;
+          size: 'invisible';
+          callback: (token: string) => void;
+          'error-callback': () => void;
+        },
+      ) => string;
+      execute: (widgetId: string) => void;
+      remove: (widgetId: string) => void;
+    };
+  }
+}
 
 function PayPalIcon(): React.JSX.Element {
   return (
@@ -32,7 +51,6 @@ interface PaymentOption {
   id: PaymentMethod;
   label: string;
   sublabelKey: string;
-  href: string;
   icon: React.JSX.Element;
   accentColor: string;
   borderColor: string;
@@ -44,7 +62,6 @@ const PAYMENT_OPTIONS: PaymentOption[] = [
     id: 'paypal',
     label: 'PayPal',
     sublabelKey: 'support.paypalSub',
-    href: PAYPAL_LINK,
     icon: <PayPalIcon />,
     accentColor: '#009cde',
     borderColor: 'rgba(0, 156, 222, 0.35)',
@@ -54,7 +71,6 @@ const PAYMENT_OPTIONS: PaymentOption[] = [
     id: 'stripe',
     label: 'Stripe',
     sublabelKey: 'support.stripeSub',
-    href: STRIPE_LINK,
     icon: <StripeIcon />,
     accentColor: '#635BFF',
     borderColor: 'rgba(99, 91, 255, 0.35)',
@@ -64,11 +80,115 @@ const PAYMENT_OPTIONS: PaymentOption[] = [
 
 export default function SupportPage(): React.JSX.Element {
   const {t} = useI18n();
+  const {siteConfig} = useDocusaurusContext();
+  const {TURNSTILE_SITE_KEY} = siteConfig.customFields as {
+    TURNSTILE_SITE_KEY?: string;
+  };
   const [floatingBtnPos, setFloatingBtnPos] = useState<{x: number; y: number} | null>(null);
   const [hovered, setHovered] = useState<PaymentMethod | null>(null);
+  const [stripeStatus, setStripeStatus] = useState<'idle' | 'loading' | 'error'>('idle');
 
   const handleHeartClick = (e: React.MouseEvent<SVGGElement>) => {
     setFloatingBtnPos({x: e.clientX, y: e.clientY});
+  };
+
+  const loadTurnstile = () => new Promise<void>((resolve, reject) => {
+    if (window.turnstile) {
+      resolve();
+      return;
+    }
+
+    const existingScript = document.querySelector<HTMLScriptElement>('script[src^="https://challenges.cloudflare.com/turnstile/v0/api.js"]');
+    if (existingScript) {
+      existingScript.addEventListener('load', () => resolve(), {once: true});
+      existingScript.addEventListener('error', () => reject(new Error('Turnstile failed to load')), {once: true});
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+    script.async = true;
+    script.defer = true;
+    script.onload = () => resolve();
+    script.onerror = () => reject(new Error('Turnstile failed to load'));
+    document.head.appendChild(script);
+  });
+
+  const getTurnstileToken = async (): Promise<string> => {
+    if (!TURNSTILE_SITE_KEY) {
+      throw new Error('Turnstile site key is not configured');
+    }
+
+    await loadTurnstile();
+
+    const container = document.createElement('div');
+    container.style.position = 'fixed';
+    container.style.left = '-9999px';
+    container.style.top = '0';
+    document.body.appendChild(container);
+
+    return new Promise((resolve, reject) => {
+      const widgetId = window.turnstile?.render(container, {
+        sitekey: TURNSTILE_SITE_KEY,
+        size: 'invisible',
+        callback: (token) => {
+          window.turnstile?.remove(widgetId);
+          container.remove();
+          resolve(token);
+        },
+        'error-callback': () => {
+          window.turnstile?.remove(widgetId);
+          container.remove();
+          reject(new Error('Turnstile verification failed'));
+        },
+      });
+
+      if (!widgetId) {
+        container.remove();
+        reject(new Error('Turnstile is not available'));
+        return;
+      }
+
+      window.turnstile?.execute(widgetId);
+    });
+  };
+
+  const startStripeCheckout = async () => {
+    if (stripeStatus === 'loading') {
+      return;
+    }
+
+    setStripeStatus('loading');
+
+    try {
+      const turnstileToken = await getTurnstileToken();
+      const response = await fetch(STRIPE_CHECKOUT_API, {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          'x-cadautoscript-payment': 'support-page',
+        },
+        body: JSON.stringify({turnstileToken}),
+      });
+
+      if (response.status === 429) {
+        throw new Error('Too many checkout attempts. Please wait a minute and try again.');
+      }
+
+      if (!response.ok) {
+        throw new Error('Stripe checkout could not be started.');
+      }
+
+      const {url} = await response.json() as {url?: string};
+      if (!url) {
+        throw new Error('Stripe checkout URL is missing.');
+      }
+
+      window.location.assign(url);
+    } catch (error) {
+      console.error(error);
+      setStripeStatus('error');
+    }
   };
 
   return (
@@ -122,31 +242,64 @@ export default function SupportPage(): React.JSX.Element {
           <p className={styles.lead}>{t('support.description')}</p>
 
           <div className={styles.paymentOptions}>
-            {PAYMENT_OPTIONS.map((opt) => (
-              <a
-                key={opt.id}
-                href={opt.href}
-                target="_blank"
-                rel="noreferrer noopener"
-                className={styles.paymentCard}
-                style={{
-                  '--option-accent': opt.accentColor,
-                  '--option-border': opt.borderColor,
-                  '--option-hover-bg': opt.hoverBg,
-                } as React.CSSProperties}
-                onMouseEnter={() => setHovered(opt.id)}
-                onMouseLeave={() => setHovered(null)}
-              >
-                <span className={styles.paymentIcon}>{opt.icon}</span>
-                <span className={styles.paymentLabels}>
-                  <span className={styles.paymentName}>{opt.label}</span>
-                  <span className={styles.paymentSub}>{t(opt.sublabelKey)}</span>
-                </span>
-                <svg className={styles.paymentArrow} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                  <path d="M3 8H13M9 4L13 8L9 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </a>
-            ))}
+            {PAYMENT_OPTIONS.map((opt) => {
+              const cardStyle = {
+                '--option-accent': opt.accentColor,
+                '--option-border': opt.borderColor,
+                '--option-hover-bg': opt.hoverBg,
+              } as React.CSSProperties;
+
+              const cardContent = (
+                <>
+                  <span className={styles.paymentIcon}>{opt.icon}</span>
+                  <span className={styles.paymentLabels}>
+                    <span className={styles.paymentName}>{opt.label}</span>
+                    <span className={styles.paymentSub}>
+                      {opt.id === 'stripe' && stripeStatus === 'loading'
+                        ? 'Preparing secure checkout...'
+                        : opt.id === 'stripe' && stripeStatus === 'error'
+                          ? 'Checkout blocked or unavailable. Please try again.'
+                          : t(opt.sublabelKey)}
+                    </span>
+                  </span>
+                  <svg className={styles.paymentArrow} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M3 8H13M9 4L13 8L9 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </>
+              );
+
+              if (opt.id === 'stripe') {
+                return (
+                  <button
+                    key={opt.id}
+                    type="button"
+                    className={styles.paymentCard}
+                    style={cardStyle}
+                    disabled={stripeStatus === 'loading'}
+                    onClick={startStripeCheckout}
+                    onMouseEnter={() => setHovered(opt.id)}
+                    onMouseLeave={() => setHovered(null)}
+                  >
+                    {cardContent}
+                  </button>
+                );
+              }
+
+              return (
+                <a
+                  key={opt.id}
+                  href={PAYPAL_LINK}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className={styles.paymentCard}
+                  style={cardStyle}
+                  onMouseEnter={() => setHovered(opt.id)}
+                  onMouseLeave={() => setHovered(null)}
+                >
+                  {cardContent}
+                </a>
+              );
+            })}
           </div>
 
           {floatingBtnPos && (

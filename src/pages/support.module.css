@@ -150,12 +150,16 @@
   display: flex;
   align-items: center;
   gap: 0.9rem;
+  width: 100%;
   padding: 0.9rem 1.1rem;
   border-radius: 14px;
   border: 1px solid var(--option-border);
   background: rgba(255, 255, 255, 0.03);
   color: #e2eaf8;
+  font: inherit;
+  text-align: left;
   text-decoration: none;
+  cursor: pointer;
   transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
 }
@@ -167,6 +171,12 @@
   border-color: var(--option-accent);
   transform: translateX(3px);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18), inset 0 0 0 1px var(--option-border);
+}
+
+.paymentCard:disabled {
+  cursor: wait;
+  opacity: 0.76;
+  transform: none;
 }
 
 .paymentIcon {
