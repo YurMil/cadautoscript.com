@@ -1,9 +1,38 @@
 const RATE_LIMIT_WINDOW_SECONDS = 60;
 const RATE_LIMIT_MAX_REQUESTS = 3;
 
+// Lightweight bot filter. This value is sent by the support page and is visible
+// in the browser, so it is NOT a secret — it only weeds out unsophisticated
+// bots before the real Turnstile + rate-limit checks. Keep it in sync with the
+// `x-cadautoscript-payment` header set in src/pages/support.tsx.
+const PAYMENT_REQUEST_HEADER = 'x-cadautoscript-payment';
+const PAYMENT_REQUEST_HEADER_VALUE = 'support-page';
+
 type CheckoutRequestBody = {
   turnstileToken?: string;
 };
+
+// Best-effort in-memory fallback used when Upstash Redis is not configured or
+// is temporarily unreachable. On serverless each instance keeps its own map, so
+// this is weaker than the centralized limiter, but it prevents a total outage
+// (and keeps some friction against bursts) instead of blocking every visitor.
+const memoryRateLimitStore = new Map<string, {count: number; expiresAt: number}>();
+
+function incrementInMemoryRateLimit(key: string): number {
+  const now = Date.now();
+  const existing = memoryRateLimitStore.get(key);
+
+  if (!existing || existing.expiresAt <= now) {
+    memoryRateLimitStore.set(key, {
+      count: 1,
+      expiresAt: now + RATE_LIMIT_WINDOW_SECONDS * 1000,
+    });
+    return 1;
+  }
+
+  existing.count += 1;
+  return existing.count;
+}
 
 function getHeader(req: any, name: string): string | undefined {
   const value = req.headers?.[name.toLowerCase()] ?? req.headers?.[name];
@@ -48,6 +77,14 @@ async function incrementUpstashRateLimit(key: string): Promise<number> {
     return response.json() as Promise<{result?: unknown}>;
   };
 
+  // Create the counter together with its TTL atomically (SET ... EX ... NX).
+  // Doing INCR first and EXPIRE second left a window where a failed EXPIRE
+  // could keep a key without any expiry, blocking that IP permanently.
+  const created = await request('set', key, '1', 'EX', String(RATE_LIMIT_WINDOW_SECONDS), 'NX');
+  if (created.result === 'OK') {
+    return 1;
+  }
+
   const incrementResult = await request('incr', key);
   const count = Number(incrementResult.result);
 
@@ -55,22 +92,25 @@ async function incrementUpstashRateLimit(key: string): Promise<number> {
     throw new Error('Upstash incr returned an invalid counter');
   }
 
-  if (count === 1) {
-    await request('expire', key, String(RATE_LIMIT_WINDOW_SECONDS));
-  }
-
   return count;
 }
 
 async function isRateLimited(ip: string): Promise<boolean> {
   const key = `checkout-rate-limit:${ip}`;
+  const upstashConfigured = Boolean(
+    process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN,
+  );
+
+  if (!upstashConfigured) {
+    return incrementInMemoryRateLimit(key) > RATE_LIMIT_MAX_REQUESTS;
+  }
 
   try {
     const count = await incrementUpstashRateLimit(key);
     return count > RATE_LIMIT_MAX_REQUESTS;
   } catch (error) {
-    console.error('Centralized rate limit failed:', error);
-    return true;
+    console.error('Centralized rate limit failed, falling back to in-memory limiter:', error);
+    return incrementInMemoryRateLimit(key) > RATE_LIMIT_MAX_REQUESTS;
   }
 }
 
@@ -124,8 +164,25 @@ async function verifyTurnstileToken(token: string | undefined, ip: string): Prom
     return false;
   }
 
-  const result = await response.json() as {success?: boolean};
-  return result.success === true;
+  const result = await response.json() as {success?: boolean; hostname?: string};
+  if (result.success !== true) {
+    return false;
+  }
+
+  // Optional defense-in-depth: reject tokens solved on an unexpected hostname.
+  // Set TURNSTILE_ALLOWED_HOSTNAMES (comma-separated) in production. Left empty,
+  // the check is skipped so Vercel preview deployments keep working.
+  const allowedHostnames = (process.env.TURNSTILE_ALLOWED_HOSTNAMES ?? '')
+    .split(',')
+    .map((host) => host.trim())
+    .filter(Boolean);
+
+  if (allowedHostnames.length > 0 && (!result.hostname || !allowedHostnames.includes(result.hostname))) {
+    console.error('Turnstile hostname mismatch:', result.hostname);
+    return false;
+  }
+
+  return true;
 }
 
 async function createStripeCheckoutSession(origin: string): Promise<string | null> {
@@ -170,8 +227,7 @@ export default async function handler(req: any, res: any) {
       return res.status(405).json({error: 'Method not allowed'});
     }
 
-    const expectedHeader = process.env.PAYMENT_REQUEST_HEADER_VALUE ?? 'support-page';
-    if (getHeader(req, 'x-cadautoscript-payment') !== expectedHeader) {
+    if (getHeader(req, PAYMENT_REQUEST_HEADER) !== PAYMENT_REQUEST_HEADER_VALUE) {
       return res.status(403).json({error: 'Forbidden'});
     }
 
