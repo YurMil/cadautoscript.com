@@ -278,6 +278,9 @@ function SettingsContent(): React.JSX.Element {
     setSuccess(null);
     try {
       await deleteOwnAccount(user.id);
+      // Suppress the "sign in" guard modal that would otherwise fire when the
+      // user is cleared, before we redirect the just-deleted account home.
+      setPromptedLogin(true);
       setUser(null);
       setDeleteModalOpen(false);
       history.push('/');
