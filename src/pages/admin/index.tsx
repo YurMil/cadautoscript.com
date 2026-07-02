@@ -17,6 +17,14 @@ import {
   type UtilityPopularity,
   type AdminUtilityUsageRow,
 } from '@site/src/shared/utility-usage';
+import {
+  getAdminDashboardStats,
+  getAdminAuditLog,
+  logAdminEvent,
+  type DashboardStats,
+  type AuditLogEntry,
+  type AuditEventType,
+} from '@site/src/shared/admin-analytics';
 import {utilities} from '@site/src/data/utilities';
 import UsageRanking from '@site/src/components/UtilityUsage/UsageRanking';
 import styles from './index.module.css';
@@ -47,7 +55,25 @@ type CommentRow = {
   } | null;
 };
 
-type TabKey = 'users' | 'comments' | 'usage' | 'settings';
+type TabKey = 'overview' | 'users' | 'comments' | 'usage' | 'audit' | 'settings';
+
+const AUDIT_PAGE_SIZE = 50;
+
+const AUDIT_EVENT_LABELS: Record<AuditEventType, string> = {
+  account_deleted: 'Account deleted',
+  settings_reset: 'Settings reset',
+  analytics_reset: 'Analytics reset',
+  role_changed: 'Role changed',
+  user_invited: 'User invited',
+};
+
+const AUDIT_EVENT_CHIP: Record<AuditEventType, string> = {
+  account_deleted: 'chipDeleted',
+  settings_reset: 'chipReset',
+  analytics_reset: 'chipReset',
+  role_changed: 'chipRole',
+  user_invited: 'chipInvite',
+};
 
 const utilityNameById = new Map(utilities.map((u) => [u.id, u.name]));
 
@@ -77,7 +103,7 @@ export default function AdminPage(): React.JSX.Element {
   const [sessionUser, setSessionUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<ProfileRow | null>(null);
   const [data, setData] = useState(initialState);
-  const [activeTab, setActiveTab] = useState<TabKey>('users');
+  const [activeTab, setActiveTab] = useState<TabKey>('overview');
   const [loadingAuth, setLoadingAuth] = useState(true);
   const [loadingUsers, setLoadingUsers] = useState(false);
   const [loadingComments, setLoadingComments] = useState(false);
@@ -94,6 +120,14 @@ export default function AdminPage(): React.JSX.Element {
   const [perUserUsage, setPerUserUsage] = useState<AdminUtilityUsageRow[]>([]);
   const [usageLoading, setUsageLoading] = useState(false);
   const [usageLoaded, setUsageLoaded] = useState(false);
+  const [stats, setStats] = useState<DashboardStats | null>(null);
+  const [statsLoading, setStatsLoading] = useState(false);
+  const [statsLoaded, setStatsLoaded] = useState(false);
+  const [auditEntries, setAuditEntries] = useState<AuditLogEntry[]>([]);
+  const [auditLoading, setAuditLoading] = useState(false);
+  const [auditLoaded, setAuditLoaded] = useState(false);
+  const [auditFilter, setAuditFilter] = useState<AuditEventType | ''>('');
+  const [auditHasMore, setAuditHasMore] = useState(false);
 
   const normalizeProfile = useCallback(
     (value: CommentRow['profiles'] | CommentRow['profiles'][] | null | undefined) =>
@@ -190,6 +224,47 @@ export default function AdminPage(): React.JSX.Element {
       setUsageLoading(false);
     }
   }, []);
+
+  const loadStats = useCallback(async () => {
+    setStatsLoading(true);
+    try {
+      const result = await getAdminDashboardStats();
+      setStats(result);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Unable to load dashboard stats.';
+      console.error('[Admin] Unable to load dashboard stats', message);
+      setError('Unable to load dashboard stats.');
+    } finally {
+      setStatsLoaded(true);
+      setStatsLoading(false);
+    }
+  }, []);
+
+  const loadAudit = useCallback(
+    async (opts?: {filter?: AuditEventType | ''; append?: boolean}) => {
+      const filter = opts?.filter ?? auditFilter;
+      const append = opts?.append ?? false;
+      setAuditLoading(true);
+      try {
+        const offset = append ? auditEntries.length : 0;
+        const rows = await getAdminAuditLog({
+          limit: AUDIT_PAGE_SIZE,
+          offset,
+          eventType: filter === '' ? null : filter,
+        });
+        setAuditEntries((prev) => (append ? [...prev, ...rows] : rows));
+        setAuditHasMore(rows.length === AUDIT_PAGE_SIZE);
+      } catch (err) {
+        const message = err instanceof Error ? err.message : 'Unable to load audit log.';
+        console.error('[Admin] Unable to load audit log', message);
+        setError('Unable to load audit log.');
+      } finally {
+        setAuditLoaded(true);
+        setAuditLoading(false);
+      }
+    },
+    [auditFilter, auditEntries.length],
+  );
 
   // Access control: fetch session + profile, redirect if not admin.
   useEffect(() => {
@@ -298,6 +373,28 @@ export default function AdminPage(): React.JSX.Element {
     void loadUsage();
   }, [activeTab, loadingAuth, profile?.role, usageLoaded, usageLoading, loadUsage]);
 
+  // Lazy-load the Overview stats when first opened.
+  useEffect(() => {
+    if (loadingAuth || profile?.role !== 'admin') {
+      return;
+    }
+    if (activeTab !== 'overview' || statsLoaded || statsLoading) {
+      return;
+    }
+    void loadStats();
+  }, [activeTab, loadingAuth, profile?.role, statsLoaded, statsLoading, loadStats]);
+
+  // Lazy-load the Audit log when first opened.
+  useEffect(() => {
+    if (loadingAuth || profile?.role !== 'admin') {
+      return;
+    }
+    if (activeTab !== 'audit' || auditLoaded || auditLoading) {
+      return;
+    }
+    void loadAudit();
+  }, [activeTab, loadingAuth, profile?.role, auditLoaded, auditLoading, loadAudit]);
+
   const handleDeleteComment = async (commentId: string) => {
     if (!commentId) return;
     setActionState({kind: 'deleting', targetId: commentId});
@@ -399,6 +496,14 @@ export default function AdminPage(): React.JSX.Element {
     setError(null);
     setToast(null);
     setActionState({kind: 'deleting', targetId: userId});
+    // Record the deletion in the audit log (snapshotting identity) BEFORE the
+    // cascade removes the profile. Non-fatal: proceed with deletion regardless.
+    const {error: auditError} = await supabase.rpc('request_account_deletion', {
+      p_target: userId,
+    });
+    if (auditError) {
+      console.warn('[Admin] Unable to write deletion audit entry', auditError.message);
+    }
     const {error: fnError} = await supabase.functions.invoke('super-function', {
       body: {action: 'delete', targetUserId: userId},
     });
@@ -460,10 +565,59 @@ export default function AdminPage(): React.JSX.Element {
       return;
     }
     setToast(result?.message || 'Invitation sent');
+    void logAdminEvent('user_invited', {email: inviteEmail});
     setInviteEmail('');
     setInviteOpen(false);
     setActionState({kind: 'idle'});
     void loadProfiles();
+  };
+
+  const handleAuditFilterChange = (value: AuditEventType | '') => {
+    setAuditFilter(value);
+    void loadAudit({filter: value, append: false});
+  };
+
+  const renderDistribution = (title: string, dist: Record<string, number>) => {
+    const entries = Object.entries(dist).sort((a, b) => b[1] - a[1]);
+    const max = entries.reduce((m, [, c]) => Math.max(m, c), 0) || 1;
+    return (
+      <div className={styles.distroCard}>
+        <h3 className={styles.usageHeading}>{title}</h3>
+        {entries.length === 0 ? (
+          <p className={styles.muted}>No data yet.</p>
+        ) : (
+          entries.map(([key, count]) => (
+            <div key={key} className={styles.distroRow}>
+              <span>{key}</span>
+              <span className={styles.distroTrack}>
+                <span
+                  className={styles.distroFill}
+                  style={{width: `${Math.round((count / max) * 100)}%`}}
+                />
+              </span>
+              <span className={styles.distroCount}>{count}</span>
+            </div>
+          ))
+        )}
+      </div>
+    );
+  };
+
+  const formatAuditDetail = (entry: AuditLogEntry): string => {
+    const meta = entry.metadata || {};
+    if (entry.eventType === 'role_changed' && meta.from && meta.to) {
+      return `${String(meta.from)} → ${String(meta.to)}`;
+    }
+    if (entry.eventType === 'analytics_reset' && meta.deleted_count != null) {
+      return `${String(meta.deleted_count)} records cleared`;
+    }
+    if (entry.eventType === 'account_deleted') {
+      return meta.self_service ? 'Self-service' : 'By admin';
+    }
+    if (entry.eventType === 'user_invited' && meta.email) {
+      return String(meta.email);
+    }
+    return '';
   };
 
   if (loadingAuth) {
@@ -492,6 +646,13 @@ export default function AdminPage(): React.JSX.Element {
           <div className={styles.tabs}>
             <button
               type="button"
+              className={`${styles.tab} ${activeTab === 'overview' ? styles.tabActive : ''}`}
+              onClick={() => setActiveTab('overview')}
+            >
+              Overview
+            </button>
+            <button
+              type="button"
               className={`${styles.tab} ${activeTab === 'users' ? styles.tabActive : ''}`}
               onClick={() => setActiveTab('users')}
             >
@@ -513,6 +674,13 @@ export default function AdminPage(): React.JSX.Element {
             </button>
             <button
               type="button"
+              className={`${styles.tab} ${activeTab === 'audit' ? styles.tabActive : ''}`}
+              onClick={() => setActiveTab('audit')}
+            >
+              Audit
+            </button>
+            <button
+              type="button"
               className={`${styles.tab} ${activeTab === 'settings' ? styles.tabActive : ''}`}
               onClick={() => setActiveTab('settings')}
             >
@@ -523,6 +691,67 @@ export default function AdminPage(): React.JSX.Element {
 
         {error ? <div className={styles.alert}>{error}</div> : null}
         {toast ? <div className={clsx(styles.alert, styles.alertSuccess)}>{toast}</div> : null}
+
+        {activeTab === 'overview' ? (
+          <section className={styles.panel}>
+            <div className={styles.toolbar}>
+              <div className={styles.toolbarLeft}>
+                {statsLoading ? 'Loading dashboard...' : 'Site overview'}
+              </div>
+              <div className={styles.toolbarRight}>
+                <button
+                  type="button"
+                  className={styles.secondaryBtn}
+                  onClick={() => void loadStats()}
+                  disabled={statsLoading}
+                >
+                  {statsLoading ? 'Refreshing...' : 'Refresh'}
+                </button>
+              </div>
+            </div>
+
+            {!stats ? (
+              <p className={styles.muted}>{statsLoading ? 'Loading…' : 'No data yet.'}</p>
+            ) : (
+              <>
+                <div className={styles.statGrid}>
+                  <div className={styles.statCard}>
+                    <div className={styles.statValue}>{stats.totalUsers}</div>
+                    <div className={styles.statLabel}>Total users</div>
+                  </div>
+                  <div className={styles.statCard}>
+                    <div className={styles.statValue}>{stats.newUsers7d}</div>
+                    <div className={styles.statLabel}>New · 7 days</div>
+                  </div>
+                  <div className={styles.statCard}>
+                    <div className={styles.statValue}>{stats.newUsers30d}</div>
+                    <div className={styles.statLabel}>New · 30 days</div>
+                  </div>
+                  <div className={styles.statCard}>
+                    <div className={styles.statValue}>{stats.activeUsers7d}</div>
+                    <div className={styles.statLabel}>Active · 7 days</div>
+                  </div>
+                  <div className={styles.statCard}>
+                    <div className={styles.statValue}>{stats.totalLaunches}</div>
+                    <div className={styles.statLabel}>Total launches</div>
+                  </div>
+                  <div className={clsx(styles.statCard, styles.statCardDanger)}>
+                    <div className={styles.statValue}>{stats.deletedAccountsTotal}</div>
+                    <div className={styles.statLabel}>
+                      Deleted accounts ({stats.deletedAccounts30d} in 30d)
+                    </div>
+                  </div>
+                </div>
+
+                <div className={styles.distroGrid}>
+                  {renderDistribution('Theme preference', stats.themeDistribution)}
+                  {renderDistribution('Interface language', stats.languageDistribution)}
+                  {renderDistribution('Display mode', stats.displayModeDistribution)}
+                </div>
+              </>
+            )}
+          </section>
+        ) : null}
 
         {activeTab === 'users' ? (
           <section className={styles.panel}>
@@ -729,6 +958,103 @@ export default function AdminPage(): React.JSX.Element {
                 )}
               </div>
             </div>
+          </section>
+        ) : null}
+
+        {activeTab === 'audit' ? (
+          <section className={styles.panel}>
+            <div className={styles.toolbar}>
+              <div className={styles.toolbarLeft}>
+                {auditLoading
+                  ? 'Loading audit log...'
+                  : `${auditEntries.length} event${auditEntries.length === 1 ? '' : 's'}`}
+              </div>
+              <div className={styles.toolbarRight}>
+                <select
+                  className={styles.auditFilter}
+                  value={auditFilter}
+                  onChange={(e) => handleAuditFilterChange(e.target.value as AuditEventType | '')}
+                  disabled={auditLoading}
+                >
+                  <option value="">All events</option>
+                  <option value="account_deleted">Account deleted</option>
+                  <option value="role_changed">Role changed</option>
+                  <option value="settings_reset">Settings reset</option>
+                  <option value="analytics_reset">Analytics reset</option>
+                  <option value="user_invited">User invited</option>
+                </select>
+                <button
+                  type="button"
+                  className={styles.secondaryBtn}
+                  onClick={() => void loadAudit({append: false})}
+                  disabled={auditLoading}
+                >
+                  {auditLoading ? 'Refreshing...' : 'Refresh'}
+                </button>
+              </div>
+            </div>
+
+            {auditEntries.length === 0 ? (
+              <p className={styles.muted}>
+                {auditLoading ? 'Loading…' : 'No events recorded yet.'}
+              </p>
+            ) : (
+              <>
+                <table className={styles.table}>
+                  <thead>
+                    <tr>
+                      <th>When</th>
+                      <th>Event</th>
+                      <th>Actor</th>
+                      <th>Target</th>
+                      <th>Details</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {auditEntries.map((entry) => (
+                      <tr key={entry.id}>
+                        <td>{formatDate(entry.createdAt)}</td>
+                        <td>
+                          <span
+                            className={clsx(
+                              styles.chip,
+                              styles[AUDIT_EVENT_CHIP[entry.eventType] as keyof typeof styles],
+                            )}
+                          >
+                            {AUDIT_EVENT_LABELS[entry.eventType]}
+                          </span>
+                        </td>
+                        <td>{entry.actorEmail || '-'}</td>
+                        <td>
+                          <span className={styles.auditTarget}>
+                            <span>{entry.targetName || entry.targetEmail || '-'}</span>
+                            {entry.targetName && entry.targetEmail ? (
+                              <span className={styles.auditTargetEmail}>{entry.targetEmail}</span>
+                            ) : null}
+                          </span>
+                        </td>
+                        <td className={styles.auditMeta}>{formatAuditDetail(entry)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                {auditHasMore ? (
+                  <div className={styles.toolbar} style={{marginTop: '0.75rem'}}>
+                    <div className={styles.toolbarLeft} />
+                    <div className={styles.toolbarRight}>
+                      <button
+                        type="button"
+                        className={styles.secondaryBtn}
+                        onClick={() => void loadAudit({append: true})}
+                        disabled={auditLoading}
+                      >
+                        {auditLoading ? 'Loading...' : 'Load more'}
+                      </button>
+                    </div>
+                  </div>
+                ) : null}
+              </>
+            )}
           </section>
         ) : null}
 

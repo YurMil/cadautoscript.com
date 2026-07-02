@@ -375,3 +375,158 @@
   font-variant-numeric: tabular-nums;
   color: var(--ifm-color-emphasis-700);
 }
+
+/* Overview stats */
+.statGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 0.85rem;
+  margin-top: 0.75rem;
+}
+
+.statCard {
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  padding: 1rem 1.1rem;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.statValue {
+  font-size: 1.9rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+
+.statLabel {
+  margin-top: 0.25rem;
+  color: #9aa5c8;
+  font-size: 0.85rem;
+}
+
+.statCardDanger .statValue {
+  color: #fca5a5;
+}
+
+.distroGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.distroCard {
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  padding: 1rem 1.1rem 1.25rem;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.distroRow {
+  display: grid;
+  grid-template-columns: 90px 1fr 2.5rem;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.55rem;
+  font-size: 0.9rem;
+}
+
+.distroTrack {
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+
+.distroFill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(100, 255, 218, 0.85), rgba(33, 92, 255, 0.75));
+}
+
+.distroCount {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: #9aa5c8;
+}
+
+/* Audit log */
+.chip {
+  display: inline-block;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  border: 1px solid var(--card-border);
+  white-space: nowrap;
+}
+
+.chipDeleted {
+  background: rgba(248, 113, 113, 0.14);
+  border-color: rgba(248, 113, 113, 0.4);
+  color: #fca5a5;
+}
+
+.chipRole {
+  background: rgba(147, 197, 253, 0.14);
+  border-color: rgba(147, 197, 253, 0.4);
+  color: #bfdbfe;
+}
+
+.chipReset {
+  background: rgba(250, 204, 21, 0.12);
+  border-color: rgba(250, 204, 21, 0.35);
+  color: #fde68a;
+}
+
+.chipInvite {
+  background: rgba(74, 222, 128, 0.12);
+  border-color: rgba(74, 222, 128, 0.35);
+  color: #bbf7d0;
+}
+
+.auditFilter {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  padding: 0.35rem 0.5rem;
+  color: inherit;
+}
+
+.auditTarget {
+  display: flex;
+  flex-direction: column;
+}
+
+.auditTargetEmail {
+  color: #9aa5c8;
+  font-size: 0.82rem;
+}
+
+.auditMeta {
+  font-size: 0.82rem;
+  color: #9aa5c8;
+  font-family: var(--ifm-font-family-monospace);
+}
+
+:global(html[data-theme='light']) .statCard,
+:global(html[data-theme='light']) .distroCard {
+  background: var(--light-surface);
+}
+
+:global(html[data-theme='light']) .statLabel,
+:global(html[data-theme='light']) .distroCount,
+:global(html[data-theme='light']) .auditTargetEmail,
+:global(html[data-theme='light']) .auditMeta {
+  color: var(--light-text-soft);
+}
+
+:global(html[data-theme='light']) .distroTrack {
+  background: rgba(15, 23, 42, 0.08);
+}
+
+:global(html[data-theme='light']) .auditFilter {
+  background: rgba(248, 250, 255, 0.92);
+  color: var(--light-text);
+}

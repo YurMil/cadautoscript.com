@@ -3,12 +3,20 @@ import clsx from 'clsx';
 import type {User} from '@supabase/supabase-js';
 import Layout from '@theme/Layout';
 import Head from '@docusaurus/Head';
+import {useHistory} from '@docusaurus/router';
 import {supabase} from '@site/src/lib/supabaseClient';
 import {useAuthModal} from '@site/src/contexts/AuthModalContext';
 import {useI18n} from '@site/src/contexts/I18nContext';
 import {LOCALES} from '@site/src/i18n';
+import {
+  resetUserSettings,
+  resetUserAnalytics,
+  deleteOwnAccount,
+} from '@site/src/shared/account';
 import styles from './index.module.css';
 import {useColorMode} from '@docusaurus/theme-common';
+
+type DangerAction = 'settings' | 'analytics' | 'delete' | null;
 
 type UserSettings = {
   smart_sorting: boolean;
@@ -38,9 +46,13 @@ function SettingsContent(): React.JSX.Element {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [promptedLogin, setPromptedLogin] = useState(false);
+  const [dangerBusy, setDangerBusy] = useState<DangerAction>(null);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [deleteConfirm, setDeleteConfirm] = useState('');
   const {openLoginModal} = useAuthModal();
   const {setColorMode} = useColorMode();
   const {t, setLocale} = useI18n();
+  const history = useHistory();
 
   useEffect(() => {
     let isMounted = true;
@@ -195,6 +207,90 @@ function SettingsContent(): React.JSX.Element {
     setSaving(false);
   };
 
+  const clearLocalPreferences = () => {
+    try {
+      localStorage.removeItem('theme');
+      localStorage.removeItem('site-locale');
+      localStorage.removeItem('utilities-compact');
+    } catch {
+      /* ignore storage errors */
+    }
+  };
+
+  const handleResetSettings = async () => {
+    if (!user || dangerBusy) {
+      return;
+    }
+    if (!window.confirm(t('settings.dangerZone.resetSettingsConfirm'))) {
+      return;
+    }
+    setDangerBusy('settings');
+    setError(null);
+    setSuccess(null);
+    try {
+      await resetUserSettings();
+      setSettings(defaultSettings);
+      clearLocalPreferences();
+      setColorMode(null);
+      try {
+        setLocale('en');
+      } catch {
+        /* ignore */
+      }
+      setSuccess(t('settings.dangerZone.resetSettingsDone'));
+    } catch (err) {
+      console.error('[Settings] reset settings failed', err);
+      setError(t('settings.dangerZone.actionError'));
+    } finally {
+      setDangerBusy(null);
+    }
+  };
+
+  const handleResetAnalytics = async () => {
+    if (!user || dangerBusy) {
+      return;
+    }
+    if (!window.confirm(t('settings.dangerZone.resetAnalyticsConfirm'))) {
+      return;
+    }
+    setDangerBusy('analytics');
+    setError(null);
+    setSuccess(null);
+    try {
+      const removed = await resetUserAnalytics();
+      setSuccess(
+        t('settings.dangerZone.resetAnalyticsDone').replace('{count}', String(removed)),
+      );
+    } catch (err) {
+      console.error('[Settings] reset analytics failed', err);
+      setError(t('settings.dangerZone.actionError'));
+    } finally {
+      setDangerBusy(null);
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    if (!user || dangerBusy) {
+      return;
+    }
+    setDangerBusy('delete');
+    setError(null);
+    setSuccess(null);
+    try {
+      await deleteOwnAccount(user.id);
+      // Suppress the "sign in" guard modal that would otherwise fire when the
+      // user is cleared, before we redirect the just-deleted account home.
+      setPromptedLogin(true);
+      setUser(null);
+      setDeleteModalOpen(false);
+      history.push('/');
+    } catch (err) {
+      console.error('[Settings] delete account failed', err);
+      setError(t('settings.dangerZone.actionError'));
+      setDangerBusy(null);
+    }
+  };
+
   const renderUnauthed = () => (
     <div className={styles.guard}>
       <p className={styles.eyebrow}>{t('settings.eyebrow')}</p>
@@ -316,6 +412,131 @@ function SettingsContent(): React.JSX.Element {
             </>
           )}
         </section>
+
+        {user ? (
+          <section className={clsx(styles.panel, styles.dangerPanel)}>
+            <header className={styles.header}>
+              <p className={clsx(styles.eyebrow, styles.dangerEyebrow)}>
+                {t('settings.dangerZone.eyebrow')}
+              </p>
+              <h2 className={styles.title}>{t('settings.dangerZone.title')}</h2>
+              <p className={styles.subtle}>{t('settings.dangerZone.subtitle')}</p>
+            </header>
+
+            <div className={styles.dangerList}>
+              <div className={styles.dangerRow}>
+                <div className={styles.dangerRowText}>
+                  <span className={styles.dangerRowTitle}>
+                    {t('settings.dangerZone.resetSettingsTitle')}
+                  </span>
+                  <p className={styles.dangerRowHint}>
+                    {t('settings.dangerZone.resetSettingsHint')}
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  className={styles.dangerBtn}
+                  onClick={handleResetSettings}
+                  disabled={dangerBusy !== null}
+                >
+                  {dangerBusy === 'settings'
+                    ? t('settings.dangerZone.working')
+                    : t('settings.dangerZone.resetSettingsBtn')}
+                </button>
+              </div>
+
+              <div className={styles.dangerRow}>
+                <div className={styles.dangerRowText}>
+                  <span className={styles.dangerRowTitle}>
+                    {t('settings.dangerZone.resetAnalyticsTitle')}
+                  </span>
+                  <p className={styles.dangerRowHint}>
+                    {t('settings.dangerZone.resetAnalyticsHint')}
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  className={styles.dangerBtn}
+                  onClick={handleResetAnalytics}
+                  disabled={dangerBusy !== null}
+                >
+                  {dangerBusy === 'analytics'
+                    ? t('settings.dangerZone.working')
+                    : t('settings.dangerZone.resetAnalyticsBtn')}
+                </button>
+              </div>
+
+              <div className={styles.dangerRow}>
+                <div className={styles.dangerRowText}>
+                  <span className={styles.dangerRowTitle}>
+                    {t('settings.dangerZone.deleteTitle')}
+                  </span>
+                  <p className={styles.dangerRowHint}>
+                    {t('settings.dangerZone.deleteHint')}
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  className={clsx(styles.dangerBtn, styles.dangerBtnSolid)}
+                  onClick={() => {
+                    setDeleteConfirm('');
+                    setDeleteModalOpen(true);
+                  }}
+                  disabled={dangerBusy !== null}
+                >
+                  {t('settings.dangerZone.deleteBtn')}
+                </button>
+              </div>
+            </div>
+          </section>
+        ) : null}
+
+        {deleteModalOpen ? (
+          <div
+            className={styles.modalBackdrop}
+            role="dialog"
+            aria-modal="true"
+            onClick={() => (dangerBusy === 'delete' ? null : setDeleteModalOpen(false))}
+          >
+            <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+              <h3 className={styles.modalTitle}>{t('settings.dangerZone.deleteModalTitle')}</h3>
+              <p className={styles.subtle}>{t('settings.dangerZone.deleteModalBody')}</p>
+              <label className={styles.dangerRowText}>
+                <span className={styles.dangerRowHint}>
+                  {t('settings.dangerZone.deleteModalLabel')}
+                </span>
+                <input
+                  type="text"
+                  className={styles.modalInput}
+                  value={deleteConfirm}
+                  onChange={(e) => setDeleteConfirm(e.target.value)}
+                  placeholder="DELETE"
+                  autoFocus
+                />
+              </label>
+              <div className={styles.modalActions}>
+                <button
+                  type="button"
+                  className={styles.secondaryBtn}
+                  onClick={() => setDeleteModalOpen(false)}
+                  disabled={dangerBusy === 'delete'}
+                >
+                  {t('common.cancel')}
+                </button>
+                <button
+                  type="button"
+                  className={clsx(styles.dangerBtn, styles.dangerBtnSolid)}
+                  onClick={handleDeleteAccount}
+                  disabled={deleteConfirm.trim() !== 'DELETE' || dangerBusy === 'delete'}
+                >
+                  {dangerBusy === 'delete'
+                    ? t('settings.dangerZone.deleting')
+                    : t('settings.dangerZone.deleteConfirmBtn')}
+                </button>
+              </div>
+            </div>
+          </div>
+        ) : null}
       </main>
   );
 }
