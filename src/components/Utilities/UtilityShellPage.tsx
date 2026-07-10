@@ -94,17 +94,20 @@ export default function UtilityShellPage({tool, ...config}: UtilityShellPageProp
     };
   }, [isFullscreen]);
 
+  const exitFullscreen = () => {
+    setIsFullscreen(false);
+    const stage = document.querySelector('.utility-stage');
+    if (stage) {
+      stage.scrollIntoView({behavior: 'smooth', block: 'start'});
+    }
+  };
+
   const toggleFullscreen = () => {
-    setIsFullscreen((prev) => {
-      const next = !prev;
-      if (!next) {
-        const stage = document.querySelector('.utility-stage');
-        if (stage) {
-          stage.scrollIntoView({behavior: 'smooth', block: 'start'});
-        }
-      }
-      return next;
-    });
+    if (isFullscreen) {
+      exitFullscreen();
+    } else {
+      setIsFullscreen(true);
+    }
   };
 
   const toggleInfo = () => {
@@ -239,7 +242,7 @@ export default function UtilityShellPage({tool, ...config}: UtilityShellPageProp
             <button 
               type="button" 
               className="utility-fullscreen-exit-button"
-              onClick={() => setIsFullscreen(false)}
+              onClick={exitFullscreen}
             >
               {t('utility.exitFullScreen')}
             </button>
@@ -249,7 +252,7 @@ export default function UtilityShellPage({tool, ...config}: UtilityShellPageProp
             <button 
               type="button" 
               className="utility-fullscreen-exit-button"
-              onClick={() => setIsFullscreen(false)}
+              onClick={exitFullscreen}
             >
               {t('utility.exitFullScreen')}
             </button>
