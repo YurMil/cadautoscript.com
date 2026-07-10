@@ -65,11 +65,6 @@ export default function MiniGameShellPage(config: MiniGamePageConfig) {
         <meta property="og:url" content={canonicalUrl} />
         <link rel="stylesheet" href={stylesHref} />
         <link rel="stylesheet" href={shellCssHref} />
-        {scriptType === 'module' ? (
-          <script type="module" src={shellScriptSrc}></script>
-        ) : (
-          <script defer src={shellScriptSrc}></script>
-        )}
       </Head>
       <main className={`utility-shell ${isFullscreen ? 'utility-shell--fullscreen' : ''}`}>
         <header className="utility-header">

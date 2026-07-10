@@ -48,6 +48,9 @@ export default function UtilityShellPage({tool, ...config}: UtilityShellPageProp
   const {settings} = useUserSettings();
   const {t} = useI18n();
 
+  const [isFullscreen, setIsFullscreen] = React.useState(false);
+  const [isInfoCollapsed, setIsInfoCollapsed] = React.useState(false);
+
   React.useEffect(() => {
     document.body.classList.add('utility-shell-page');
     return () => document.body.classList.remove('utility-shell-page');
@@ -80,21 +83,33 @@ export default function UtilityShellPage({tool, ...config}: UtilityShellPageProp
 
   React.useEffect(() => {
     if (settings.fullscreen_utilities && !isLocked && !isCheckingAccess) {
-      const stage = document.querySelector('.utility-stage');
-      const container = document.querySelector('.utility-shell');
-      const btn = document.querySelector('.utility-fullscreen');
-      
-      if (stage && !stage.classList.contains('is-fullscreen')) {
-        stage.classList.add('is-fullscreen');
-        if (container) container.classList.add('utility-shell--fullscreen');
-        document.body.classList.add('utility-is-fullscreen');
-        if (btn) {
-          btn.textContent = 'Exit full screen';
-          btn.setAttribute('aria-pressed', 'true');
-        }
-      }
+      setIsFullscreen(true);
     }
   }, [settings.fullscreen_utilities, isLocked, isCheckingAccess]);
+
+  React.useEffect(() => {
+    document.body.classList.toggle('utility-is-fullscreen', isFullscreen);
+    return () => {
+      document.body.classList.remove('utility-is-fullscreen');
+    };
+  }, [isFullscreen]);
+
+  const toggleFullscreen = () => {
+    setIsFullscreen((prev) => {
+      const next = !prev;
+      if (!next) {
+        const stage = document.querySelector('.utility-stage');
+        if (stage) {
+          stage.scrollIntoView({behavior: 'smooth', block: 'start'});
+        }
+      }
+      return next;
+    });
+  };
+
+  const toggleInfo = () => {
+    setIsInfoCollapsed((prev) => !prev);
+  };
 
   const heroLinks = defaultHeroLinks;
   const reactionsSlug = config.reactionSlug ?? `tool-${slug}`;
@@ -115,13 +130,8 @@ export default function UtilityShellPage({tool, ...config}: UtilityShellPageProp
         <meta property="og:url" content={canonicalUrl} />
         <link rel="stylesheet" href={stylesHref} />
         <link rel="stylesheet" href={shellCssHref} />
-        {scriptType === 'module' ? (
-          <script type="module" src={shellScriptSrc}></script>
-        ) : (
-          <script defer src={shellScriptSrc}></script>
-        )}
       </Head>
-      <main className="utility-shell">
+      <main className={`utility-shell ${isFullscreen ? 'utility-shell--fullscreen' : ''}`}>
         <header className="utility-header">
           <div>
             <Link className="utility-logo" to="/">
@@ -145,7 +155,7 @@ export default function UtilityShellPage({tool, ...config}: UtilityShellPageProp
           </div>
         </header>
         <section className="utility-main">
-          <div className="utility-stage">
+          <div className={`utility-stage ${isFullscreen ? 'is-fullscreen' : ''}`}>
             {isCheckingAccess ? (
               <div className="utility-locked">
                 <p className="utility-locked__eyebrow">{t('utility.checkingAccess')}</p>
@@ -176,18 +186,28 @@ export default function UtilityShellPage({tool, ...config}: UtilityShellPageProp
           </div>
           {!isLocked ? (
             <div className="utility-toolbar" role="toolbar">
-              <button className="utility-toggle" type="button" aria-expanded="true">
-                {t('utility.hideInfo')}
+              <button 
+                className="utility-toggle" 
+                type="button" 
+                aria-expanded={!isInfoCollapsed}
+                onClick={toggleInfo}
+              >
+                {isInfoCollapsed ? t('utility.showInfo') : t('utility.hideInfo')}
               </button>
-              <button className="utility-fullscreen" type="button" aria-pressed="false">
-                {t('utility.fullScreen')}
+              <button 
+                className="utility-fullscreen" 
+                type="button" 
+                aria-pressed={isFullscreen}
+                onClick={toggleFullscreen}
+              >
+                {isFullscreen ? t('utility.exitFullScreen') : t('utility.fullScreen')}
               </button>
             </div>
           ) : null}
           <div className="utility-reactions">
             <ReactionsBar slug={reactionsSlug} />
           </div>
-          <aside className="utility-info" data-collapsible>
+          <aside className={`utility-info ${isInfoCollapsed ? 'is-collapsed' : ''}`} data-collapsible>
             <div className="utility-info__header">
               <h2>{t('utility.about')}</h2>
               <p>{about}</p>
@@ -216,13 +236,21 @@ export default function UtilityShellPage({tool, ...config}: UtilityShellPageProp
           </div>
           <div className="utility-fullscreen-exit-zone top">
             <div className="utility-fullscreen-indicator" aria-hidden="true"></div>
-            <button type="button" className="utility-fullscreen-exit-button">
+            <button 
+              type="button" 
+              className="utility-fullscreen-exit-button"
+              onClick={() => setIsFullscreen(false)}
+            >
               {t('utility.exitFullScreen')}
             </button>
           </div>
           <div className="utility-fullscreen-exit-zone bottom">
             <div className="utility-fullscreen-indicator" aria-hidden="true"></div>
-            <button type="button" className="utility-fullscreen-exit-button">
+            <button 
+              type="button" 
+              className="utility-fullscreen-exit-button"
+              onClick={() => setIsFullscreen(false)}
+            >
               {t('utility.exitFullScreen')}
             </button>
           </div>
