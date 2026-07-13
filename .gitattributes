@@ -1,0 +1,4 @@
+# Pre-built utility app bundles (compiled/minified third-party and app code).
+# Marked as generated/vendored so CodeQL and diff views skip them.
+static/utility-apps/**/*.js linguist-generated=true linguist-vendored=true
+static/utility-apps/**/*.mjs linguist-generated=true linguist-vendored=true
