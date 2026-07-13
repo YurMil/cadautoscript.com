@@ -18,7 +18,6 @@ import AnimatedLogo from '@site/src/components/AnimatedLogo/AnimatedLogo';
 import ThumbnailPicture from '@site/src/components/ThumbnailPicture';
 import {useUserSettings} from '@site/src/contexts/UserSettingsContext';
 import {useI18n} from '@site/src/contexts/I18nContext';
-import HreflangHead from '@site/src/components/I18n/HreflangHead';
 
 const heroStats = [
   {label: 'Live utilities', value: utilities.length.toString()},
@@ -320,7 +319,6 @@ export default function Home(): ReactNode {
     <Layout
       title={siteConfig.title}
       description={t('home.heroSubtitle')}>
-      <HreflangHead path="/" />
       <main className={styles.main}>
         <section
           ref={hero.ref}

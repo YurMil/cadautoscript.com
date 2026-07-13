@@ -147,6 +147,8 @@ function buildRobotsTxt(origin) {
     'User-agent: *\n' +
     'Allow: /\n' +
     'Disallow: /admin/\n' +
+    // Localized copies of the admin SPA (e.g. /ru/admin/) exist too.
+    'Disallow: /*/admin/\n' +
     `Sitemap: ${origin}/sitemap-index.xml\n` +
     `Sitemap: ${origin}/sitemap.xml\n`
   );
