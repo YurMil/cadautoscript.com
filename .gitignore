@@ -23,3 +23,6 @@ yarn-error.log*
 
 # Claude Code local state (worktrees, etc.)
 .claude/
+
+# Sourcemaps from pre-built utility bundles (issue #57): don't recommit them
+static/utility-apps/**/*.map
