@@ -23,7 +23,10 @@ const config: Config = {
     AUTH_REDIRECT_URL: process.env.AUTH_REDIRECT_URL,
     TURNSTILE_SITE_KEY: process.env.TURNSTILE_SITE_KEY,
   },
-  onBrokenLinks: 'warn',
+  // CI sets DOCUSAURUS_ONBROKENLINKS=throw so broken links fail the build
+  // there without slowing down local iteration.
+  onBrokenLinks:
+    (process.env.DOCUSAURUS_ONBROKENLINKS as 'warn' | 'throw' | undefined) ?? 'warn',
   // Share Tech Mono is self-hosted via @font-face in src/css/custom.css
   // (see static/fonts) and only used by the homepage hero SVG, so there is no
   // render-blocking Google Fonts stylesheet/preconnect on any page.

@@ -1,9 +1,8 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import styles from './AnimatedLogo.module.css';
 
-interface AnimatedLogoProps extends React.SVGProps<SVGSVGElement> {
-  // x, y, width, height are already in SVGProps
-}
+// x, y, width, height are already in SVGProps
+type AnimatedLogoProps = React.SVGProps<SVGSVGElement>;
 
 const AnimatedLogo: React.FC<AnimatedLogoProps> = ({ className, ...props }) => {
   const svgRef = useRef<SVGSVGElement | null>(null);

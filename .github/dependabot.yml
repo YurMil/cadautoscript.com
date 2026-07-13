@@ -1,0 +1,13 @@
+version: 2
+updates:
+  # Security updates only — keep noise low (issue #57).
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 0
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
