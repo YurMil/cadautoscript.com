@@ -11,6 +11,12 @@ type AuthState = {
   authChecked: boolean;
 };
 
+// The OAuth redirect (?code= / #access_token=) must be exchanged exactly once
+// per page load no matter how many components mount this hook — concurrent
+// exchanges of the same code fail, and multiple instances used to race.
+// Later instances receive the session via getSession/onAuthStateChange.
+let redirectHandledGlobally = false;
+
 export function useAuthStatus(): AuthState {
   const [user, setUser] = useState<User | null>(null);
   const [authChecked, setAuthChecked] = useState(false);
@@ -21,6 +27,11 @@ export function useAuthStatus(): AuthState {
 
     const maybeExchangeCode = async () => {
       if (typeof window === 'undefined') return;
+      // /auth/callback runs its own exchange (src/pages/auth/callback.tsx);
+      // touching the URL params here would race with it.
+      if (window.location.pathname.includes('/auth/callback')) return;
+      if (redirectHandledGlobally) return;
+      redirectHandledGlobally = true;
 
       // Handle implicit flow fragments (e.g., #access_token=... after logout/login)
       const cleanedHash = window.location.hash.replace(/^#+/, '');

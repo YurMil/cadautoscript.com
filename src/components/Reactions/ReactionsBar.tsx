@@ -2,6 +2,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 import clsx from 'clsx';
 import {supabase} from '@site/src/lib/supabaseClient';
 import {useAuthModal} from '@site/src/contexts/AuthModalContext';
+import {useAuthStatus} from '@site/src/hooks/useAuthStatus';
 import styles from './ReactionsBar.module.css';
 
 const EMOJIS = ['👍', '🚀', '🎉', '❤️'] as const;
@@ -35,35 +36,9 @@ export default function ReactionsBar({slug}: Props) {
   const {openLoginModal} = useAuthModal();
   const [counts, setCounts] = useState<ReactionCounts>(createInitialCounts);
   const [userReaction, setUserReaction] = useState<ReactionEmoji | null>(null);
-  const [userId, setUserId] = useState<string | null>(null);
   const [pendingEmoji, setPendingEmoji] = useState<ReactionEmoji | null>(null);
-
-  useEffect(() => {
-    let isMounted = true;
-    supabase.auth
-      .getUser()
-      .then(({data}) => {
-        if (isMounted) {
-          setUserId(data.user?.id ?? null);
-        }
-      })
-      .catch((error) => {
-        console.error('Unable to resolve auth user for reactions', error);
-      });
-
-    const {
-      data: {subscription},
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (isMounted) {
-        setUserId(session?.user?.id ?? null);
-      }
-    });
-
-    return () => {
-      isMounted = false;
-      subscription.unsubscribe();
-    };
-  }, []);
+  const {user} = useAuthStatus();
+  const userId = user?.id ?? null;
 
   useEffect(() => {
     let isMounted = true;

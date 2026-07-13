@@ -1,6 +1,6 @@
 import React, {createContext, useContext, useEffect, useState} from 'react';
-import type {User} from '@supabase/supabase-js';
 import {supabase} from '@site/src/lib/supabaseClient';
+import {useAuthStatus} from '@site/src/hooks/useAuthStatus';
 
 export type UserSettings = {
   smart_sorting: boolean;
@@ -65,41 +65,11 @@ export function UserSettingsProvider({children}: {children: React.ReactNode}) {
   // toggle) and trigger a hydration mismatch (React error #418).
   const [settings, setSettings] = useState<UserSettings>(defaultSettings);
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState<User | null>(null);
+  const {user} = useAuthStatus();
 
   // Apply guest preferences from localStorage only after hydration.
   useEffect(() => {
     setSettings((prev) => ({...prev, ...getInitialSettings()}));
-  }, []);
-
-  useEffect(() => {
-    let isMounted = true;
-
-    const resolveSession = async () => {
-      try {
-        const {data} = await supabase.auth.getSession();
-        if (isMounted) {
-          setUser(data?.session?.user ?? null);
-        }
-      } catch (err) {
-        console.error('Error getting session in settings context', err);
-      }
-    };
-
-    resolveSession();
-
-    const {
-      data: {subscription},
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (isMounted) {
-        setUser(session?.user ?? null);
-      }
-    });
-
-    return () => {
-      isMounted = false;
-      subscription.unsubscribe();
-    };
   }, []);
 
   useEffect(() => {

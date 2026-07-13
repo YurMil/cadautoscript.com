@@ -1,48 +1,11 @@
-import React, {useEffect, useState} from 'react';
-import type {User} from '@supabase/supabase-js';
+import React, {useState} from 'react';
 import {supabase} from '@site/src/lib/supabaseClient';
+import {useAuthStatus} from '@site/src/hooks/useAuthStatus';
 import {getAuthRedirectUrl, rememberReturnTo} from '@site/src/utils/authRedirect';
 
 const AuthTest = () => {
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+  const {user, authChecked} = useAuthStatus();
   const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    let isMounted = true;
-
-    supabase.auth
-      .getUser()
-      .then(({data, error: getUserError}) => {
-        if (!isMounted) {
-          return;
-        }
-
-        if (getUserError) {
-          setError(getUserError.message);
-        }
-
-        setUser(data.user ?? null);
-        setLoading(false);
-      })
-      .catch((err) => {
-        if (isMounted) {
-          setError(err.message);
-          setLoading(false);
-        }
-      });
-
-    const {
-      data: {subscription},
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-    });
-
-    return () => {
-      isMounted = false;
-      subscription.unsubscribe();
-    };
-  }, []);
 
   const handleLogin = async () => {
     setError(null);
@@ -76,7 +39,7 @@ const AuthTest = () => {
     }
   };
 
-  if (loading) {
+  if (!authChecked) {
     return <p>Checking auth status…</p>;
   }
 

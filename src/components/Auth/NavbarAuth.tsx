@@ -1,10 +1,10 @@
 import React, {useCallback, useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {createPortal} from 'react-dom';
 import clsx from 'clsx';
-import type {User} from '@supabase/supabase-js';
 import Link from '@docusaurus/Link';
 import {supabase} from '@site/src/lib/supabaseClient';
 import {useAuthModal} from '@site/src/contexts/AuthModalContext';
+import {useAuthStatus} from '@site/src/hooks/useAuthStatus';
 import styles from './NavbarAuth.module.css';
 
 const shouldSilence = (message?: string | null) =>
@@ -20,7 +20,7 @@ const reportError = (message?: string) => {
 };
 
 export default function NavbarAuth(): React.JSX.Element {
-  const [user, setUser] = useState<User | null>(null);
+  const {user} = useAuthStatus();
   const [menuOpen, setMenuOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const [dropdownPosition, setDropdownPosition] = useState<{top: number; left: number; width: number} | null>(null);
@@ -33,44 +33,12 @@ export default function NavbarAuth(): React.JSX.Element {
     setIsMounted(true);
   }, []);
 
+  // Close the menu and the login modal whenever the auth state changes
+  // (sign-in closes the modal, sign-out closes the dropdown).
   useEffect(() => {
-    let isMounted = true;
-
-    const resolveSession = async () => {
-      try {
-        const {data, error} = await supabase.auth.getSession();
-        if (!isMounted) {
-          return;
-        }
-
-        if (error && !shouldSilence(error.message)) {
-          reportError(error.message);
-        }
-        setUser(data?.session?.user ?? null);
-      } catch (err) {
-        if (!isMounted) {
-          return;
-        }
-        const message = err instanceof Error ? err.message : 'Unable to fetch auth session.';
-        reportError(message);
-      }
-    };
-
-    resolveSession();
-
-    const {
-      data: {subscription},
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-      setMenuOpen(false);
-      closeLoginModal();
-    });
-
-    return () => {
-      isMounted = false;
-      subscription.unsubscribe();
-    };
-  }, [closeLoginModal]);
+    setMenuOpen(false);
+    closeLoginModal();
+  }, [user, closeLoginModal]);
 
   useEffect(() => {
     if (!user) return;
