@@ -37,3 +37,8 @@ jobs:
         env:
           # Fail CI on broken internal links even though local dev only warns.
           DOCUSAURUS_ONBROKENLINKS: throw
+          # Public client-side values (embedded in the browser bundle anyway),
+          # but the SSR build refuses to run without them.
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          AUTH_REDIRECT_URL: ${{ secrets.AUTH_REDIRECT_URL }}
