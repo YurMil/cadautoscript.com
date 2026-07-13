@@ -18,7 +18,7 @@ export default function WorldGenerator() {
         }
 
         // Random road position
-        let roadZ = -35 - Math.random() * 10;
+        const roadZ = -35 - Math.random() * 10;
         setRoadZ(roadZ);
     }, [resetToken, setRiver, setRoadZ]);
 

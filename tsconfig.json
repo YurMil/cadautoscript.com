@@ -5,5 +5,13 @@
     "baseUrl": ".",
     "types": ["react", "react-dom"]
   },
-  "exclude": [".docusaurus", "build", "dev new utility", "supabase/functions"]
+  "exclude": [
+    ".docusaurus",
+    "build",
+    "node_modules",
+    "static",
+    "dev-plans",
+    "dev new utility",
+    "supabase/functions"
+  ]
 }

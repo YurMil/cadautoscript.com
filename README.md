@@ -1,6 +1,6 @@
 # CAD AutoScript
 
-[![Docusaurus](https://img.shields.io/badge/Docusaurus-3.9-green?logo=docusaurus)](https://docusaurus.io/)
+[![Docusaurus](https://img.shields.io/badge/Docusaurus-3.10-green?logo=docusaurus)](https://docusaurus.io/)
 [![React](https://img.shields.io/badge/React-19-blue?logo=react)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.6-blue?logo=typescript)](https://www.typescriptlang.org/)
 [![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
@@ -172,7 +172,7 @@ cadautoscript.com/
 
 | Technology | Version | Purpose |
 |------------|---------|---------|
-| [Docusaurus](https://docusaurus.io/) | 3.9.2 | Static site generator with MDX support |
+| [Docusaurus](https://docusaurus.io/) | 3.10.x | Static site generator with MDX support |
 | [React](https://react.dev/) | 19.2.1 | UI component library |
 | [TypeScript](https://www.typescriptlang.org/) | 5.6 | Type-safe JavaScript |
 
@@ -250,6 +250,7 @@ cadautoscript.com/
 | `npm run serve` | Serve production build locally |
 | `npm run clear` | Clear Docusaurus cache |
 | `npm run typecheck` | Run TypeScript type checking |
+| `npm run lint` | Run ESLint over src, api and scripts |
 | `npm run sitemap:sections` | Generate sectioned sitemaps |
 | `npm run sync:webstep-viewer` | Sync WebSTEP viewer embed |
 
@@ -257,7 +258,7 @@ cadautoscript.com/
 
 ## Deployment
 
-The repository's checked-in deployment workflow publishes the site to GitHub Pages on pushes to `main`.
+The site is deployed on [Vercel](https://vercel.com/): every push to `main` triggers a production deployment, and pull requests get preview deployments. CI (`.github/workflows/ci.yml`) runs typecheck, lint and a full build on every PR.
 
 ### Manual Deployment
 
