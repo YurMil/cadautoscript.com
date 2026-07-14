@@ -10,5 +10,25 @@
   "sidebar.tutorialSidebar.category.Utilities": {
     "message": "Утилиты",
     "description": "The label for category 'Utilities' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Calculators": {
+    "message": "Калькуляторы",
+    "description": "The label for category 'Calculators' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Configurators": {
+    "message": "Конфигураторы",
+    "description": "The label for category 'Configurators' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.PDF Tools": {
+    "message": "PDF-инструменты",
+    "description": "The label for category 'PDF Tools' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.CAD & 3D": {
+    "message": "CAD и 3D",
+    "description": "The label for category 'CAD & 3D' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Productivity": {
+    "message": "Продуктивность",
+    "description": "The label for category 'Productivity' in sidebar 'tutorialSidebar'"
   }
 }

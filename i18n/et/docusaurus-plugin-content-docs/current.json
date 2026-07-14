@@ -10,5 +10,25 @@
   "sidebar.tutorialSidebar.category.Utilities": {
     "message": "Utiliidid",
     "description": "The label for category 'Utilities' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Calculators": {
+    "message": "Kalkulaatorid",
+    "description": "The label for category 'Calculators' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Configurators": {
+    "message": "Konfiguraatorid",
+    "description": "The label for category 'Configurators' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.PDF Tools": {
+    "message": "PDF-tööriistad",
+    "description": "The label for category 'PDF Tools' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.CAD & 3D": {
+    "message": "CAD ja 3D",
+    "description": "The label for category 'CAD & 3D' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Productivity": {
+    "message": "Produktiivsus",
+    "description": "The label for category 'Productivity' in sidebar 'tutorialSidebar'"
   }
 }

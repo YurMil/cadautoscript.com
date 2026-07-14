@@ -2,7 +2,7 @@ import {type ReactNode, useState, useEffect, useMemo} from 'react';
 import Link from '@docusaurus/Link';
 import Layout from '@theme/Layout';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-import {utilities} from '@site/src/data/utilities';
+import {utilities, UTILITY_CATEGORIES, type UtilityCategory} from '@site/src/data/utilities';
 import SupportSection from '@site/src/components/Support/SupportSection';
 import {useAuthModal} from '@site/src/contexts/AuthModalContext';
 import {useAuthStatus} from '@site/src/hooks/useAuthStatus';
@@ -150,6 +150,15 @@ export default function Home(): ReactNode {
   const [heroCollapsed, setHeroCollapsed] = useState(true);
   const [heroReady, setHeroReady] = useState(false);
   const [filterQuery, setFilterQuery] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState<UtilityCategory | 'all'>('all');
+
+  // Allow deep-linking a category (footer links, docs): /?category=calculators
+  useEffect(() => {
+    const param = new URLSearchParams(window.location.search).get('category');
+    if (param && UTILITY_CATEGORIES.some((cat) => cat.id === param)) {
+      setCategoryFilter(param as UtilityCategory);
+    }
+  }, []);
   const [usageStats, setUsageStats] = useState<UtilityUsageStat[]>([]);
   const [globalOrder, setGlobalOrder] = useState<string[]>([]);
 
@@ -214,8 +223,12 @@ export default function Home(): ReactNode {
 
   const filteredUtilities = useMemo(() => {
     const q = filterQuery.trim().toLowerCase();
-    if (!q) return orderedUtilities;
-    return orderedUtilities.filter((u) => {
+    const byCategory =
+      categoryFilter === 'all'
+        ? orderedUtilities
+        : orderedUtilities.filter((u) => u.category === categoryFilter);
+    if (!q) return byCategory;
+    return byCategory.filter((u) => {
       const haystack = [
         u.name,
         u.description,
@@ -225,7 +238,7 @@ export default function Home(): ReactNode {
       ].join(' ').toLowerCase();
       return haystack.includes(q);
     });
-  }, [filterQuery, orderedUtilities]);
+  }, [filterQuery, categoryFilter, orderedUtilities]);
 
   useEffect(() => {
     if (!authChecked || !isAuthenticated) {
@@ -650,8 +663,31 @@ export default function Home(): ReactNode {
             </div>
           </header>
 
+          <div className={styles.categoryChips} role="group" aria-label="Filter by category">
+            <button
+              type="button"
+              className={`${styles.categoryChip} ${categoryFilter === 'all' ? styles.categoryChipActive : ''}`}
+              onClick={() => setCategoryFilter('all')}
+            >
+              All · {utilities.length}
+            </button>
+            {UTILITY_CATEGORIES.map((cat) => {
+              const count = utilities.filter((u) => u.category === cat.id).length;
+              return (
+                <button
+                  key={cat.id}
+                  type="button"
+                  className={`${styles.categoryChip} ${categoryFilter === cat.id ? styles.categoryChipActive : ''}`}
+                  onClick={() => setCategoryFilter((prev) => (prev === cat.id ? 'all' : cat.id))}
+                >
+                  {cat.label} · {count}
+                </button>
+              );
+            })}
+          </div>
+
           {filteredUtilities.length === 0 ? (
-            <p className={styles.noResults}>No utilities match «{filterQuery.trim()}»</p>
+            <p className={styles.noResults}>No utilities match the current filters</p>
           ) : isCompactMode ? (
             <div className={styles.iconGrid}>
               {filteredUtilities.map((utility) => {

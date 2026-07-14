@@ -18,5 +18,9 @@
   "item.label.Mini Games": {
     "message": "Міні-ігри",
     "description": "Navbar item with label Mini Games"
+  },
+  "item.label.Utilities": {
+    "message": "Утиліти",
+    "description": "Navbar item with label Utilities"
   }
 }

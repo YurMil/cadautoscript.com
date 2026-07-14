@@ -121,6 +121,9 @@ const config: Config = {
         src: 'img/logo.svg',
       },
       items: [
+        // The homepage is the utilities catalog; give the main product an
+        // explicit navbar entry (issue #61).
+        {to: '/', label: 'Utilities', position: 'left'},
         {
           type: 'docSidebar',
           sidebarId: 'tutorialSidebar',
@@ -149,15 +152,11 @@ const config: Config = {
         {
           title: 'Utilities',
           items: [
-            {
-              html: '<a class="footer__link-item" href="/utilities/pipe-cutter/" data-nobrokenlinkcheck>Pipe Cutter</a>',
-            },
-            {
-              html: '<a class="footer__link-item" href="/utilities/cylindrical-shell-rolling/" data-nobrokenlinkcheck>Shell Rolling</a>',
-            },
-            {
-              html: '<a class="footer__link-item" href="/utilities/interactive-thread/" data-nobrokenlinkcheck>Thread Atlas</a>',
-            },
+            {label: 'Calculators', to: '/?category=calculators'},
+            {label: 'Configurators', to: '/?category=configurators'},
+            {label: 'PDF Tools', to: '/?category=pdf-tools'},
+            {label: 'CAD & 3D', to: '/?category=cad-tools'},
+            {label: 'Productivity', to: '/?category=productivity'},
           ],
         },
         {
