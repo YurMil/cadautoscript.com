@@ -345,6 +345,27 @@ export const en = {
     returnHome: 'Return home',
     tryAgain: 'and try again.',
   },
+  relatedTools: {
+    title: 'Related tools',
+  },
+  badges: {
+    free: 'Free',
+    account: 'Account',
+    whySignIn: 'Why sign in?',
+  },
+  whySignIn: {
+    title: 'Why sign in?',
+    intro: 'Most utilities are free to use after creating an account. Here is exactly what an account gives you and what we store.',
+    benefit1: 'Access to the full catalog of 27 engineering utilities',
+    benefit2: 'Your reactions and comments under tools and posts',
+    benefit3: 'Synced preferences: theme, language, display mode, fullscreen',
+    benefit4: 'Usage-based sorting so your most-used tools surface first',
+    freeTitle: 'Is it free?',
+    freeCopy: 'Yes. An account is free and always will be for the current catalog. The first three utilities work without any account at all.',
+    dataTitle: 'What do we store?',
+    dataCopy: 'Only your login identity (email/avatar from Google or GitHub), your settings and your comments/reactions. Everything is stored in Supabase (EU); calculations run entirely in your browser and never leave it. You can delete your account and all data at any time from Settings.',
+    cta: 'Create a free account',
+  },
 };
 
 export type TranslationDict = typeof en;

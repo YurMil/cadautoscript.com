@@ -347,4 +347,25 @@ export const et: TranslationDict = {
     returnHome: 'Tagasi avalehele',
     tryAgain: 'ja proovi uuesti.',
   },
+  relatedTools: {
+    title: 'Seotud tööriistad',
+  },
+  badges: {
+    free: 'Tasuta',
+    account: 'Konto',
+    whySignIn: 'Miks sisse logida?',
+  },
+  whySignIn: {
+    title: 'Miks sisse logida?',
+    intro: 'Enamik tööriistu on pärast konto loomist tasuta. Siin on täpselt kirjas, mida konto annab ja mida me salvestame.',
+    benefit1: 'Ligipääs kogu kataloogile — 27 inseneritööriista',
+    benefit2: 'Sinu reaktsioonid ja kommentaarid tööriistade ja postituste all',
+    benefit3: 'Sünkroonitud eelistused: teema, keel, kuvarežiim, täisekraan',
+    benefit4: 'Kasutuspõhine järjestus — sinu enimkasutatud tööriistad eespool',
+    freeTitle: 'Kas see on tasuta?',
+    freeCopy: 'Jah. Konto on tasuta ja jääb praeguse kataloogi jaoks tasuta. Esimesed kolm tööriista töötavad üldse ilma kontota.',
+    dataTitle: 'Mida me salvestame?',
+    dataCopy: 'Ainult sinu sisselogimisidentiteeti (e-post/avatar Google’ist või GitHubist), seadeid ning kommentaare/reaktsioone. Kõik hoitakse Supabase’is (EL); arvutused toimuvad täielikult sinu brauseris ega lahku sealt. Konto ja kõik andmed saab igal ajal seadetest kustutada.',
+    cta: 'Loo tasuta konto',
+  },
 };

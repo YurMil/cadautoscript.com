@@ -1016,3 +1016,37 @@
 :global(html[data-theme='light']) .utilityCardLocked::after {
   background: linear-gradient(160deg, rgba(249, 115, 22, 0.08), rgba(255, 255, 255, 0));
 }
+/* Access badges on utility cards (issue #65) */
+.accessFree,
+.accessAccount {
+  margin-left: auto;
+  font-size: 0.68rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.accessFree {
+  color: #64ffda;
+  border: 1px solid rgba(100, 255, 218, 0.45);
+}
+
+.accessAccount {
+  color: #f0b429;
+  border: 1px solid rgba(240, 180, 41, 0.45);
+}
+
+.whySignInLink {
+  font-size: 0.8rem;
+  text-decoration: underline;
+}
+
+:global(html[data-theme='light']) .accessFree {
+  color: #0f766e;
+  border-color: rgba(15, 118, 110, 0.5);
+}
+
+:global(html[data-theme='light']) .accessAccount {
+  color: #92600a;
+  border-color: rgba(146, 96, 10, 0.45);
+}

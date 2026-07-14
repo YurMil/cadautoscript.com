@@ -154,6 +154,20 @@ Calculate roll spacing, bending allowance, and developed length for cylindrical 
 - **How is springback handled?** Presets include typical tolerances. Adjust overbend or allowances for your material batch.
 - **Are my entries saved?** No. Close the page to clear everything; it stays in your browser memory only.
 
+## Assumptions & standards
+
+- **Standards basis:** Developed length and allowance values are based on standard plate-bending geometry relations, with tolerance presets styled after EN 13445 and ASME VIII fabrication guidance.
+- **Key assumptions:**
+  - The shell is a constant-diameter cylinder with uniform plate thickness.
+  - Springback is handled only through the preset tolerances and any overbend allowance you enter.
+  - Nominal input dimensions are used; plate thickness and diameter tolerances are not modeled.
+  - Material behavior is assumed typical for the preset; alloy-specific springback must be refined from mill test data.
+- **Limitations:**
+  - Cones, transitions, elbows, and other non-cylindrical shapes are not supported.
+  - No machine capacity, roll deflection, or finite element checks are performed.
+  - Weld shrinkage, ovality correction, and post-rolling heat treatment effects are not covered.
+- ⚠️ The Cylindrical Shell Rolling Calculator provides preliminary sizing support. Results must be verified by a qualified engineer against the governing code edition and the project specification before manufacturing or purchase.
+
 ## Related tools
 - [Pipe Cutter Visualizer](./pipe-cutter.mdx)
 - [Metal Bending Prototype](./metal-bending.mdx)

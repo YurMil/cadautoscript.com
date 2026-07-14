@@ -32,6 +32,19 @@ Generate tube sheet hole patterns for heat exchangers, preview the layout, and e
 - DXF export includes the tube sheet outline and all tube holes.
 - STEP export runs on WebAssembly in the browser; large hole counts may take longer.
 
+## Assumptions & standards
+
+- **Standards basis:** Geometric layout tool for square and triangular pitch patterns commonly used in heat exchanger fabrication; it does not implement a specific design code.
+- **Key assumptions:**
+  - Nominal hole and pitch dimensions without drilling tolerances.
+  - A flat, circular tube sheet with a uniform edge margin.
+  - Pass partitions are a visual layout guide, not a hydraulic or mechanical design feature.
+- **Limitations:**
+  - No tube sheet thickness, ligament stress, or tube-to-tubesheet joint calculations (e.g., per TEMA, ASME VIII, or EN 13445) are performed.
+  - Tube count optimization for baffles, impingement plates, or shell-side clearances is not covered.
+  - Thermal design and vibration analysis are out of scope.
+- ⚠️ The Tube Sheet Generator provides preliminary sizing support. Results must be verified by a qualified engineer against the governing code edition and the project specification before manufacturing or purchase.
+
 ## Feedback
 
 Email or DM with the slug `tube-sheet-generator` so we can reproduce any issues.

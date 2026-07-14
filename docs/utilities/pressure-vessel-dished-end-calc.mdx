@@ -156,6 +156,22 @@ Instant calculation of pressure vessel head geometry, weight, and volume. It gen
 - **Is the QC report customizable?** The QC report is auto-generated based on your inputs and includes DIN 28005-1 tolerances. It prints directly from the browser.
 - **Are my entries saved?** No. Close the page to clear everything; it stays in your browser memory only.
 
+## Assumptions & standards
+
+- **Standards basis:** Head geometry follows the relations of DIN 28011 (torispherical, R = Da, r = 0.1 Da), DIN 28013 (ellipsoidal), and SS 895; QC report tolerances are derived from DIN 28005-1 for formed heads.
+- **Key assumptions:**
+  - Nominal dimensions per the selected standard, without forming tolerances applied to the calculated geometry.
+  - Uniform wall thickness across the head; thinning from forming is not modeled.
+  - Weight uses standard material densities (e.g., 7.85 kg/dm3 for carbon steel, 7.9 for stainless).
+  - Blank diameter is an estimate based on standard factors (e.g., 1.09x or 1.14x Da) plus the straight flange.
+  - Nozzle positions are treated as a visual layout guide, not a reinforcement calculation.
+- **Limitations:**
+  - No pressure rating or stress analysis (e.g., ASME VIII Div 1 or EN 13445-3 design checks) is performed.
+  - Nozzle reinforcement, opening compensation, and weld design are not covered.
+  - ASME 2:1 ellipsoidal heads are not a native preset.
+  - Fatigue, corrosion beyond the entered allowance, and thermal effects are not considered.
+- ⚠️ The Dished End (Vessel Head) Calculator provides preliminary sizing support. Results must be verified by a qualified engineer against the governing code edition and the project specification before manufacturing or purchase.
+
 ## Related tools
 - [Cylindrical Shell Rolling](./cylindrical-shell-rolling.mdx)
 - [Bourdon Gauge Configurator](./bourdon-gauge-configurator.mdx)

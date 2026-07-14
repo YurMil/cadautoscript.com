@@ -67,6 +67,21 @@ The calculations, stress estimates, and CAD files provided by this utility are f
 4. **Inspect Visual Engagements**: Check the 2D mesh sketch and 3D preview tabs. Toggle the animation to verify gear engagement direction.
 5. **Download CAD and Reports**: Export DXF files for cutting profiles, STEP files for CAD assemblies, and the PDF report for project records.
 
+## Assumptions & Standards
+
+- **Standards basis:** Gear geometry follows the involute relations of ISO 21771-1 for external cylindrical spur gears; bending safety uses a simplified Lewis formula and is not a full ISO 6336 or AGMA rating.
+- **Key assumptions:**
+  - External spur gear pairs only, with involute profiles and the entered pressure angle.
+  - Static or steady-state loading derived from the entered torque, speed, efficiency, and service factor.
+  - Uniform material properties and the allowable stresses you supply.
+  - Nominal dimensions without manufacturing tolerances or quality grades.
+- **Limitations:**
+  - No surface durability (pitting), scuffing, or micropitting checks.
+  - Helical, internal, bevel, and worm gearing are not supported.
+  - Dynamic effects, load distribution factors, and lubrication analysis beyond the simplified force model are not covered.
+  - Results do not constitute a certified gear rating for production release.
+- ⚠️ The Visual Gear Pair Calculator provides preliminary sizing support. Results must be verified by a qualified engineer against the governing code edition and the project specification before manufacturing or purchase.
+
 ## Related Utilities
 
 - [Tube Sheet Generator](../tube-sheet-generator/)
