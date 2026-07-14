@@ -58,6 +58,21 @@
       "permanent": true
     },
     {
+      "source": "/docs/blind-flange-calculator-microarchitecture-migration/",
+      "destination": "/docs/utilities/blind-flange-calculator/",
+      "permanent": true
+    },
+    {
+      "source": "/docs/tube-sheet-generator-microarchitecture-migration/",
+      "destination": "/docs/utilities/tube-sheet-generator/",
+      "permanent": true
+    },
+    {
+      "source": "/docs/guides/:slug*",
+      "destination": "/docs/intro/",
+      "permanent": true
+    },
+    {
       "source": "/games",
       "destination": "/mini-games/",
       "permanent": true
