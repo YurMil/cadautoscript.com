@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import {supabase} from '@site/src/lib/supabaseClient';
 import {useAuthModal} from '@site/src/contexts/AuthModalContext';
 import {useAuthStatus} from '@site/src/hooks/useAuthStatus';
+import {useI18n} from '@site/src/contexts/I18nContext';
 import styles from './ReactionsBar.module.css';
 
 const EMOJIS = ['👍', '🚀', '🎉', '❤️'] as const;
@@ -34,6 +35,7 @@ const isReactionEmoji = (value: string): value is ReactionEmoji =>
 
 export default function ReactionsBar({slug}: Props) {
   const {openLoginModal} = useAuthModal();
+  const {t} = useI18n();
   const [counts, setCounts] = useState<ReactionCounts>(createInitialCounts);
   const [userReaction, setUserReaction] = useState<ReactionEmoji | null>(null);
   const [pendingEmoji, setPendingEmoji] = useState<ReactionEmoji | null>(null);
@@ -139,7 +141,7 @@ export default function ReactionsBar({slug}: Props) {
   return (
     <div className={styles.bar} aria-label="Emoji reactions">
       <span className={styles.label}>
-        Reactions{totalReactions ? ` (${totalReactions})` : ''}
+        {t('reactions.title')}{totalReactions ? ` (${totalReactions})` : ''}
       </span>
       {EMOJIS.map((emoji) => {
         const isActive = userReaction === emoji;

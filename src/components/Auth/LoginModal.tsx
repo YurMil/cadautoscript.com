@@ -2,13 +2,14 @@ import React, {useState} from 'react';
 import type {Provider} from '@supabase/supabase-js';
 import {supabase} from '@site/src/lib/supabaseClient';
 import {useAuthModal} from '@site/src/contexts/AuthModalContext';
+import {useI18n} from '@site/src/contexts/I18nContext';
 import {getAuthRedirectUrl, rememberReturnTo} from '@site/src/utils/authRedirect';
 import styles from './LoginModal.module.css';
 
-const providers: Array<{provider: Provider; label: string; className: string; Icon: () => React.JSX.Element}> = [
+const providers: Array<{provider: Provider; labelKey: string; className: string; Icon: () => React.JSX.Element}> = [
   {
     provider: 'github',
-    label: 'Continue with GitHub',
+    labelKey: 'authModal.github',
     className: styles.github,
     Icon: () => (
       <svg role="img" viewBox="0 0 24 24" className={styles.icon} aria-hidden="true">
@@ -21,7 +22,7 @@ const providers: Array<{provider: Provider; label: string; className: string; Ic
   },
   {
     provider: 'google',
-    label: 'Continue with Google',
+    labelKey: 'authModal.google',
     className: styles.google,
     Icon: () => (
       <svg role="img" viewBox="0 0 533.5 544.3" className={styles.icon} aria-hidden="true">
@@ -48,6 +49,7 @@ const providers: Array<{provider: Provider; label: string; className: string; Ic
 
 export default function LoginModal(): React.JSX.Element | null {
   const {isOpen, closeLoginModal} = useAuthModal();
+  const {t} = useI18n();
   const [error, setError] = useState<string | null>(null);
 
   if (!isOpen) {
@@ -69,7 +71,7 @@ export default function LoginModal(): React.JSX.Element | null {
       closeLoginModal();
     } catch (error_) {
       const message =
-        error_ instanceof Error ? error_.message : 'Unable to sign in. Please try again.';
+        error_ instanceof Error ? error_.message : t('authModal.error');
       console.error('[Supabase Auth] Unable to sign in', message);
       setError(message);
     }
@@ -84,10 +86,10 @@ export default function LoginModal(): React.JSX.Element | null {
   return (
     <div className={styles.backdrop} role="dialog" aria-modal="true" onClick={onBackdropClick}>
       <div className={styles.modal}>
-        <h2 className={styles.title}>Sign In</h2>
-        <p className={styles.description}>Use one of the providers below to continue.</p>
+        <h2 className={styles.title}>{t('authModal.title')}</h2>
+        <p className={styles.description}>{t('authModal.description')}</p>
         <div className={styles.actions}>
-          {providers.map(({provider, label, className, Icon}) => (
+          {providers.map(({provider, labelKey, className, Icon}) => (
             <button
               key={provider}
               type="button"
@@ -95,11 +97,11 @@ export default function LoginModal(): React.JSX.Element | null {
               onClick={() => handleSignIn(provider)}
             >
               <Icon />
-              {label}
+              {t(labelKey)}
             </button>
           ))}
           <button type="button" className={styles.closeButton} onClick={closeLoginModal}>
-            Cancel
+            {t('authModal.cancel')}
           </button>
           {error ? <p className={styles.error}>{error}</p> : null}
         </div>
