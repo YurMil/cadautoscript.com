@@ -2,6 +2,7 @@ import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import Link from '@docusaurus/Link';
 import {supabase} from '@site/src/lib/supabaseClient';
 import {useAuthModal} from '@site/src/contexts/AuthModalContext';
+import {useI18n} from '@site/src/contexts/I18nContext';
 import {useAuthStatus} from '@site/src/hooks/useAuthStatus';
 import {sanitizeHtml} from '@site/src/utils/sanitizeHtml';
 import {formatDateTime} from '@site/src/utils/formatDate';
@@ -40,6 +41,7 @@ export default function Comments({slug}: Props): React.JSX.Element {
   const editorRef = useRef<RichCommentInputHandle | null>(null);
   const [error, setError] = useState<string | null>(null);
   const {openLoginModal} = useAuthModal();
+  const {t} = useI18n();
 
   const hasProfileName =
     !!(profile?.username && profile.username.trim().length > 0) ||
@@ -48,7 +50,7 @@ export default function Comments({slug}: Props): React.JSX.Element {
   const authorDisplay = (value: Profile | null) =>
     value?.username?.trim() ||
     value?.full_name?.trim() ||
-    'Anonymous';
+    t('comments.anonymous');
 
   const fetchComments = useCallback(async () => {
     setLoading(true);
@@ -64,7 +66,7 @@ export default function Comments({slug}: Props): React.JSX.Element {
 
     if (fetchError) {
       console.error('[Supabase] Failed to fetch comments', fetchError.message);
-      setError('Unable to load comments. Please try again later.');
+      setError(t('comments.loadError'));
       setLoading(false);
       return;
     }
@@ -114,7 +116,7 @@ export default function Comments({slug}: Props): React.JSX.Element {
     const text = (doc.body.textContent ?? '').trim();
     const hasImage = /<img\b/i.test(html);
     if (!hasImage && text.length === 0) {
-      setError('Please enter a comment before sending.');
+      setError(t('comments.emptyDraft'));
       return;
     }
 
@@ -130,7 +132,7 @@ export default function Comments({slug}: Props): React.JSX.Element {
 
     if (insertError) {
       console.error('[Supabase] Unable to post comment', insertError.message);
-      setError('Unable to post your comment. Please try again.');
+      setError(t('comments.postError'));
       setSubmitting(false);
       return;
     }
@@ -195,7 +197,7 @@ export default function Comments({slug}: Props): React.JSX.Element {
       return null;
     }
     if (!hasProfileName) {
-      return 'Please complete your profile to comment.';
+      return t('comments.completeProfileNotice');
     }
     return null;
   }, [hasProfileName, user]);
@@ -226,8 +228,8 @@ export default function Comments({slug}: Props): React.JSX.Element {
     <section className={styles.container}>
       <div className={styles.header}>
         <div>
-          <p className={styles.eyebrow}>Discussion</p>
-          <h2 className={styles.title}>Comments</h2>
+          <p className={styles.eyebrow}>{t('comments.eyebrow')}</p>
+          <h2 className={styles.title}>{t('comments.title')}</h2>
         </div>
         <span className={styles.badge}>{comments.length}</span>
       </div>
@@ -235,9 +237,9 @@ export default function Comments({slug}: Props): React.JSX.Element {
       {error ? <div className={styles.alert}>{error}</div> : null}
 
       {loading ? (
-        <p className={styles.muted}>Loading comments...</p>
+        <p className={styles.muted}>{t('comments.loading')}</p>
       ) : comments.length === 0 ? (
-        <p className={styles.muted}>Be the first to share your thoughts.</p>
+        <p className={styles.muted}>{t('comments.empty')}</p>
       ) : (
         <ul className={styles.list}>
           {comments.map((comment) => (
@@ -264,7 +266,7 @@ export default function Comments({slug}: Props): React.JSX.Element {
                       className={styles.actionLink}
                       onClick={() => handleReply(comment)}
                     >
-                      Reply
+                      {t('comments.reply')}
                     </button>
                   </div>
                 </div>
@@ -284,11 +286,11 @@ export default function Comments({slug}: Props): React.JSX.Element {
             {replyContext ? (
               <div className={styles.replyControls}>
                 <span className={styles.replyBadge}>
-                  Replying to {replyContext.author}: “{replyContext.preview}”
+                  {t('comments.replyingTo')} {replyContext.author}: “{replyContext.preview}”
                 </span>
                 <div className={styles.replyActions}>
                   <button type="button" className={styles.replyButton} onClick={clearReply}>
-                    Cancel
+                    {t('comments.cancel')}
                   </button>
                 </div>
               </div>
@@ -296,7 +298,7 @@ export default function Comments({slug}: Props): React.JSX.Element {
             <div className={styles.inputStack}>
               <RichCommentInput
                 ref={editorRef}
-                placeholder="Share your feedback or ask a question..."
+                placeholder={t('comments.placeholder')}
                 disabled={submitting}
                 onChange={(html) => setEditorHtml(html)}
               />
@@ -308,7 +310,7 @@ export default function Comments({slug}: Props): React.JSX.Element {
                     className="button button--primary"
                     disabled={submitting || !hasProfileName}
                   >
-                    {submitting ? 'Sending...' : 'Send'}
+                    {submitting ? t('comments.sending') : t('comments.send')}
                   </button>
                 </div>
               </div>
@@ -317,14 +319,14 @@ export default function Comments({slug}: Props): React.JSX.Element {
               <p className={styles.notice}>
                 {notice}{' '}
                 <Link to="/profile" className={styles.link}>
-                  Complete profile
+                  {t('comments.completeProfileLink')}
                 </Link>
               </p>
             ) : null}
           </form>
         ) : (
           <button type="button" className="button button--secondary" onClick={openLoginModal}>
-            Log in to comment
+            {t('comments.loginToComment')}
           </button>
         )}
       </div>

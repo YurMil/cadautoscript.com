@@ -3,13 +3,17 @@ import Layout from '@theme/Layout';
 import Head from '@docusaurus/Head';
 import Link from '@docusaurus/Link';
 import {supabase} from '@site/src/lib/supabaseClient';
+import {useI18n} from '@site/src/contexts/I18nContext';
 import {consumeReturnTo} from '@site/src/utils/authRedirect';
 
 type Status = 'working' | 'error';
 
 export default function AuthCallbackPage() {
+  const {t} = useI18n();
   const [status, setStatus] = useState<Status>('working');
-  const [message, setMessage] = useState('Finishing sign in…');
+  // Holds either one of our dictionary keys (resolved with t() at render
+  // time so it follows the active locale) or a raw provider error string.
+  const [message, setMessage] = useState('authCallback.completing');
 
   useEffect(() => {
     const finishSignIn = async () => {
@@ -40,7 +44,7 @@ export default function AuthCallbackPage() {
             const {data: sessionData} = await supabase.auth.getSession();
             if (!sessionData?.session) {
               setStatus('error');
-              setMessage('Missing auth code. Please retry sign in.');
+              setMessage('authCallback.missingCode');
               return;
             }
           }
@@ -49,8 +53,7 @@ export default function AuthCallbackPage() {
         const returnTo = consumeReturnTo('/');
         window.location.replace(returnTo);
       } catch (err) {
-        const message =
-          err instanceof Error ? err.message : 'Unable to finish sign in. Please try again.';
+        const message = err instanceof Error ? err.message : 'authCallback.genericError';
         setStatus('error');
         setMessage(message);
       }
@@ -59,22 +62,24 @@ export default function AuthCallbackPage() {
     void finishSignIn();
   }, []);
 
+  const displayMessage = message.startsWith('authCallback.') ? t(message) : message;
+
   return (
-    <Layout title="Completing sign in">
+    <Layout title={t('authCallback.pageTitle')}>
       <Head>
         <meta name="robots" content="noindex" />
       </Head>
       <main className="site-container margin-vert--lg">
         {status === 'working' ? (
           <>
-            <p>Completing sign in…</p>
-            <p className="margin-top--sm">You will be redirected shortly.</p>
+            <p>{t('authCallback.completing')}</p>
+            <p className="margin-top--sm">{t('authCallback.redirect')}</p>
           </>
         ) : (
           <>
-            <p style={{color: 'var(--ifm-color-danger)'}}>{message}</p>
+            <p style={{color: 'var(--ifm-color-danger)'}}>{displayMessage}</p>
             <p className="margin-top--sm">
-              <Link to="/">Return home</Link> and try again.
+              <Link to="/">{t('authCallback.returnHome')}</Link> {t('authCallback.tryAgain')}
             </p>
           </>
         )}

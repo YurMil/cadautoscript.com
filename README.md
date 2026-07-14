@@ -166,6 +166,15 @@ cadautoscript.com/
 
 ---
 
+## Localization
+
+UI strings live in `src/i18n/locales/*.ts` (6 locales, all typed against the
+`en` dictionary — a missing key in any locale fails `npm run typecheck`).
+**Rule: never hardcode user-facing strings in components** — add a key to all
+six dictionaries and render it with `t('section.key')` from `useI18n()`.
+Docusaurus-native surfaces (navbar, footer, docs sidebar) are translated via
+`i18n/<locale>/**.json` instead.
+
 ## Technology Stack
 
 ### Core Framework
