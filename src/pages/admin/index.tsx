@@ -2,8 +2,10 @@ import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import clsx from 'clsx';
 import {useHistory} from '@docusaurus/router';
 import type {User} from '@supabase/supabase-js';
-import DOMPurify from 'dompurify';
 import Layout from '@theme/Layout';
+import {sanitizeHtml} from '@site/src/utils/sanitizeHtml';
+import {formatDateTime} from '@site/src/utils/formatDate';
+import {normalizeProfile} from '@site/src/utils/normalizeProfile';
 import {supabase} from '@site/src/lib/supabaseClient';
 import {
   DEFAULT_UTILITIES_PUBLIC_ACCESS,
@@ -77,17 +79,6 @@ const AUDIT_EVENT_CHIP: Record<AuditEventType, string> = {
 
 const utilityNameById = new Map(utilities.map((u) => [u.id, u.name]));
 
-const formatDate = (value?: string | null) =>
-  value
-    ? new Date(value).toLocaleString(undefined, {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-      })
-    : '-';
-
 const initialState: {profiles: ProfileRow[]; comments: CommentRow[]} = {
   profiles: [],
   comments: [],
@@ -128,19 +119,6 @@ export default function AdminPage(): React.JSX.Element {
   const [auditLoaded, setAuditLoaded] = useState(false);
   const [auditFilter, setAuditFilter] = useState<AuditEventType | ''>('');
   const [auditHasMore, setAuditHasMore] = useState(false);
-
-  const normalizeProfile = useCallback(
-    (value: CommentRow['profiles'] | CommentRow['profiles'][] | null | undefined) =>
-      Array.isArray(value) ? value[0] ?? null : value ?? null,
-    [],
-  );
-
-  const sanitizeHtml = useCallback((value: string) => {
-    if (typeof DOMPurify.sanitize !== 'function') {
-      return value;
-    }
-    return DOMPurify.sanitize(value, {USE_PROFILES: {html: true}});
-  }, []);
 
   const loadProfiles = useCallback(async () => {
     setLoadingUsers(true);
@@ -809,7 +787,7 @@ export default function AdminPage(): React.JSX.Element {
                         </select>
                       </td>
                       <td>{formatRelative(row.last_seen_at)}</td>
-                      <td>{formatDate(row.created_at)}</td>
+                      <td>{formatDateTime(row.created_at)}</td>
                       <td>
                         <div className={styles.actions}>
                           <button
@@ -868,7 +846,7 @@ export default function AdminPage(): React.JSX.Element {
                           <span dangerouslySetInnerHTML={{__html: sanitizeHtml(row.content)}} />
                         </td>
                         <td>{row.post_slug}</td>
-                        <td>{formatDate(row.created_at)}</td>
+                        <td>{formatDateTime(row.created_at)}</td>
                         <td>
                           <div className={styles.actions}>
                             <button
@@ -1013,7 +991,7 @@ export default function AdminPage(): React.JSX.Element {
                   <tbody>
                     {auditEntries.map((entry) => (
                       <tr key={entry.id}>
-                        <td>{formatDate(entry.createdAt)}</td>
+                        <td>{formatDateTime(entry.createdAt)}</td>
                         <td>
                           <span
                             className={clsx(

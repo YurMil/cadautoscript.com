@@ -1,9 +1,11 @@
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import Link from '@docusaurus/Link';
-import type {User} from '@supabase/supabase-js';
-import DOMPurify from 'dompurify';
 import {supabase} from '@site/src/lib/supabaseClient';
 import {useAuthModal} from '@site/src/contexts/AuthModalContext';
+import {useAuthStatus} from '@site/src/hooks/useAuthStatus';
+import {sanitizeHtml} from '@site/src/utils/sanitizeHtml';
+import {formatDateTime} from '@site/src/utils/formatDate';
+import {normalizeProfile} from '@site/src/utils/normalizeProfile';
 import RichCommentInput, {type RichCommentInputHandle} from './RichCommentInput';
 import EmojiPickerBtn from './EmojiPickerBtn';
 import styles from './Comments.module.css';
@@ -27,19 +29,10 @@ type CommentRow = {
   profiles: Profile | null;
 };
 
-const formatTimestamp = (value: string) =>
-  new Date(value).toLocaleString(undefined, {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-  });
-
 export default function Comments({slug}: Props): React.JSX.Element {
   const [comments, setComments] = useState<CommentRow[]>([]);
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState<User | null>(null);
+  const {user} = useAuthStatus();
   const [profile, setProfile] = useState<Profile | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [editorHtml, setEditorHtml] = useState('');
@@ -56,16 +49,6 @@ export default function Comments({slug}: Props): React.JSX.Element {
     value?.username?.trim() ||
     value?.full_name?.trim() ||
     'Anonymous';
-
-  const normalizeProfile = (value: Profile | Profile[] | null | undefined): Profile | null =>
-    Array.isArray(value) ? value[0] ?? null : value ?? null;
-
-  const sanitizeHtml = useCallback((value: string) => {
-    if (typeof DOMPurify.sanitize !== 'function') {
-      return value;
-    }
-    return DOMPurify.sanitize(value, {USE_PROFILES: {html: true}});
-  }, []);
 
   const fetchComments = useCallback(async () => {
     setLoading(true);
@@ -93,24 +76,6 @@ export default function Comments({slug}: Props): React.JSX.Element {
     setComments(normalized);
     setLoading(false);
   }, [slug]);
-
-  const fetchSession = useCallback(async () => {
-    const {data, error: sessionError} = await supabase.auth.getSession();
-    if (sessionError) {
-      console.error('[Supabase] Unable to fetch auth session', sessionError.message);
-    }
-    setUser(data?.session?.user ?? null);
-  }, []);
-
-  useEffect(() => {
-    void fetchSession();
-    const {
-      data: {subscription},
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-    });
-    return () => subscription.unsubscribe();
-  }, [fetchSession]);
 
   useEffect(() => {
     void fetchComments();
@@ -292,7 +257,7 @@ export default function Comments({slug}: Props): React.JSX.Element {
                 <div className={styles.meta}>
                   <span className={styles.author}>{authorDisplay(comment.profiles)}</span>
                   <span className={styles.dot}>•</span>
-                  <time dateTime={comment.created_at}>{formatTimestamp(comment.created_at)}</time>
+                  <time dateTime={comment.created_at}>{formatDateTime(comment.created_at)}</time>
                   <div className={styles.metaActions}>
                     <button
                       type="button"

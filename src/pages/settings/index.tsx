@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import clsx from 'clsx';
-import type {User} from '@supabase/supabase-js';
 import Layout from '@theme/Layout';
 import Head from '@docusaurus/Head';
 import {useHistory} from '@docusaurus/router';
 import {supabase} from '@site/src/lib/supabaseClient';
 import {useAuthModal} from '@site/src/contexts/AuthModalContext';
+import {useAuthStatus} from '@site/src/hooks/useAuthStatus';
 import {useI18n} from '@site/src/contexts/I18nContext';
 import {LOCALES} from '@site/src/i18n';
 import {
@@ -38,9 +38,8 @@ const shouldSilence = (message?: string | null) =>
   !message || message.toLowerCase().includes('auth session missing');
 
 function SettingsContent(): React.JSX.Element {
-  const [user, setUser] = useState<User | null>(null);
+  const {user, authChecked} = useAuthStatus();
   const [settings, setSettings] = useState<UserSettings>(defaultSettings);
-  const [authChecked, setAuthChecked] = useState(false);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -53,50 +52,6 @@ function SettingsContent(): React.JSX.Element {
   const {setColorMode} = useColorMode();
   const {t, setLocale} = useI18n();
   const history = useHistory();
-
-  useEffect(() => {
-    let isMounted = true;
-
-    const resolveSession = async () => {
-      try {
-        const {data, error} = await supabase.auth.getSession();
-        if (!isMounted) {
-          return;
-        }
-        if (error && !shouldSilence(error.message)) {
-          console.error('[Supabase Auth] Unable to fetch session', error.message);
-        }
-        setUser(data?.session?.user ?? null);
-      } catch (err) {
-        if (!isMounted) {
-          return;
-        }
-        const message =
-          err instanceof Error ? err.message : 'Unable to fetch auth session.';
-        console.error('[Supabase Auth] Unable to fetch session', message);
-      } finally {
-        if (isMounted) {
-          setAuthChecked(true);
-        }
-      }
-    };
-
-    resolveSession();
-
-    const {
-      data: {subscription},
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (!isMounted) {
-        return;
-      }
-      setUser(session?.user ?? null);
-    });
-
-    return () => {
-      isMounted = false;
-      subscription.unsubscribe();
-    };
-  }, []);
 
   useEffect(() => {
     if (authChecked && !user && !promptedLogin) {
@@ -279,9 +234,9 @@ function SettingsContent(): React.JSX.Element {
     try {
       await deleteOwnAccount(user.id);
       // Suppress the "sign in" guard modal that would otherwise fire when the
-      // user is cleared, before we redirect the just-deleted account home.
+      // user is cleared (deleteOwnAccount signs out, which propagates through
+      // useAuthStatus), before we redirect the just-deleted account home.
       setPromptedLogin(true);
-      setUser(null);
       setDeleteModalOpen(false);
       history.push('/');
     } catch (err) {
