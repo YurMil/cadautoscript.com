@@ -76,6 +76,7 @@
     "@types/react": "^19.2.13",
     "@types/react-dom": "^19.2.3",
     "@types/three": "^0.182.0",
+    "@vercel/node": "^5.8.24",
     "dotenv": "^17.2.3",
     "eslint": "^10.7.0",
     "eslint-plugin-react-hooks": "^7.1.1",
