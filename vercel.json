@@ -68,7 +68,22 @@
       "permanent": true
     },
     {
-      "source": "/docs/guides/:slug*",
+      "source": "/docs/guides/deploy-guide/",
+      "destination": "/docs/intro/",
+      "permanent": true
+    },
+    {
+      "source": "/docs/guides/nodejs-npm-guide/",
+      "destination": "/docs/intro/",
+      "permanent": true
+    },
+    {
+      "source": "/docs/guides/package-json-guide/",
+      "destination": "/docs/intro/",
+      "permanent": true
+    },
+    {
+      "source": "/docs/guides/",
       "destination": "/docs/intro/",
       "permanent": true
     },
