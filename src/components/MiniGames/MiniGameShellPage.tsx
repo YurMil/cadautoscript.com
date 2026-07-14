@@ -6,6 +6,7 @@ import Layout from '@theme/Layout';
 import ReactionsBar from '@site/src/components/Reactions/ReactionsBar';
 import Comments from '@site/src/components/Comments';
 import {useI18n} from '@site/src/contexts/I18nContext';
+import {sanitizeHtml} from '@site/src/utils/sanitizeHtml';
 import type {MiniGamePageConfig} from '@site/src/data/miniGamePages';
 
 type HeroLink = {label: string; href: string; variant?: 'primary' | 'ghost'; external?: boolean};
@@ -122,7 +123,7 @@ export default function MiniGameShellPage(config: MiniGamePageConfig) {
             <div className="utility-info__header">
               <h2>{t('miniGamesPage.aboutHeading')}</h2>
               {typeof about === 'string' ? (
-                <p dangerouslySetInnerHTML={{ __html: about }} />
+                <p dangerouslySetInnerHTML={{ __html: sanitizeHtml(about) }} />
               ) : (
                 <p>{about}</p>
               )}
@@ -137,7 +138,7 @@ export default function MiniGameShellPage(config: MiniGamePageConfig) {
             {note && (
               <p className="utility-note">
                 {typeof note === 'string' ? (
-                  <span dangerouslySetInnerHTML={{ __html: note }} />
+                  <span dangerouslySetInnerHTML={{ __html: sanitizeHtml(note) }} />
                 ) : (
                   note
                 )}

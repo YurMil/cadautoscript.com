@@ -1,3 +1,5 @@
+import type {VercelRequest, VercelResponse} from '@vercel/node';
+
 const RATE_LIMIT_WINDOW_SECONDS = 60;
 const RATE_LIMIT_MAX_REQUESTS = 3;
 
@@ -34,12 +36,12 @@ function incrementInMemoryRateLimit(key: string): number {
   return existing.count;
 }
 
-function getHeader(req: any, name: string): string | undefined {
+function getHeader(req: VercelRequest, name: string): string | undefined {
   const value = req.headers?.[name.toLowerCase()] ?? req.headers?.[name];
   return Array.isArray(value) ? value[0] : value;
 }
 
-function getClientIp(req: any): string {
+function getClientIp(req: VercelRequest): string {
   const realIp = getHeader(req, 'x-real-ip');
   if (realIp) {
     return realIp;
@@ -114,7 +116,7 @@ async function isRateLimited(ip: string): Promise<boolean> {
   }
 }
 
-function parseBody(req: any): CheckoutRequestBody {
+function parseBody(req: VercelRequest): CheckoutRequestBody {
   if (!req.body) {
     return {};
   }
@@ -130,7 +132,7 @@ function parseBody(req: any): CheckoutRequestBody {
   return req.body as CheckoutRequestBody;
 }
 
-function getOrigin(req: any): string {
+function getOrigin(req: VercelRequest): string {
   const configuredUrl = process.env.SITE_URL ?? process.env.VERCEL_PROJECT_PRODUCTION_URL;
   if (configuredUrl) {
     return configuredUrl.startsWith('http') ? configuredUrl : `https://${configuredUrl}`;
@@ -220,7 +222,7 @@ async function createStripeCheckoutSession(origin: string): Promise<string | nul
   return session.url ?? null;
 }
 
-export default async function handler(req: any, res: any) {
+export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     if (req.method !== 'POST') {
       res.setHeader('Allow', 'POST');
