@@ -99,12 +99,32 @@ const config: Config = {
           changefreq: 'weekly',
           priority: 0.5,
           filename: 'sitemap.xml',
-          ignorePatterns: ['/admin/**'],
+          // Search result pages are noindex-style utility pages, keep them
+          // out of the sitemap (locale variants included).
+          ignorePatterns: ['/admin/**', '/search/**', '/*/search/**'],
         },
         theme: {
           customCss: ['./src/css/custom.css', './src/css/light-theme.css'],
         },
       } satisfies Preset.Options,
+    ],
+  ],
+  themes: [
+    [
+      // Offline full-text search over docs, blog and pages (issue #62).
+      // Replaces the hand-maintained src/data/searchIndex.ts.
+      '@easyops-cn/docusaurus-search-local',
+      {
+        hashed: true,
+        // lunr stemmers exist for these; ua/et content still gets indexed,
+        // just without language-specific stemming.
+        language: ['en', 'ru', 'de', 'es'],
+        indexDocs: true,
+        indexBlog: true,
+        indexPages: true,
+        highlightSearchTermsOnTargetPage: true,
+        explicitSearchResultPath: true,
+      },
     ],
   ],
   themeConfig: {
@@ -132,7 +152,7 @@ const config: Config = {
         },
         {to: '/blog/', label: 'Blog', position: 'left'},
         {to: '/mini-games/', label: 'Mini Games', position: 'left'},
-        {type: 'custom-search', position: 'right'},
+        {type: 'search', position: 'right'},
         {type: 'custom-support-button', position: 'right'},
         {type: 'custom-language-switcher', position: 'right'},
         {type: 'custom-theme-toggle', position: 'right'},
