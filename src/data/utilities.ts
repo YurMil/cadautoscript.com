@@ -1,6 +1,22 @@
+export type UtilityCategory =
+  | 'calculators'
+  | 'configurators'
+  | 'pdf-tools'
+  | 'cad-tools'
+  | 'productivity';
+
+export const UTILITY_CATEGORIES: {id: UtilityCategory; label: string}[] = [
+  {id: 'calculators', label: 'Calculators'},
+  {id: 'configurators', label: 'Configurators'},
+  {id: 'pdf-tools', label: 'PDF Tools'},
+  {id: 'cad-tools', label: 'CAD & 3D'},
+  {id: 'productivity', label: 'Productivity'},
+];
+
 export type UtilityDescriptor = {
   id: string;
   name: string;
+  category: UtilityCategory;
   description: string;
   tech: string;
   standards: string;
@@ -12,6 +28,7 @@ export type UtilityDescriptor = {
 export const utilities: UtilityDescriptor[] = [
   {
     id: 'pipe-cutter',
+    category: 'cad-tools',
     name: 'Pipe Cutter Visualizer',
     description:
       'Preview saddle intersections, adjust offsets, and export CNC-ready DXF templates.',
@@ -23,6 +40,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'shell-rolling',
+    category: 'calculators',
     name: 'Cylindrical Shell Rolling',
     description:
       'Calculate roll spacing, bending allowance, and developed lengths per EN / ASME presets.',
@@ -34,6 +52,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'metal-bending',
+    category: 'calculators',
     name: 'Sheet-metal Bending',
     description:
       'Simulate K-factors, reliefs, and bend deductions before locking CAM programs.',
@@ -45,6 +64,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'thread-atlas',
+    category: 'productivity',
     name: 'Interactive Thread Atlas',
     description:
       'Filter ISO / UNC / UNF series, look up drill diameters, and copy callouts.',
@@ -56,6 +76,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'doc-parser',
+    category: 'pdf-tools',
     name: 'PDF Number Extractor',
     description:
       'Highlight QA serials, BOM IDs, and inspection numbers locally via WASM.',
@@ -67,6 +88,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'qr-nameplate',
+    category: 'cad-tools',
     name: '3D QR Nameplate',
     description:
       'Model equipment tags with QR codes; preview thickness, materials, and engraving in real time.',
@@ -78,6 +100,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'dxf-editor',
+    category: 'cad-tools',
     name: 'WebDXF Editor',
     description:
       'Trim, annotate, and resave DXF files in the browser for quick QA checks.',
@@ -89,6 +112,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'pdf-master',
+    category: 'pdf-tools',
     name: 'PDF Master',
     description:
       'Reorder, rotate, and merge drawing packs into a clean PDF — fully offline.',
@@ -100,6 +124,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'pdf-batch-signer',
+    category: 'pdf-tools',
     name: 'PDF Batch Signer',
     description:
       'Stamp a reusable signature across every page in multiple PDFs at once.',
@@ -111,6 +136,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'qr-master',
+    category: 'productivity',
     name: 'QR Master',
     description:
       'Scan QR / barcodes, generate custom codes, and manage scan history locally.',
@@ -122,6 +148,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'pdf-bom-extractor',
+    category: 'pdf-tools',
     name: 'PDF BOM Extractor',
     description:
       'Extract BOM tables from CAD PDFs into clean CSVs with master report export.',
@@ -133,6 +160,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'file-renamer',
+    category: 'productivity',
     name: 'Batch File Renamer',
     description: 'Bulk rename files with find/replace, prefixes, numbering, and ZIP export.',
     tech: 'React',
@@ -143,6 +171,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'folder-structure-builder',
+    category: 'productivity',
     name: 'Folder Structure Builder',
     description: 'Design folder trees from JSON or ZIP; export bash / PowerShell scripts.',
     tech: 'React + JSZip',
@@ -153,6 +182,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'magnetic-level-gauge-configurator',
+    category: 'configurators',
     name: 'Magnetic Level Gauge',
     description:
       'Configure connections, dimensions, and options; export a PDF datasheet.',
@@ -164,6 +194,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'bourdon-gauge-configurator',
+    category: 'configurators',
     name: 'Bourdon Gauge Configurator',
     description:
       'Configure pressure gauges with ranges, connections, and accessories; export PDF.',
@@ -175,6 +206,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'industrial-thermometer-configurator',
+    category: 'configurators',
     name: 'Industrial Thermometer',
     description:
       'Configure bimetal thermometers: ranges, stems, thermowells; export PDF datasheet.',
@@ -186,6 +218,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'tube-sheet-generator',
+    category: 'calculators',
     name: 'Tube Sheet Generator',
     description: 'Lay out tube hole patterns and export DXF or STEP files locally.',
     tech: 'Canvas + WASM',
@@ -196,6 +229,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'webstep-viewer',
+    category: 'cad-tools',
     name: 'WebSTEP Viewer',
     description: 'Inspect STEP assemblies, isolate parts, and measure geometry in the browser.',
     tech: 'WebGL + WASM',
@@ -206,6 +240,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'engineering-prompt-catalog',
+    category: 'productivity',
     name: 'Engineering Prompt Catalog',
     description:
       'Browse, filter, and export prompt templates for I&C, mech. design, and procurement.',
@@ -217,6 +252,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'business-calendar-generator',
+    category: 'productivity',
     name: 'Business Calendar',
     description:
       'Generate a yearly calendar with regional holidays and export PDF or PNG.',
@@ -228,6 +264,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'react-table-editor',
+    category: 'productivity',
     name: 'React Table Editor',
     description:
       'Open, edit, and validate tabular data with CSV / XLSX import and export.',
@@ -239,6 +276,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'focus-planner',
+    category: 'productivity',
     name: 'Focus Planner',
     description:
       'Plan tasks, run standalone or task-linked timers, and review analytics in a local-first browser workspace.',
@@ -250,6 +288,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'blind-flange-calculator',
+    category: 'calculators',
     name: 'Blind Flange Calculator',
     description:
       'Auto-select PN class and calculate EN 13445-3 thickness with weight estimates.',
@@ -261,6 +300,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'busbar-calculator',
+    category: 'calculators',
     name: 'Busbar Calculator',
     description:
       'Size copper and aluminium busbars, forecast heating, and export PDF reports locally.',
@@ -272,6 +312,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'pressure-vessel-dished-end-calc',
+    category: 'calculators',
     name: 'Dished End Calculator',
     description:
       'Size DIN 28011 / 28013 heads, add nozzle callouts, and print a QC worksheet.',
@@ -283,6 +324,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'gear-pair-calculator',
+    category: 'calculators',
     name: 'Visual Gear Pair Calculator',
     description:
       'Calculate external spur gear pair geometry, solve profile shifts, check forces, and export DXF / STEP files.',
@@ -294,6 +336,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'wikalog-analyzer',
+    category: 'productivity',
     name: 'WIKA Log Analyzer',
     description:
       'Parse WIKA CPG1500 calibrator logs, review measurement data, and print QC reports locally.',

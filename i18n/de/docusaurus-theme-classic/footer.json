@@ -30,5 +30,25 @@
   "copyright": {
     "message": "Copyright 2026 CAD AutoScript. Erstellt mit Docusaurus.",
     "description": "The footer copyright"
+  },
+  "link.item.label.Calculators": {
+    "message": "Rechner",
+    "description": "The label of footer link with label=Calculators"
+  },
+  "link.item.label.Configurators": {
+    "message": "Konfiguratoren",
+    "description": "The label of footer link with label=Configurators"
+  },
+  "link.item.label.PDF Tools": {
+    "message": "PDF-Tools",
+    "description": "The label of footer link with label=PDF Tools"
+  },
+  "link.item.label.CAD & 3D": {
+    "message": "CAD & 3D",
+    "description": "The label of footer link with label=CAD & 3D"
+  },
+  "link.item.label.Productivity": {
+    "message": "Produktivität",
+    "description": "The label of footer link with label=Productivity"
   }
 }

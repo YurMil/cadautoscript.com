@@ -10,5 +10,25 @@
   "sidebar.tutorialSidebar.category.Utilities": {
     "message": "Utilidades",
     "description": "The label for category 'Utilities' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Calculators": {
+    "message": "Calculadoras",
+    "description": "The label for category 'Calculators' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Configurators": {
+    "message": "Configuradores",
+    "description": "The label for category 'Configurators' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.PDF Tools": {
+    "message": "Herramientas PDF",
+    "description": "The label for category 'PDF Tools' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.CAD & 3D": {
+    "message": "CAD y 3D",
+    "description": "The label for category 'CAD & 3D' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Productivity": {
+    "message": "Productividad",
+    "description": "The label for category 'Productivity' in sidebar 'tutorialSidebar'"
   }
 }

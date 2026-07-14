@@ -456,6 +456,51 @@
   font-size: 0.95rem;
 }
 
+.categoryChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0 0 1.25rem;
+}
+
+.categoryChip {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.8rem;
+  color: #6b7fa3;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.categoryChip:hover {
+  color: #f5f7ff;
+  border-color: rgba(100, 255, 218, 0.4);
+}
+
+.categoryChipActive {
+  color: #64ffda;
+  border-color: rgba(100, 255, 218, 0.6);
+  background: rgba(100, 255, 218, 0.08);
+}
+
+:global(html[data-theme='light']) .categoryChip {
+  background: rgba(15, 23, 42, 0.04);
+  border-color: rgba(15, 23, 42, 0.12);
+  color: var(--light-text-soft);
+}
+
+:global(html[data-theme='light']) .categoryChip:hover {
+  color: var(--light-text);
+}
+
+:global(html[data-theme='light']) .categoryChipActive {
+  color: #0f766e;
+  border-color: rgba(15, 118, 110, 0.5);
+  background: rgba(15, 118, 110, 0.08);
+}
+
 :global(html[data-theme='light']) .filterInput {
   background: rgba(15, 23, 42, 0.04);
   border-color: rgba(15, 23, 42, 0.12);

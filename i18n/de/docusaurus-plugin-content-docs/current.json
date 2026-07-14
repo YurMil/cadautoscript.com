@@ -10,5 +10,25 @@
   "sidebar.tutorialSidebar.category.Utilities": {
     "message": "Dienstprogramme",
     "description": "The label for category 'Utilities' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Calculators": {
+    "message": "Rechner",
+    "description": "The label for category 'Calculators' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Configurators": {
+    "message": "Konfiguratoren",
+    "description": "The label for category 'Configurators' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.PDF Tools": {
+    "message": "PDF-Tools",
+    "description": "The label for category 'PDF Tools' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.CAD & 3D": {
+    "message": "CAD & 3D",
+    "description": "The label for category 'CAD & 3D' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Productivity": {
+    "message": "Produktivität",
+    "description": "The label for category 'Productivity' in sidebar 'tutorialSidebar'"
   }
 }
