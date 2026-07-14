@@ -51,6 +51,14 @@ function UtilityCard({utility, index, isAuthenticated, authChecked, utilitiesPub
   const {openLoginModal} = useAuthModal();
   const {t, tu} = useI18n();
   const isLocked = !utilitiesPublicAccess && authChecked && !isAuthenticated && index >= 3;
+  // Access badge is shown to signed-out visitors only: 'Free' for the always
+  // free tools, 'Account' for the rest — no paywall surprises (issue #65).
+  const accessBadge =
+    authChecked && !isAuthenticated && !utilitiesPublicAccess
+      ? index < 3
+        ? t('badges.free')
+        : t('badges.account')
+      : null;
   const translated = tu(utility.id);
   const displayName = translated.name || utility.name;
   const displayDesc = translated.description || utility.description;
@@ -69,6 +77,9 @@ function UtilityCard({utility, index, isAuthenticated, authChecked, utilitiesPub
       <div className={styles.utilityHead}>
         <span className={styles.badge}>{utility.tech}</span>
         <span className={styles.subtle}>{utility.standards}</span>
+        {accessBadge ? (
+          <span className={index < 3 ? styles.accessFree : styles.accessAccount}>{accessBadge}</span>
+        ) : null}
       </div>
 
       {/* ── Title — always visible, clickable ── */}
@@ -90,7 +101,10 @@ function UtilityCard({utility, index, isAuthenticated, authChecked, utilitiesPub
           <span aria-hidden="true" className={styles.lockIcon}>
             lock
           </span>
-          {t('home.locked')}
+          {t('home.locked')}{' '}
+          <Link to="/why-sign-in/" className={styles.whySignInLink}>
+            {t('badges.whySignIn')}
+          </Link>
         </p>
       ) : null}
       <ul className={styles.featureList}>

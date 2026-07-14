@@ -91,6 +91,20 @@ The bundled material constants, profile ratings, cooling presets, and clearance 
 5. Add short-circuit assumptions when they are known.
 6. Export a PDF report or JSON configuration for later review.
 
+## Assumptions & standards
+
+- **Standards basis:** Sizing, thermal, and clearance checks are oriented on DIN 43670 / DIN 43671 busbar practice and IEC 60664 clearance concepts, using bundled example datasets rather than certified tables.
+- **Key assumptions:**
+  - Steady-state operation at the entered current, ambient temperature, and cooling preset.
+  - Rectangular copper or aluminium bars with uniform material properties.
+  - Nominal profile dimensions without manufacturing tolerances.
+  - Short-circuit checks use the RMS current, duration, peak current, and support spacing exactly as entered.
+- **Limitations:**
+  - The bundled material constants, profile ratings, cooling presets, and clearance rules are example-only development datasets, not a certified design basis.
+  - Transient thermal events, harmonics, and skin/proximity effects beyond the built-in model are not covered.
+  - Joint design, plating, torque values, and enclosure ventilation design are out of scope.
+- ⚠️ The Busbar Calculator provides preliminary sizing support. Results must be verified by a qualified engineer against the governing code edition and the project specification before manufacturing or purchase.
+
 ## Related tools
 
 - [Bourdon Gauge Configurator](./bourdon-gauge-configurator.mdx)

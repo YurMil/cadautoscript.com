@@ -17,6 +17,8 @@ export type UtilityDescriptor = {
   id: string;
   name: string;
   category: UtilityCategory;
+  /** ids of complementary tools shown as "Related tools" on the utility page */
+  relatedIds?: string[];
   description: string;
   tech: string;
   standards: string;
@@ -28,6 +30,7 @@ export type UtilityDescriptor = {
 export const utilities: UtilityDescriptor[] = [
   {
     id: 'pipe-cutter',
+    relatedIds: ['metal-bending', 'dxf-editor', 'webstep-viewer'],
     category: 'cad-tools',
     name: 'Pipe Cutter Visualizer',
     description:
@@ -40,6 +43,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'shell-rolling',
+    relatedIds: ['pressure-vessel-dished-end-calc', 'blind-flange-calculator', 'tube-sheet-generator', 'metal-bending'],
     category: 'calculators',
     name: 'Cylindrical Shell Rolling',
     description:
@@ -52,6 +56,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'metal-bending',
+    relatedIds: ['shell-rolling', 'pipe-cutter'],
     category: 'calculators',
     name: 'Sheet-metal Bending',
     description:
@@ -64,6 +69,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'thread-atlas',
+    relatedIds: ['gear-pair-calculator', 'blind-flange-calculator'],
     category: 'productivity',
     name: 'Interactive Thread Atlas',
     description:
@@ -76,6 +82,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'doc-parser',
+    relatedIds: ['pdf-bom-extractor', 'pdf-master', 'wikalog-analyzer'],
     category: 'pdf-tools',
     name: 'PDF Number Extractor',
     description:
@@ -88,6 +95,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'qr-nameplate',
+    relatedIds: ['qr-master', 'webstep-viewer', 'dxf-editor'],
     category: 'cad-tools',
     name: '3D QR Nameplate',
     description:
@@ -100,6 +108,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'dxf-editor',
+    relatedIds: ['pipe-cutter', 'webstep-viewer', 'qr-nameplate'],
     category: 'cad-tools',
     name: 'WebDXF Editor',
     description:
@@ -112,6 +121,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'pdf-master',
+    relatedIds: ['pdf-batch-signer', 'pdf-bom-extractor', 'doc-parser'],
     category: 'pdf-tools',
     name: 'PDF Master',
     description:
@@ -124,6 +134,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'pdf-batch-signer',
+    relatedIds: ['pdf-master', 'pdf-bom-extractor', 'doc-parser'],
     category: 'pdf-tools',
     name: 'PDF Batch Signer',
     description:
@@ -136,6 +147,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'qr-master',
+    relatedIds: ['qr-nameplate', 'pdf-batch-signer'],
     category: 'productivity',
     name: 'QR Master',
     description:
@@ -148,6 +160,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'pdf-bom-extractor',
+    relatedIds: ['pdf-master', 'doc-parser', 'wikalog-analyzer'],
     category: 'pdf-tools',
     name: 'PDF BOM Extractor',
     description:
@@ -160,6 +173,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'file-renamer',
+    relatedIds: ['folder-structure-builder', 'pdf-batch-signer'],
     category: 'productivity',
     name: 'Batch File Renamer',
     description: 'Bulk rename files with find/replace, prefixes, numbering, and ZIP export.',
@@ -171,6 +185,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'folder-structure-builder',
+    relatedIds: ['file-renamer'],
     category: 'productivity',
     name: 'Folder Structure Builder',
     description: 'Design folder trees from JSON or ZIP; export bash / PowerShell scripts.',
@@ -182,6 +197,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'magnetic-level-gauge-configurator',
+    relatedIds: ['bourdon-gauge-configurator', 'industrial-thermometer-configurator'],
     category: 'configurators',
     name: 'Magnetic Level Gauge',
     description:
@@ -194,6 +210,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'bourdon-gauge-configurator',
+    relatedIds: ['industrial-thermometer-configurator', 'magnetic-level-gauge-configurator'],
     category: 'configurators',
     name: 'Bourdon Gauge Configurator',
     description:
@@ -206,6 +223,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'industrial-thermometer-configurator',
+    relatedIds: ['bourdon-gauge-configurator', 'magnetic-level-gauge-configurator'],
     category: 'configurators',
     name: 'Industrial Thermometer',
     description:
@@ -218,6 +236,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'tube-sheet-generator',
+    relatedIds: ['pressure-vessel-dished-end-calc', 'shell-rolling', 'blind-flange-calculator'],
     category: 'calculators',
     name: 'Tube Sheet Generator',
     description: 'Lay out tube hole patterns and export DXF or STEP files locally.',
@@ -229,6 +248,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'webstep-viewer',
+    relatedIds: ['dxf-editor', 'qr-nameplate', 'gear-pair-calculator'],
     category: 'cad-tools',
     name: 'WebSTEP Viewer',
     description: 'Inspect STEP assemblies, isolate parts, and measure geometry in the browser.',
@@ -252,6 +272,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'business-calendar-generator',
+    relatedIds: ['focus-planner'],
     category: 'productivity',
     name: 'Business Calendar',
     description:
@@ -276,6 +297,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'focus-planner',
+    relatedIds: ['business-calendar-generator'],
     category: 'productivity',
     name: 'Focus Planner',
     description:
@@ -288,6 +310,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'blind-flange-calculator',
+    relatedIds: ['pressure-vessel-dished-end-calc', 'shell-rolling', 'tube-sheet-generator'],
     category: 'calculators',
     name: 'Blind Flange Calculator',
     description:
@@ -312,6 +335,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'pressure-vessel-dished-end-calc',
+    relatedIds: ['shell-rolling', 'blind-flange-calculator', 'tube-sheet-generator'],
     category: 'calculators',
     name: 'Dished End Calculator',
     description:
@@ -324,6 +348,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'gear-pair-calculator',
+    relatedIds: ['thread-atlas', 'webstep-viewer', 'tube-sheet-generator'],
     category: 'calculators',
     name: 'Visual Gear Pair Calculator',
     description:
@@ -336,6 +361,7 @@ export const utilities: UtilityDescriptor[] = [
   },
   {
     id: 'wikalog-analyzer',
+    relatedIds: ['doc-parser', 'pdf-bom-extractor'],
     category: 'productivity',
     name: 'WIKA Log Analyzer',
     description:

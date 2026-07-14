@@ -347,4 +347,25 @@ export const es: TranslationDict = {
     returnHome: 'Volver al inicio',
     tryAgain: 'e inténtalo de nuevo.',
   },
+  relatedTools: {
+    title: 'Herramientas relacionadas',
+  },
+  badges: {
+    free: 'Gratis',
+    account: 'Cuenta',
+    whySignIn: '¿Por qué iniciar sesión?',
+  },
+  whySignIn: {
+    title: '¿Por qué iniciar sesión?',
+    intro: 'La mayoría de las utilidades son gratuitas tras crear una cuenta. Esto es exactamente lo que ofrece una cuenta y lo que almacenamos.',
+    benefit1: 'Acceso al catálogo completo de 27 utilidades de ingeniería',
+    benefit2: 'Tus reacciones y comentarios en herramientas y artículos',
+    benefit3: 'Preferencias sincronizadas: tema, idioma, modo de vista, pantalla completa',
+    benefit4: 'Orden por uso: tus herramientas más usadas aparecen primero',
+    freeTitle: '¿Es gratis?',
+    freeCopy: 'Sí. La cuenta es gratuita y lo seguirá siendo para el catálogo actual. Las tres primeras utilidades funcionan sin cuenta.',
+    dataTitle: '¿Qué almacenamos?',
+    dataCopy: 'Solo tu identidad de acceso (email/avatar de Google o GitHub), tus ajustes y tus comentarios/reacciones. Todo se guarda en Supabase (UE); los cálculos se ejecutan íntegramente en tu navegador y nunca salen de él. Puedes eliminar tu cuenta y todos los datos en cualquier momento desde Ajustes.',
+    cta: 'Crear una cuenta gratuita',
+  },
 };

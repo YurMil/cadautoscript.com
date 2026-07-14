@@ -347,4 +347,25 @@ export const de: TranslationDict = {
     returnHome: 'Zur Startseite',
     tryAgain: 'und versuchen Sie es erneut.',
   },
+  relatedTools: {
+    title: 'Verwandte Tools',
+  },
+  badges: {
+    free: 'Kostenlos',
+    account: 'Konto',
+    whySignIn: 'Warum anmelden?',
+  },
+  whySignIn: {
+    title: 'Warum anmelden?',
+    intro: 'Die meisten Tools sind nach dem Erstellen eines Kontos kostenlos nutzbar. Hier steht genau, was ein Konto bietet und was wir speichern.',
+    benefit1: 'Zugriff auf den vollständigen Katalog mit 27 Engineering-Tools',
+    benefit2: 'Ihre Reaktionen und Kommentare unter Tools und Beiträgen',
+    benefit3: 'Synchronisierte Einstellungen: Theme, Sprache, Anzeigemodus, Vollbild',
+    benefit4: 'Nutzungsbasierte Sortierung — Ihre meistgenutzten Tools zuerst',
+    freeTitle: 'Ist es kostenlos?',
+    freeCopy: 'Ja. Ein Konto ist kostenlos und bleibt es für den aktuellen Katalog. Die ersten drei Tools funktionieren ganz ohne Konto.',
+    dataTitle: 'Was speichern wir?',
+    dataCopy: 'Nur Ihre Anmeldedaten (E-Mail/Avatar von Google oder GitHub), Ihre Einstellungen und Ihre Kommentare/Reaktionen. Alles liegt in Supabase (EU); Berechnungen laufen vollständig in Ihrem Browser und verlassen ihn nie. Konto und Daten können Sie jederzeit in den Einstellungen löschen.',
+    cta: 'Kostenloses Konto erstellen',
+  },
 };

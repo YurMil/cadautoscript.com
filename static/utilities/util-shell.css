@@ -590,3 +590,65 @@ html[data-theme='light'] body.utility-shell-page {
 :root[data-theme='light'] .utility-shell .utility-fullscreen:hover {
   background: #f4f6ff;
 }
+
+/* Related tools (issue #65) */
+.utility-related {
+  margin: 2rem auto 0;
+  max-width: 1080px;
+  padding: 0 1rem;
+}
+
+.utility-related__title {
+  font-size: 1.1rem;
+  margin-bottom: 0.9rem;
+}
+
+.utility-related__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 0.75rem;
+}
+
+.utility-related__card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  text-decoration: none;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.utility-related__card:hover {
+  border-color: rgba(100, 255, 218, 0.45);
+  background: rgba(100, 255, 218, 0.06);
+  text-decoration: none;
+}
+
+.utility-related__name {
+  font-weight: 600;
+  color: var(--ifm-heading-color, #f5f7ff);
+}
+
+.utility-related__desc {
+  font-size: 0.8rem;
+  opacity: 0.75;
+}
+
+.utility-related__meta {
+  font-size: 0.72rem;
+  font-family: var(--ifm-font-family-monospace);
+  opacity: 0.55;
+}
+
+html[data-theme='light'] .utility-related__card {
+  border-color: rgba(15, 23, 42, 0.12);
+  background: rgba(15, 23, 42, 0.03);
+}
+
+html[data-theme='light'] .utility-related__card:hover {
+  border-color: rgba(15, 118, 110, 0.45);
+  background: rgba(15, 118, 110, 0.05);
+}

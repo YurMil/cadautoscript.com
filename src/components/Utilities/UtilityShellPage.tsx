@@ -61,6 +61,13 @@ export default function UtilityShellPage({tool, ...config}: UtilityShellPageProp
     [slug],
   );
   const trackedUtility = utilityIndex >= 0 ? utilities[utilityIndex] : null;
+  const relatedUtilities = useMemo(() => {
+    if (!trackedUtility?.relatedIds?.length) return [];
+    const byId = new Map(utilities.map((u) => [u.id, u]));
+    return trackedUtility.relatedIds
+      .map((id) => byId.get(id))
+      .filter((u): u is (typeof utilities)[number] => Boolean(u));
+  }, [trackedUtility]);
   const isFreeUtility = utilityIndex >= 0 && utilityIndex < 3;
   const isAuthRequired = !utilitiesPublicAccess;
   const isLocked = isAuthRequired && !isAuthenticated && !isFreeUtility;
@@ -181,6 +188,9 @@ export default function UtilityShellPage({tool, ...config}: UtilityShellPageProp
                   <Link className="button ghost" to="/utilities/pipe-cutter/">
                     {t('utility.viewFreeUtilities')}
                   </Link>
+                  <Link className="button ghost" to="/why-sign-in/">
+                    {t('badges.whySignIn')}
+                  </Link>
                 </div>
               </div>
             ) : (
@@ -234,6 +244,20 @@ export default function UtilityShellPage({tool, ...config}: UtilityShellPageProp
               </div>
             ) : null}
           </aside>
+          {relatedUtilities.length > 0 ? (
+            <div className="utility-related">
+              <h2 className="utility-related__title">{t('relatedTools.title')}</h2>
+              <div className="utility-related__grid">
+                {relatedUtilities.map((related) => (
+                  <Link key={related.id} to={related.href} className="utility-related__card">
+                    <span className="utility-related__name">{related.name}</span>
+                    <span className="utility-related__desc">{related.description}</span>
+                    <span className="utility-related__meta">{related.standards}</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          ) : null}
           <div className="utility-comments">
             <Comments slug={reactionsSlug} />
           </div>

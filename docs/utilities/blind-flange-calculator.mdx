@@ -151,6 +151,22 @@ Select a DN, set operating and test pressures, temperature, and material grade. 
 - **Does it upload my data?** No. Everything runs locally in the browser.
 - **Is this a final design check?** No. Use it for preliminary sizing and verify against your project specs.
 
+## Assumptions & standards
+
+- **Standards basis:** Flange dimensions and PN class ratings are taken from EN 1092-1; the minimum thickness is calculated using the EN 13445-3 stress checks for blind flanges.
+- **Key assumptions:**
+  - Static internal pressure loading only (operating and test cases).
+  - Uniform, temperature-dependent yield strength for the selected material grade (P265GH, P355GH, or 1.4404).
+  - Nominal EN 1092-1 flange dimensions without manufacturing tolerances.
+  - Corrosion allowance is added directly to the calculated minimum thickness as entered.
+  - Standard bolt pattern and gasket arrangement per the selected DN/PN combination.
+- **Limitations:**
+  - Bolt loads, gasket seating stress, and flange rotation are not analyzed in detail.
+  - Fatigue, creep, and cyclic loading are not covered.
+  - External loads (piping moments, wind, seismic) are not considered.
+  - The result is not a certified code calculation and carries no code stamp.
+- ⚠️ The Blind Flange Calculator provides preliminary sizing support. Results must be verified by a qualified engineer against the governing code edition and the project specification before manufacturing or purchase.
+
 ## Related tools
 - [Dished End (Vessel Head) Calculator](./pressure-vessel-dished-end-calc.mdx)
 - [Cylindrical Shell Rolling Calculator](./cylindrical-shell-rolling.mdx)

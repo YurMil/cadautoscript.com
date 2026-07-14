@@ -1,0 +1,21 @@
+.main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 3rem 1.25rem 4rem;
+}
+
+.intro {
+  font-size: 1.05rem;
+  opacity: 0.85;
+}
+
+.benefits {
+  margin: 1.5rem 0;
+  padding-left: 1.25rem;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.actions {
+  margin-top: 2rem;
+}
