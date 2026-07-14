@@ -1,0 +1,86 @@
+---
+slug: ai-engineering-workflow
+title: "Mehr als Chatbots: LLMs im Maschinenbau-Workflow"
+authors: [yurii]
+tags: [ai, llm, python, solidworks, automation]
+---
+
+Wir hören oft von KI, die Bilder oder Gedichte generiert. Für Maschinenbau-Ingenieure und CAD-Konstrukteure geht es bei Large Language Models (LLMs) jedoch nicht um Kreativität, sondern um Schnittstellen und Automatisierung.
+
+In diesem Artikel betrachten wir, wie sich LLMs (GPT-4, Claude 3.5, Llama 3) zur Steuerung von CAD-Software und zur Verarbeitung technischer Daten einsetzen lassen.
+
+{/* truncate */}
+
+:::tip Das Kernkonzept
+
+LLMs sind schwach im räumlichen Denken (sie können sich eine 3D-Baugruppe nicht gut "vorstellen"). Sie sind jedoch hervorragend darin, die APIs von CAD-Software (SolidWorks, AutoCAD, Fusion 360) zu verstehen und die Skripte zu schreiben, die diese Geometrie manipulieren.
+
+:::
+
+1. Zero-Shot-Makrogenerierung
+
+Die größte Hürde in der CAD-Automatisierung ist das Nachschlagen in der API-Dokumentation. Ein VBA-Makro für SolidWorks oder ein Python-Skript für Blender zu schreiben, bedeutete früher stundenlanges Durchsuchen von Foren.
+
+Moderne LLMs haben diese API-Dokumentationen indexiert. Sie können jetzt nach Funktionalität statt nach Syntax fragen.
+
+Praxisbeispiel: Alle Blechkomponenten einer Baugruppe stapelweise nach DXF exportieren.
+
+Codebeispiel (Python + pyautocad)
+
+Statt dies von Grund auf zu schreiben, kann ein Ingenieur dieses Grundgerüst sofort generieren lassen:
+
+```python
+from pyautocad import Autocad, APoint
+
+# Von einem LLM generiert, um wiederkehrende Zeichnungsaufgaben zu automatisieren
+def draw_gear_profile(teeth, module):
+    acad = Autocad(create_if_not_exists=True)
+    radius = (teeth * module) / 2
+    center = APoint(0, 0)
+    
+    # Das LLM versteht spezifische Engineering-Bibliotheken
+    acad.model.AddCircle(center, radius)
+    print(f"Gear profile created: m{module} z{teeth}")
+
+draw_gear_profile(20, 2)
+```
+
+2. Auswertung von Altdaten (PDF zu JSON)
+
+Ingenieure arbeiten mit Tausenden von PDF-Datenblättern und alten 2D-Zeichnungen. Parameter (Toleranz, Werkstoff, Gewicht) manuell zu extrahieren ist fehleranfällig.
+
+Multimodale LLMs können Screenshots von technischen Zeichnungen oder Tabellen "lesen" und die Daten als JSON für Ihr ERP- oder PDM-System strukturieren.
+
+3. RAG für Normen (ISO/GOST/DIN)
+
+Statt ein 500-seitiges PDF zu durchblättern, um das Anzugsdrehmoment für eine Schraube M12 der Festigkeitsklasse 8.8 zu finden, können Sie ein RAG-System (Retrieval-Augmented Generation) aufbauen.
+
+Eingabe: "Drehmoment für M12 8.8"
+
+System: Ruft die passende Seite aus dem hochgeladenen ISO-PDF ab.
+
+Ausgabe: "81 Nm (Quelle: ISO 898-1, Tabelle 4)"
+
+Interaktiver Prompt-Builder
+
+Probieren Sie diese Struktur, wenn Sie eine KI bitten, CAD-Skripte für Sie zu schreiben:
+
+:::info Prompt-Struktur
+**Kontext:** "Ich verwende die SolidWorks 2023 API mit VBA."
+
+**Aufgabe:** "Schreibe ein Makro, das den Feature-Baum durchläuft."
+
+**Einschränkung:** "Finde alle Features im Zustand 'suppressed' und hebe die Unterdrückung auf."
+
+<button
+  type="button"
+  className="button button--primary"
+  onClick={() => alert('Prompt copied to clipboard!')}
+>
+  Struktur kopieren
+</button>
+:::
+
+Fazit
+
+Bitten Sie die KI nicht, das Bauteil zu konstruieren. Bitten Sie die KI, den Code zu schreiben, der die langweiligen Teile des Konstruktionsprozesses automatisiert. Das verschiebt die Rolle des Ingenieurs vom "Bediener" zum "Architekten der Automatisierung".

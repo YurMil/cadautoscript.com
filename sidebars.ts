@@ -9,16 +9,6 @@ const sidebars: SidebarsConfig = {
     'intro',
     {
       type: 'category',
-      label: 'Guides',
-      collapsed: false,
-      items: [
-        'guides/deploy-guide',
-        'guides/nodejs-npm-guide',
-        'guides/package-json-guide',
-      ],
-    },
-    {
-      type: 'category',
       label: 'Utilities',
       collapsed: false,
       items: [

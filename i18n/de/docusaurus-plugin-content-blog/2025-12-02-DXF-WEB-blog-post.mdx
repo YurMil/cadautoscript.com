@@ -1,0 +1,95 @@
+---
+slug: headless-cad-chromium
+title: "Headless CAD: DXF-Abwicklungen mit Chromium erzeugen und verschachteln"
+authors: [yurii]
+tags: [chromium, nodejs, dxf, automation, cad]
+---
+
+import {DxfCircleDemo} from '@site/src/components/DxfCircleDemo';
+
+Traditionelle Ansätze zur Zeichnungserstellung stützen sich stark auf schwergewichtige Desktop-Software und proprietäre APIs. Der moderne Ansatz verlagert den Geometriekern ins Web.
+
+In diesem Artikel zeigen wir, wie sich mit der Chromium-Engine (über Puppeteer oder Playwright) und JavaScript DXF-Dateien automatisch erzeugen, validieren und verschachteln (Nesting) lassen.
+
+{/* truncate */}
+
+:::tip Warum Chromium?
+
+Für einen Ingenieur ist ein Browser nicht nur ein Seitenbetrachter, sondern eine leistungsfähige Vektor-Rendering-Engine (SVG/Canvas) mit Hardwarebeschleunigung.
+
+Plattformunabhängig: Die Generierung funktioniert identisch unter Windows, auf Linux-Servern und in Docker-Containern.
+
+Visuelles Debugging: Sie sehen exakt, was an die Maschine geht.
+
+Bibliotheksvielfalt: Das NPM-Ökosystem (Maker.js, OpenJSCAD) ermöglicht 2D-Geometriebearbeitung schneller als LISP oder VBA.
+
+:::
+
+Lösungsarchitektur
+
+Der Automatisierungsworkflow für das Nesting oder die Erzeugung einer Abwicklung sieht so aus:
+
+Frontend/Logik: Ein JS-Skript erzeugt die Bauteilgeometrie (SVG-Pfad) auf Basis von Parametern.
+
+Engine (Chromium): Der Headless-Browser rendert die Geometrie, berechnet Schnittpunkte (für das Nesting) oder wandelt Bézierkurven in Bögen/Polylinien um.
+
+Ausgabe: Serialisierung des Ergebnisses ins DXF-Format.
+
+Technische Umsetzung
+
+Statt Linien manuell zu zeichnen, nutzen wir das DOM für die Berechnungen.
+
+Stack:
+
+Node.js - Laufzeitumgebung.
+
+Puppeteer - Steuerung von Headless-Chromium.
+
+Maker.js - Bibliothek für CAD-Operationen und DXF-Export.
+
+Codebeispiel (Node.js)
+
+```js
+const puppeteer = require('puppeteer');
+const fs = require('fs');
+
+(async () => {
+  // 1. Einen "sauberen" Browser starten
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+
+  // 2. Konstruktionslogik injizieren (z. B. Abwicklung eines Kastens)
+  // In einem realen Projekt würde hier maker.js injiziert
+  const dxfContent = await page.evaluate(() => {
+    // Angenommen, makerjs ist im Seitenkontext geladen
+    const model = new makerjs.models.Rectangle(100, 50);
+    
+    // Bohrungen oder Biegelinien hinzufügen
+    const hole = new makerjs.paths.Circle([10, 10], 5);
+    makerjs.model.addPath(model, hole, 'hole_1');
+
+    // Als DXF-String exportieren
+    return makerjs.exporter.toDXF(model, { units: 'mm' });
+  });
+
+  // 3. Datei für die Fertigung speichern
+  fs.writeFileSync('flat-pattern.dxf', dxfContent);
+  
+  console.log('DXF generated successfully.');
+  await browser.close();
+})();
+```
+
+Interaktives Beispiel
+
+Mit MDX lassen sich sogar interaktive Elemente direkt in den Beitrag einbetten. Starten Sie unten den DXF-Kreisgenerator, passen Sie den Codeausschnitt an und laden Sie die aktualisierte DXF-Datei sofort herunter:
+
+<DxfCircleDemo />
+
+Anwendung für das Nesting
+
+Nesting-Algorithmen (wie SVGnest oder Deepnest) erfordern aufwendige Geometrieberechnungen. Werden sie in der Chromium-Umgebung ausgeführt, lassen sich WebAssembly-Module (WASM) nutzen. Das beschleunigt die Berechnung der Teileplatzierung im Vergleich zu reinem JS erheblich und erlaubt den sofortigen Export nach DXF.
+
+Fazit
+
+Der Einsatz von Chromium für CAD-Aufgaben beseitigt die Abhängigkeit von serverseitigen SolidWorks- oder AutoCAD-Lizenzen. So lassen sich Cloud-Konfiguratoren (CPQ) aufbauen, die schnittfertige Dateien für das Laserschneiden in Sekundenschnelle liefern.

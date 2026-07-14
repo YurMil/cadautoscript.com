@@ -1,0 +1,74 @@
+---
+title: Visual Gear Pair Calculator
+description: Arvutage välise silindrilise otshammasrataste paari geomeetriat, lahendage profiilinihkeid, hinnake esialgseid jõude ja paindepingeid ning eksportige DXF- või STEP-failid.
+slug: /utilities/gear-pair-calculator
+image: /img/og/utilities/gear-pair-calculator.png
+keywords:
+  - gear calculator
+  - spur gear design
+  - profile shift solver
+  - dxf gear profile
+  - step gear model
+  - gear bending check
+  - engineering calculators
+---
+
+import Head from '@docusaurus/Head';
+
+# Visual Gear Pair Calculator
+
+Arvutage välise silindrilise otshammasrataste paari geomeetriat, lahendage profiilinihked ja töö-teljevahe, uurige hammaste haardumist 2D- ja 3D-vaates, kontrollige jõude ja esialgset paindevaru ning eksportige tootmiseks mõeldud DXF-failid või 3D STEP CAD-failid — kõik lokaalselt brauseris.
+
+![Gear Calculator Preview](/img/og/utilities/gear-pair-calculator.webp)
+
+<a className="button button--primary" href="/utilities/gear-pair-calculator/" data-nobrokenlinkcheck>Ava utiliit</a>
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/gear-pair-calculator/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Visual Gear Pair Calculator",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Calculate external spur gear pair geometry, solve profile shifts, check mesh safety, and export DXF / STEP models.",
+  "url": "https://cadautoscript.com/utilities/gear-pair-calculator/",
+  "image": "https://cadautoscript.com/img/og/utilities/gear-pair-calculator.png"
+}`}</script>
+</Head>
+
+## Põhifunktsioonid
+
+- **Geomeetria lahendaja**: Käsitleb standardseid ja profiilinihkega ($x_1, x_2$) väliseid otshammasrattaid. Arvutab töö-haardenurga $\alpha_w$ ja teljevahe $a_w$.
+- **Haardumise terviklikkuse kontrollid**: Kohene tagasiside kattuvusteguri, alalõike hoiatuste, rattakeha/ava kontrollide ja hammaste interferentsi kohta.
+- **Ülekandesuhte otsingumootor**: Soovitab sobivaid hammaste arvude ja moodulite kombinatsioone soovitud ülekandesuhte ja teljevahe saavutamiseks.
+- **2D- ja 3D-haardumise eelvaated**: Dünaamilised eelvaated animatsioonikiirustega, mis vastavad sisestatud pöörlemissagedusele (RPM), võimaldades haardumise kvaliteeti visuaalselt hinnata.
+- **CAD-eksport**: Eksportige suletud 2D-polüjooned DXF-i (kihtidega profiilide ning jaotus-/põhi-/välis-/jalusringide jaoks) ja 3D-kehad STEP-i brauseri Web Workeri kaudu (OpenCascade.js).
+- **PDF-arvutusaruanded**: Loob trükivalmis dokumentatsiooni, mis sisaldab valemite tuletusi, hoiatusi, eeldusi ja mõõtmete tabeleid.
+
+## Toetatud arvutused
+
+| Valdkond | Parameetrid | Standardid ja tulemused |
+|---|---|---|
+| **Geomeetria** | Moodul, hammaste arv, haardenurk, nihked, hambalõtk, hambalaius | Jaotus-, põhi-, välis- ja jalusringi läbimõõdud, töö-teljevahe |
+| **Haardumise kvaliteet** | Kattuvustegur, alalõike piirid, kattumise piirangud | Otskattuvustegur ($\epsilon_\alpha$), profiili terviklikkus |
+| **Koormused ja jõud** | Pöördemoment, pöörlemissagedus (RPM), kasutegur, töörežiimi tegur | Tangentsiaaljõud ($F_t$), radiaaljõud ($F_r$), normaaljõud ($F_n$), ringkiirus ($v$) |
+| **Paindevaru** | Materjali lubatud pinged, töörežiimi eeldused | Hinnanguline paindepinge ($\sigma_b$) ja varutegur Lewise kontrolli järgi |
+
+## Oluline märkus
+
+Selle utiliidi pakutavad arvutused, pingehinnangud ja CAD-failid on mõeldud esialgseks inseneriviiteks, prototüüpimiseks ja CAD-makettideks. Paindekontrollid kasutavad lihtsustatud Lewise valemit ega kujuta endast täielikku ISO 6336 või AGMA hindamist. Kontrollige oma lõplikku hammasülekande konstruktsiooni alati sertifitseeritud standardite järgi spetsialiseeritud tarkvaraga enne tootmisse andmist.
+
+## Põhiline töövoog
+
+1. **Valige dimensioonimise režiim**: Valige **Existing Gear Pair Check** konkreetsete mõõtmete kontrollimiseks või **Ratio-driven Sizing** kandidaatide otsimiseks.
+2. **Seadistage sisendid**: Määrake hammasratta põhiparameetrid: moodul, haardenurk, hammaste arvud, hambalaius ja profiilinihked.
+3. **Kontrollige hoiatusi ja valideerimist**: Veenduge, et kattuvusteguri märgis on roheline ($> 1.4$) ning et ei ole märgitud alalõike- ega interferentsivigu.
+4. **Uurige visuaalset haardumist**: Vaadake 2D-haardumise visandi ja 3D-eelvaate vahekaarte. Lülitage animatsioon sisse, et kontrollida rataste haardumise suunda.
+5. **Laadige alla CAD-failid ja aruanded**: Eksportige DXF-failid lõikeprofiilide jaoks, STEP-failid CAD-koostude jaoks ja PDF-aruanne projektidokumentatsiooni tarbeks.
+
+## Seotud utiliidid
+
+- [Tube Sheet Generator](../tube-sheet-generator/)
+- [WebSTEP Viewer](../webstep-viewer/)
+- [Blind Flange Calculator](../blind-flange-calculator/)

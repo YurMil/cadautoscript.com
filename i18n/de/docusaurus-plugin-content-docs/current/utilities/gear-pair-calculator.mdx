@@ -1,0 +1,74 @@
+---
+title: Visual Gear Pair Calculator
+description: Berechnen Sie die Geometrie außenverzahnter Stirnradpaare, lösen Sie Profilverschiebungen, bewerten Sie vorläufige Kräfte/Biegespannungen und exportieren Sie DXF- oder STEP-Dateien.
+slug: /utilities/gear-pair-calculator
+image: /img/og/utilities/gear-pair-calculator.png
+keywords:
+  - gear calculator
+  - spur gear design
+  - profile shift solver
+  - dxf gear profile
+  - step gear model
+  - gear bending check
+  - engineering calculators
+---
+
+import Head from '@docusaurus/Head';
+
+# Visual Gear Pair Calculator
+
+Berechnen Sie die Geometrie außenverzahnter zylindrischer Stirnradpaare, lösen Sie Profilverschiebungen und den Betriebsachsabstand, prüfen Sie den Zahneingriff in 2D und 3D, kontrollieren Sie Kräfte und die vorläufige Biegesicherheit und exportieren Sie DXF-Fertigungsdateien oder 3D-STEP-CAD-Dateien — alles lokal im Browser.
+
+![Gear Calculator Preview](/img/og/utilities/gear-pair-calculator.webp)
+
+<a className="button button--primary" href="/utilities/gear-pair-calculator/" data-nobrokenlinkcheck>Utility öffnen</a>
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/gear-pair-calculator/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Visual Gear Pair Calculator",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Calculate external spur gear pair geometry, solve profile shifts, check mesh safety, and export DXF / STEP models.",
+  "url": "https://cadautoscript.com/utilities/gear-pair-calculator/",
+  "image": "https://cadautoscript.com/img/og/utilities/gear-pair-calculator.png"
+}`}</script>
+</Head>
+
+## Hauptfunktionen
+
+- **Geometrie-Solver**: Verarbeitet standardmäßige und profilverschobene ($x_1, x_2$) außenverzahnte Stirnräder. Berechnet den Betriebseingriffswinkel $\alpha_w$ und den Achsabstand $a_w$.
+- **Eingriffsprüfungen**: Sofortiges Feedback zu Überdeckungsgrad, Unterschnitt-Warnungen, Radkörper-/Bohrungsprüfungen und Zahninterferenz.
+- **Übersetzungssuche**: Schlägt geeignete Kombinationen aus Zähnezahlen und Modulen vor, um eine gewünschte Übersetzung und einen gewünschten Achsabstand zu erreichen.
+- **2D- und 3D-Eingriffsvorschau**: Dynamische Vorschauen mit Animationsgeschwindigkeiten passend zur eingegebenen Drehzahl (RPM) zur visuellen Prüfung der Eingriffsqualität.
+- **CAD-Exporte**: Export geschlossener 2D-Polylinien nach DXF (mit Layern für Profile, Teil-/Grund-/Kopf-/Fußkreise) und von 3D-Volumenkörpern nach STEP über einen Browser-Web-Worker (OpenCascade.js).
+- **PDF-Berechnungsberichte**: Erstellt druckfertige Dokumentation einschließlich Formelherleitungen, Warnungen, Annahmen und Maßtabellen.
+
+## Unterstützte Berechnungen
+
+| Bereich | Parameter | Normen und Ergebnisse |
+|---|---|---|
+| **Geometrie** | Modul, Zähnezahl, Eingriffswinkel, Verschiebungen, Flankenspiel, Zahnbreite | Teil-, Grund-, Kopf-, Fußkreisdurchmesser, Betriebsachsabstand |
+| **Eingriffsqualität** | Überdeckungsgrad, Unterschnittgrenzen, Überdeckungsbeschränkungen | Profilüberdeckung ($\epsilon_\alpha$), Profilintegrität |
+| **Lasten und Kräfte** | Drehmoment, Drehzahl (RPM), Wirkungsgrad, Betriebsfaktor | Tangentialkraft ($F_t$), Radialkraft ($F_r$), Normalkraft ($F_n$), Umfangsgeschwindigkeit ($v$) |
+| **Biegesicherheit** | Zulässige Werkstoffspannungen, Betriebsannahmen | Geschätzte Biegespannung ($\sigma_b$) und Sicherheitsfaktor nach der Lewis-Methode |
+
+## Wichtiger Hinweis
+
+Die von diesem Utility bereitgestellten Berechnungen, Spannungsabschätzungen und CAD-Dateien dienen der vorläufigen ingenieurtechnischen Orientierung, dem Prototyping und CAD-Mockups. Die Biegeprüfungen verwenden eine vereinfachte Lewis-Formel und stellen keine vollständige Bewertung nach ISO 6336 oder AGMA dar. Überprüfen Sie Ihre endgültige Getriebeauslegung vor der Serienfreigabe stets anhand zertifizierter Normen mit spezialisierter Software.
+
+## Grundlegender Arbeitsablauf
+
+1. **Auslegungsmodus wählen**: Wählen Sie **Existing Gear Pair Check**, um konkrete Abmessungen zu prüfen, oder **Ratio-driven Sizing**, um Kandidaten zu suchen.
+2. **Auslegungseingaben konfigurieren**: Definieren Sie die grundlegenden Verzahnungsparameter: Modul, Eingriffswinkel, Zähnezahlen, Zahnbreite und Profilverschiebungen.
+3. **Warnungen und Validierung prüfen**: Stellen Sie sicher, dass das Überdeckungsgrad-Badge grün ist ($> 1.4$) und keine Unterschnitt- oder Interferenzfehler gemeldet werden.
+4. **Visuellen Eingriff prüfen**: Kontrollieren Sie die Tabs mit der 2D-Eingriffsskizze und der 3D-Vorschau. Schalten Sie die Animation ein, um die Eingriffsrichtung der Räder zu überprüfen.
+5. **CAD-Dateien und Berichte herunterladen**: Exportieren Sie DXF-Dateien für Schneidprofile, STEP-Dateien für CAD-Baugruppen und den PDF-Bericht für die Projektdokumentation.
+
+## Verwandte Utilities
+
+- [Tube Sheet Generator](../tube-sheet-generator/)
+- [WebSTEP Viewer](../webstep-viewer/)
+- [Blind Flange Calculator](../blind-flange-calculator/)

@@ -37,19 +37,19 @@ function I18nBridge({children}: {children: React.ReactNode}) {
 }
 
 /**
- * The blog is not translated: non-default locales serve English fallback posts
- * (the per-locale docusaurus-plugin-content-blog folders under i18n are empty).
- * Those duplicate pages get crawled but never indexed by Google, so we mark
- * every localized blog route
- * noindex. Docusaurus' sitemap plugin also drops noindex pages automatically.
- * Revisit if the blog ever gets real per-locale translations.
+ * Locales without real blog translations serve English fallback posts and get
+ * flagged as duplicates in Google Search Console, so their blog routes are
+ * marked noindex. The blog is translated for the locales listed below —
+ * extend the set when more translations land (issue #66).
  */
+const BLOG_TRANSLATED_LOCALES = new Set(['en', 'ru', 'de']);
+
 function LocalizedBlogNoindex() {
   const {i18n} = useDocusaurusContext();
   const {pathname} = useLocation();
-  const isDefaultLocale = i18n.currentLocale === i18n.defaultLocale;
+  const isTranslatedLocale = BLOG_TRANSLATED_LOCALES.has(i18n.currentLocale);
   const isBlogRoute = /(^|\/)blog(\/|$)/.test(pathname);
-  if (isDefaultLocale || !isBlogRoute) {
+  if (isTranslatedLocale || !isBlogRoute) {
     return null;
   }
   return (

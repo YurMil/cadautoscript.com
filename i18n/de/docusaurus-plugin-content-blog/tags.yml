@@ -1,0 +1,69 @@
+facebook:
+  label: Facebook
+  permalink: /facebook
+  description: Beschreibung des Facebook-Tags
+
+hello:
+  label: Hallo
+  permalink: /hello
+  description: Beschreibung des Hello-Tags
+
+docusaurus:
+  label: Docusaurus
+  permalink: /docusaurus
+  description: Beschreibung des Docusaurus-Tags
+
+hola:
+  label: Hola
+  permalink: /hola
+  description: Beschreibung des Hola-Tags
+
+release:
+  label: Release
+  permalink: /release
+  description: Release-Ankündigungen
+
+chromium:
+  label: Chromium
+  permalink: /chromium
+  description: Chromium-spezifische Runtime-Updates
+
+nodejs:
+  label: Node.js
+  permalink: /nodejs
+  description: Node.js-Automatisierung und serverseitige Entwicklung
+
+dxf:
+  label: DXF
+  permalink: /dxf
+  description: DXF-Dateiformat und -Generierung
+
+automation:
+  label: Automatisierung
+  permalink: /automation
+  description: CAD- und Workflow-Automatisierung
+
+cad:
+  label: CAD
+  permalink: /cad
+  description: Werkzeuge und Techniken für Computer-Aided Design
+
+ai:
+  label: KI
+  permalink: /ai
+  description: Angewandte KI für CAD- und Fertigungsworkflows
+
+llm:
+  label: LLM
+  permalink: /llm
+  description: Automatisierungsmuster mit Large Language Models
+
+python:
+  label: Python
+  permalink: /python
+  description: Python-Skripting für CAD- und Datenautomatisierung
+
+solidworks:
+  label: SolidWorks
+  permalink: /solidworks
+  description: SolidWorks-Makros, API-Nutzung und Automatisierung
