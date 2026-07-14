@@ -5,7 +5,6 @@ import React, {
   useRef,
   useState,
   type ComponentType,
-  type ReactNode,
 } from 'react';
 import {AnimatePresence, motion} from 'framer-motion';
 import Editor from '@monaco-editor/react';
@@ -17,327 +16,40 @@ import remarkFrontmatter from 'remark-frontmatter';
 import remarkMdxFrontmatter from 'remark-mdx-frontmatter';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
-import clsx, {type ClassValue} from 'clsx';
 import useIsBrowser from '@docusaurus/useIsBrowser';
 import {
   AlertTriangle,
-  Bold,
   CheckCircle2,
-  Code2,
   FileDown,
   FileUp,
-  Heading1,
-  Heading2,
-  Heading3,
-  Image as ImageIcon,
-  Italic,
-  Link2,
-  List,
-  ListOrdered,
   PanelLeft,
   PanelRight,
   Play,
-  Quote,
   Save,
-  Search,
   Sparkles,
-  Table,
   Wand2,
 } from 'lucide-react';
 import styles from './MdxPostEditor.module.css';
-
-function cn(...values: ClassValue[]) {
-  return clsx(values);
-}
-
-type ButtonVariant = 'primary' | 'ghost' | 'danger';
-
-function Button({
-  children,
-  variant = 'primary',
-  onClick,
-  title,
-  disabled,
-}: {
-  children: ReactNode;
-  variant?: ButtonVariant;
-  onClick?: () => void;
-  title?: string;
-  disabled?: boolean;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      title={title}
-      disabled={disabled}
-      className={cn(styles.btn, {
-        [styles.btnPrimary]: variant === 'primary',
-        [styles.btnGhost]: variant === 'ghost',
-        [styles.btnDanger]: variant === 'danger',
-      })}
-    >
-      {children}
-    </button>
-  );
-}
-
-function IconButton({
-  children,
-  onClick,
-  title,
-  disabled,
-}: {
-  children: ReactNode;
-  onClick?: () => void;
-  title?: string;
-  disabled?: boolean;
-}) {
-  return (
-    <button
-      type="button"
-      title={title}
-      disabled={disabled}
-      onClick={onClick}
-      className={styles.iconBtn}
-    >
-      {children}
-    </button>
-  );
-}
-
-function Input(props: React.InputHTMLAttributes<HTMLInputElement>) {
-  return <input {...props} className={cn(styles.input, props.className)} />;
-}
-
-function Badge({
-  children,
-  tone = 'info',
-}: {
-  children: ReactNode;
-  tone?: 'info' | 'ok' | 'warn';
-}) {
-  return (
-    <span
-      className={cn(styles.chip, {
-        [styles.chipOk]: tone === 'ok',
-        [styles.chipWarn]: tone === 'warn',
-      })}
-    >
-      {children}
-    </span>
-  );
-}
-
-function Card({
-  title,
-  right,
-  children,
-}: {
-  title?: ReactNode;
-  right?: ReactNode;
-  children: ReactNode;
-}) {
-  return (
-    <div className={styles.card}>
-      {(title || right) && (
-        <div className={styles.cardHeader}>
-          <div className={styles.cardTitle}>{title}</div>
-          <div>{right}</div>
-        </div>
-      )}
-      <div className={styles.cardBody}>{children}</div>
-    </div>
-  );
-}
-
-function Separator() {
-  return <div style={{height: 12}} />;
-}
-
-function useDebouncedValue<T>(value: T, delayMs: number) {
-  const [debounced, setDebounced] = useState(value);
-  useEffect(() => {
-    const t = setTimeout(() => setDebounced(value), delayMs);
-    return () => clearTimeout(t);
-  }, [value, delayMs]);
-  return debounced;
-}
-
-// MDX preview components
-function Callout({
-  type = 'info',
-  title,
-  children,
-}: {
-  type?: 'info' | 'warn' | 'success' | 'danger';
-  title?: string;
-  children: ReactNode;
-}) {
-  const toneClass =
-    type === 'success'
-      ? styles.calloutSuccess
-      : type === 'warn'
-      ? styles.calloutWarn
-      : type === 'danger'
-      ? styles.calloutDanger
-      : styles.calloutInfo;
-  return (
-    <div className={cn(styles.callout, toneClass)}>
-      {title ? <div style={{fontWeight: 700, marginBottom: 8}}>{title}</div> : null}
-      <div>{children}</div>
-    </div>
-  );
-}
-
-function Kbd({children}: {children: ReactNode}) {
-  return <kbd className={styles.kbd}>{children}</kbd>;
-}
-
-function Steps({children}: {children: ReactNode}) {
-  return <ol style={{margin: '14px 0', paddingLeft: '20px'}}>{children}</ol>;
-}
-
-function YouTube({id, title}: {id: string; title?: string}) {
-  return (
-    <div style={{margin: '14px 0', overflow: 'hidden', borderRadius: 12, border: '1px solid #1f2937'}}>
-      <div style={{position: 'relative', paddingTop: '56.25%'}}>
-        <iframe
-          title={title ?? 'YouTube'}
-          src={`https://www.youtube-nocookie.com/embed/${id}`}
-          style={{position: 'absolute', inset: 0, width: '100%', height: '100%'}}
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          loading="lazy"
-          allowFullScreen
-        />
-      </div>
-    </div>
-  );
-}
-
-const mdxComponents = {
-  Callout,
-  Kbd,
-  Steps,
-  YouTube,
-};
-
-const STARTER_MDX = String.raw`---
-title: "Embed and explain inside MDX"
-description: "Drop calculators into MDX, capture screenshots, or write run-books."
-tags: ["mdx", "docs", "editor"]
----
-
-# {frontmatter.title}
-
-<Callout type="info" title="Why MDX?">
-  MDX lets you mix Markdown with React components.
-</Callout>
-
-## Quick start
-
-<Steps>
-  <li>Edit the MDX on the left.</li>
-  <li>Use the component palette to insert snippets.</li>
-  <li>Toggle live preview.</li>
-</Steps>
-
-### Keyboard
-
-- Save: <Kbd>Ctrl</Kbd> + <Kbd>S</Kbd>
-- Toggle preview: <Kbd>Ctrl</Kbd> + <Kbd>Enter</Kbd>
-
-\`\`\`ts
-// You can show code blocks normally
-export const sum = (a: number, b: number) => a + b
-\`\`\`
-
-<YouTube id="dQw4w9WgXcQ" title="Demo" />
-`;
-
-const COMPONENT_SNIPPETS: Array<{name: string; description: string; snippet: string}> = [
-  {
-    name: 'Callout',
-    description: 'Informational block with a title and tone',
-    snippet: `<Callout type="info" title="Heads up">
-  Your note here.
-</Callout>
-`,
-  },
-  {
-    name: 'Steps',
-    description: 'Ordered steps',
-    snippet: `<Steps>
-  <li>First</li>
-  <li>Second</li>
-</Steps>
-`,
-  },
-  {
-    name: 'YouTube',
-    description: 'Embed a YouTube video (privacy-enhanced)',
-    snippet: `<YouTube id="VIDEO_ID" title="Title" />
-`,
-  },
-  {
-    name: 'Frontmatter',
-    description: 'YAML frontmatter for metadata',
-    snippet: `---
-title: ""
-description: ""
-tags: []
----
-
-`,
-  },
-  {
-    name: 'Table',
-    description: 'Markdown table',
-    snippet: `| Col A | Col B |
-| --- | --- |
-| 1 | 2 |
-`,
-  },
-  {
-    name: 'Code block',
-    description: 'Fenced code block',
-    snippet: '```tsx\nexport function Example() {\n  return <div>Hello</div>\n}\n```\n',
-  },
-];
-
-type CompileState =
-  | {status: 'idle' | 'compiling'}
-  | {status: 'ok'; warnings?: string[]}
-  | {status: 'error'; message: string; line?: number; column?: number};
-
-function getWordCount(text: string) {
-  const stripped = text
-    .replace(/```[\s\S]*?```/g, ' ')
-    .replace(/<[^>]+>/g, ' ')
-    .replace(/---[\s\S]*?---/g, ' ')
-    .replace(/[^\p{L}\p{N}\s]/gu, ' ');
-  const words = stripped
-    .split(/\s+/)
-    .map((w) => w.trim())
-    .filter(Boolean);
-  return words.length;
-}
-
-function readingTimeMinutes(wordCount: number) {
-  return Math.max(1, Math.round(wordCount / 200));
-}
-
-function downloadTextFile(filename: string, content: string) {
-  const blob = new Blob([content], {type: 'text/plain;charset=utf-8'});
-  const url = URL.createObjectURL(blob);
-  const anchor = document.createElement('a');
-  anchor.href = url;
-  anchor.download = filename;
-  document.body.appendChild(anchor);
-  anchor.click();
-  anchor.remove();
-  URL.revokeObjectURL(url);
-}
+import MDXErrorBoundary from './MDXErrorBoundary';
+import SnippetsSidebar from './SnippetsSidebar';
+import {
+  Badge,
+  Button,
+  IconButton,
+  Input,
+  Separator,
+  cn,
+  mdxComponents,
+  useDebouncedValue,
+} from './ui';
+import {
+  COMPONENT_SNIPPETS,
+  STARTER_MDX,
+  downloadTextFile,
+  getWordCount,
+  readingTimeMinutes,
+  type CompileState,
+} from './constants';
 
 async function pickTextFile(accept = '.md,.mdx,text/markdown,text/plain') {
   return new Promise<string | null>((resolve) => {
@@ -756,99 +468,14 @@ export default function MdxPostEditor() {
         <div className={styles.grid}>
           <AnimatePresence initial={false}>
             {showLeft && (
-              <motion.aside
-                className={styles.leftPanel}
-                initial={{opacity: 0, x: -12}}
-                animate={{opacity: 1, x: 0}}
-                exit={{opacity: 0, x: -12}}
-                transition={{duration: 0.18}}
-              >
-                <Card
-                  title="Insert"
-                  right={
-                    <span className={styles.muted}>
-                      <Search size={14} /> Snippets
-                    </span>
-                  }
-                >
-                  <div style={{display: 'flex', flexDirection: 'column', gap: 12}}>
-                    <Input
-                      value={search}
-                      onChange={(e) => setSearch(e.target.value)}
-                      placeholder="Search snippets..."
-                    />
-                    <div className={styles.snippetList}>
-                      {filteredSnippets.map((snippet) => (
-                        <button
-                          key={snippet.name}
-                          type="button"
-                          className={styles.snippet}
-                          onClick={() => insertAtCursor(snippet.snippet)}
-                        >
-                          <div className={styles.snippetTitle}>{snippet.name}</div>
-                          <div className={styles.snippetDesc}>{snippet.description}</div>
-                        </button>
-                      ))}
-                    </div>
-                    <Separator />
-                    <div className={styles.toolbar}>
-                      <IconButton title="Bold (Ctrl+B)" onClick={() => wrapSelection('**', '**')}>
-                        <Bold size={14} />
-                      </IconButton>
-                      <IconButton title="Italic (Ctrl+I)" onClick={() => wrapSelection('*', '*')}>
-                        <Italic size={14} />
-                      </IconButton>
-                      <IconButton title="Inline code" onClick={() => wrapSelection('`', '`')}>
-                        <Code2 size={14} />
-                      </IconButton>
-                      <IconButton title="Heading 1" onClick={() => applyHeading(1)}>
-                        <Heading1 size={14} />
-                      </IconButton>
-                      <IconButton title="Heading 2" onClick={() => applyHeading(2)}>
-                        <Heading2 size={14} />
-                      </IconButton>
-                      <IconButton title="Heading 3" onClick={() => applyHeading(3)}>
-                        <Heading3 size={14} />
-                      </IconButton>
-                      <IconButton title="Link (Ctrl+K)" onClick={() => wrapSelection('[', '](url)')}>
-                        <Link2 size={14} />
-                      </IconButton>
-                      <IconButton title="Image" onClick={() => insertAtCursor('![alt](url)\n')}>
-                        <ImageIcon size={14} />
-                      </IconButton>
-                      <IconButton title="Bulleted list" onClick={() => insertAtCursor('- item\n- item\n')}>
-                        <List size={14} />
-                      </IconButton>
-                      <IconButton title="Numbered list" onClick={() => insertAtCursor('1. item\n2. item\n')}>
-                        <ListOrdered size={14} />
-                      </IconButton>
-                      <IconButton title="Quote" onClick={() => insertAtCursor('> quote\n')}>
-                        <Quote size={14} />
-                      </IconButton>
-                      <IconButton
-                        title="Table"
-                        onClick={() => insertAtCursor('| Col A | Col B |\n| --- | --- |\n| 1 | 2 |\n')}
-                      >
-                        <Table size={14} />
-                      </IconButton>
-                    </div>
-                    <div className={styles.note}>
-                      <div className={styles.small}>
-                        <strong>Shortcuts:</strong> Ctrl+S save, Ctrl+Enter preview, Ctrl+F find, Ctrl+B bold, Ctrl+I
-                        italic, Ctrl+K link
-                      </div>
-                    </div>
-                  </div>
-                </Card>
-                <div style={{marginTop: 14}}>
-                  <Card title="Security">
-                    <div className={styles.small}>
-                      This editor compiles MDX in the browser. For untrusted content, compile on the server and allow
-                      only known components.
-                    </div>
-                  </Card>
-                </div>
-              </motion.aside>
+              <SnippetsSidebar
+                search={search}
+                onSearchChange={setSearch}
+                snippets={filteredSnippets}
+                onInsert={insertAtCursor}
+                onWrapSelection={wrapSelection}
+                onApplyHeading={applyHeading}
+              />
             )}
           </AnimatePresence>
 
@@ -979,37 +606,3 @@ function ChecklistItem({ok, label}: {ok: boolean; label: string}) {
   );
 }
 
-class MDXErrorBoundary extends React.Component<{children: ReactNode}, {hasError: boolean; error?: any}> {
-  constructor(props: {children: ReactNode}) {
-    super(props);
-    this.state = {hasError: false};
-  }
-
-  static getDerivedStateFromError(error: any) {
-    return {hasError: true, error};
-  }
-
-  componentDidCatch(error: any) {
-    // noop, UI handles messaging
-    void error;
-  }
-
-  render() {
-    if (this.state.hasError) {
-      return (
-        <div className={styles.alert}>
-          <div style={{display: 'flex', gap: 8}}>
-            <AlertTriangle size={14} />
-            <div>
-              <div style={{fontWeight: 700}}>Render error</div>
-              <div className={styles.small}>
-                {String(this.state.error?.message ?? this.state.error ?? 'Unknown error')}
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-    }
-    return this.props.children;
-  }
-}
