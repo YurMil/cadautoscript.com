@@ -154,6 +154,20 @@ Arvutage valtside vahekaugus, paindevaru ja arendatud pikkus silindriliste kesta
 - **Kuidas käsitletakse tagasivedrustust (springback)?** Eelseadistused sisaldavad tüüpilisi tolerantse. Kohandage ülepainet või varusid vastavalt oma materjalipartii omadustele.
 - **Kas minu sisestused salvestatakse?** Ei. Sulgege leht, et kõik tühjendada; andmed jäävad ainult teie brauseri mällu.
 
+## Eeldused ja standardid
+
+- **Standardite alus:** Arendatud pikkuse ja varude väärtused põhinevad standardsetel plaadipainutuse geomeetriaseostel, kusjuures tolerantside eelseadistused on kujundatud EN 13445 ja ASME VIII valmistusjuhiste eeskujul.
+- **Peamised eeldused:**
+  - Kest on konstantse läbimõõduga silinder ühtlase plaadi paksusega.
+  - Tagasivedrustust (springback) käsitletakse üksnes eelseadistatud tolerantside ja teie sisestatud ülepainde varu kaudu.
+  - Kasutatakse nominaalseid sisestatud mõõtmeid; plaadi paksuse ja läbimõõdu tolerantse ei modelleerita.
+  - Materjali käitumist eeldatakse eelseadistusele tüüpilisena; sulamipõhine tagasivedrustus tuleb täpsustada tehase katseandmete põhjal.
+- **Piirangud:**
+  - Koonuseid, üleminekuid, põlvi ja muid mittesilindrilisi kujundeid ei toetata.
+  - Masina jõudlust, rullide läbipainet ega lõplike elementide kontrolle ei teostata.
+  - Keevituse kahanemist, ovaalsuse korrektsiooni ega painutusjärgse kuumtöötluse mõjusid ei käsitleta.
+- ⚠️ The Cylindrical Shell Rolling Calculator pakub esialgset dimensioneerimise tuge. Tulemused peab kvalifitseeritud insener kontrollima kehtiva koodiväljaande ja projekti spetsifikatsiooni suhtes enne valmistamist või ostmist.
+
 ## Seotud tööriistad
 - [Pipe Cutter Visualizer](./pipe-cutter.mdx)
 - [Metal Bending Prototype](./metal-bending.mdx)

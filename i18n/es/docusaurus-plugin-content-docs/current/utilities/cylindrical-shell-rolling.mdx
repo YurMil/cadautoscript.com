@@ -154,6 +154,20 @@ Calcule el espaciado de los rodillos, la tolerancia de doblado y la longitud des
 - **¿Cómo se maneja el retorno elástico (springback)?** Los ajustes preestablecidos incluyen tolerancias típicas. Ajuste el sobrecurvado o las tolerancias para su lote de material.
 - **¿Se guardan mis entradas?** No. Cierre la página para borrar todo; permanece únicamente en la memoria de su navegador.
 
+## Suposiciones y normas
+
+- **Base normativa:** Los valores de longitud desarrollada y de sobreespesor se basan en relaciones geométricas estándar de curvado de chapa, con preajustes de tolerancia inspirados en las guías de fabricación de EN 13445 y ASME VIII.
+- **Suposiciones clave:**
+  - La virola es un cilindro de diámetro constante con espesor de chapa uniforme.
+  - El retorno elástico (springback) se gestiona únicamente mediante las tolerancias preestablecidas y cualquier sobrecurvado que introduzca.
+  - Se utilizan las dimensiones nominales de entrada; las tolerancias de espesor de chapa y de diámetro no se modelan.
+  - Se asume un comportamiento del material típico para el preajuste; el retorno elástico específico de la aleación debe refinarse a partir de datos de ensayo de colada.
+- **Limitaciones:**
+  - Los conos, transiciones, codos y otras formas no cilíndricas no están soportados.
+  - No se realizan verificaciones de capacidad de máquina, deflexión de rodillos ni de elementos finitos.
+  - La contracción por soldadura, la corrección de ovalidad y los efectos del tratamiento térmico posterior al curvado no están cubiertos.
+- ⚠️ The Cylindrical Shell Rolling Calculator proporciona soporte de dimensionamiento preliminar. Los resultados deben ser verificados por un ingeniero calificado frente a la edición vigente del código y la especificación del proyecto antes de la fabricación o la compra.
+
 ## Herramientas relacionadas
 - [Pipe Cutter Visualizer](./pipe-cutter.mdx)
 - [Metal Bending Prototype](./metal-bending.mdx)

@@ -151,6 +151,22 @@ Wählen Sie eine Nennweite (DN), legen Sie Betriebs- und Prüfdruck, Temperatur 
 - **Werden meine Daten hochgeladen?** Nein. Alles läuft lokal im Browser.
 - **Ist dies eine endgültige Designprüfung?** Nein. Verwenden Sie es für die vorläufige Dimensionierung und prüfen Sie es gegen Ihre Projektspezifikationen.
 
+## Annahmen & Normen
+
+- **Normengrundlage:** Flanschabmessungen und PN-Klassen werden aus EN 1092-1 übernommen; die Mindestdicke wird anhand der EN 13445-3 Spannungsnachweise für Blindflansche berechnet.
+- **Wesentliche Annahmen:**
+  - Nur statische innere Druckbelastung (Betriebs- und Prüffälle).
+  - Gleichmäßige, temperaturabhängige Streckgrenze für die gewählte Werkstoffgüte (P265GH, P355GH oder 1.4404).
+  - Nennmaße der Flansche nach EN 1092-1 ohne Fertigungstoleranzen.
+  - Der Korrosionszuschlag wird direkt wie eingegeben zur berechneten Mindestdicke addiert.
+  - Standard-Schraubenbild und Dichtungsanordnung gemäß der gewählten DN/PN-Kombination.
+- **Einschränkungen:**
+  - Schraubenkräfte, Dichtungspressung und Flanschverdrehung werden nicht im Detail analysiert.
+  - Ermüdung, Kriechen und zyklische Belastung werden nicht abgedeckt.
+  - Äußere Lasten (Rohrleitungsmomente, Wind, Erdbeben) werden nicht berücksichtigt.
+  - Das Ergebnis ist keine zertifizierte Normberechnung und trägt keinen Normstempel.
+- ⚠️ Der Blind Flange Calculator bietet Unterstützung bei der vorläufigen Dimensionierung. Die Ergebnisse müssen von einem qualifizierten Ingenieur gegen die maßgebende Normausgabe und die Projektspezifikation geprüft werden, bevor gefertigt oder beschafft wird.
+
 ## Verwandte Tools
 - [Dished End (Vessel Head) Calculator](./pressure-vessel-dished-end-calc.mdx)
 - [Cylindrical Shell Rolling Calculator](./cylindrical-shell-rolling.mdx)

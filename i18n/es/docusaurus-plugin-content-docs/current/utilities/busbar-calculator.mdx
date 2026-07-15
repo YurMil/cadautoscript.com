@@ -91,6 +91,20 @@ Las constantes de material, ratings de perfiles, presets de refrigeración y reg
 5. Agregue datos de cortocircuito cuando estén disponibles.
 6. Exporte un PDF o una configuración JSON para revisión posterior.
 
+## Suposiciones y normas
+
+- **Base normativa:** Las verificaciones de dimensionamiento, térmicas y de distancias de aislamiento se orientan en la práctica de barras colectoras DIN 43670 / DIN 43671 y en los conceptos de distancias de IEC 60664, utilizando conjuntos de datos de ejemplo incluidos en lugar de tablas certificadas.
+- **Suposiciones clave:**
+  - Operación en régimen permanente con la corriente introducida, la temperatura ambiente y el preajuste de refrigeración.
+  - Barras rectangulares de cobre o aluminio con propiedades de material uniformes.
+  - Dimensiones nominales del perfil sin tolerancias de fabricación.
+  - Las verificaciones de cortocircuito utilizan la corriente RMS, la duración, la corriente de pico y la separación entre soportes exactamente tal como se introducen.
+- **Limitaciones:**
+  - Las constantes de material, las capacidades de perfil, los preajustes de refrigeración y las reglas de distancias incluidos son conjuntos de datos de desarrollo solo a modo de ejemplo, no una base de diseño certificada.
+  - Los eventos térmicos transitorios, los armónicos y los efectos pelicular y de proximidad más allá del modelo integrado no están cubiertos.
+  - El diseño de uniones, el recubrimiento, los valores de par de apriete y el diseño de ventilación del envolvente quedan fuera del alcance.
+- ⚠️ The Busbar Calculator proporciona soporte de dimensionamiento preliminar. Los resultados deben ser verificados por un ingeniero calificado frente a la edición vigente del código y la especificación del proyecto antes de la fabricación o la compra.
+
 ## Herramientas relacionadas
 
 - [Bourdon Gauge Configurator](./bourdon-gauge-configurator.mdx)

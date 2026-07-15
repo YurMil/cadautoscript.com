@@ -67,6 +67,21 @@ Los cálculos, las estimaciones de tensiones y los archivos CAD proporcionados p
 4. **Inspeccione el engrane visual**: Revise las pestañas del croquis 2D del engrane y de la vista previa 3D. Active la animación para verificar la dirección del engrane.
 5. **Descargue archivos CAD e informes**: Exporte archivos DXF para perfiles de corte, archivos STEP para ensamblajes CAD y el informe PDF para los registros del proyecto.
 
+## Suposiciones y normas
+
+- **Base normativa:** La geometría del engranaje sigue las relaciones de involuta de ISO 21771-1 para engranajes rectos cilíndricos externos; la seguridad a flexión utiliza una fórmula de Lewis simplificada y no constituye una calificación completa según ISO 6336 o AGMA.
+- **Suposiciones clave:**
+  - Solo pares de engranajes rectos externos, con perfiles de involuta y el ángulo de presión introducido.
+  - Carga estática o en régimen permanente derivada del par, la velocidad, el rendimiento y el factor de servicio introducidos.
+  - Propiedades de material uniformes y las tensiones admisibles que usted proporcione.
+  - Dimensiones nominales sin tolerancias de fabricación ni grados de calidad.
+- **Limitaciones:**
+  - No se realizan verificaciones de durabilidad superficial (picadura), rayado (scuffing) ni micropicadura.
+  - Los engranajes helicoidales, internos, cónicos y de tornillo sin fin no están soportados.
+  - Los efectos dinámicos, los factores de distribución de carga y el análisis de lubricación más allá del modelo de fuerzas simplificado no están cubiertos.
+  - Los resultados no constituyen una calificación de engranaje certificada para la liberación de producción.
+- ⚠️ The Visual Gear Pair Calculator proporciona soporte de dimensionamiento preliminar. Los resultados deben ser verificados por un ingeniero calificado frente a la edición vigente del código y la especificación del proyecto antes de la fabricación o la compra.
+
 ## Utilidades relacionadas
 
 - [Tube Sheet Generator](../tube-sheet-generator/)

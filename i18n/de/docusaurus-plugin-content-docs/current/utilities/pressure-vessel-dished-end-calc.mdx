@@ -156,6 +156,22 @@ Sofortige Berechnung von Geometrie, Gewicht und Volumen von Druckbehälterböden
 - **Ist der QC-Bericht anpassbar?** Der QC-Bericht wird automatisch basierend auf Ihren Eingaben generiert und enthält Toleranzen nach DIN 28005-1. Er wird direkt aus dem Browser gedruckt.
 - **Werden meine Eingaben gespeichert?** Nein. Schließen Sie die Seite, um alles zu löschen; es bleibt nur im Arbeitsspeicher Ihres Browsers.
 
+## Annahmen & Normen
+
+- **Normengrundlage:** Die Bodengeometrie folgt den Beziehungen von DIN 28011 (Klöpperboden, R = Da, r = 0.1 Da), DIN 28013 (Korbbogenboden) und SS 895; die Toleranzen des QC-Berichts sind aus DIN 28005-1 für gewölbte Böden abgeleitet.
+- **Wesentliche Annahmen:**
+  - Nennmaße gemäß der gewählten Norm, ohne dass Fertigungstoleranzen auf die berechnete Geometrie angewendet werden.
+  - Gleichmäßige Wanddicke über den gesamten Boden; die Ausdünnung durch das Umformen wird nicht modelliert.
+  - Das Gewicht verwendet Standard-Werkstoffdichten (z. B. 7.85 kg/dm3 für Kohlenstoffstahl, 7.9 für nichtrostenden Stahl).
+  - Der Zuschnittsdurchmesser ist eine Schätzung auf Basis von Standardfaktoren (z. B. 1.09x oder 1.14x Da) zuzüglich des zylindrischen Bords.
+  - Stutzenpositionen werden als visuelle Layout-Hilfe behandelt, nicht als Verstärkungsberechnung.
+- **Einschränkungen:**
+  - Es wird keine Druckauslegung oder Spannungsanalyse durchgeführt (z. B. Auslegungsnachweise nach ASME VIII Div 1 oder EN 13445-3).
+  - Stutzenverstärkung, Ausschnittskompensation und Schweißnahtgestaltung werden nicht abgedeckt.
+  - ASME-2:1-Korbbogenböden sind keine native Voreinstellung.
+  - Ermüdung, Korrosion über den eingegebenen Zuschlag hinaus und thermische Effekte werden nicht berücksichtigt.
+- ⚠️ Der Dished End (Vessel Head) Calculator bietet Unterstützung bei der vorläufigen Dimensionierung. Die Ergebnisse müssen von einem qualifizierten Ingenieur gegen die maßgebende Normausgabe und die Projektspezifikation geprüft werden, bevor gefertigt oder beschafft wird.
+
 ## Verwandte Tools
 - [Cylindrical Shell Rolling](./cylindrical-shell-rolling.mdx)
 - [Bourdon Gauge Configurator](./bourdon-gauge-configurator.mdx)

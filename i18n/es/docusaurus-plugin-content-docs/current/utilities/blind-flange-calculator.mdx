@@ -154,6 +154,22 @@ Seleccione un DN, establezca las presiones de funcionamiento y de prueba, la tem
 - **¿Se cargan mis datos?** No. Todo se ejecuta localmente en el navegador.
 - **¿Es esta una verificación de diseño final?** No. Úselo para el dimensionamiento preliminar y verifíquelo con las especificaciones de su proyecto.
 
+## Suposiciones y normas
+
+- **Base normativa:** Las dimensiones de la brida y las clases de presión PN se toman de EN 1092-1; el espesor mínimo se calcula mediante las verificaciones de tensión de EN 13445-3 para bridas ciegas.
+- **Suposiciones clave:**
+  - Solo carga de presión interna estática (casos de operación y de prueba).
+  - Límite elástico uniforme y dependiente de la temperatura para el grado de material seleccionado (P265GH, P355GH o 1.4404).
+  - Dimensiones nominales de brida según EN 1092-1 sin tolerancias de fabricación.
+  - El sobreespesor de corrosión se suma directamente al espesor mínimo calculado tal como se introduce.
+  - Patrón de pernos y disposición de junta estándar según la combinación DN/PN seleccionada.
+- **Limitaciones:**
+  - Las cargas de los pernos, la tensión de asiento de la junta y la rotación de la brida no se analizan en detalle.
+  - La fatiga, la fluencia y las cargas cíclicas no están cubiertas.
+  - Las cargas externas (momentos de tubería, viento, sismo) no se consideran.
+  - El resultado no es un cálculo de código certificado y no lleva sello de código.
+- ⚠️ The Blind Flange Calculator proporciona soporte de dimensionamiento preliminar. Los resultados deben ser verificados por un ingeniero calificado frente a la edición vigente del código y la especificación del proyecto antes de la fabricación o la compra.
+
 ## Herramientas relacionadas
 - [Dished End (Vessel Head) Calculator](./pressure-vessel-dished-end-calc.mdx)
 - [Cylindrical Shell Rolling Calculator](./cylindrical-shell-rolling.mdx)

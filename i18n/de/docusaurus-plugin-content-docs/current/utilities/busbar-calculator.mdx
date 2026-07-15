@@ -91,6 +91,20 @@ Die mitgelieferten Materialdaten, Profilratings, Kühlpresets und Abstandsregeln
 5. Kurzschlussannahmen ergänzen, wenn sie bekannt sind.
 6. PDF-Bericht oder JSON-Konfiguration für die weitere Prüfung exportieren.
 
+## Annahmen & Normen
+
+- **Normengrundlage:** Dimensionierungs-, Thermik- und Abstandsprüfungen orientieren sich an der Stromschienenpraxis nach DIN 43670 / DIN 43671 und den Abstandskonzepten der IEC 60664, wobei mitgelieferte Beispieldatensätze anstelle zertifizierter Tabellen verwendet werden.
+- **Wesentliche Annahmen:**
+  - Stationärer Betrieb bei eingegebenem Strom, Umgebungstemperatur und Kühlungsvoreinstellung.
+  - Rechteckige Kupfer- oder Aluminiumschienen mit gleichmäßigen Werkstoffeigenschaften.
+  - Nennmaße der Profile ohne Fertigungstoleranzen.
+  - Kurzschlussprüfungen verwenden Effektivstrom, Dauer, Stoßstrom und Stützabstand genau wie eingegeben.
+- **Einschränkungen:**
+  - Die mitgelieferten Werkstoffkonstanten, Profilkennwerte, Kühlungsvoreinstellungen und Abstandsregeln sind reine Beispiel-Entwicklungsdatensätze, keine zertifizierte Auslegungsgrundlage.
+  - Transiente thermische Ereignisse, Oberschwingungen sowie Skin- und Proximity-Effekte über das eingebaute Modell hinaus werden nicht abgedeckt.
+  - Verbindungsgestaltung, Beschichtung, Drehmomentwerte und die Lüftungsauslegung des Gehäuses liegen außerhalb des Anwendungsbereichs.
+- ⚠️ Der Busbar Calculator bietet Unterstützung bei der vorläufigen Dimensionierung. Die Ergebnisse müssen von einem qualifizierten Ingenieur gegen die maßgebende Normausgabe und die Projektspezifikation geprüft werden, bevor gefertigt oder beschafft wird.
+
 ## Verwandte Tools
 
 - [Bourdon Gauge Configurator](./bourdon-gauge-configurator.mdx)

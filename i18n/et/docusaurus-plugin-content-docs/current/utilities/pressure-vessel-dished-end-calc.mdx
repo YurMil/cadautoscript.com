@@ -156,6 +156,22 @@ Surveanuma põhja geomeetria, kaalu ja mahu kohene arvutamine. See genereerib vi
 - **Kas QC aruanne on kohandatav?** QC aruanne genereeritakse automaatselt teie sisestatud andmete põhjal ja sisaldab DIN 28005-1 tolerantsid. See prinditakse otse brauserist.
 - **Kas minu andmed salvestatakse?** Ei. Lehe sulgemisel kõik andmed kustutatakse; need jäävad ainult teie brauseri mällu.
 
+## Eeldused ja standardid
+
+- **Standardite alus:** Põhja geomeetria järgib DIN 28011 (torisfääriline, R = Da, r = 0.1 Da), DIN 28013 (ellipsoidne) ja SS 895 seoseid; QC-aruande tolerantsid on tuletatud DIN 28005-1 põhjal vormitud põhjadele.
+- **Peamised eeldused:**
+  - Nominaalsed mõõtmed vastavalt valitud standardile, ilma vormimistolerantside rakendamiseta arvutatud geomeetriale.
+  - Ühtlane seina paksus üle põhja; vormimisest tulenevat õhenemist ei modelleerita.
+  - Kaal kasutab standardseid materjalitihedusi (nt 7.85 kg/dm3 süsinikterasele, 7.9 roostevabale terasele).
+  - Toorikuläbimõõt on hinnang, mis põhineb standardteguritel (nt 1.09x või 1.14x Da) pluss sirge äär.
+  - Nozzli asukohti käsitletakse visuaalse paigutusjuhisena, mitte tugevdusarvutusena.
+- **Piirangud:**
+  - Rõhuklassi ega pingeanalüüsi (nt ASME VIII Div 1 või EN 13445-3 projekteerimiskontrollid) ei teostata.
+  - Nozzli tugevdust, ava kompenseerimist ega keevituse projekteerimist ei käsitleta.
+  - ASME 2:1 ellipsoidsed põhjad ei ole omaette eelseadistus.
+  - Väsimust, korrosiooni üle sisestatud varu ega termilisi mõjusid ei arvestata.
+- ⚠️ The Dished End (Vessel Head) Calculator pakub esialgset dimensioneerimise tuge. Tulemused peab kvalifitseeritud insener kontrollima kehtiva koodiväljaande ja projekti spetsifikatsiooni suhtes enne valmistamist või ostmist.
+
 ## Seotud tööriistad
 - [Cylindrical Shell Rolling](./cylindrical-shell-rolling.mdx)
 - [Bourdon Gauge Configurator](./bourdon-gauge-configurator.mdx)

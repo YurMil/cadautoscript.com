@@ -154,6 +154,20 @@ Berechnen Sie Walzenabstand, Biegezugabe und gestreckte Länge für zylindrische
 - **Wie wird die Rückfederung gehandhabt?** Voreinstellungen enthalten typische Toleranzen. Passen Sie Überbiegung oder Zugaben für Ihre Materialcharge an.
 - **Werden meine Eingaben gespeichert?** Nein. Schließen Sie die Seite, um alles zu löschen; es bleibt nur im Speicher Ihres Browsers.
 
+## Annahmen & Normen
+
+- **Normengrundlage:** Abgewickelte Länge und Zugabewerte basieren auf standardmäßigen Geometriebeziehungen des Blechbiegens, wobei die Toleranzvoreinstellungen an die Fertigungshinweise von EN 13445 und ASME VIII angelehnt sind.
+- **Wesentliche Annahmen:**
+  - Die Schale ist ein Zylinder mit konstantem Durchmesser und gleichmäßiger Blechdicke.
+  - Die Rückfederung wird nur über die voreingestellten Toleranzen und eine von Ihnen eingegebene Überbiegungszugabe berücksichtigt.
+  - Es werden Nennmaße verwendet; Toleranzen von Blechdicke und Durchmesser werden nicht modelliert.
+  - Das Materialverhalten wird als typisch für die Voreinstellung angenommen; die legierungsspezifische Rückfederung muss anhand von Abnahmeprüfdaten verfeinert werden.
+- **Einschränkungen:**
+  - Kegel, Übergänge, Rohrbögen und andere nicht-zylindrische Formen werden nicht unterstützt.
+  - Es werden keine Prüfungen der Maschinenkapazität, der Walzendurchbiegung oder mit finiten Elementen durchgeführt.
+  - Schweißschrumpfung, Unrundheitskorrektur und Effekte einer Wärmebehandlung nach dem Walzen werden nicht abgedeckt.
+- ⚠️ Der Cylindrical Shell Rolling Calculator bietet Unterstützung bei der vorläufigen Dimensionierung. Die Ergebnisse müssen von einem qualifizierten Ingenieur gegen die maßgebende Normausgabe und die Projektspezifikation geprüft werden, bevor gefertigt oder beschafft wird.
+
 ## Verwandte Tools
 - [Pipe Cutter Visualizer](./pipe-cutter.mdx)
 - [Metal Bending Prototype](./metal-bending.mdx)

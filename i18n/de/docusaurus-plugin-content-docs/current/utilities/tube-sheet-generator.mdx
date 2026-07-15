@@ -32,6 +32,19 @@ Erstellen Sie Rohrboden-Lochmuster für Wärmetauscher, zeigen Sie das Layout in
 - Der DXF-Export umfasst den Rohrbodenumriss und alle Rohrbohrungen.
 - Der STEP-Export erfolgt über WebAssembly im Browser; bei einer hohen Anzahl von Bohrungen kann dies länger dauern.
 
+## Annahmen & Normen
+
+- **Normengrundlage:** Geometrisches Layout-Tool für quadratische und dreieckige Teilungsmuster, wie sie üblicherweise im Wärmetauscherbau verwendet werden; es setzt keine bestimmte Auslegungsnorm um.
+- **Wesentliche Annahmen:**
+  - Nennmaße für Bohrungen und Teilung ohne Bohrtoleranzen.
+  - Ein flacher, kreisrunder Rohrboden mit gleichmäßigem Randabstand.
+  - Durchgangstrennwände sind eine visuelle Layout-Hilfe, kein hydraulisches oder mechanisches Auslegungsmerkmal.
+- **Einschränkungen:**
+  - Es werden keine Berechnungen zur Rohrbodendicke, zur Stegspannung oder zur Rohr-zu-Rohrboden-Verbindung durchgeführt (z. B. nach TEMA, ASME VIII oder EN 13445).
+  - Die Optimierung der Rohranzahl für Umlenkbleche, Prallbleche oder mantelseitige Abstände wird nicht abgedeckt.
+  - Thermische Auslegung und Schwingungsanalyse liegen außerhalb des Anwendungsbereichs.
+- ⚠️ Der Tube Sheet Generator bietet Unterstützung bei der vorläufigen Dimensionierung. Die Ergebnisse müssen von einem qualifizierten Ingenieur gegen die maßgebende Normausgabe und die Projektspezifikation geprüft werden, bevor gefertigt oder beschafft wird.
+
 ## Feedback
 
 Senden Sie eine E-Mail oder DM mit dem Slug `tube-sheet-generator`, damit wir eventuelle Probleme reproduzieren können.
