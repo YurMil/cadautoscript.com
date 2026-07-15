@@ -1,0 +1,69 @@
+facebook:
+  label: Facebook
+  permalink: /facebook
+  description: Опис тега Facebook
+
+hello:
+  label: Hello
+  permalink: /hello
+  description: Опис тега Hello
+
+docusaurus:
+  label: Docusaurus
+  permalink: /docusaurus
+  description: Опис тега Docusaurus
+
+hola:
+  label: Hola
+  permalink: /hola
+  description: Опис тега Hola
+
+release:
+  label: Релізи
+  permalink: /release
+  description: Анонси релізів
+
+chromium:
+  label: Chromium
+  permalink: /chromium
+  description: Оновлення середовища виконання Chromium
+
+nodejs:
+  label: Node.js
+  permalink: /nodejs
+  description: Автоматизація та серверна розробка на Node.js
+
+dxf:
+  label: DXF
+  permalink: /dxf
+  description: Формат DXF і генерація файлів
+
+automation:
+  label: Автоматизація
+  permalink: /automation
+  description: Автоматизація CAD і робочих процесів
+
+cad:
+  label: CAD
+  permalink: /cad
+  description: Інструменти та прийоми систем автоматизованого проєктування
+
+ai:
+  label: AI
+  permalink: /ai
+  description: Прикладний ШІ для CAD і виробничих процесів
+
+llm:
+  label: LLM
+  permalink: /llm
+  description: Патерни автоматизації на великих мовних моделях
+
+python:
+  label: Python
+  permalink: /python
+  description: Скрипти на Python для CAD і автоматизації даних
+
+solidworks:
+  label: SolidWorks
+  permalink: /solidworks
+  description: Макроси SolidWorks, робота з API та автоматизація

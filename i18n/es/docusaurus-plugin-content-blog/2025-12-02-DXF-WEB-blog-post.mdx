@@ -1,0 +1,95 @@
+---
+slug: headless-cad-chromium
+title: "CAD headless: generar y anidar patrones planos DXF con Chromium"
+authors: [yurii]
+tags: [chromium, nodejs, dxf, automation, cad]
+---
+
+import {DxfCircleDemo} from '@site/src/components/DxfCircleDemo';
+
+Los enfoques tradicionales para la generación de planos dependen en gran medida de software de escritorio pesado y de API propietarias. El enfoque moderno traslada el núcleo geométrico a la web.
+
+En este artículo exploramos cómo usar el motor Chromium (a través de Puppeteer o Playwright) y JavaScript para generar, validar y anidar archivos DXF de forma automática.
+
+{/* truncate */}
+
+:::tip ¿Por qué Chromium?
+
+Para un ingeniero, un navegador no es solo un visor de páginas; es un potente motor de renderizado vectorial (SVG/Canvas) con soporte de aceleración por hardware.
+
+Multiplataforma: la generación funciona de forma idéntica en Windows, en servidores Linux y dentro de contenedores Docker.
+
+Depuración visual: ves exactamente lo que se envía a la máquina.
+
+Disponibilidad de bibliotecas: el ecosistema NPM (Maker.js, OpenJSCAD) permite manipular geometría 2D más rápido que LISP o VBA.
+
+:::
+
+Arquitectura de la solución
+
+El flujo de trabajo de automatización para anidar o generar un patrón plano es el siguiente:
+
+Frontend/Lógica: un script en JS genera la geometría de la pieza (ruta SVG) a partir de parámetros.
+
+Motor (Chromium): el navegador headless renderiza la geometría, calcula intersecciones (para el anidado) o convierte las curvas Bézier en arcos/polilíneas.
+
+Salida: serialización del resultado al formato DXF.
+
+Implementación técnica
+
+En lugar de dibujar líneas manualmente, aprovechamos el DOM para los cálculos.
+
+Stack:
+
+Node.js - Entorno de ejecución.
+
+Puppeteer - Control de Chromium en modo headless.
+
+Maker.js - Biblioteca para operaciones CAD y exportación a DXF.
+
+Ejemplo de código (Node.js)
+
+```js
+const puppeteer = require('puppeteer');
+const fs = require('fs');
+
+(async () => {
+  // 1. Iniciar un navegador "limpio"
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+
+  // 2. Inyectar la lógica de construcción (p. ej., patrón plano de una caja)
+  // En un proyecto real, aquí se inyectaría maker.js
+  const dxfContent = await page.evaluate(() => {
+    // Se asume que makerjs está cargado en el contexto de la página
+    const model = new makerjs.models.Rectangle(100, 50);
+    
+    // Añadir agujeros o líneas de plegado
+    const hole = new makerjs.paths.Circle([10, 10], 5);
+    makerjs.model.addPath(model, hole, 'hole_1');
+
+    // Exportar como cadena DXF
+    return makerjs.exporter.toDXF(model, { units: 'mm' });
+  });
+
+  // 3. Guardar el archivo para producción
+  fs.writeFileSync('flat-pattern.dxf', dxfContent);
+  
+  console.log('DXF generated successfully.');
+  await browser.close();
+})();
+```
+
+Ejemplo interactivo
+
+Con MDX se pueden incluso incrustar elementos interactivos directamente en la publicación. Inicia abajo el generador de círculos DXF, ajusta el fragmento de código y descarga al instante el archivo DXF actualizado:
+
+<DxfCircleDemo />
+
+Aplicación para el anidado
+
+Los algoritmos de anidado (como SVGnest o Deepnest) requieren cálculos geométricos intensivos. Ejecutarlos dentro del entorno de Chromium permite usar módulos de WebAssembly (WASM). Esto acelera considerablemente el cálculo de la colocación de las piezas en comparación con JS puro y permite exportar de inmediato a DXF.
+
+Conclusión
+
+Usar Chromium para tareas de CAD elimina la dependencia de licencias de SolidWorks o AutoCAD del lado del servidor. Esto permite construir configuradores en la nube (CPQ) que entregan al instante archivos listos para cortar en el corte por láser.

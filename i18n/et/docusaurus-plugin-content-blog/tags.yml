@@ -1,0 +1,69 @@
+facebook:
+  label: Facebook
+  permalink: /facebook
+  description: Facebooki sildi kirjeldus
+
+hello:
+  label: Tere
+  permalink: /hello
+  description: Tere sildi kirjeldus
+
+docusaurus:
+  label: Docusaurus
+  permalink: /docusaurus
+  description: Docusauruse sildi kirjeldus
+
+hola:
+  label: Hola
+  permalink: /hola
+  description: Hola sildi kirjeldus
+
+release:
+  label: Release
+  permalink: /release
+  description: Väljalaseteated
+
+chromium:
+  label: Chromium
+  permalink: /chromium
+  description: Chromiumi-spetsiifilised käitusaja uuendused
+
+nodejs:
+  label: Node.js
+  permalink: /nodejs
+  description: Node.js-i automatiseerimine ja serveripoolne arendus
+
+dxf:
+  label: DXF
+  permalink: /dxf
+  description: DXF-failivorming ja -genereerimine
+
+automation:
+  label: Automatiseerimine
+  permalink: /automation
+  description: CAD-i ja töövoogude automatiseerimine
+
+cad:
+  label: CAD
+  permalink: /cad
+  description: Arvutipõhise projekteerimise tööriistad ja tehnikad
+
+ai:
+  label: AI
+  permalink: /ai
+  description: Rakenduslik tehisintellekt CAD- ja tootmistöövoogude jaoks
+
+llm:
+  label: LLM
+  permalink: /llm
+  description: Suurte keelemudelite automatiseerimismustrid
+
+python:
+  label: Python
+  permalink: /python
+  description: Python-skriptimine CAD- ja andmeautomatiseerimiseks
+
+solidworks:
+  label: SolidWorks
+  permalink: /solidworks
+  description: SolidWorksi makrod, API kasutamine ja automatiseerimine

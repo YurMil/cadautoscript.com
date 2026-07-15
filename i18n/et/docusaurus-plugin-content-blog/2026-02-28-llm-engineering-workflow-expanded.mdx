@@ -1,0 +1,485 @@
+---
+slug: llm-engineering-workflow-expanded
+title: "Rohkem kui vestlusrobotid: kuidas LLM-id sobituvad insenertehnilisse töövoogu (CAD, elektrotehnika, automatiseerimine, projektid, riistvara)"
+authors: [yurii]
+tags: [ai, llm, python, solidworks, automation, cad]
+description: Praktilised mustrid LLM-ide integreerimiseks insenertehnilistesse töövoogudesse koos deterministlike tööriistade, valideerimise ja distsipliiniüleste kasutusjuhtudega.
+---
+
+*Laiendatud versioon, mis põhineb algsel artiklil "[Rohkem kui vestlusrobotid: LLM-id masinaehituse töövoos](/blog/ai-engineering-workflow)" (2. detsember 2025).*
+*Eesmärk: keskenduda praktilisele automatiseerimisele, mitte "maagilisele konstrueerimisele" - eriti seal, kus insenerid kaotavad aega korduvatele sammudele, dokumentatsiooni otsimisele, vormingu teisendamisele ja korduvatele arvutustele.*
+
+{/* truncate */}
+
+:::tip Põhikontseptsioon
+Kasuta LLM-e kiire liidesekihina insenertehnilistele süsteemidele. Hoia lõppväljundid deterministlikud ja valideeritud testide, reeglite ja jälgitavate allikatega.
+:::
+
+## 1) Algse artikli lühiülevaade: mis on tugev ja mida laiendada
+
+**Tugevad ideed (säilitatud ja tugevdatud):**
+- **LLM-id kui liides tööriistadele**, mitte "detaili generaator".
+- **Zero-shot makrode ja skriptide genereerimine**, et vähendada API-ga tutvumise aega.
+- **Andmete eraldamine PDF-idest ja tabelitest** JSON-/ERP-/PDM-valmis vormingutesse.
+- **RAG standardite üle** täpseks otsinguks suurtest dokumentidest.
+- **Prompti struktuuri distsipliin** (kontekst -> ülesanne -> piirangud).
+
+**Mis sageli puudub (lisatud selles laiendatud versioonis):**
+- **Valideerimine ja vastutus**: LLM-i väljund peab läbima testid ja vastuvõtukriteeriumid.
+- **Süsteemi integratsiooni strateegia**: kuidas LLM sobitub IDE-sse, Giti, CI-sse, PDM/PLM-i, SCADA-sse, ERP-sse.
+- **Rolliülesed näited**: elektrotehnika, mõõteriistad/automaatika, projekteerimine, riistvara/PCB, kvaliteet, käitus.
+- **Kaudne kõrge tootluse (ROI) kasutus**: LLM kirjutab abiskripte, parsereid, kontrolle ja väikeseid igapäevaseid veebirakendusi.
+- **Andmekvaliteedi töövoog**: parsi -> normaliseeri -> valideeri -> laadi, sealhulgas OCR-müra käsitlemine.
+- **Turvalisus ja konfidentsiaalsus**: hoia ära jooniste, BOM-ide ja äriandmete lekked.
+
+## 2) Põhiidee: LLM on insenertehniline liim süsteemide vahel
+
+Käsitle LLM-i kui:
+- **keele- ja struktuuriabilist** (kirjelda ülesanne -> saa kood/mall/plaan),
+- **mustandigeneraatorit** (skript, makro, SQL, Python, ST/IEC 61131-3, C#, PowerShell),
+- **andmete normaliseerijat** (tabelid, PDF-id, BOM-id, spetsifikatsioonid),
+- **standardite kaaslast** (RAG, nõuete eraldamine, jälgitavusmaatriksid).
+
+Ära käsitle LLM-i kui:
+- insenertehnilise otsustusvõime asendajat,
+- standardite tõeallikat ilma kontrollita,
+- mootorit autonoomseteks kriitilisteks otsusteks.
+
+### Kus LLM-id on objektiivselt tugevad
+
+- Tekstijuhiste teisendamine struktureeritud väljundiks.
+- Nõuete tõlkimine algoritmideks ja skriptiraamistikeks.
+- Töö API/SDK mustritega (puu läbimine, filtreerimine, mass-eksport/import).
+- Dokumentatsiooni, kontroll-loendite, testjuhtude ja veakäsitlusradade genereerimine.
+
+### Kus nad on nõrgemad (ja kuidas kompenseerida)
+
+- Ruumiline ja geomeetriline mõtlemine.
+- Kõrge täpsusega matemaatika, mida tehakse "usu peale".
+- Enesekindlad hallutsinatsioonid valede üksikasjadega.
+
+**Kompensatsioonimuster:** range I/O, testid, viitenäited, deterministlik täitmine ja vastuvõtukontrollid.
+
+## 3) Universaalne teostusmuster: LLM + deterministlik tööriist + valideerimine
+
+Parimad tulemused insenertehnikas tulevad tavaliselt sellisest stackist:
+
+```text
+Engineer task -> prompt -> LLM (code/template/plan)
+                         |
+                         v
+              deterministic executor
+   (CAD API / Python / solver / simulator / parser / CI)
+                         |
+                         v
+      validation (unit tests, rules, baseline comparisons)
+                         |
+                         v
+          result (file, report, export, DB write)
+```
+
+Põhipunkt: LLM ei "tooda" lõplikku insenertehnilist tulemust otse. Ta genereerib juhiseid ja koodi. Lõpptulemus tuleb deterministlikust täitmisest pluss kontrollimisest.
+
+## 4) Rollipõhised näited: kus on kiire mõju realistlik
+
+Need on suure eduvõimalusega stsenaariumid, sest need on korduvad, teksti-/tabelirikkad, API-sõbralikud ja testitavad.
+
+### 4.1 Masinaehitus / CAD / projekteerimisbürood
+
+**Ülesanded, mis automatiseeruvad hästi:**
+- Mass-eksport (DXF/DWG/PDF/STEP), printimisvood, lehtede genereerimine.
+- Omaduste uuendamine (materjal, mass, detailinumber, revisjon), failide nimetamine.
+- Mudelikontrollid (tühjad omadused, valed ühikud, mittestandardsed konfiguratsiooninimed).
+- Aruannete genereerimine (BOM, massikokkuvõte, muudatuste loendid).
+- Simulatsioonitöövoogude eel-/järeltöötlus (CSV-st graafikuteks ja aruanneteks).
+
+**Kaudne, kuid väga tõhus:**
+- igapäevased abitööriistad sobituste, keermeotsingu, ühikute teisendamise ja nimetamisreeglite kontrolli jaoks.
+
+**Näide: detailinumbri valideerija (Python)**
+
+```python
+import re
+
+RULE = re.compile(r"^[A-Z]{2}-\d{4}-[A-Z]{2}\d{2}$")  # Example: AB-1024-XY05
+
+def validate_part_number(pn: str) -> bool:
+    return bool(RULE.match(pn))
+
+candidates = ["AB-1024-XY05", "ab-1024-XY05", "AB-102-XY05"]
+for pn in candidates:
+    print(pn, "OK" if validate_part_number(pn) else "FAIL")
+```
+
+LLM-i väärtus: valideerimisloogika, CLI-tööriistade, PyQt-minirakenduste ja pluginate raamistike kiire genereerimine, samal ajal kui insener kontrollib reegleid ja näiteid.
+
+### 4.2 Elektriinsenerid (skeemid, kilbid, kaabligraafikud, arvutused)
+
+**Tugevad kasutusjuhud:**
+- Kaabligraafikute, signaaliloendite, I/O-loendite genereerimine ja valideerimine.
+- Andmeahelate automatiseerimine: koormused -> grupid -> kaitselülitid -> kaablid.
+- Tehniliste nõuete, seletuskirjade, seadmeloendite koostamine.
+- Projekteerimisandmete normaliseerimine: nimede korrastamine, ühikute normaliseerimine, duplikaatide tuvastamine.
+
+**Näide: kiire pingelanguse abitööriista raamistik**
+
+```python
+from dataclasses import dataclass
+
+@dataclass
+class Line:
+    length_m: float
+    current_a: float
+    voltage_v: float
+    r_ohm_per_km: float  # Conductor resistance at defined temperature
+
+def voltage_drop_percent(line: Line) -> float:
+    # Simplified single-phase model: dU = I * R
+    # R = r_ohm_per_km * (L / 1000)
+    r_total = line.r_ohm_per_km * (line.length_m / 1000.0)
+    du = line.current_a * r_total
+    return du / line.voltage_v * 100.0
+
+l = Line(length_m=80, current_a=32, voltage_v=230, r_ohm_per_km=1.15)
+print(f"Voltage drop: {voltage_drop_percent(l):.2f}%")
+```
+
+Võid paluda LLM-il lisada:
+- kaablitabeli impordi CSV-st/Excelist ja valikupiirangud,
+- CLI + PDF-aruande ekspordi,
+- ühiktestid baasjuhtude vastu,
+- pakendamise meeskonna abitööriistaks.
+
+> Oluline: valemid ja korrektsioonitegurid tuleb valideerida sinu kohaldatavate standardite (IEC/NEC/sisereeglid) vastu. LLM kiirendab teostust, mitte vastavuse heakskiitmist.
+
+### 4.3 Tööstusautomaatika / mõõteriistade insenerid (PLC, SCADA, DCS)
+
+**Suure mõjuga automatiseerimine:**
+- PLC-koodi raamistikud (IEC 61131-3: ST/FBD) funktsionaalsete kirjelduste põhjal.
+- Tag-nimede normaliseerimine ja duplikaatide tuvastamine.
+- Alarmitekstide genereerimine ja prioriteedistruktuurid.
+- Pärandkonversioon: PDF-andmeleht -> struktureeritud parameetrite komplekt -> import insenertööriista.
+- Kooskõla kontrollid I/O-loendi, silmusdiagrammide, SCADA-tagide ja alarmiloendite vahel.
+
+**Näide: mootori käivituse funktsiooniploki raamistik struktureeritud tekstis**
+
+```pascal
+FUNCTION_BLOCK FB_MotorStart
+VAR_INPUT
+    StartCmd    : BOOL;
+    StopCmd     : BOOL;
+    EStopOk     : BOOL;
+    InterlockOk : BOOL;
+    FeedbackOn  : BOOL;
+END_VAR
+VAR_OUTPUT
+    RunOut      : BOOL;
+    Fault       : BOOL;
+END_VAR
+VAR
+    latchedRun  : BOOL;
+    tFeedback   : TON;
+END_VAR
+
+// Latching start command
+IF StopCmd OR NOT EStopOk THEN
+    latchedRun := FALSE;
+ELSIF StartCmd AND InterlockOk THEN
+    latchedRun := TRUE;
+END_IF;
+
+RunOut := latchedRun AND EStopOk AND InterlockOk;
+
+// Feedback supervision (simplified)
+tFeedback(IN := RunOut AND NOT FeedbackOn, PT := T#3S);
+IF tFeedback.Q THEN
+    Fault := TRUE;
+    latchedRun := FALSE;
+END_IF;
+```
+
+LLM aitab, genereerides algse raamistiku, diagnostika, olekukäsitluse, taimerid, dokumentatsiooni ja simulatsiooni testjuhtude mustandid.
+
+Inseneri vastutus jääb läbirääkimatuks: ohutusloogika, seiskamistingimused, veakindel käitumine, anduririkke stsenaariumid ja objekti standardid.
+
+### 4.4 Projekteerimisinsenerid ja distsipliiniülesed meeskonnad (nõuded ja koordineerimine)
+
+**Kohese väärtuse valdkonnad:**
+- Laialipillutatud nõuete teisendamine struktureeritud spetsifikatsioonideks.
+- Nõuete jälgitavusmaatriksite automaatne genereerimine.
+- RFI/RFQ pakettide ja sidusrühmade vastusemallide koostamine.
+- Riskide ja tegevuspunktide eraldamine koosolekumärkmetest (koos konfidentsiaalsuse kontrolliga).
+
+**Näidisvoog: nõuete eraldamine JSON-i**
+
+Prompti idee: "Teisenda see lähtetekst JSON-iks skeemiga `id`, `requirement`, `rationale`, `verification_method`, `priority`."
+
+Seejärel:
+- valideeri JSON-skeemi vastu,
+- impordi Jira/Polarion/DOORS/Confluence'i,
+- genereeri kontrollplaanid.
+
+### 4.5 Riistvara- ja PCB-insenerid (BOM, testide automatiseerimine, püsivara raamistikud)
+
+**Suure tootlusega sihtmärgid:**
+- BOM-i normaliseerimine: tootja, MPN, alternatiivid, ühikud, kirjeldused.
+- Stendi-testiskriptide genereerimine (Python + SCPI/PyVISA, jadaliides, CAN).
+- Püsivara raamistikud (draiverid, olekumasinad, protokollikäsitlejad) range ülevaatusega.
+- Käivitamise (bring-up) kontroll-loendid ja tootmistesti plaani mustandid.
+
+**Näide: minimaalne SCPI tuvastuse wrapper**
+
+```python
+import pyvisa
+
+def read_idn(resource: str) -> str:
+    rm = pyvisa.ResourceManager()
+    inst = rm.open_resource(resource)
+    inst.timeout = 5000
+    return inst.query("*IDN?").strip()
+
+print(read_idn("USB0::0x0000::0x0000::INSTR"))
+```
+
+LLM saab kiiresti lisada kordused, ühenduse diagnostika, struktureeritud logid, CSV-/JSON-ekspordi, CLI kasutuskogemuse ja testikäivituse kokkuvõtted.
+
+## 5) Süvavaatlusega juhtumid koos teostusretseptidega
+
+### Juhtum A: zero-shot CAD-skriptid kvaliteedikontrolliga
+
+**Ülesanne:** eksportida koostu kõik lehtmetalldetailid DXF-i, koos kaustade ja logidega.
+
+**Miks LLM aitab kiiresti:**
+- koostu läbimine,
+- lehtmetalli filtreerimine,
+- ekspordivalikud,
+- nimetamisreeglid,
+- veakäsitlus ja logimine.
+
+**Turvaline juurutamise järjekord:**
+1. Määratle selged sisendid ja väljundid.
+2. Genereeri CAD API raamistik (VBA/C#/Python).
+3. Lisa vastuvõtukontrollid:
+   - oodatav failide arv,
+   - vastavus nimetamismallile,
+   - duplikaatide/tühjade nimede tagasilükkamine,
+   - täielik olekulogi.
+4. Käivita esmalt testkoostul, seejärel tootmises.
+5. Versioonihaldus Gitis lukustatud CAD-/pluginaversioonidega.
+
+**Prompti mall CAD-skripti genereerimiseks**
+
+```text
+Context:
+- CAD: SolidWorks 2023
+- Language: VBA (or C#)
+- Object: active assembly (.sldasm)
+
+Task:
+- Find all sheet-metal parts, including nested subassemblies
+- Export each to ./ExportDXF/<PartNumber>/
+- File naming: <PartNumber>_<ConfigName>.dxf
+
+Constraints:
+- Skip suppressed components
+- Never overwrite files (append suffix instead)
+- Write log.csv with part, config, status, message
+
+Acceptance criteria:
+- For a 10-part sheet-metal test assembly, produce 10+ DXFs (depending on configs)
+- Log must have no empty fields and include error codes
+```
+
+### Juhtum B: PDF -> JSON -> PDM/ERP andmelehtede jaoks
+
+**Ülesanne:** eralda andmelehtedelt parameetrid (näiteks rõhuandurid) ja loo struktureeritud kirjed.
+
+**Tüüpiline väljakutse:** PDF-id võivad olla tekstipõhised või skaneeritud pildid.
+
+**Soovitatav torustik:**
+1. Tekst-PDF: parsi tabelid Pythoni tööriistadega (`pdfplumber`, `camelot`, `tabula`) ja normaliseeri.
+2. Skaneeritud PDF: jäädvusta võtmeleheküljed ja käivita multimodaalne eraldamine JSON-i.
+3. Valideeri kõik:
+   - vastavus skeemile,
+   - ühikute kooskõla,
+   - allika jälgitavus (fail, lehekülg, tabeli rida).
+
+**Minimaalne JSON-skeemi näide**
+
+```json
+{
+  "tag": "PT-101",
+  "device_type": "Pressure Transmitter",
+  "manufacturer": "ACME",
+  "model": "X200",
+  "range": {"min": 0, "max": 10, "unit": "bar"},
+  "output": "4-20 mA + HART",
+  "supply": {"min": 12, "max": 30, "unit": "VDC"},
+  "process_connection": "G1/2",
+  "materials": {"wetted": "316L"},
+  "ip_rating": "IP67",
+  "source": {"file": "datasheet_x200.pdf", "page": 3}
+}
+```
+
+Võtmetaktika: nõua mudelilt ranget ainult-JSON väljundit.
+
+**Prompti mall tabeli eraldamiseks**
+
+```text
+You are given a table image (page 3). Return JSON only with this schema:
+- manufacturer (string)
+- model (string)
+- range.min (number), range.max (number), range.unit (string)
+- supply.min (number), supply.max (number), supply.unit (string)
+- output (string)
+- ip_rating (string)
+Use null when a value is missing.
+```
+
+### Juhtum C: RAG standardite ja siseeeskirjade jaoks
+
+**Ülesanne:** vasta küsimustele nagu pingutusmoment, tolerants ja märgistusreeglid koos allikaviidetega.
+
+**RAG-voog:**
+- indekseeri PDF-id ja sisedokumendid,
+- leia asjakohased fragmendid,
+- vasta leitud sisu põhjal,
+- säilita dokumendi/lehekülje viited.
+
+```text
+PDF/docs -> chunking -> embeddings -> vector DB
+                              |
+                              v
+                         user query
+                              |
+                              v
+                   top-k retrieved fragments
+                              |
+                              v
+                  LLM answer + source citations
+```
+
+Praktiline reegel: säilita standardi versioon, jõustumiskuupäev ja sisemised erandid iga indekseeritud allika lähedal.
+
+### Juhtum D: LLM kui mikrorakenduste generaator igapäevaste insenertööde jaoks
+
+Mõnikord on suurim tootlus väike teenus, mitte täielik "agent".
+
+**Näited:**
+- veebivorm sisendparameetrite jaoks -> valideeritud aruanne,
+- Slacki/Teamsi bot kontroll-loendite ja standardiviidete jaoks,
+- Exceli lisandmoodul andmete normaliseerimisvoogudeks.
+
+**FastAPI raamistiku näide**
+
+```python
+from fastapi import FastAPI
+from pydantic import BaseModel
+
+app = FastAPI()
+
+class Input(BaseModel):
+    length_m: float
+    current_a: float
+    voltage_v: float
+    r_ohm_per_km: float
+
+@app.post("/voltage-drop")
+def voltage_drop(inp: Input):
+    r_total = inp.r_ohm_per_km * (inp.length_m / 1000.0)
+    du = inp.current_a * r_total
+    return {"drop_percent": du / inp.voltage_v * 100.0}
+```
+
+LLM saab kiiresti lisada OpenAPI-dokumentatsiooni, valideerimise, logid, Dockerfile'i ja testikatte.
+
+## 6) Promptimise praktika inseneridele: mallid, mis tegelikult töötavad
+
+### 6.1 Universaalne insenertehnilise koodi prompt
+
+```text
+1) Context
+- Tool/version: (SolidWorks 2023 / EPLAN / TIA Portal / KiCad / Python 3.11)
+- Language: (VBA/C#/Python/ST)
+- Environment constraints: (offline, stdlib-only, access limits)
+
+2) Inputs
+- What comes in? (file, folder, CSV, parameters)
+- At least one sample input
+
+3) Outputs
+- What should be produced? (files, report, JSON, model changes)
+- Strict output format
+
+4) Rules
+- Naming, units, standards, exceptions
+- Error definitions
+
+5) Acceptance criteria
+- 3-5 verifiable checks
+- Preferably test cases (input -> expected output)
+```
+
+### 6.2 Küsi alati teste
+
+Prompti täiendused, mis parandavad usaldusväärsust:
+- "Generate 5 `pytest` unit tests for formula edge cases."
+- "Add static type checking (`mypy`) and linting (`ruff`) config."
+
+See vähendab märgatavalt vaikseid loogikavigu.
+
+## 7) Kvaliteedikontroll: kuidas vältida LLM-i põhjustatud kaost
+
+Minimaalne praktikate komplekt, mis töötab tootmises:
+- Kasuta kõigi skriptide/makrode jaoks **Giti**.
+- Nõua **inimese koodiülevaatust**.
+- Säilita **logid ja täitmisaruanded**.
+- Halda **baasandmestikke** (testkoostud, test-PDF-id, test-tagid).
+- Jõusta **JSON-skeem ja ranged väljundvormingud**.
+- Blokeeri automaatse kirjutamise toimingud ilma **dry-run + aruanne enne**.
+
+Praktiline reegel: LLM kiirendab artefaktide genereerimist (kood, dokumentatsioon, tabelid), kuid vastutus insenertehniliste otsuste eest jääb kvalifitseeritud inseneridele ja valideeritud deterministlikele tööriistadele.
+
+## 8) Realistlik 2-4-nädalane juurutusplaan
+
+**1. nädal: vali 1-2 valukohta**
+- Näited: DXF-eksport, BOM-i korrastamine, I/O-loendi genereerimine, pingelanguse arvutus.
+
+**2. nädal: prototüüp**
+- Skript + üks testandmestik + täitmislogi.
+- Sisemine README käivitusjuhistega.
+
+**3. nädal: kvaliteedi pakendamine**
+- Ühiktestid, vormingu valideerimine, veakäsitlus.
+- Giti repositoorium ja versioonidistsipliin.
+
+**4. nädal: tootmispiloot**
+- Meeskonna juhendamine.
+- Piloot päris andmetel.
+- Tagasisidesilmus ja iteratsioon.
+
+## 9) Lõppmõte
+
+LLM-id ei tähenda "las tehisintellekt konstrueerib minu eest". Nad tähendavad:
+- rutiinset automatiseerimist (eksport, omadused, aruanded, tabelid),
+- kiiremat sisetööriistade arendust (skriptid, kalkulaatorid, valideerijad),
+- struktureeritud teadmiste eraldamist (PDF -> JSON, RAG standardite üle),
+- paremat kvaliteeti läbipaistvate torustike ja testide kaudu.
+
+Inseneri roll nihkub liidese operaatorist automatiseerimise arhitektiks: defineeri reeglid, kontrolli väljundeid ja ehita korratavaid töövooge.
+
+## Sildipõhine navigeerimine teistele avaldatud postitustele
+
+Kasuta neid sildihüppeid, et liikuda seotud postituste vahel:
+- [#automation](/blog/tags/automation)
+- [#cad](/blog/tags/cad)
+- [#llm](/blog/tags/llm)
+- [#ai](/blog/tags/ai)
+- [#python](/blog/tags/python)
+
+Nende siltidega ühendatud avaldatud artiklid:
+- [Peata CAD: DXF-lahtilõigete genereerimine ja pesastamine Chromiumiga](/blog/headless-cad-chromium)
+- [Rohkem kui vestlusrobotid: LLM-id masinaehituse töövoos](/blog/ai-engineering-workflow)
+- [Excalidraw: virtuaalne salvrätik inseneridele](/blog/excalidraw-virtual-napkin)
+- [FreeCAD 1.x: avatud lähtekoodiga CAD-i "kuningas"](/blog/freecad-1x-open-source-cad)

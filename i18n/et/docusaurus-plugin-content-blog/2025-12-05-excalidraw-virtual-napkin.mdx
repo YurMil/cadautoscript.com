@@ -1,0 +1,67 @@
+---
+slug: excalidraw-virtual-napkin
+title: "Excalidraw: virtuaalne salvrätik inseneridele"
+authors: [yurmil]
+tags: [automation, cad]
+description: Miks Excalidraw asendab raskepärased diagrammitööriistad kiirete tehniliste visandite ja skriptiloogika jaoks.
+---
+
+> Miks võid kiirete diagrammide jaoks Visio unustada.
+
+Inseneri- ja kontoritöös on "raske tarkvara" korduv pidur. Lihtsa vooskeemi või skriptiloogika joonistamiseks haarame Visio, Lucidcharti või koguni CAD-i järele. See on aeglane, kulukas ja ülepaisutatud, kui ideed on vaja lihtsalt kuhugi kirja panna. Excalidraw lahendab selle kiire, avatud lähtekoodiga ja käsitsi joonistatud ilmega lõuendiga, mis töötab brauseris.
+
+Allpool kirjeldame, kuidas seda oma töövoogu integreerida, kui oled insener või skriptiarendaja.
+
+{/* truncate */}
+
+## 1) "Salvrätikule visandatud" efekt (lo-fi prototüüpimine)
+
+- Tahtlikult kare, käsitsi joonistatud joonestiil on omadus, mitte viga.
+- Viimistletud diagrammid panevad vaataja arvama, et lahendus on "lõplik", ning ta hakkab norima fontide ja joonduse kallal.
+- Mustandi välimusega diagrammid hoiavad fookuse loogikal ja struktuuril.
+- Kasutusjuht: automatiseerimisskriptide või plugina arhitektuuri varajased nõuded. Mustandile pakuvad inimesed muudatusi vabamalt.
+
+## 2) Teegid kõige jaoks (insenertehnika ja IT)
+
+Sa ei joonista komponente nullist. Excalidrawiga on kaasas kogukonna teegid:
+
+- Tarkvara disainimustrid: andmebaasid, serverid, järjekorrad arhitektuurivisandite jaoks.
+- Arduino ja Raspberry Pi: elektroonikaklotsid IoT-diagrammide jaoks.
+- UI-ikoonid ja -plokid: CAD-plugina liidese maketide jaoks.
+
+Kuidas: klõpsa **Library** → **Browse libraries** → lisa vajalik korra ja kasuta seda uuesti.
+
+## 3) Mermaidi tugi (tekstist diagrammiks)
+
+Eelistad koodi hiirele? Excalidraw impordib Mermaidi.
+
+- Kirjuta pseudokood/loogika koos hargnemistega.
+- Kleebi Mermaidi tekst Excalidrawi.
+- See genereerib automaatselt redigeeritava, käsitsi joonistatud ilmega diagrammi.
+
+Tulemus: null ajakulu käsitsi joondamisele.
+
+## 4) Integreerub sinu dokumentatsiooniga (Obsidian, Notion, VS Code)
+
+Excalidrawi failid on JSON, mitte staatilised pildid.
+
+- VS Code: ametlik laiendus salvestab diagrammid otse koodi kõrvale repositooriumi.
+- Obsidian: plugin põimib diagrammid sisse; tekst indekseeritakse otsingu jaoks.
+
+Praktiline nõuanne: ekspordi **.svg**-na, et diagrammid skaleeruksid kvaliteeti kaotamata, kui need dokumentidesse või saitidele põimida.
+
+## 5) Kohene koostöö ilma registreerumiseta
+
+Vaja kiiret kaugülevaatust? Kontosid pole tarvis.
+
+Sammud: ava **excalidraw.com** → **Live Collaboration** → jaga linki. Andmed on otspunktkrüpteeritud; server ei saa sinu joonist lugeda.
+
+## Kokkuvõte
+
+Ära käivita raskeid tööriistu kiireks mõtlemiseks. Excalidraw katab ~90% igapäevastest vajadustest protsesside, võrgutopoloogiate ja skriptiloogika jaoks:
+
+- Kiirus: käivitub umbes 1 sekundiga.
+- Fookus: arutelu käib loogika, mitte visuaalse viimistluse üle.
+- Integratsioon: töötab seal, kus sa koodi ja dokumentatsiooni kirjutad.
+
+Proovi oma järgmine algoritm siin visandada: https://excalidraw.com/

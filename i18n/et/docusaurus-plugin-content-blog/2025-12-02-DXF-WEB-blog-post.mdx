@@ -1,0 +1,95 @@
+---
+slug: headless-cad-chromium
+title: "Peata CAD: DXF-lahtilõigete genereerimine ja pesastamine Chromiumiga"
+authors: [yurii]
+tags: [chromium, nodejs, dxf, automation, cad]
+---
+
+import {DxfCircleDemo} from '@site/src/components/DxfCircleDemo';
+
+Traditsioonilised joonisegenereerimise lähenemised toetuvad tugevalt raskepärasele lauaarvutitarkvarale ja suletud API-dele. Kaasaegne lähenemine viib geomeetriakerneli veebi.
+
+Selles artiklis vaatame, kuidas kasutada Chromiumi mootorit (Puppeteeri või Playwrighti kaudu) ja JavaScripti DXF-failide automaatseks genereerimiseks, valideerimiseks ja pesastamiseks.
+
+{/* truncate */}
+
+:::tip Miks Chromium?
+
+Insenerile ei ole brauser pelgalt lehe vaatur, vaid võimas vektorrenderdusmootor (SVG/Canvas) riistvaralise kiirendusega.
+
+Platvormist sõltumatu: genereerimine toimib ühtemoodi Windowsis, Linuxi serverites ja Docker-konteinerite sees.
+
+Visuaalne silumine: näed täpselt, mis masinasse läheb.
+
+Teekide kättesaadavus: NPM-i ökosüsteem (Maker.js, OpenJSCAD) võimaldab 2D-geomeetria töötlust kiiremini kui LISP või VBA.
+
+:::
+
+Lahenduse arhitektuur
+
+Automatiseerimise töövoog pesastamiseks või lahtilõike genereerimiseks näeb välja selline:
+
+Frontend/loogika: JS-skript genereerib parameetrite põhjal detaili geomeetria (SVG-tee).
+
+Mootor (Chromium): peata brauser renderdab geomeetria, arvutab lõikepunkte (pesastamiseks) või teisendab Bézier'-kõverad kaarteks/polüjoonteks.
+
+Väljund: tulemuse serialiseerimine DXF-vormingusse.
+
+Tehniline teostus
+
+Selle asemel et jooni käsitsi joonistada, kasutame arvutusteks DOM-i.
+
+Stack:
+
+Node.js - käituskeskkond.
+
+Puppeteer - peata Chromiumi juhtimine.
+
+Maker.js - teek CAD-operatsioonideks ja DXF-ekspordiks.
+
+Koodinäide (Node.js)
+
+```js
+const puppeteer = require('puppeteer');
+const fs = require('fs');
+
+(async () => {
+  // 1. Launch a "clean" browser
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+
+  // 2. Inject construction logic (e.g., box flat pattern)
+  // In a real project, maker.js would be injected here
+  const dxfContent = await page.evaluate(() => {
+    // Assume makerjs is loaded in the page context
+    const model = new makerjs.models.Rectangle(100, 50);
+    
+    // Add holes or bend lines
+    const hole = new makerjs.paths.Circle([10, 10], 5);
+    makerjs.model.addPath(model, hole, 'hole_1');
+
+    // Export to DXF string
+    return makerjs.exporter.toDXF(model, { units: 'mm' });
+  });
+
+  // 3. Save file for production
+  fs.writeFileSync('flat-pattern.dxf', dxfContent);
+  
+  console.log('DXF generated successfully.');
+  await browser.close();
+})();
+```
+
+Interaktiivne näide
+
+MDX-iga saab isegi interaktiivseid elemente otse postitusse põimida. Käivita allpool DXF-ringi generaator, muuda koodilõiku ja laadi uuendatud DXF kohe alla:
+
+<DxfCircleDemo />
+
+Rakendus pesastamiseks
+
+Pesastamisalgoritmid (nagu SVGnest või Deepnest) nõuavad mahukaid geomeetriaarvutusi. Nende käivitamine Chromiumi keskkonnas võimaldab kasutada WebAssembly (WASM) mooduleid. See kiirendab detailide paigutuse arvutust puhta JS-iga võrreldes märgatavalt ja lubab kohese ekspordi DXF-i.
+
+Kokkuvõte
+
+Chromiumi kasutamine CAD-ülesannete jaoks kõrvaldab sõltuvuse serveripoolsetest SolidWorksi või AutoCAD-i litsentsidest. See võimaldab ehitada pilvekonfiguraatoreid (CPQ), mis tarnivad laserlõikuseks valmis failid silmapilkselt.

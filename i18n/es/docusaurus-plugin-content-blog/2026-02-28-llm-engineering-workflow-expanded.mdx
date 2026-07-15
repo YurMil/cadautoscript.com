@@ -1,0 +1,485 @@
+---
+slug: llm-engineering-workflow-expanded
+title: "Más allá de los chatbots: cómo encajan los LLM en el flujo de trabajo de la ingeniería (CAD, eléctrica, automatización, proyectos, hardware)"
+authors: [yurii]
+tags: [ai, llm, python, solidworks, automation, cad]
+description: Patrones prácticos para integrar los LLM en flujos de trabajo de ingeniería con herramientas deterministas, validación y casos de uso multidisciplinares.
+---
+
+*Versión ampliada basada en el artículo original "[Más allá de los chatbots: los LLM en el flujo de trabajo de la ingeniería mecánica](/blog/ai-engineering-workflow)" (2 de diciembre de 2025).*
+*Objetivo: centrarnos en la automatización práctica, no en el "diseño mágico", sobre todo allí donde los ingenieros pierden tiempo en pasos repetitivos, búsqueda de documentación, conversión de formatos y cálculos recurrentes.*
+
+{/* truncate */}
+
+:::tip Concepto central
+Usa los LLM como una capa de interfaz de alta velocidad para los sistemas de ingeniería. Mantén los resultados finales deterministas y validados con pruebas, reglas y fuentes trazables.
+:::
+
+## 1) Repaso rápido del artículo original: qué es sólido y qué ampliar
+
+**Ideas sólidas (mantenidas y reforzadas):**
+- **Los LLM como interfaz hacia las herramientas**, no como un "generador de piezas".
+- **Generación zero-shot de macros y scripts** para reducir el tiempo de adopción de las API.
+- **Extracción de datos de PDF y tablas** a formatos listos para JSON/ERP/PDM.
+- **RAG sobre normas** para una recuperación precisa en documentos extensos.
+- **Disciplina en la estructura del prompt** (contexto -> tarea -> restricciones).
+
+**Lo que suele faltar (añadido en esta versión ampliada):**
+- **Validación y responsabilidad**: la salida del LLM debe superar pruebas y criterios de aceptación.
+- **Estrategia de integración de sistemas**: cómo encaja el LLM en el IDE, Git, CI, PDM/PLM, SCADA, ERP.
+- **Ejemplos entre roles**: eléctrica, instrumentación/automatización, ingeniería de proyectos, hardware/PCB, calidad, operaciones.
+- **Uso indirecto de alto ROI**: el LLM escribe scripts utilitarios, parsers, comprobaciones y pequeñas aplicaciones web para el día a día.
+- **Flujo de trabajo de calidad de datos**: parsear -> normalizar -> validar -> cargar, incluido el tratamiento del ruido de OCR.
+- **Seguridad y confidencialidad**: evitar fugas de planos, listas de materiales y datos comerciales.
+
+## 2) Idea central: el LLM es el pegamento de ingeniería entre sistemas
+
+Trata al LLM como:
+- un **asistente de lenguaje y estructura** (describe una tarea -> obtén código/plantilla/plan),
+- un **generador de borradores** (script, macro, SQL, Python, ST/IEC 61131-3, C#, PowerShell),
+- un **normalizador de datos** (tablas, PDF, listas de materiales, especificaciones),
+- un **acompañante de normas** (RAG, extracción de requisitos, matrices de trazabilidad).
+
+No trates al LLM como:
+- un sustituto del criterio de ingeniería,
+- una fuente de verdad para las normas sin verificación,
+- un motor para decisiones críticas autónomas.
+
+### Dónde los LLM son objetivamente fuertes
+
+- Convertir instrucciones de texto en salidas estructuradas.
+- Traducir requisitos en algoritmos y esqueletos de script.
+- Trabajar con patrones de API/SDK (recorrido de árboles, filtrado, exportación/importación por lotes).
+- Generar documentación, listas de comprobación, casos de prueba y rutas de manejo de errores.
+
+### Dónde son más débiles (y cómo compensarlo)
+
+- Razonamiento espacial y geométrico.
+- Matemática de alta precisión hecha "por confianza".
+- Alucinaciones seguras de sí mismas con datos concretos erróneos.
+
+**Patrón de compensación:** E/S estricta, pruebas, ejemplos de referencia, ejecución determinista y comprobaciones de aceptación.
+
+## 3) Patrón de implementación universal: LLM + herramienta determinista + validación
+
+Los mejores resultados en ingeniería suelen provenir de este stack:
+
+```text
+Engineer task -> prompt -> LLM (code/template/plan)
+                         |
+                         v
+              deterministic executor
+   (CAD API / Python / solver / simulator / parser / CI)
+                         |
+                         v
+      validation (unit tests, rules, baseline comparisons)
+                         |
+                         v
+          result (file, report, export, DB write)
+```
+
+Punto clave: el LLM no "produce" directamente el resultado final de ingeniería. Genera instrucciones y código. El resultado final proviene de la ejecución determinista más la verificación.
+
+## 4) Ejemplos por rol: dónde es realista un impacto rápido
+
+Estos son escenarios con alta probabilidad de éxito porque son repetitivos, con mucho texto/tabla, amigables con las API y comprobables.
+
+### 4.1 Ingeniería mecánica / CAD / oficinas de diseño
+
+**Tareas que se automatizan bien:**
+- Exportación por lotes (DXF/DWG/PDF/STEP), flujos de impresión, generación de hojas.
+- Actualización de propiedades (material, masa, número de pieza, revisión), nomenclatura de archivos.
+- Comprobaciones del modelo (propiedades vacías, unidades incorrectas, nombres de configuración no normalizados).
+- Generación de informes (lista de materiales, resumen de masas, listas de cambios).
+- Pre/postprocesado para flujos de simulación (de CSV a gráficos e informes).
+
+**Indirecto pero muy eficaz:**
+- utilidades cotidianas para ajustes, consulta de roscas, conversión de unidades, comprobación de reglas de nomenclatura.
+
+**Ejemplo: validador de números de pieza (Python)**
+
+```python
+import re
+
+RULE = re.compile(r"^[A-Z]{2}-\d{4}-[A-Z]{2}\d{2}$")  # Example: AB-1024-XY05
+
+def validate_part_number(pn: str) -> bool:
+    return bool(RULE.match(pn))
+
+candidates = ["AB-1024-XY05", "ab-1024-XY05", "AB-102-XY05"]
+for pn in candidates:
+    print(pn, "OK" if validate_part_number(pn) else "FAIL")
+```
+
+Valor del LLM: generación rápida de lógica de validación, herramientas CLI, mini-apps en PyQt y esqueletos de plugins, mientras el ingeniero controla las reglas y los ejemplos.
+
+### 4.2 Ingenieros eléctricos (esquemas, cuadros, listas de cables, cálculos)
+
+**Casos de uso sólidos:**
+- Generar y validar listas de cables, listas de señales, listas de E/S.
+- Automatizar cadenas de datos: cargas -> grupos -> interruptores automáticos -> cables.
+- Redactar requisitos técnicos, memorias explicativas, listas de equipos.
+- Normalizar datos de diseño: limpieza de nomenclatura, normalización de unidades, detección de duplicados.
+
+**Ejemplo: esqueleto rápido de una utilidad de caída de tensión**
+
+```python
+from dataclasses import dataclass
+
+@dataclass
+class Line:
+    length_m: float
+    current_a: float
+    voltage_v: float
+    r_ohm_per_km: float  # Conductor resistance at defined temperature
+
+def voltage_drop_percent(line: Line) -> float:
+    # Simplified single-phase model: dU = I * R
+    # R = r_ohm_per_km * (L / 1000)
+    r_total = line.r_ohm_per_km * (line.length_m / 1000.0)
+    du = line.current_a * r_total
+    return du / line.voltage_v * 100.0
+
+l = Line(length_m=80, current_a=32, voltage_v=230, r_ohm_per_km=1.15)
+print(f"Voltage drop: {voltage_drop_percent(l):.2f}%")
+```
+
+Puedes pedir al LLM que añada:
+- importación de tablas de cables desde CSV/Excel y restricciones de selección,
+- exportación de informe CLI + PDF,
+- pruebas unitarias frente a casos de referencia,
+- empaquetado como utilidad de equipo.
+
+> Importante: las fórmulas y los factores de corrección deben validarse frente a las normas que te apliquen (IEC/NEC/reglas internas). El LLM acelera la implementación, no la aprobación de conformidad.
+
+### 4.3 Ingenieros de automatización industrial / instrumentación (PLC, SCADA, DCS)
+
+**Automatización de alto impacto:**
+- Esqueletos de código PLC (IEC 61131-3: ST/FBD) a partir de descripciones funcionales.
+- Normalización de la nomenclatura de tags y detección de duplicados.
+- Generación de textos de alarma y estructuras de priorización.
+- Conversión de datos heredados: hoja de datos PDF -> conjunto de parámetros estructurado -> importación a la herramienta de ingeniería.
+- Comprobaciones de consistencia entre la lista de E/S, los diagramas de lazo, los tags SCADA y las listas de alarmas.
+
+**Ejemplo: esqueleto de bloque de función para el arranque de un motor en Structured Text**
+
+```pascal
+FUNCTION_BLOCK FB_MotorStart
+VAR_INPUT
+    StartCmd    : BOOL;
+    StopCmd     : BOOL;
+    EStopOk     : BOOL;
+    InterlockOk : BOOL;
+    FeedbackOn  : BOOL;
+END_VAR
+VAR_OUTPUT
+    RunOut      : BOOL;
+    Fault       : BOOL;
+END_VAR
+VAR
+    latchedRun  : BOOL;
+    tFeedback   : TON;
+END_VAR
+
+// Latching start command
+IF StopCmd OR NOT EStopOk THEN
+    latchedRun := FALSE;
+ELSIF StartCmd AND InterlockOk THEN
+    latchedRun := TRUE;
+END_IF;
+
+RunOut := latchedRun AND EStopOk AND InterlockOk;
+
+// Feedback supervision (simplified)
+tFeedback(IN := RunOut AND NOT FeedbackOn, PT := T#3S);
+IF tFeedback.Q THEN
+    Fault := TRUE;
+    latchedRun := FALSE;
+END_IF;
+```
+
+El LLM ayuda generando el esqueleto inicial, diagnósticos, gestión de estados, temporizadores, documentación y borradores de casos de prueba de simulación.
+
+La responsabilidad del ingeniero sigue siendo innegociable: lógica de seguridad, condiciones de parada, comportamiento fail-safe, escenarios de fallo de sensores y estándares de la planta.
+
+### 4.4 Ingenieros de proyecto y equipos multidisciplinares (requisitos y coordinación)
+
+**Áreas de valor inmediato:**
+- Convertir requisitos dispersos en especificaciones estructuradas.
+- Generar automáticamente matrices de trazabilidad de requisitos.
+- Redactar paquetes RFI/RFQ y plantillas de respuesta a las partes interesadas.
+- Extraer riesgos y acciones de las actas de reunión (con controles de confidencialidad).
+
+**Flujo de ejemplo: extracción de requisitos a JSON**
+
+Idea de prompt: "Transforma este texto fuente en JSON con el esquema `id`, `requirement`, `rationale`, `verification_method`, `priority`."
+
+Después:
+- valida frente a un JSON Schema,
+- importa en Jira/Polarion/DOORS/Confluence,
+- genera planes de verificación.
+
+### 4.5 Ingenieros de hardware y PCB (lista de materiales, automatización de pruebas, esqueletos de firmware)
+
+**Objetivos de alto rendimiento:**
+- Normalización de la lista de materiales: fabricante, MPN, alternativas, unidades, descripciones.
+- Generación de scripts de prueba de banco (Python + SCPI/PyVISA, serie, CAN).
+- Esqueletos de firmware (drivers, máquinas de estados, manejadores de protocolo) con revisión estricta.
+- Listas de comprobación de puesta en marcha y borradores de planes de prueba de fabricación.
+
+**Ejemplo: envoltorio mínimo de identificación SCPI**
+
+```python
+import pyvisa
+
+def read_idn(resource: str) -> str:
+    rm = pyvisa.ResourceManager()
+    inst = rm.open_resource(resource)
+    inst.timeout = 5000
+    return inst.query("*IDN?").strip()
+
+print(read_idn("USB0::0x0000::0x0000::INSTR"))
+```
+
+El LLM puede añadir rápidamente reintentos, diagnósticos de conexión, logs estructurados, exportación CSV/JSON, UX de CLI y resúmenes de ejecución de pruebas.
+
+## 5) Casos en profundidad con recetas de implementación
+
+### Caso A: scripts CAD zero-shot con puertas de calidad
+
+**Tarea:** exportar por lotes todos los componentes de chapa de un ensamblaje a DXF, con carpetas y logs.
+
+**Por qué el LLM ayuda rápido:**
+- recorrido del ensamblaje,
+- filtrado de piezas de chapa,
+- opciones de exportación,
+- reglas de nomenclatura,
+- manejo de errores y logging.
+
+**Secuencia de despliegue segura:**
+1. Definir explícitamente entradas y salidas.
+2. Generar un esqueleto de API CAD (VBA/C#/Python).
+3. Añadir comprobaciones de aceptación:
+   - número esperado de archivos,
+   - cumplimiento de la plantilla de nomenclatura,
+   - rechazo de nombres duplicados/vacíos,
+   - log de estado completo.
+4. Ejecutar primero en un ensamblaje de prueba y luego en producción.
+5. Control de versiones en Git con versiones de CAD/plugin fijadas.
+
+**Plantilla de prompt para la generación de scripts CAD**
+
+```text
+Context:
+- CAD: SolidWorks 2023
+- Language: VBA (or C#)
+- Object: active assembly (.sldasm)
+
+Task:
+- Find all sheet-metal parts, including nested subassemblies
+- Export each to ./ExportDXF/<PartNumber>/
+- File naming: <PartNumber>_<ConfigName>.dxf
+
+Constraints:
+- Skip suppressed components
+- Never overwrite files (append suffix instead)
+- Write log.csv with part, config, status, message
+
+Acceptance criteria:
+- For a 10-part sheet-metal test assembly, produce 10+ DXFs (depending on configs)
+- Log must have no empty fields and include error codes
+```
+
+### Caso B: PDF -> JSON -> PDM/ERP para hojas de datos
+
+**Tarea:** extraer parámetros de hojas de datos (por ejemplo, transmisores de presión) y crear registros estructurados.
+
+**Reto típico:** los PDF pueden ser de texto nativo o imágenes escaneadas.
+
+**Pipeline recomendado:**
+1. PDF de texto: parsear tablas con herramientas de Python (`pdfplumber`, `camelot`, `tabula`) y normalizar.
+2. PDF escaneado: capturar las páginas clave y ejecutar una extracción multimodal a JSON.
+3. Validarlo todo:
+   - conformidad con el esquema,
+   - consistencia de unidades,
+   - trazabilidad de la fuente (archivo, página, fila de la tabla).
+
+**Ejemplo de esquema JSON mínimo**
+
+```json
+{
+  "tag": "PT-101",
+  "device_type": "Pressure Transmitter",
+  "manufacturer": "ACME",
+  "model": "X200",
+  "range": {"min": 0, "max": 10, "unit": "bar"},
+  "output": "4-20 mA + HART",
+  "supply": {"min": 12, "max": 30, "unit": "VDC"},
+  "process_connection": "G1/2",
+  "materials": {"wetted": "316L"},
+  "ip_rating": "IP67",
+  "source": {"file": "datasheet_x200.pdf", "page": 3}
+}
+```
+
+Táctica clave: exigir al modelo una salida estrictamente en JSON.
+
+**Plantilla de prompt para la extracción de tablas**
+
+```text
+You are given a table image (page 3). Return JSON only with this schema:
+- manufacturer (string)
+- model (string)
+- range.min (number), range.max (number), range.unit (string)
+- supply.min (number), supply.max (number), supply.unit (string)
+- output (string)
+- ip_rating (string)
+Use null when a value is missing.
+```
+
+### Caso C: RAG para normas y reglamentos internos
+
+**Tarea:** responder preguntas como par de apriete, tolerancias y reglas de etiquetado con referencias a la fuente.
+
+**Flujo RAG:**
+- indexar PDF y documentos internos,
+- recuperar los fragmentos relevantes,
+- responder a partir del contenido recuperado,
+- conservar las citas de documento/página.
+
+```text
+PDF/docs -> chunking -> embeddings -> vector DB
+                              |
+                              v
+                         user query
+                              |
+                              v
+                   top-k retrieved fragments
+                              |
+                              v
+                  LLM answer + source citations
+```
+
+Regla práctica: almacena la versión de la norma, la fecha de entrada en vigor y las excepciones internas junto a cada fuente indexada.
+
+### Caso D: el LLM como generador de micro-apps para tareas de ingeniería cotidianas
+
+A veces el mayor ROI está en un pequeño servicio, no en un "agente" completo.
+
+**Ejemplos:**
+- formulario web para parámetros de entrada -> informe validado,
+- bot de Slack/Teams para listas de comprobación y referencias a normas,
+- complemento de Excel para flujos de normalización de datos.
+
+**Ejemplo de esqueleto FastAPI**
+
+```python
+from fastapi import FastAPI
+from pydantic import BaseModel
+
+app = FastAPI()
+
+class Input(BaseModel):
+    length_m: float
+    current_a: float
+    voltage_v: float
+    r_ohm_per_km: float
+
+@app.post("/voltage-drop")
+def voltage_drop(inp: Input):
+    r_total = inp.r_ohm_per_km * (inp.length_m / 1000.0)
+    du = inp.current_a * r_total
+    return {"drop_percent": du / inp.voltage_v * 100.0}
+```
+
+El LLM puede añadir rápidamente documentación OpenAPI, validación, logs, un Dockerfile y cobertura de pruebas.
+
+## 6) Práctica de prompting para ingenieros: plantillas que realmente funcionan
+
+### 6.1 Prompt universal para código de ingeniería
+
+```text
+1) Context
+- Tool/version: (SolidWorks 2023 / EPLAN / TIA Portal / KiCad / Python 3.11)
+- Language: (VBA/C#/Python/ST)
+- Environment constraints: (offline, stdlib-only, access limits)
+
+2) Inputs
+- What comes in? (file, folder, CSV, parameters)
+- At least one sample input
+
+3) Outputs
+- What should be produced? (files, report, JSON, model changes)
+- Strict output format
+
+4) Rules
+- Naming, units, standards, exceptions
+- Error definitions
+
+5) Acceptance criteria
+- 3-5 verifiable checks
+- Preferably test cases (input -> expected output)
+```
+
+### 6.2 Pide siempre pruebas
+
+Añadidos al prompt que mejoran la fiabilidad:
+- "Genera 5 pruebas unitarias `pytest` para los casos límite de la fórmula."
+- "Añade configuración de comprobación estática de tipos (`mypy`) y linting (`ruff`)."
+
+Esto reduce significativamente los fallos de lógica silenciosos.
+
+## 7) Control de calidad: cómo evitar el caos impulsado por LLM
+
+Conjunto mínimo de prácticas que funciona en producción:
+- Usar **Git** para todos los scripts/macros.
+- Exigir **revisión de código humana**.
+- Mantener **logs e informes de ejecución**.
+- Mantener **conjuntos de datos de referencia** (ensamblajes de prueba, PDF de prueba, tags de prueba).
+- Imponer **JSON Schema y formatos de salida estrictos**.
+- Bloquear las acciones de escritura automática sin **dry-run + informe primero**.
+
+Regla práctica: el LLM acelera la generación de artefactos (código, documentación, tablas), pero la responsabilidad de las decisiones de ingeniería sigue recayendo en ingenieros cualificados y en herramientas deterministas validadas.
+
+## 8) Un plan de despliegue realista de 2-4 semanas
+
+**Semana 1: elegir 1-2 puntos de dolor**
+- Ejemplos: exportación DXF, limpieza de lista de materiales, generación de lista de E/S, cálculo de caída de tensión.
+
+**Semana 2: prototipo**
+- Script + un conjunto de datos de prueba + log de ejecución.
+- README interno con instrucciones de ejecución.
+
+**Semana 3: envoltura de calidad**
+- Pruebas unitarias, validación de formatos, manejo de errores.
+- Repositorio Git y disciplina de versiones.
+
+**Semana 4: piloto de producción**
+- Instrucción al equipo.
+- Piloto con datos reales.
+- Bucle de retroalimentación e iteración.
+
+## 9) Conclusión final
+
+Los LLM no van de "que la IA diseñe por mí". Van de:
+- automatización de rutinas (exportaciones, propiedades, informes, tablas),
+- desarrollo más rápido de herramientas internas (scripts, calculadoras, validadores),
+- extracción estructurada de conocimiento (PDF -> JSON, RAG sobre normas),
+- mejor calidad mediante pipelines transparentes y pruebas.
+
+El rol del ingeniero pasa de operador de interfaz a arquitecto de la automatización: definir reglas, verificar resultados y construir flujos de trabajo reproducibles.
+
+## Navegación por etiquetas a otros artículos publicados
+
+Usa estos saltos por etiqueta para moverte entre artículos relacionados:
+- [#automation](/blog/tags/automation)
+- [#cad](/blog/tags/cad)
+- [#llm](/blog/tags/llm)
+- [#ai](/blog/tags/ai)
+- [#python](/blog/tags/python)
+
+Artículos publicados conectados por estas etiquetas:
+- [CAD headless: generar y anidar patrones planos DXF con Chromium](/blog/headless-cad-chromium)
+- [Más allá de los chatbots: los LLM en el flujo de trabajo de la ingeniería mecánica](/blog/ai-engineering-workflow)
+- [Excalidraw: una servilleta virtual para ingenieros](/blog/excalidraw-virtual-napkin)
+- [FreeCAD 1.x: el "rey" del CAD de código abierto](/blog/freecad-1x-open-source-cad)
