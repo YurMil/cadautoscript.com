@@ -32,6 +32,19 @@ Genereerige soojusvahetite toruplaatide avade mustreid, vaadake paigutust eelvaa
 - DXF-eksport sisaldab toruplaadi piirjoont ja kõiki toruavasid.
 - STEP-eksport töötab brauseris WebAssembly abil; suure avade arvu korral võib see aega võtta.
 
+## Eeldused ja standardid
+
+- **Standardite alus:** Geomeetrilise paigutuse tööriist ruut- ja kolmnurkse sammu mustrite jaoks, mida tavaliselt kasutatakse soojusvahetite valmistamisel; see ei rakenda konkreetset projekteerimiskoodi.
+- **Peamised eeldused:**
+  - Nominaalsed ava- ja sammumõõtmed ilma puurimistolerantsideta.
+  - Lame ümmargune toruplaat ühtlase servavaruga.
+  - Käigujaotised on visuaalne paigutusjuhis, mitte hüdrauliline ega mehaaniline projekteerimiselement.
+- **Piirangud:**
+  - Toruplaadi paksuse, ligamendi pinge ega toru-toruplaadi liite arvutusi (nt TEMA, ASME VIII või EN 13445 järgi) ei teostata.
+  - Torude arvu optimeerimist vaheseinte, põrkeplaatide ega korpusepoolsete kliirenside jaoks ei käsitleta.
+  - Termiline projekteerimine ja vibratsioonianalüüs jäävad käsitlusalast välja.
+- ⚠️ The Tube Sheet Generator pakub esialgset dimensioneerimise tuge. Tulemused peab kvalifitseeritud insener kontrollima kehtiva koodiväljaande ja projekti spetsifikatsiooni suhtes enne valmistamist või ostmist.
+
 ## Tagasiside
 
 Saatke e-kiri või DM koos slugiga `tube-sheet-generator`, et saaksime probleeme reprodutseerida.

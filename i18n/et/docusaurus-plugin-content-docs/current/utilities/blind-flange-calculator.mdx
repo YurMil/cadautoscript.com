@@ -151,6 +151,22 @@ Valige DN, määrake töö- ja testrõhk, temperatuur ja materjali mark. Tööri
 - **Kas minu andmed laaditakse üles?** Ei. Kõik toimub lokaalselt brauseris.
 - **Kas see on lõplik projekteerimiskontroll?** Ei. Kasutage seda esialgseks dimensioneerimiseks ja kontrollige vastavalt oma projekti spetsifikatsioonidele.
 
+## Eeldused ja standardid
+
+- **Standardite alus:** Ääriku mõõtmed ja PN-klassi nimiväärtused on võetud standardist EN 1092-1; minimaalne paksus arvutatakse pimeäärikute jaoks EN 13445-3 pingekontrollide abil.
+- **Peamised eeldused:**
+  - Ainult staatiline sisemine rõhukoormus (töö- ja katsejuhud).
+  - Ühtlane, temperatuurist sõltuv voolavuspiir valitud materjaliklassi jaoks (P265GH, P355GH või 1.4404).
+  - Nominaalsed EN 1092-1 ääriku mõõtmed ilma valmistustolerantsideta.
+  - Korrosioonivaru lisatakse arvutatud minimaalsele paksusele otse sisestatud kujul.
+  - Standardne poltide muster ja tihendi paigutus vastavalt valitud DN/PN kombinatsioonile.
+- **Piirangud:**
+  - Poltide koormusi, tihendi istumispinget ja ääriku pöördumist ei analüüsita üksikasjalikult.
+  - Väsimust, roomet ja tsüklilist koormust ei käsitleta.
+  - Väliskoormusi (torustiku momendid, tuul, seismilised) ei arvestata.
+  - Tulemus ei ole sertifitseeritud koodiarvutus ega kanna koodimärgist.
+- ⚠️ The Blind Flange Calculator pakub esialgset dimensioneerimise tuge. Tulemused peab kvalifitseeritud insener kontrollima kehtiva koodiväljaande ja projekti spetsifikatsiooni suhtes enne valmistamist või ostmist.
+
 ## Seotud tööriistad
 - [Dished End (Vessel Head) Calculator](./pressure-vessel-dished-end-calc.mdx)
 - [Cylindrical Shell Rolling Calculator](./cylindrical-shell-rolling.mdx)

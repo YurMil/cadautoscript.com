@@ -94,5 +94,18 @@ Genere patrones de orificios de placas de tubos para intercambiadores de calor, 
 - Se añadió la exportación STEP.
 - Documentación inicial.
 
+## Suposiciones y normas
+
+- **Base normativa:** Herramienta de disposición geométrica para patrones de paso cuadrado y triangular comúnmente usados en la fabricación de intercambiadores de calor; no implementa ningún código de diseño específico.
+- **Suposiciones clave:**
+  - Dimensiones nominales de agujero y paso sin tolerancias de taladrado.
+  - Una placa tubular plana y circular con un margen de borde uniforme.
+  - Las particiones de paso son una guía visual de disposición, no una característica de diseño hidráulico o mecánico.
+- **Limitaciones:**
+  - No se realizan cálculos de espesor de placa tubular, tensión de ligamento ni de la unión tubo-placa (p. ej., según TEMA, ASME VIII o EN 13445).
+  - La optimización del número de tubos para deflectores, placas de impacto o distancias del lado de la carcasa no está cubierta.
+  - El diseño térmico y el análisis de vibraciones quedan fuera del alcance.
+- ⚠️ The Tube Sheet Generator proporciona soporte de dimensionamiento preliminar. Los resultados deben ser verificados por un ingeniero calificado frente a la edición vigente del código y la especificación del proyecto antes de la fabricación o la compra.
+
 ## Comentarios
 Envíe un correo electrónico o DM con el slug `tube-sheet-generator` para que podamos reproducir cualquier problema.

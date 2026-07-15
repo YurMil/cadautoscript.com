@@ -156,6 +156,22 @@ Cálculo instantáneo de la geometría, el peso y el volumen del fondo de un rec
 - **¿Es personalizable el informe de QC?** El informe de QC se genera automáticamente en función de sus entradas e incluye tolerancias DIN 28005-1. Se imprime directamente desde el navegador.
 - **¿Se guardan mis entradas?** No. Cierre la página para borrarlo todo; solo permanece en la memoria de su navegador.
 
+## Suposiciones y normas
+
+- **Base normativa:** La geometría del fondo sigue las relaciones de DIN 28011 (toriesférico, R = Da, r = 0.1 Da), DIN 28013 (elipsoidal) y SS 895; las tolerancias del informe de QC se derivan de DIN 28005-1 para fondos conformados.
+- **Suposiciones clave:**
+  - Dimensiones nominales según la norma seleccionada, sin tolerancias de conformado aplicadas a la geometría calculada.
+  - Espesor de pared uniforme en todo el fondo; el adelgazamiento por conformado no se modela.
+  - El peso utiliza densidades de material estándar (p. ej., 7.85 kg/dm3 para acero al carbono, 7.9 para acero inoxidable).
+  - El diámetro del disco es una estimación basada en factores estándar (p. ej., 1.09x o 1.14x Da) más la pestaña recta.
+  - Las posiciones de las tubuladuras se tratan como una guía visual de disposición, no como un cálculo de refuerzo.
+- **Limitaciones:**
+  - No se realiza ninguna clasificación de presión ni análisis de tensiones (p. ej., verificaciones de diseño según ASME VIII Div 1 o EN 13445-3).
+  - El refuerzo de tubuladuras, la compensación de aberturas y el diseño de soldaduras no están cubiertos.
+  - Los fondos elipsoidales ASME 2:1 no son un preajuste nativo.
+  - La fatiga, la corrosión más allá del sobreespesor introducido y los efectos térmicos no se consideran.
+- ⚠️ The Dished End (Vessel Head) Calculator proporciona soporte de dimensionamiento preliminar. Los resultados deben ser verificados por un ingeniero calificado frente a la edición vigente del código y la especificación del proyecto antes de la fabricación o la compra.
+
 ## Herramientas relacionadas
 - [Cylindrical Shell Rolling](./cylindrical-shell-rolling.mdx)
 - [Bourdon Gauge Configurator](./bourdon-gauge-configurator.mdx)

@@ -67,6 +67,21 @@ Die von diesem Utility bereitgestellten Berechnungen, Spannungsabschätzungen un
 4. **Visuellen Eingriff prüfen**: Kontrollieren Sie die Tabs mit der 2D-Eingriffsskizze und der 3D-Vorschau. Schalten Sie die Animation ein, um die Eingriffsrichtung der Räder zu überprüfen.
 5. **CAD-Dateien und Berichte herunterladen**: Exportieren Sie DXF-Dateien für Schneidprofile, STEP-Dateien für CAD-Baugruppen und den PDF-Bericht für die Projektdokumentation.
 
+## Annahmen & Normen
+
+- **Normengrundlage:** Die Zahnradgeometrie folgt den Evolventenbeziehungen der ISO 21771-1 für außenverzahnte zylindrische Stirnräder; die Zahnfußsicherheit verwendet eine vereinfachte Lewis-Formel und ist keine vollständige Tragfähigkeitsberechnung nach ISO 6336 oder AGMA.
+- **Wesentliche Annahmen:**
+  - Nur außenverzahnte Stirnradpaare mit Evolventenprofilen und dem eingegebenen Eingriffswinkel.
+  - Statische oder stationäre Belastung, abgeleitet aus dem eingegebenen Drehmoment, der Drehzahl, dem Wirkungsgrad und dem Betriebsfaktor.
+  - Gleichmäßige Werkstoffeigenschaften und die von Ihnen angegebenen zulässigen Spannungen.
+  - Nennmaße ohne Fertigungstoleranzen oder Qualitätsstufen.
+- **Einschränkungen:**
+  - Keine Prüfungen der Flankentragfähigkeit (Grübchenbildung), des Fressens oder der Graufleckigkeit.
+  - Schräg-, Innen-, Kegel- und Schneckenverzahnungen werden nicht unterstützt.
+  - Dynamische Effekte, Lastverteilungsfaktoren und die Schmierungsanalyse über das vereinfachte Kraftmodell hinaus werden nicht abgedeckt.
+  - Die Ergebnisse stellen keine zertifizierte Zahnradtragfähigkeitsberechnung für die Produktionsfreigabe dar.
+- ⚠️ Der Visual Gear Pair Calculator bietet Unterstützung bei der vorläufigen Dimensionierung. Die Ergebnisse müssen von einem qualifizierten Ingenieur gegen die maßgebende Normausgabe und die Projektspezifikation geprüft werden, bevor gefertigt oder beschafft wird.
+
 ## Verwandte Utilities
 
 - [Tube Sheet Generator](../tube-sheet-generator/)
