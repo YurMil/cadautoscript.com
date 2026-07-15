@@ -1,0 +1,75 @@
+---
+slug: freecad-1x-open-source-cad
+title: 'FreeCAD 1.x: avatud lähtekoodiga CAD-i "kuningas"'
+authors: [yurii]
+tags: [cad, automation, release]
+description: FreeCAD 1.x lisab parameetrilise stabiilsuse, sisseehitatud koostud ja UX-täiendused, mis toovad avatud lähtekoodiga CAD-i kommertspakettidele lähemale.
+---
+
+FreeCAD 1.x on harv juhtum, kus tasuta CAD lakkab tundumast hobitööriistana ja muutub praktiliseks insenertehniliseks tööriistaks. Pärast 1.0 väljalaset (18. november 2024) sai projekt täiendusi, mis mõjutavad otseselt insenertehnilist kasutatavust: tugevam parameetriline stabiilsus (leevendades topoloogilise nimetamise probleemi), sisseehitatud Assembly Workbench, uuendatud materjalid/välimus ja parem UX. 2025. aasta lõpuks oli juba ilmunud esimene 1.1 väljalaskekandidaat, seega 1.x liin liigub edasi.
+
+Allpool selgitame, miks FreeCAD-i võib nimetada avatud lähtekoodiga CAD-i "kuningaks", kus see tegelikult läheneb kommertssüsteemidele (SolidWorks, Inventor, Solid Edge, Creo, Fusion 360, NX) ja kus see endiselt maha jääb.
+
+{/* truncate */}
+
+## Miks FreeCAD väärib "kuninga" tiitlit
+
+### Parameetrika kui vundament
+FreeCAD ehitati algusest peale parameetrilise modelleerimise ümber: visandid, kitsendused, feature-puu, avaldised ja geomeetria taaskasutus. Just selle filosoofia eest maksavad insenerid "suurtes" CAD-süsteemides.
+
+### Insenertehniliste valdkondade laius ühes ökosüsteemis
+Ühe rakenduse (pluss lisandmoodulite) sees katab FreeCAD mitut maailma:
+
+- mehaaniline projekteerimine (PartDesign/Part)
+- koostud (sisseehitatud Assembly pluss välised workbenchid)
+- joonised (TechDraw)
+- CAM/tööriistateed (Path)
+- FEM (baasanalüüs)
+- arhitektuur/BIM (Arch ja seotud ökosüsteem)
+
+Kommertssüsteemid oskavad seda samuti, kuid sageli modulaarse litsentsimise kaudu. FreeCAD-is tuleneb see laius workbenchidest ja kogukonnapõhisest arendusest.
+
+### Kriitiline nihe: mudeli parem töökindlus muudatuste käigus
+Ajalooliselt oli üks FreeCAD-i valusamaid probleeme katkised viited tahkudele/servadele pärast mudeli muudatusi (topoloogilise nimetamise probleem). Versioonis 1.0 jõudis leevendus tuuma. See ei puuduta mugavust, vaid parameetriliste töövoogude usaldusväärsust.
+
+## Kus FreeCAD 1.x on kommerts-CAD-ile lähedal
+
+### Parameetriline tahkismodelleerimine (mehaaniline)
+Korpuste, kronsteinide, plaatide, adapterite, rakiste, töötlemisdetailide ja 3D-printimise puhul on FreeCAD väga lähedal. Parameetriline põhilähenemine (visandid + features + puu) on küps ning 1.0 muudab mudelimuudatused vastupidavaks tänu parematele viidetele.
+
+### 2D-visandid ja kitsendused
+Tüüpilise insenertehnilise geomeetria puhul (mõõtahelad, sümmeetria, puutumine, paralleelsus, avaldised/parameetrid) katab FreeCAD umbes 80-90% sellest, mida enamik kasutajaid peavoolu mehaanilisest CAD-ist vajab. Erinevused taanduvad tavaliselt mugavusele, ülekitsenduste diagnoosimisele, UX-viimistlusele ja jõudlusele väga suurte visandite puhul.
+
+### Koostud: kiire edenemise tsoon
+Sisseehitatud Assembly Workbench FreeCAD 1.0-s on suur samm: koostud pole enam ainult lisandmoodulite pärusmaa. Välised koostu-workbenchid on endiselt populaarsed - näiteks A2plus on paigaldatav Addon Manageri kaudu. Väikeste kuni keskmise suurusega koostude, paigutustöö, põhiliste kinemaatiliste kontrollide ja sobivuse kontrollimise jaoks on FreeCAD sageli juba "piisav". Väga suurte koostude ja keerukate kitsenduste võrgustike puhul ilmnevad piirangud kiiremini.
+
+### Andmevahetus
+STEP jääb tööstuslikuks tööhobuseks 3D-mudelite vahetamisel ja FreeCAD sobitub STEP-põhistesse töövoogudesse hästi - eriti vaaturi, redaktori ja geomeetria ettevalmistamise tööriistana. Kommerts-CAD läheb sageli ette "natiivsete" ökosüsteemide kaudu ühe tarnija sees ja keerukate mudelite prognoositavamate importijate kaudu.
+
+## Kus FreeCAD endiselt kommerts-CAD-ist maha jääb
+
+1) **Suured koostud, jõudlus, hallatavus.** Kommerts-CAD on tavaliselt tugevam tuhandete komponentide jõudluse, lihtsustustööriistade (defeature, kergrežiimid), karbist väljas konfiguratsiooni-/variandihalduse ja ettevõttetasemel läbilõike-/vahekaugusanalüüsi osas.
+
+2) **Joonised ja standarditel põhinev dokumentatsioon suures mahus.** TechDraw on kasutatav, kuid kommerts-CAD saab sageli paremini hakkama automatiseeritud joonisetöövoogudega, vaate-mudeli seoste stabiilsusega keerukatel juhtudel, standardsete märkuste/tolerantside/BOM-ide rikkalike teekidega ja PDM-integratsiooniga. Kui joonised on sinu peamine väljund, on erinevus tunnetatavam.
+
+3) **Kõrgklassi pinnamodelleerimine (Class-A) ja spetsialiseeritud moodulid.** Keerukate pindade, tööstusdisaini ja kosmeetilise kvaliteedi puhul tippmoodulite tasemel (NX/Creo/SW Premium jne) ei ole FreeCAD tavaliselt esimene valik. Sama kehtib kitsaste, tööstusspetsiifiliste tööriistakomplektide kohta: vormide projekteerimine, keerukas lehtmetalli vormimine, reeglipõhine torustik, juhtmekimbud ja PLM-spetsiifilised integratsioonid.
+
+4) **PDM/PLM ja ettevõtte integratsioon.** Kommerts-CAD võidab ökosüsteemis: andmehaldus, juurdepääsu kontroll, revisjonid, kinnitused, jälgitavus ning ERP-/PLM-konnektorid.
+
+## Praktiline hinnang: kui lähedal on "lähedal"
+
+- **Väga tugev valik (sageli ilma reservatsioonideta):** üksikdetailid ja väikesed tooted parameetrikaga; rakised, kinnitusdetailid, adapterid, kronsteinid; mudeli ettevalmistus 3D-printimiseks ja töötlemiseks; paigutusmudelid ja väikesed koostud; STEP-põhine vahetus ja geomeetria puhastamine/redigeerimine.
+- **Hea valik, kuid mastaap ja nõuded loevad:** keskmise suurusega koostud kitsendustega; joonised, kui nõuded pole äärmiselt ranged ja tugevalt automatiseeritud; tüüpilise taseme CAM-operatsioonid; FEM insenertehnilisteks hinnanguteks ja kiirkontrollideks.
+- **Kommerts-CAD on sagedamini parem valik:** väga suured koostud ja keerukas konfiguratsioonihaldus; suure läbilaskevõimega joonisetootmine rangete standardite alusel; edasijõudnud pinnamodelleerimine ja spetsialiseeritud tööstusmoodulid; ranged PDM/PLM-nõuded ja muudatuste auditeerimine.
+
+## Järeldus
+
+FreeCAD 1.x pälvib "avatud lähtekoodiga CAD-i kuninga" tiitli tänu parameetrika, ülesannete laiuse ja arendustempo kombinatsioonile. 1.0 väljalase oli pöördepunkt parameetrilise töökindluse ja koostude jaoks ning 1.1 (juba RC-staadiumis) näitab, et projekt ei jäänud verstapostiversiooni juurde pidama.
+
+## Lisalugemine ja arvustused
+
+- [FreeCAD-i ametlik veebisait](https://www.freecad.org/)
+- [FreeCAD 1.0 väljalaskemärkmed](https://wiki.freecad.org/Release_notes_1.0)
+- [All3DP FreeCAD-i arvustus](https://all3dp.com/2/freecad-review/)
+- [SourceForge'i projektileht kasutajaarvustustega](https://sourceforge.net/projects/free-cad/)
+- [G2 kasutajaarvustused FreeCAD-i kohta](https://www.g2.com/products/freecad/reviews)

@@ -1,0 +1,75 @@
+---
+slug: freecad-1x-open-source-cad
+title: 'FreeCAD 1.x: el "rey" del CAD de código abierto'
+authors: [yurii]
+tags: [cad, automation, release]
+description: FreeCAD 1.x añade estabilidad paramétrica, ensamblajes integrados y mejoras de UX que acercan el CAD de código abierto a las suites comerciales.
+---
+
+FreeCAD 1.x es un caso poco común en el que un CAD gratuito deja de parecer un juguete de aficionado y se convierte en una herramienta de ingeniería práctica. Tras el lanzamiento de la versión 1.0 (18 de noviembre de 2024), el proyecto ganó mejoras que afectan directamente a la usabilidad en ingeniería: mayor estabilidad paramétrica (mitigación del problema del nombrado topológico), un Assembly Workbench integrado, materiales/apariencia renovados y mejor UX. A finales de 2025 ya había aparecido el primer candidato a versión (RC) de la 1.1, así que la línea 1.x sigue avanzando.
+
+A continuación explicamos por qué se puede llamar a FreeCAD el "rey" del CAD de código abierto, en qué se aproxima realmente a los sistemas comerciales (SolidWorks, Inventor, Solid Edge, Creo, Fusion 360, NX) y en qué sigue quedándose atrás.
+
+{/* truncate */}
+
+## Por qué FreeCAD merece el título de "rey"
+
+### La paramétrica como base
+FreeCAD se construyó desde el principio en torno al modelado paramétrico: bocetos, restricciones, un árbol de operaciones, expresiones y reutilización de geometría. Esa filosofía es justo por lo que los ingenieros pagan en los "grandes" sistemas CAD.
+
+### Amplitud de dominios de ingeniería en un solo ecosistema
+Dentro de una sola aplicación (más los complementos), FreeCAD abarca varios mundos:
+
+- diseño mecánico (PartDesign/Part)
+- ensamblajes (Assembly integrado más workbenches externos)
+- planos (TechDraw)
+- CAM/trayectorias de herramienta (Path)
+- FEM (análisis básico)
+- arquitectura/BIM (Arch y su ecosistema asociado)
+
+Los sistemas comerciales también pueden hacer esto, pero a menudo a través de licencias modulares. En FreeCAD, esta amplitud proviene de los workbenches y del desarrollo impulsado por la comunidad.
+
+### Un cambio crítico: mayor robustez del modelo ante ediciones
+Históricamente, uno de los problemas más dolorosos de FreeCAD eran las referencias rotas a caras/aristas tras cambios en el modelo (el problema del nombrado topológico). En la 1.0 llegó al núcleo una mitigación. No se trata de comodidad, sino de la fiabilidad de los flujos de trabajo paramétricos.
+
+## Dónde FreeCAD 1.x se acerca al CAD comercial
+
+### Modelado paramétrico de sólidos (mecánico)
+Para carcasas, soportes, placas, adaptadores, utillajes, piezas de mecanizado e impresión 3D, FreeCAD está muy cerca. El enfoque paramétrico del núcleo (bocetos + operaciones + árbol) es maduro, y la 1.0 hace que las ediciones del modelo sobrevivan gracias a una mayor robustez de las referencias.
+
+### Bocetos 2D y restricciones
+Para la geometría de ingeniería habitual (cadenas de cotas, simetría, tangencia, paralelismo, expresiones/parámetros), FreeCAD cubre en torno al 80-90 % de lo que la mayoría de los usuarios necesita de un CAD mecánico convencional. Las diferencias suelen reducirse a la comodidad, al diagnóstico de sobredeterminaciones, al pulido de la UX y al rendimiento en bocetos muy grandes.
+
+### Ensamblajes: una zona de rápido progreso
+El Assembly Workbench integrado en FreeCAD 1.0 es un gran paso: los ensamblajes ya no son dominio exclusivo de los complementos. Los workbenches de ensamblaje externos siguen siendo populares; A2plus, por ejemplo, se puede instalar a través del Addon Manager. Para ensamblajes pequeños y medianos, trabajo de disposición (layout), comprobaciones cinemáticas básicas y verificación de ajustes, FreeCAD a menudo ya es "suficiente". Para ensamblajes muy grandes y redes de restricciones complejas, las limitaciones aparecen más rápido.
+
+### Intercambio de datos
+STEP sigue siendo el caballo de batalla industrial para el intercambio de modelos 3D, y FreeCAD encaja bien en flujos de trabajo basados en STEP, especialmente como visor, editor y herramienta de preparación de geometría. El CAD comercial suele adelantarse mediante ecosistemas "nativos" dentro de un mismo fabricante e importadores más predecibles para modelos complejos.
+
+## Dónde FreeCAD sigue por detrás del CAD comercial
+
+1) **Grandes ensamblajes, rendimiento, manejabilidad.** El CAD comercial suele ser más fuerte en rendimiento con miles de componentes, herramientas de simplificación (defeature, modos lightweight), gestión de configuraciones/variantes lista para usar y análisis de interferencias/holguras a nivel empresarial.
+
+2) **Planos y documentación normalizada a gran escala.** TechDraw es funcional, pero el CAD comercial suele hacerlo mejor en flujos de trabajo automatizados de planos, estabilidad de los vínculos vista-modelo en casos complejos, bibliotecas ricas de anotaciones/tolerancias/listas de materiales estándar e integración con PDM. Si los planos son tu principal entregable, la diferencia se nota con más fuerza.
+
+3) **Superficies de alta gama (Clase A) y módulos especializados.** Para superficies complejas, diseño industrial y calidad estética al nivel de los módulos de gama alta (NX/Creo/SW Premium, etc.), FreeCAD no suele ser la primera opción. Lo mismo ocurre con conjuntos de herramientas específicos de sector: diseño de moldes, conformado avanzado de chapa, tuberías basadas en reglas, arneses de cableado e integraciones específicas de PLM.
+
+4) **PDM/PLM e integración empresarial.** El CAD comercial gana en ecosistema: gestión de datos, control de acceso, revisiones, aprobaciones, trazabilidad y conectores ERP/PLM.
+
+## Evaluación práctica: cómo de cerca es "cerca"
+
+- **Una opción muy sólida (a menudo sin reservas):** piezas individuales y productos pequeños con paramétrica; utillajes, elementos de fijación, adaptadores, soportes; preparación de modelos para impresión 3D y mecanizado; modelos de disposición y ensamblajes pequeños; intercambio basado en STEP y limpieza/edición de geometría.
+- **Una buena opción, pero la escala y los requisitos importan:** ensamblajes medianos con restricciones; planos si los requisitos no son extremadamente estrictos ni altamente automatizados; operaciones CAM de nivel habitual; FEM para estimaciones de ingeniería y comprobaciones rápidas.
+- **El CAD comercial suele ser la mejor elección:** ensamblajes muy grandes y gestión de configuraciones compleja; producción de planos de alto rendimiento bajo normas estrictas; superficies avanzadas y módulos sectoriales especializados; requisitos estrictos de PDM/PLM y auditoría de cambios.
+
+## Conclusión
+
+FreeCAD 1.x se gana el título de "rey del CAD de código abierto" gracias a su combinación de paramétrica, amplitud de tareas y ritmo de desarrollo. El lanzamiento de la 1.0 fue un punto de inflexión para la robustez paramétrica y los ensamblajes, y la 1.1 (ya en RC) demuestra que el proyecto no se detuvo en una versión hito.
+
+## Lecturas y reseñas adicionales
+
+- [Sitio oficial de FreeCAD](https://www.freecad.org/)
+- [Notas de la versión FreeCAD 1.0](https://wiki.freecad.org/Release_notes_1.0)
+- [Reseña de FreeCAD en All3DP](https://all3dp.com/2/freecad-review/)
+- [Página del proyecto en SourceForge con reseñas de usuarios](https://sourceforge.net/projects/free-cad/)
+- [Reseñas de usuarios de FreeCAD en G2](https://www.g2.com/products/freecad/reviews)

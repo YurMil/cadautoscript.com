@@ -40,9 +40,9 @@ function I18nBridge({children}: {children: React.ReactNode}) {
  * Locales without real blog translations serve English fallback posts and get
  * flagged as duplicates in Google Search Console, so their blog routes are
  * marked noindex. The blog is translated for the locales listed below —
- * extend the set when more translations land (issue #66).
+ * extend the set when more translations land (issues #66, #84).
  */
-const BLOG_TRANSLATED_LOCALES = new Set(['en', 'ru', 'de']);
+const BLOG_TRANSLATED_LOCALES = new Set(['en', 'ru', 'de', 'ua', 'es', 'et']);
 
 function LocalizedBlogNoindex() {
   const {i18n} = useDocusaurusContext();
