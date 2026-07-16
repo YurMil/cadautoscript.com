@@ -1,9 +1,7 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import clsx from 'clsx';
 import {useHistory} from '@docusaurus/router';
-import type {User} from '@supabase/supabase-js';
 import Layout from '@theme/Layout';
-import {normalizeProfile} from '@site/src/utils/normalizeProfile';
 import OverviewTab from '@site/src/components/AdminDashboard/OverviewTab';
 import UsersTab from '@site/src/components/AdminDashboard/UsersTab';
 import CommentsTab from '@site/src/components/AdminDashboard/CommentsTab';
@@ -11,452 +9,42 @@ import UsageTab from '@site/src/components/AdminDashboard/UsageTab';
 import AuditTab from '@site/src/components/AdminDashboard/AuditTab';
 import SettingsTab from '@site/src/components/AdminDashboard/SettingsTab';
 import InviteModal from '@site/src/components/AdminDashboard/InviteModal';
-import type {ActionState, CommentRow, ProfileRow, RoleValue} from '@site/src/components/AdminDashboard/types';
-import {supabase} from '@site/src/lib/supabaseClient';
-import {logger} from '../../lib/logger';
-import {
-  DEFAULT_UTILITIES_PUBLIC_ACCESS,
-  UTILITIES_PUBLIC_ACCESS_KEY,
-  parseBooleanSetting,
-  serializeBooleanSetting,
-} from '@site/src/utils/siteSettings';
-import {
-  listUtilityPopularity,
-  listAdminUtilityUsage,
-  type UtilityPopularity,
-  type AdminUtilityUsageRow,
-} from '@site/src/shared/utility-usage';
-import {
-  getAdminDashboardStats,
-  getAdminAuditLog,
-  logAdminEvent,
-  type DashboardStats,
-  type AuditLogEntry,
-  type AuditEventType,
-} from '@site/src/shared/admin-analytics';
+import {useAdminData, type TabKey} from '@site/src/components/AdminDashboard/useAdminData';
 import styles from './index.module.css';
-
-type TabKey = 'overview' | 'users' | 'comments' | 'usage' | 'audit' | 'settings';
-
-const AUDIT_PAGE_SIZE = 50;
-
-const initialState: {profiles: ProfileRow[]; comments: CommentRow[]} = {
-  profiles: [],
-  comments: [],
-};
 
 export default function AdminPage(): React.JSX.Element {
   const history = useHistory();
-  const [sessionUser, setSessionUser] = useState<User | null>(null);
-  const [profile, setProfile] = useState<ProfileRow | null>(null);
-  const [data, setData] = useState(initialState);
   const [activeTab, setActiveTab] = useState<TabKey>('overview');
-  const [loadingAuth, setLoadingAuth] = useState(true);
-  const [loadingUsers, setLoadingUsers] = useState(false);
-  const [loadingComments, setLoadingComments] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [actionState, setActionState] = useState<ActionState>({kind: 'idle'});
-  const [roleUpdating, setRoleUpdating] = useState<string | null>(null);
-  const [toast, setToast] = useState<string | null>(null);
   const [inviteEmail, setInviteEmail] = useState('');
   const [inviteOpen, setInviteOpen] = useState(false);
-  const [utilitiesPublicAccess, setUtilitiesPublicAccess] = useState(DEFAULT_UTILITIES_PUBLIC_ACCESS);
-  const [settingsLoading, setSettingsLoading] = useState(false);
-  const [settingsSaving, setSettingsSaving] = useState(false);
-  const [globalUsage, setGlobalUsage] = useState<UtilityPopularity[]>([]);
-  const [perUserUsage, setPerUserUsage] = useState<AdminUtilityUsageRow[]>([]);
-  const [usageLoading, setUsageLoading] = useState(false);
-  const [usageLoaded, setUsageLoaded] = useState(false);
-  const [stats, setStats] = useState<DashboardStats | null>(null);
-  const [statsLoading, setStatsLoading] = useState(false);
-  const [statsLoaded, setStatsLoaded] = useState(false);
-  const [auditEntries, setAuditEntries] = useState<AuditLogEntry[]>([]);
-  const [auditLoading, setAuditLoading] = useState(false);
-  const [auditLoaded, setAuditLoaded] = useState(false);
-  const [auditFilter, setAuditFilter] = useState<AuditEventType | ''>('');
-  const [auditHasMore, setAuditHasMore] = useState(false);
 
-  const loadProfiles = useCallback(async () => {
-    setLoadingUsers(true);
-    setError(null);
-
-    const {data: rpcProfiles, error: profilesError} = await supabase
-      .rpc('get_admin_users_list')
-      .order('created_at', {ascending: false});
-
-    let merged = rpcProfiles ?? [];
-
-    // Fallback: fetch profiles directly to catch records that may not join with auth.users
-    const {data: rawProfiles, error: profilesFallbackError} = await supabase
-      .from('profiles')
-      .select('id, username, full_name, avatar_url, role, created_at, last_seen_at, email')
-      .order('created_at', {ascending: false});
-
-    if (profilesFallbackError) {
-      logger.error('[Admin] Unable to load profiles fallback', profilesFallbackError.message);
-    } else if (rawProfiles) {
-      const existingIds = new Set(merged.map((p: ProfileRow) => p.id));
-      const missing = rawProfiles.filter((p) => !existingIds.has(p.id));
-      merged = [...merged, ...missing];
-    }
-
-    if (profilesError && !merged.length) {
-      logger.error('[Admin] Unable to fetch profiles', profilesError.message);
-      setError('Unable to load users.');
-    }
-
-    setData((prev) => ({...prev, profiles: merged as ProfileRow[]}));
-    setLoadingUsers(false);
-  }, []);
-
-  const loadSiteSettings = useCallback(async () => {
-    setSettingsLoading(true);
-
-    try {
-      const {data, error} = await supabase
-        .from('site_settings')
-        .select('value')
-        .eq('key', UTILITIES_PUBLIC_ACCESS_KEY)
-        .maybeSingle();
-
-      if (error) {
-        logger.error('[Admin] Unable to load site settings', error.message);
-        setError('Unable to load site settings.');
-        return;
-      }
-
-      const parsed = parseBooleanSetting(data?.value);
-      if (parsed !== null) {
-        setUtilitiesPublicAccess(parsed);
-      }
-    } catch (err) {
-      const message = err instanceof Error ? err.message : 'Unable to load site settings.';
-      logger.error('[Admin] Unable to load site settings', message);
-      setError('Unable to load site settings.');
-    } finally {
-      setSettingsLoading(false);
-    }
-  }, []);
-
-  const loadUsage = useCallback(async () => {
-    setUsageLoading(true);
-    try {
-      const [global, perUser] = await Promise.all([
-        listUtilityPopularity(),
-        listAdminUtilityUsage(),
-      ]);
-      setGlobalUsage(global);
-      setPerUserUsage(perUser);
-    } catch (err) {
-      const message = err instanceof Error ? err.message : 'Unable to load usage analytics.';
-      logger.error('[Admin] Unable to load usage analytics', message);
-      setError('Unable to load usage analytics.');
-    } finally {
-      // Mark as loaded even on failure so the lazy-load effect doesn't retry
-      // in a loop; the Refresh button still allows a manual retry.
-      setUsageLoaded(true);
-      setUsageLoading(false);
-    }
-  }, []);
-
-  const loadStats = useCallback(async () => {
-    setStatsLoading(true);
-    try {
-      const result = await getAdminDashboardStats();
-      setStats(result);
-    } catch (err) {
-      const message = err instanceof Error ? err.message : 'Unable to load dashboard stats.';
-      logger.error('[Admin] Unable to load dashboard stats', message);
-      setError('Unable to load dashboard stats.');
-    } finally {
-      setStatsLoaded(true);
-      setStatsLoading(false);
-    }
-  }, []);
-
-  const loadAudit = useCallback(
-    async (opts?: {filter?: AuditEventType | ''; append?: boolean}) => {
-      const filter = opts?.filter ?? auditFilter;
-      const append = opts?.append ?? false;
-      setAuditLoading(true);
-      try {
-        const offset = append ? auditEntries.length : 0;
-        const rows = await getAdminAuditLog({
-          limit: AUDIT_PAGE_SIZE,
-          offset,
-          eventType: filter === '' ? null : filter,
-        });
-        setAuditEntries((prev) => (append ? [...prev, ...rows] : rows));
-        setAuditHasMore(rows.length === AUDIT_PAGE_SIZE);
-      } catch (err) {
-        const message = err instanceof Error ? err.message : 'Unable to load audit log.';
-        logger.error('[Admin] Unable to load audit log', message);
-        setError('Unable to load audit log.');
-      } finally {
-        setAuditLoaded(true);
-        setAuditLoading(false);
-      }
-    },
-    [auditFilter, auditEntries.length],
-  );
-
-  // Access control: fetch session + profile, redirect if not admin.
-  useEffect(() => {
-    let isMounted = true;
-
-    const checkAccess = async () => {
-      try {
-        const {data: sessionData} = await supabase.auth.getSession();
-        if (!isMounted) return;
-        const user = sessionData?.session?.user ?? null;
-        setSessionUser(user);
-        if (!user) {
-          history.replace('/');
-          return;
-        }
-
-        const {data: profileData, error: profileError} = await supabase
-          .from('profiles')
-          .select('id, username, full_name, avatar_url, role, created_at')
-          .eq('id', user.id)
-          .maybeSingle();
-
-        if (!isMounted) return;
-        if (profileError) {
-          logger.error('[Admin] Unable to fetch profile', profileError.message);
-          setError('Unable to verify permissions.');
-          history.replace('/');
-          return;
-        }
-
-        setProfile(profileData ?? null);
-        const isAdmin = profileData?.role === 'admin';
-        if (!isAdmin) {
-          history.replace('/');
-          return;
-        }
-      } finally {
-        if (isMounted) {
-          setLoadingAuth(false);
-        }
-      }
-    };
-
-    void checkAccess();
-    return () => {
-      isMounted = false;
-    };
-  }, [history]);
-
-  // Fetch users
-  useEffect(() => {
-    if (loadingAuth || profile?.role !== 'admin') {
-      return;
-    }
-    void loadProfiles();
-  }, [loadProfiles, loadingAuth, profile?.role]);
-
-  // Fetch settings
-  useEffect(() => {
-    if (loadingAuth || profile?.role !== 'admin') {
-      return;
-    }
-    void loadSiteSettings();
-  }, [loadSiteSettings, loadingAuth, profile?.role]);
-
-  // Fetch comments
-  useEffect(() => {
-    if (loadingAuth || profile?.role !== 'admin') {
-      return;
-    }
-    const loadComments = async () => {
-      setLoadingComments(true);
-      setError(null);
-      const {data: comments, error: commentsError} = await supabase
-        .from('comments')
-        .select('id, user_id, post_slug, content, created_at, profiles:profiles(full_name, username, avatar_url)')
-        .order('created_at', {ascending: false})
-        .limit(50);
-
-      if (commentsError) {
-        logger.error('[Admin] Unable to fetch comments', commentsError.message);
-        setError('Unable to load comments.');
-        setLoadingComments(false);
-        return;
-      }
-
-      const normalized = (comments ?? []).map((comment) => ({
-        ...comment,
-        profiles: normalizeProfile(comment.profiles),
-      }));
-      setData((prev) => ({...prev, comments: normalized}));
-      setLoadingComments(false);
-    };
-
-    void loadComments();
-  }, [loadingAuth, profile?.role]);
-
-  // Lazy-load usage analytics only when the admin opens the Usage tab.
-  useEffect(() => {
-    if (loadingAuth || profile?.role !== 'admin') {
-      return;
-    }
-    if (activeTab !== 'usage' || usageLoaded || usageLoading) {
-      return;
-    }
-    void loadUsage();
-  }, [activeTab, loadingAuth, profile?.role, usageLoaded, usageLoading, loadUsage]);
-
-  // Lazy-load the Overview stats when first opened.
-  useEffect(() => {
-    if (loadingAuth || profile?.role !== 'admin') {
-      return;
-    }
-    if (activeTab !== 'overview' || statsLoaded || statsLoading) {
-      return;
-    }
-    void loadStats();
-  }, [activeTab, loadingAuth, profile?.role, statsLoaded, statsLoading, loadStats]);
-
-  // Lazy-load the Audit log when first opened.
-  useEffect(() => {
-    if (loadingAuth || profile?.role !== 'admin') {
-      return;
-    }
-    if (activeTab !== 'audit' || auditLoaded || auditLoading) {
-      return;
-    }
-    void loadAudit();
-  }, [activeTab, loadingAuth, profile?.role, auditLoaded, auditLoading, loadAudit]);
-
-  const handleDeleteComment = async (commentId: string) => {
-    if (!commentId) return;
-    setActionState({kind: 'deleting', targetId: commentId});
-    const {error: deleteError} = await supabase.from('comments').delete().eq('id', commentId);
-    if (deleteError) {
-      logger.error('[Admin] Unable to delete comment', deleteError.message);
-      setError('Unable to delete comment. Check RLS or permissions.');
-      setActionState({kind: 'idle'});
-      return;
-    }
-    setData((prev) => ({
-      ...prev,
-      comments: prev.comments.filter((c) => c.id !== commentId),
-    }));
-    setActionState({kind: 'idle'});
-  };
+  const {
+    state,
+    loadStats,
+    loadUsage,
+    loadAudit,
+    handleDeleteComment,
+    handleRoleChange,
+    handleDeleteUser,
+    handleToggleUtilitiesAccess,
+    inviteUser,
+    handleAuditFilterChange,
+  } = useAdminData(activeTab, history);
 
   const displayName = useMemo(
-    () => profile?.full_name || profile?.username || sessionUser?.email || 'Admin',
-    [profile?.full_name, profile?.username, sessionUser?.email],
+    () => state.profile?.full_name || state.profile?.username || state.sessionUser?.email || 'Admin',
+    [state.profile?.full_name, state.profile?.username, state.sessionUser?.email],
   );
 
-  const handleRoleChange = async (userId: string, newRole: RoleValue) => {
-    setRoleUpdating(userId);
-    setToast(null);
-    const {error: roleError} = await supabase.from('profiles').update({role: newRole}).eq('id', userId);
-    if (roleError) {
-      logger.error('[Admin] Unable to update role', roleError.message);
-      setError('Unable to update role.');
-      setRoleUpdating(null);
-      return;
-    }
-    setData((prev) => ({
-      ...prev,
-      profiles: prev.profiles.map((p) => (p.id === userId ? {...p, role: newRole} : p)),
-    }));
-    setRoleUpdating(null);
-    setToast('Role updated');
-  };
-
-  const handleDeleteUser = async (userId: string) => {
-    if (!userId) return;
-    if (!window.confirm('Удалить пользователя? Это действие необратимо.')) return;
-    setError(null);
-    setToast(null);
-    setActionState({kind: 'deleting', targetId: userId});
-    // Record the deletion in the audit log (snapshotting identity) BEFORE the
-    // cascade removes the profile. Non-fatal: proceed with deletion regardless.
-    const {error: auditError} = await supabase.rpc('request_account_deletion', {
-      p_target: userId,
-    });
-    if (auditError) {
-      logger.warn('[Admin] Unable to write deletion audit entry', auditError.message);
-    }
-    const {error: fnError} = await supabase.functions.invoke('super-function', {
-      body: {action: 'delete', targetUserId: userId},
-    });
-    if (fnError) {
-      logger.error('[Admin] Unable to delete user', fnError.message);
-      setError('Не удалось удалить пользователя. Проверьте edge function или права.');
-      setActionState({kind: 'idle'});
-      return;
-    }
-    setData((prev) => ({
-      ...prev,
-      profiles: prev.profiles.filter((p) => p.id !== userId),
-    }));
-    setToast('User deleted');
-    setActionState({kind: 'idle'});
-  };
-
-  const handleToggleUtilitiesAccess = async () => {
-    if (settingsSaving) return;
-    setSettingsSaving(true);
-    setError(null);
-    setToast(null);
-    const nextValue = !utilitiesPublicAccess;
-
-    const {error: updateError} = await supabase
-      .from('site_settings')
-      .upsert(
-        {key: UTILITIES_PUBLIC_ACCESS_KEY, value: serializeBooleanSetting(nextValue)},
-        {onConflict: 'key'},
-      );
-
-    if (updateError) {
-      logger.error('[Admin] Unable to update utilities access', updateError.message);
-      setError('Unable to update utilities access setting.');
-      setSettingsSaving(false);
-      return;
-    }
-
-    setUtilitiesPublicAccess(nextValue);
-    setSettingsSaving(false);
-    setToast('Utilities access updated');
-  };
-
   const handleInviteUser = async () => {
-    if (!inviteEmail) {
-      setError('Введите email для приглашения.');
-      return;
+    const ok = await inviteUser(inviteEmail);
+    if (ok) {
+      setInviteEmail('');
+      setInviteOpen(false);
     }
-    setError(null);
-    setToast(null);
-    setActionState({kind: 'inviting'});
-    const {data: result, error: fnError} = await supabase.functions.invoke('super-function', {
-      body: {action: 'invite', email: inviteEmail},
-    });
-    if (fnError) {
-      logger.error('[Admin] Unable to invite user', fnError.message);
-      setError('Не удалось отправить приглашение. Проверьте edge function или права.');
-      setActionState({kind: 'idle'});
-      return;
-    }
-    setToast(result?.message || 'Invitation sent');
-    void logAdminEvent('user_invited', {email: inviteEmail});
-    setInviteEmail('');
-    setInviteOpen(false);
-    setActionState({kind: 'idle'});
-    void loadProfiles();
   };
 
-  const handleAuditFilterChange = (value: AuditEventType | '') => {
-    setAuditFilter(value);
-    void loadAudit({filter: value, append: false});
-  };
-
-  if (loadingAuth) {
+  if (state.loadingAuth) {
     return (
       <Layout title="Admin">
         <main className={styles.main}>
@@ -467,7 +55,7 @@ export default function AdminPage(): React.JSX.Element {
   }
 
   // In case redirect failed for any reason.
-  if (profile?.role !== 'admin') {
+  if (state.profile?.role !== 'admin') {
     return null;
   }
 
@@ -525,19 +113,19 @@ export default function AdminPage(): React.JSX.Element {
           </div>
         </div>
 
-        {error ? <div className={styles.alert}>{error}</div> : null}
-        {toast ? <div className={clsx(styles.alert, styles.alertSuccess)}>{toast}</div> : null}
+        {state.error ? <div className={styles.alert}>{state.error}</div> : null}
+        {state.toast ? <div className={clsx(styles.alert, styles.alertSuccess)}>{state.toast}</div> : null}
 
         {activeTab === 'overview' ? (
-          <OverviewTab stats={stats} statsLoading={statsLoading} onRefresh={() => void loadStats()} />
+          <OverviewTab stats={state.stats} statsLoading={state.statsLoading} onRefresh={() => void loadStats()} />
         ) : null}
 
         {activeTab === 'users' ? (
           <UsersTab
-            profiles={data.profiles}
-            loadingUsers={loadingUsers}
-            roleUpdating={roleUpdating}
-            actionState={actionState}
+            profiles={state.profiles}
+            loadingUsers={state.loadingUsers}
+            roleUpdating={state.roleUpdating}
+            actionState={state.actionState}
             onRoleChange={handleRoleChange}
             onDeleteUser={handleDeleteUser}
             onOpenInvite={() => setInviteOpen(true)}
@@ -546,29 +134,29 @@ export default function AdminPage(): React.JSX.Element {
 
         {activeTab === 'comments' ? (
           <CommentsTab
-            comments={data.comments}
-            loadingComments={loadingComments}
-            actionState={actionState}
+            comments={state.comments}
+            loadingComments={state.loadingComments}
+            actionState={state.actionState}
             onDeleteComment={handleDeleteComment}
           />
         ) : null}
 
         {activeTab === 'usage' ? (
           <UsageTab
-            globalUsage={globalUsage}
-            perUserUsage={perUserUsage}
-            usageLoading={usageLoading}
-            usageLoaded={usageLoaded}
+            globalUsage={state.globalUsage}
+            perUserUsage={state.perUserUsage}
+            usageLoading={state.usageLoading}
+            usageLoaded={state.usageLoaded}
             onRefresh={() => void loadUsage()}
           />
         ) : null}
 
         {activeTab === 'audit' ? (
           <AuditTab
-            auditEntries={auditEntries}
-            auditLoading={auditLoading}
-            auditFilter={auditFilter}
-            auditHasMore={auditHasMore}
+            auditEntries={state.auditEntries}
+            auditLoading={state.auditLoading}
+            auditFilter={state.auditFilter}
+            auditHasMore={state.auditHasMore}
             onFilterChange={handleAuditFilterChange}
             onRefresh={() => void loadAudit({append: false})}
             onLoadMore={() => void loadAudit({append: true})}
@@ -577,9 +165,9 @@ export default function AdminPage(): React.JSX.Element {
 
         {activeTab === 'settings' ? (
           <SettingsTab
-            settingsLoading={settingsLoading}
-            settingsSaving={settingsSaving}
-            utilitiesPublicAccess={utilitiesPublicAccess}
+            settingsLoading={state.settingsLoading}
+            settingsSaving={state.settingsSaving}
+            utilitiesPublicAccess={state.utilitiesPublicAccess}
             onToggle={handleToggleUtilitiesAccess}
           />
         ) : null}
@@ -587,7 +175,7 @@ export default function AdminPage(): React.JSX.Element {
         <InviteModal
           open={inviteOpen}
           email={inviteEmail}
-          actionState={actionState}
+          actionState={state.actionState}
           onEmailChange={setInviteEmail}
           onClose={() => setInviteOpen(false)}
           onSubmit={handleInviteUser}
