@@ -1,6 +1,5 @@
 import {useCallback, useEffect, useReducer} from 'react';
 import type {User} from '@supabase/supabase-js';
-import type {History} from 'history';
 import {supabase} from '@site/src/lib/supabaseClient';
 import {logger} from '@site/src/lib/logger';
 import {normalizeProfile} from '@site/src/utils/normalizeProfile';
@@ -128,7 +127,11 @@ function reducer(state: AdminState, action: Action): AdminState {
  * local UI state (active tab, invite modal). Behavior is unchanged from the
  * previous ~28-useState version.
  */
-export function useAdminData(activeTab: TabKey, history: History) {
+// Minimal structural type — only `replace` is used, and it avoids depending on
+// the transitive `history` package's types (not resolvable under CI's install).
+type Redirector = {replace: (path: string) => void};
+
+export function useAdminData(activeTab: TabKey, history: Redirector) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const loadProfiles = useCallback(async () => {
