@@ -1,5 +1,6 @@
 import type {RealtimeChannel} from '@supabase/supabase-js';
 import {createSupabaseUserDataRepository, rowToDocument} from './supabaseUserDataRepository';
+import {logger} from '../../lib/logger';
 import type {
   UserAppDocumentRow,
   UserDataClient,
@@ -151,7 +152,7 @@ export function createUserDataClient(options: UserDataClientOptions): UserDataCl
 
       channel.subscribe((status) => {
         if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') {
-          console.warn('[userData] channel status:', status, {appSlug, collection});
+          logger.warn('[userData] channel status:', status, {appSlug, collection});
         }
       });
 

@@ -2,6 +2,7 @@ import type {PdfRuntimeConfig, ScanResult} from '../types';
 import {getFilePrefix} from './fileNaming';
 import {getPdfRuntime} from './pdfRuntime';
 import {buildBaseNumberRegex, buildSearchRegex} from './regex';
+import {logger} from '../../../lib/logger';
 
 export async function quickScanFile(params: {
   file: File;
@@ -52,7 +53,7 @@ export async function quickScanFile(params: {
       matches,
     };
   } catch (error) {
-    console.error(`Quick scan error for ${file.name}:`, error);
+    logger.error(`Quick scan error for ${file.name}:`, error);
     return {
       total: 'Error',
       unique: '',

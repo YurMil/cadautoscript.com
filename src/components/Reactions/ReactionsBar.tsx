@@ -5,6 +5,7 @@ import {useAuthModal} from '@site/src/contexts/AuthModalContext';
 import {useAuthStatus} from '@site/src/hooks/useAuthStatus';
 import {useI18n} from '@site/src/contexts/I18nContext';
 import styles from './ReactionsBar.module.css';
+import {logger} from '../../lib/logger';
 
 const EMOJIS = ['👍', '🚀', '🎉', '❤️'] as const;
 
@@ -55,7 +56,7 @@ export default function ReactionsBar({slug}: Props) {
       }
 
       if (error) {
-        console.error('Unable to fetch reactions', error);
+        logger.error('Unable to fetch reactions', error);
         return;
       }
 
@@ -130,7 +131,7 @@ export default function ReactionsBar({slug}: Props) {
         }
       }
     } catch (error) {
-      console.error('Unable to update reaction', error);
+      logger.error('Unable to update reaction', error);
       setCounts(previousCounts);
       setUserReaction(previousReaction);
     } finally {

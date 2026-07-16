@@ -29,6 +29,9 @@ export default tseslint.config(
       },
     },
     rules: {
+      // Route logging through src/lib/logger instead of the console directly
+      // (issue #80). logger silences non-error logs in production.
+      'no-console': 'error',
       // Existing code relies on these patterns; tighten gradually (issue #57).
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/no-unused-vars': [
@@ -49,6 +52,13 @@ export default tseslint.config(
     files: ['scripts/**/*.js', 'postcss.config.js', 'tailwind.config.js'],
     rules: {
       '@typescript-eslint/no-require-imports': 'off',
+    },
+  },
+  {
+    // The logger wrapper and build scripts are allowed to use the console.
+    files: ['src/lib/logger.ts', 'scripts/**/*.js', 'api/**/*.ts'],
+    rules: {
+      'no-console': 'off',
     },
   },
 );

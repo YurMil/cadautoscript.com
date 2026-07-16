@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import {useColorMode} from '@docusaurus/theme-common';
 import {useUserSettings} from '@site/src/contexts/UserSettingsContext';
 import styles from './styles.module.css';
+import {logger} from '../../../lib/logger';
 
 type Props = {
   mobile?: boolean;
@@ -17,7 +18,7 @@ export default function ThemeToggleNavbarItem({mobile, className}: Props): React
 
   const handleToggle = () => {
     setColorMode(nextMode);
-    updateSettings({ default_theme: nextMode }).catch(console.error);
+    updateSettings({ default_theme: nextMode }).catch(logger.error);
   };
 
   if (mobile) {

@@ -8,6 +8,7 @@ import {useAuthModal} from '@site/src/contexts/AuthModalContext';
 import {listUtilityUsage, type UtilityUsageStat} from '@site/src/shared/utility-usage';
 import UsageRanking from '@site/src/components/UtilityUsage/UsageRanking';
 import styles from './index.module.css';
+import {logger} from '../../lib/logger';
 
 type Profile = {
   id: string;
@@ -76,7 +77,7 @@ export default function ProfilePage(): React.JSX.Element {
           return;
         }
         if (error && !shouldSilence(error.message)) {
-          console.error('[Supabase Auth] Unable to fetch session', error.message);
+          logger.error('[Supabase Auth] Unable to fetch session', error.message);
         }
         setUser(data?.session?.user ?? null);
       } catch (err) {
@@ -85,7 +86,7 @@ export default function ProfilePage(): React.JSX.Element {
         }
         const message =
           err instanceof Error ? err.message : 'Unable to fetch auth session.';
-        console.error('[Supabase Auth] Unable to fetch session', message);
+        logger.error('[Supabase Auth] Unable to fetch session', message);
       } finally {
         if (isMounted) {
           setAuthChecked(true);
@@ -148,7 +149,7 @@ export default function ProfilePage(): React.JSX.Element {
       }
 
       if (profileError && !shouldSilence(profileError.message)) {
-        console.error('[Supabase Profile] Unable to load profile', profileError.message);
+        logger.error('[Supabase Profile] Unable to load profile', profileError.message);
         setError('Unable to load your profile. Please try again.');
       }
 
@@ -191,7 +192,7 @@ export default function ProfilePage(): React.JSX.Element {
       } catch (err) {
         const message = err instanceof Error ? err.message : 'Unable to load utility usage.';
         if (!shouldSilence(message)) {
-          console.warn('[Profile] Unable to load utility usage', message);
+          logger.warn('[Profile] Unable to load utility usage', message);
         }
         if (isMounted) {
           setUsageStats([]);
@@ -282,7 +283,7 @@ export default function ProfilePage(): React.JSX.Element {
       .neq('id', user.id);
 
     if (usernameError && !shouldSilence(usernameError.message)) {
-      console.error('[Supabase Profile] Unable to validate username', usernameError.message);
+      logger.error('[Supabase Profile] Unable to validate username', usernameError.message);
       setError('Unable to validate username. Please try again.');
       setSaving(false);
       return;
@@ -307,7 +308,7 @@ export default function ProfilePage(): React.JSX.Element {
       .single();
 
     if (upsertError) {
-      console.error('[Supabase Profile] Unable to save profile', upsertError.message);
+      logger.error('[Supabase Profile] Unable to save profile', upsertError.message);
       setError('Unable to save your profile. Please try again.');
       setSaving(false);
       return;

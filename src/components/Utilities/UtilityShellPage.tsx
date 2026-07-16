@@ -13,6 +13,7 @@ import {useUserSettings} from '@site/src/contexts/UserSettingsContext';
 import {useI18n} from '@site/src/contexts/I18nContext';
 import {incrementUtilityUsage, shouldReportUtilityUsage} from '@site/src/shared/utility-usage';
 import type {UtilityPageConfig} from '@site/src/data/utilityShellPages';
+import {logger} from '../../lib/logger';
 
 type UtilityShellPageProps = UtilityPageConfig & {tool?: React.ReactNode};
 
@@ -84,7 +85,7 @@ export default function UtilityShellPage({tool, ...config}: UtilityShellPageProp
 
     void incrementUtilityUsage(trackedUtility.id).catch((err) => {
       const message = err instanceof Error ? err.message : 'Unable to increment utility usage.';
-      console.warn('[UtilityUsage] Unable to record utility launch', message);
+      logger.warn('[UtilityUsage] Unable to record utility launch', message);
     });
   }, [authChecked, isAuthenticated, isLocked, isCheckingAccess, trackedUtility, user?.id]);
 

@@ -1,6 +1,7 @@
 import {useEffect, useReducer, useRef} from 'react';
 import type {Dispatch} from 'react';
 import {INITIAL_STATE, QUICK_SCAN_DEBOUNCE_MS} from '../constants';
+import {logger} from '../../../lib/logger';
 import type {
   CapturedResult,
   ExtractorSettings,
@@ -252,7 +253,7 @@ export function usePdfNumberExtractor(runtimeConfig: PdfRuntimeConfig) {
         }
         if (file.size > MAX_FILE_BYTES) {
           skippedOversized += 1;
-          console.warn(
+          logger.warn(
             `[PdfNumberExtractor] Skipped "${file.name}" (${(file.size / 1024 / 1024).toFixed(1)} MB) — exceeds 200 MB limit`,
           );
           return false;
@@ -369,7 +370,7 @@ export function usePdfNumberExtractor(runtimeConfig: PdfRuntimeConfig) {
           });
         }
       } catch (error) {
-        console.error(`Error processing ${file.name}:`, error);
+        logger.error(`Error processing ${file.name}:`, error);
         if (analysisSessionRef.current !== sessionId) {
           return;
         }

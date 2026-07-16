@@ -1,3 +1,4 @@
+import {logger} from './logger';
 import type {
   SupabaseClient,
   AuthChangeEvent,
@@ -66,7 +67,7 @@ function lazyBuilder(getRoot: () => Promise<any>): any {
     {},
     {
       get(_target, prop: string | symbol) {
-        // Inspection/serialization (util.inspect & console.log probe symbol
+        // Inspection/serialization (util.inspect & logger.log probe symbol
         // keys like Symbol.toStringTag/inspect; JSON.stringify probes toJSON).
         // Returning a chainable function for those would recurse infinitely, so
         // answer `undefined`. Neither is a PostgREST query method.
@@ -144,7 +145,7 @@ function lazyChannel(name: string, opts?: unknown): any {
           rc.subscribe(callback);
         })
         .catch((err) => {
-          console.error(
+          logger.error(
             '[Supabase Realtime] Failed to lazy-load Supabase for channel',
             err,
           );
@@ -194,7 +195,7 @@ const facade = {
           realSubscription = c.auth.onAuthStateChange(callback).data.subscription;
         })
         .catch((err) => {
-          console.error(
+          logger.error(
             '[Supabase Auth] Failed to lazy-load Supabase for onAuthStateChange',
             err,
           );

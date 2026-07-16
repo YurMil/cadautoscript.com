@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
 import type {User} from '@supabase/supabase-js';
 import {supabase} from '@site/src/lib/supabaseClient';
+import {logger} from '../lib/logger';
 
 const shouldSilence = (message?: string | null) =>
   !message || message.toLowerCase().includes('auth session missing');
@@ -46,7 +47,7 @@ export function useAuthStatus(): AuthState {
             refresh_token: refreshToken,
           });
           if (error && !shouldSilence(error.message)) {
-            console.error('[Supabase Auth] Unable to set session from hash', error.message);
+            logger.error('[Supabase Auth] Unable to set session from hash', error.message);
           }
           if (isMounted) {
             setUser(data?.session?.user ?? null);
@@ -54,7 +55,7 @@ export function useAuthStatus(): AuthState {
         } catch (err) {
           const message = err instanceof Error ? err.message : 'Unable to set session from hash.';
           if (!shouldSilence(message)) {
-            console.error('[Supabase Auth] Hash handling failed', message);
+            logger.error('[Supabase Auth] Hash handling failed', message);
           }
         } finally {
           window.location.hash = '';
@@ -66,7 +67,7 @@ export function useAuthStatus(): AuthState {
       const errorDescription = url.searchParams.get('error_description');
 
       if (errorDescription && !shouldSilence(errorDescription)) {
-        console.error('[Supabase Auth] Redirect error', errorDescription);
+        logger.error('[Supabase Auth] Redirect error', errorDescription);
       }
 
       if (!code) return;
@@ -75,7 +76,7 @@ export function useAuthStatus(): AuthState {
         handledRedirect = true;
         const {data, error} = await supabase.auth.exchangeCodeForSession(code);
         if (error && !shouldSilence(error.message)) {
-          console.error('[Supabase Auth] Unable to exchange code for session', error.message);
+          logger.error('[Supabase Auth] Unable to exchange code for session', error.message);
         }
         if (isMounted) {
           setUser(data?.session?.user ?? null);
@@ -83,7 +84,7 @@ export function useAuthStatus(): AuthState {
       } catch (err) {
         const message = err instanceof Error ? err.message : 'Unable to complete auth redirect.';
         if (!shouldSilence(message)) {
-          console.error('[Supabase Auth] Redirect handling failed', message);
+          logger.error('[Supabase Auth] Redirect handling failed', message);
         }
       } finally {
         // Clean URL to avoid re-processing the code param on navigation
@@ -106,14 +107,14 @@ export function useAuthStatus(): AuthState {
         const {data, error} = await supabase.auth.getSession();
         if (!isMounted) return;
         if (error && !shouldSilence(error.message)) {
-          console.error('[Supabase Auth] Unable to fetch auth session', error.message);
+          logger.error('[Supabase Auth] Unable to fetch auth session', error.message);
         }
         setUser(data?.session?.user ?? null);
       } catch (err) {
         if (!isMounted) return;
         const message = err instanceof Error ? err.message : 'Unable to fetch auth session.';
         if (!shouldSilence(message)) {
-          console.error('[Supabase Auth] Unable to fetch auth session', message);
+          logger.error('[Supabase Auth] Unable to fetch auth session', message);
         }
       } finally {
         if (isMounted) {
