@@ -6,6 +6,7 @@ import {supabase} from '@site/src/lib/supabaseClient';
 import {useAuthModal} from '@site/src/contexts/AuthModalContext';
 import {useAuthStatus} from '@site/src/hooks/useAuthStatus';
 import styles from './NavbarAuth.module.css';
+import {logger} from '../../lib/logger';
 
 const shouldSilence = (message?: string | null) =>
   !message || message.toLowerCase().includes('auth session missing');
@@ -15,7 +16,7 @@ const reportError = (message?: string) => {
     return;
   }
   if (typeof console !== 'undefined') {
-    console.error(`[Supabase Auth] ${message}`);
+    logger.error(`[Supabase Auth] ${message}`);
   }
 };
 
@@ -54,7 +55,7 @@ export default function NavbarAuth(): React.JSX.Element {
         didUpdate = true;
         await supabase.from('profiles').update({last_seen_at: now}).eq('id', user.id);
       } catch (err) {
-        console.error('[Supabase Presence] Unable to update last_seen_at', err);
+        logger.error('[Supabase Presence] Unable to update last_seen_at', err);
       }
     };
     void updatePresence();

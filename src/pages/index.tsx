@@ -7,6 +7,7 @@ import {useAuthModal} from '@site/src/contexts/AuthModalContext';
 import {useAuthStatus} from '@site/src/hooks/useAuthStatus';
 import {useUtilitiesAccess} from '@site/src/hooks/useUtilitiesAccess';
 import {usePauseWhenOffscreen} from '@site/src/hooks/usePauseWhenOffscreen';
+import {logger} from '../lib/logger';
 import {
   listUtilityUsage,
   listGlobalUtilityPopularity,
@@ -151,7 +152,7 @@ export default function Home(): ReactNode {
         }
       } catch (err) {
         const message = err instanceof Error ? err.message : 'Unable to load utility usage.';
-        console.warn('[UtilityUsage] Unable to load utility ranking', message);
+        logger.warn('[UtilityUsage] Unable to load utility ranking', message);
         if (isMounted) {
           setUsageStats([]);
         }
@@ -182,7 +183,7 @@ export default function Home(): ReactNode {
       } catch (err) {
         const message =
           err instanceof Error ? err.message : 'Unable to load global utility ranking.';
-        console.warn('[UtilityUsage] Unable to load global ranking', message);
+        logger.warn('[UtilityUsage] Unable to load global ranking', message);
       }
     };
 

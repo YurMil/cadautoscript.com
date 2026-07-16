@@ -1,4 +1,5 @@
 import {supabase} from '@site/src/lib/supabaseClient';
+import {logger} from '../../lib/logger';
 
 /**
  * Admin dashboard analytics. All backed by admin-only SECURITY DEFINER RPCs
@@ -126,6 +127,6 @@ export async function logAdminEvent(
   });
   if (error) {
     // Non-fatal for the calling flow — surface via console only.
-    console.warn('[admin-analytics] logAdminEvent failed', error.message);
+    logger.warn('[admin-analytics] logAdminEvent failed', error.message);
   }
 }

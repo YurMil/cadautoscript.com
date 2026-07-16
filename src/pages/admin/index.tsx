@@ -13,6 +13,7 @@ import SettingsTab from '@site/src/components/AdminDashboard/SettingsTab';
 import InviteModal from '@site/src/components/AdminDashboard/InviteModal';
 import type {ActionState, CommentRow, ProfileRow, RoleValue} from '@site/src/components/AdminDashboard/types';
 import {supabase} from '@site/src/lib/supabaseClient';
+import {logger} from '../../lib/logger';
 import {
   DEFAULT_UTILITIES_PUBLIC_ACCESS,
   UTILITIES_PUBLIC_ACCESS_KEY,
@@ -92,7 +93,7 @@ export default function AdminPage(): React.JSX.Element {
       .order('created_at', {ascending: false});
 
     if (profilesFallbackError) {
-      console.error('[Admin] Unable to load profiles fallback', profilesFallbackError.message);
+      logger.error('[Admin] Unable to load profiles fallback', profilesFallbackError.message);
     } else if (rawProfiles) {
       const existingIds = new Set(merged.map((p: ProfileRow) => p.id));
       const missing = rawProfiles.filter((p) => !existingIds.has(p.id));
@@ -100,7 +101,7 @@ export default function AdminPage(): React.JSX.Element {
     }
 
     if (profilesError && !merged.length) {
-      console.error('[Admin] Unable to fetch profiles', profilesError.message);
+      logger.error('[Admin] Unable to fetch profiles', profilesError.message);
       setError('Unable to load users.');
     }
 
@@ -119,7 +120,7 @@ export default function AdminPage(): React.JSX.Element {
         .maybeSingle();
 
       if (error) {
-        console.error('[Admin] Unable to load site settings', error.message);
+        logger.error('[Admin] Unable to load site settings', error.message);
         setError('Unable to load site settings.');
         return;
       }
@@ -130,7 +131,7 @@ export default function AdminPage(): React.JSX.Element {
       }
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Unable to load site settings.';
-      console.error('[Admin] Unable to load site settings', message);
+      logger.error('[Admin] Unable to load site settings', message);
       setError('Unable to load site settings.');
     } finally {
       setSettingsLoading(false);
@@ -148,7 +149,7 @@ export default function AdminPage(): React.JSX.Element {
       setPerUserUsage(perUser);
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Unable to load usage analytics.';
-      console.error('[Admin] Unable to load usage analytics', message);
+      logger.error('[Admin] Unable to load usage analytics', message);
       setError('Unable to load usage analytics.');
     } finally {
       // Mark as loaded even on failure so the lazy-load effect doesn't retry
@@ -165,7 +166,7 @@ export default function AdminPage(): React.JSX.Element {
       setStats(result);
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Unable to load dashboard stats.';
-      console.error('[Admin] Unable to load dashboard stats', message);
+      logger.error('[Admin] Unable to load dashboard stats', message);
       setError('Unable to load dashboard stats.');
     } finally {
       setStatsLoaded(true);
@@ -189,7 +190,7 @@ export default function AdminPage(): React.JSX.Element {
         setAuditHasMore(rows.length === AUDIT_PAGE_SIZE);
       } catch (err) {
         const message = err instanceof Error ? err.message : 'Unable to load audit log.';
-        console.error('[Admin] Unable to load audit log', message);
+        logger.error('[Admin] Unable to load audit log', message);
         setError('Unable to load audit log.');
       } finally {
         setAuditLoaded(true);
@@ -222,7 +223,7 @@ export default function AdminPage(): React.JSX.Element {
 
         if (!isMounted) return;
         if (profileError) {
-          console.error('[Admin] Unable to fetch profile', profileError.message);
+          logger.error('[Admin] Unable to fetch profile', profileError.message);
           setError('Unable to verify permissions.');
           history.replace('/');
           return;
@@ -278,7 +279,7 @@ export default function AdminPage(): React.JSX.Element {
         .limit(50);
 
       if (commentsError) {
-        console.error('[Admin] Unable to fetch comments', commentsError.message);
+        logger.error('[Admin] Unable to fetch comments', commentsError.message);
         setError('Unable to load comments.');
         setLoadingComments(false);
         return;
@@ -333,7 +334,7 @@ export default function AdminPage(): React.JSX.Element {
     setActionState({kind: 'deleting', targetId: commentId});
     const {error: deleteError} = await supabase.from('comments').delete().eq('id', commentId);
     if (deleteError) {
-      console.error('[Admin] Unable to delete comment', deleteError.message);
+      logger.error('[Admin] Unable to delete comment', deleteError.message);
       setError('Unable to delete comment. Check RLS or permissions.');
       setActionState({kind: 'idle'});
       return;
@@ -355,7 +356,7 @@ export default function AdminPage(): React.JSX.Element {
     setToast(null);
     const {error: roleError} = await supabase.from('profiles').update({role: newRole}).eq('id', userId);
     if (roleError) {
-      console.error('[Admin] Unable to update role', roleError.message);
+      logger.error('[Admin] Unable to update role', roleError.message);
       setError('Unable to update role.');
       setRoleUpdating(null);
       return;
@@ -380,13 +381,13 @@ export default function AdminPage(): React.JSX.Element {
       p_target: userId,
     });
     if (auditError) {
-      console.warn('[Admin] Unable to write deletion audit entry', auditError.message);
+      logger.warn('[Admin] Unable to write deletion audit entry', auditError.message);
     }
     const {error: fnError} = await supabase.functions.invoke('super-function', {
       body: {action: 'delete', targetUserId: userId},
     });
     if (fnError) {
-      console.error('[Admin] Unable to delete user', fnError.message);
+      logger.error('[Admin] Unable to delete user', fnError.message);
       setError('Не удалось удалить пользователя. Проверьте edge function или права.');
       setActionState({kind: 'idle'});
       return;
@@ -414,7 +415,7 @@ export default function AdminPage(): React.JSX.Element {
       );
 
     if (updateError) {
-      console.error('[Admin] Unable to update utilities access', updateError.message);
+      logger.error('[Admin] Unable to update utilities access', updateError.message);
       setError('Unable to update utilities access setting.');
       setSettingsSaving(false);
       return;
@@ -437,7 +438,7 @@ export default function AdminPage(): React.JSX.Element {
       body: {action: 'invite', email: inviteEmail},
     });
     if (fnError) {
-      console.error('[Admin] Unable to invite user', fnError.message);
+      logger.error('[Admin] Unable to invite user', fnError.message);
       setError('Не удалось отправить приглашение. Проверьте edge function или права.');
       setActionState({kind: 'idle'});
       return;

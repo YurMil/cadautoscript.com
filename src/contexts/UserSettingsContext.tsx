@@ -1,6 +1,7 @@
 import React, {createContext, useContext, useEffect, useState} from 'react';
 import {supabase} from '@site/src/lib/supabaseClient';
 import {useAuthStatus} from '@site/src/hooks/useAuthStatus';
+import {logger} from '../lib/logger';
 
 export type UserSettings = {
   smart_sorting: boolean;
@@ -99,7 +100,7 @@ export function UserSettingsProvider({children}: {children: React.ReactNode}) {
           fullscreen_utilities: data.fullscreen_utilities ?? defaultSettings.fullscreen_utilities,
         });
       } else if (error && error.code !== 'PGRST116') {
-        console.error('Error fetching user settings:', error.message);
+        logger.error('Error fetching user settings:', error.message);
       } else {
         // No settings exist yet, let's migrate legacy local storage keys
         let initialDisplayMode = defaultSettings.utility_display_mode;
@@ -131,7 +132,7 @@ export function UserSettingsProvider({children}: {children: React.ReactNode}) {
             ...migratedSettings,
             updated_at: new Date().toISOString(),
           });
-          if (insertErr) console.error('Failed to save migrated settings:', insertErr.message);
+          if (insertErr) logger.error('Failed to save migrated settings:', insertErr.message);
         })();
       }
       

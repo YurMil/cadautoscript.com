@@ -5,6 +5,7 @@ import {useAuthModal} from '@site/src/contexts/AuthModalContext';
 import {useI18n} from '@site/src/contexts/I18nContext';
 import {getAuthRedirectUrl, rememberReturnTo} from '@site/src/utils/authRedirect';
 import styles from './LoginModal.module.css';
+import {logger} from '../../lib/logger';
 
 const providers: Array<{provider: Provider; labelKey: string; className: string; Icon: () => React.JSX.Element}> = [
   {
@@ -72,7 +73,7 @@ export default function LoginModal(): React.JSX.Element | null {
     } catch (error_) {
       const message =
         error_ instanceof Error ? error_.message : t('authModal.error');
-      console.error('[Supabase Auth] Unable to sign in', message);
+      logger.error('[Supabase Auth] Unable to sign in', message);
       setError(message);
     }
   };

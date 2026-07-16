@@ -2,6 +2,7 @@ import React, {Suspense, lazy, useEffect, useRef, useState} from 'react';
 import type {EmojiClickData} from 'emoji-picker-react';
 import {supabase} from '@site/src/lib/supabaseClient';
 import styles from './Comments.module.css';
+import {logger} from '../../lib/logger';
 
 const EmojiPicker = lazy(() => import('emoji-picker-react'));
 
@@ -29,7 +30,7 @@ export default function EmojiPickerBtn({onEmojiSelect}: Props): React.JSX.Elemen
       const {data, error} = await supabase.from('custom_emojis').select('name, url');
       if (!active) return;
       if (error) {
-        console.error('[Comments] Unable to fetch custom emojis', error.message);
+        logger.error('[Comments] Unable to fetch custom emojis', error.message);
         return;
       }
       const mapped: CustomEmoji[] =

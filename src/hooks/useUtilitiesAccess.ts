@@ -1,5 +1,6 @@
 import {useEffect, useState} from 'react';
 import {supabase} from '@site/src/lib/supabaseClient';
+import {logger} from '../lib/logger';
 import {
   DEFAULT_UTILITIES_PUBLIC_ACCESS,
   UTILITIES_PUBLIC_ACCESS_KEY,
@@ -27,7 +28,7 @@ export function useUtilitiesAccess(): UtilitiesAccessState {
           .maybeSingle();
 
         if (error) {
-          console.error('[Settings] Unable to load utilities access setting', error.message);
+          logger.error('[Settings] Unable to load utilities access setting', error.message);
           return;
         }
 
@@ -37,7 +38,7 @@ export function useUtilitiesAccess(): UtilitiesAccessState {
         }
       } catch (err) {
         const message = err instanceof Error ? err.message : 'Unable to load utilities access setting.';
-        console.error('[Settings] Unable to load utilities access setting', message);
+        logger.error('[Settings] Unable to load utilities access setting', message);
       } finally {
         if (isMounted) {
           setSettingsChecked(true);

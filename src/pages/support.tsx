@@ -4,6 +4,7 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import {PAYPAL_LINK, STRIPE_CHECKOUT_API} from '@site/src/constants/support';
 import {useI18n} from '@site/src/contexts/I18nContext';
 import styles from './support.module.css';
+import {logger} from '../lib/logger';
 
 declare global {
   interface Window {
@@ -213,7 +214,7 @@ export default function SupportPage(): React.JSX.Element {
 
       window.location.assign(url);
     } catch (error) {
-      console.error(error);
+      logger.error(error);
       setStripeStatus('error');
     }
   };

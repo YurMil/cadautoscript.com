@@ -8,6 +8,7 @@ import {useAuthModal} from '@site/src/contexts/AuthModalContext';
 import {useAuthStatus} from '@site/src/hooks/useAuthStatus';
 import {useI18n} from '@site/src/contexts/I18nContext';
 import {LOCALES} from '@site/src/i18n';
+import {logger} from '../../lib/logger';
 import {
   resetUserSettings,
   resetUserAnalytics,
@@ -84,7 +85,7 @@ function SettingsContent(): React.JSX.Element {
       }
 
       if (settingsError && !shouldSilence(settingsError.message)) {
-        console.error('[Supabase Settings] Unable to load settings', settingsError.message);
+        logger.error('[Supabase Settings] Unable to load settings', settingsError.message);
         setError(t('settings.errorLoad'));
       }
 
@@ -146,7 +147,7 @@ function SettingsContent(): React.JSX.Element {
       });
 
     if (upsertError) {
-      console.error('[Supabase Settings] Unable to save settings', upsertError.message);
+      logger.error('[Supabase Settings] Unable to save settings', upsertError.message);
       setError(t('settings.errorSave'));
       setSaving(false);
       return;
@@ -194,7 +195,7 @@ function SettingsContent(): React.JSX.Element {
       }
       setSuccess(t('settings.dangerZone.resetSettingsDone'));
     } catch (err) {
-      console.error('[Settings] reset settings failed', err);
+      logger.error('[Settings] reset settings failed', err);
       setError(t('settings.dangerZone.actionError'));
     } finally {
       setDangerBusy(null);
@@ -217,7 +218,7 @@ function SettingsContent(): React.JSX.Element {
         t('settings.dangerZone.resetAnalyticsDone').replace('{count}', String(removed)),
       );
     } catch (err) {
-      console.error('[Settings] reset analytics failed', err);
+      logger.error('[Settings] reset analytics failed', err);
       setError(t('settings.dangerZone.actionError'));
     } finally {
       setDangerBusy(null);
@@ -240,7 +241,7 @@ function SettingsContent(): React.JSX.Element {
       setDeleteModalOpen(false);
       history.push('/');
     } catch (err) {
-      console.error('[Settings] delete account failed', err);
+      logger.error('[Settings] delete account failed', err);
       setError(t('settings.dangerZone.actionError'));
       setDangerBusy(null);
     }

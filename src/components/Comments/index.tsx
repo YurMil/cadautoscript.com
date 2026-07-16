@@ -10,6 +10,7 @@ import {normalizeProfile} from '@site/src/utils/normalizeProfile';
 import RichCommentInput, {type RichCommentInputHandle} from './RichCommentInput';
 import EmojiPickerBtn from './EmojiPickerBtn';
 import styles from './Comments.module.css';
+import {logger} from '../../lib/logger';
 
 type Props = {
   slug: string;
@@ -65,7 +66,7 @@ export default function Comments({slug}: Props): React.JSX.Element {
       .order('created_at', {ascending: true});
 
     if (fetchError) {
-      console.error('[Supabase] Failed to fetch comments', fetchError.message);
+      logger.error('[Supabase] Failed to fetch comments', fetchError.message);
       setError(t('comments.loadError'));
       setLoading(false);
       return;
@@ -96,7 +97,7 @@ export default function Comments({slug}: Props): React.JSX.Element {
         .maybeSingle();
 
       if (profileError) {
-        console.error('[Supabase] Unable to fetch profile', profileError.message);
+        logger.error('[Supabase] Unable to fetch profile', profileError.message);
         return;
       }
       setProfile(data ?? null);
@@ -131,7 +132,7 @@ export default function Comments({slug}: Props): React.JSX.Element {
     });
 
     if (insertError) {
-      console.error('[Supabase] Unable to post comment', insertError.message);
+      logger.error('[Supabase] Unable to post comment', insertError.message);
       setError(t('comments.postError'));
       setSubmitting(false);
       return;
