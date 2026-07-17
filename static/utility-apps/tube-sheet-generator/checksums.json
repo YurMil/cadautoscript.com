@@ -2,7 +2,7 @@
   "files": [
     {
       "path": "app.html",
-      "sha256": "597069ffe0c174f9360b29b82e99291d8a22ed5e9c784234a605bdb6193ff79a",
+      "sha256": "f77dd287f228f2027123805142288069a0c7f5d4ca96517b1cbe54b1af5bb74d",
       "bytes": 407
     },
     {
@@ -11,14 +11,14 @@
       "bytes": 4894
     },
     {
-      "path": "assets/index-BPYltr0y.css",
-      "sha256": "91bc4f26ef8122a22632bf285708ebcf395dd7c8c2e1ecba1725925b0cd6ebef",
-      "bytes": 9261
+      "path": "assets/index-CcKcbUOP.css",
+      "sha256": "3a9e81867266bcf6c1aaa4cdd49b67b6879edd30acfcb5b9ec85801ea38e9e3e",
+      "bytes": 9749
     },
     {
-      "path": "assets/index-C47oUDs5.js",
-      "sha256": "4c62ac84d5613e09115173ebccf5675b87393ac3b980b1eff836cd49546b77d9",
-      "bytes": 227508
+      "path": "assets/index-CD4tAapp.js",
+      "sha256": "7235e5bff7707e89148fab93ce0dd68737341b792a0057d35dc6836cd5d1622e",
+      "bytes": 230689
     },
     {
       "path": "assets/replicad_single-BXInhmaQ.wasm",
@@ -37,7 +37,7 @@
     },
     {
       "path": "manifest.json",
-      "sha256": "5662de85acbb87b82556d84aa17fe28953328bdc29c8d573263ac49e0eddf1f5",
+      "sha256": "8a575b608765110db6a88f13c96757327d928edcaeb74a8a34585f653cfdfd14",
       "bytes": 670
     }
   ]
