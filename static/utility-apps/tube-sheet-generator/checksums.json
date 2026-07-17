@@ -2,7 +2,7 @@
   "files": [
     {
       "path": "app.html",
-      "sha256": "ab6f22939abac00d36f3154a31b9b8117141caef69e931e938a45f36dd814458",
+      "sha256": "232e7e0f79982ba5288fabf09d6747f55951e512bb7bee68a0851cd6e07d9c31",
       "bytes": 407
     },
     {
@@ -11,14 +11,14 @@
       "bytes": 4894
     },
     {
-      "path": "assets/index-C4wYWdU6.js",
-      "sha256": "1359a599abd85cee76adef37743b6103a47f28b2290eac2b026c238283116a9b",
-      "bytes": 236445
+      "path": "assets/index-CCG5s6l4.css",
+      "sha256": "83f6b28cf1da48353ca920ecc9f0c61f13f6d345a792e6f151e53f90c6d88aea",
+      "bytes": 10402
     },
     {
-      "path": "assets/index-CcKcbUOP.css",
-      "sha256": "3a9e81867266bcf6c1aaa4cdd49b67b6879edd30acfcb5b9ec85801ea38e9e3e",
-      "bytes": 9749
+      "path": "assets/index-CpvobHgG.js",
+      "sha256": "190be54c242d5bb21d0f52aac1ee026a922232a992e80b8fd0d527f58eef5180",
+      "bytes": 236853
     },
     {
       "path": "assets/layout-worker-ChqlxxPU.js",
@@ -42,8 +42,8 @@
     },
     {
       "path": "manifest.json",
-      "sha256": "a92203b30bfc48b51684d20a11b761d57a1be18a4069c612bbae368b7019f67a",
-      "bytes": 753
+      "sha256": "7a4427737bcd6276fc4f6c12496d6c9df8c8eadc14e310a3ffe44cf682dd4af9",
+      "bytes": 754
     }
   ]
 }
