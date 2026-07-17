@@ -2,7 +2,7 @@
   "files": [
     {
       "path": "app.html",
-      "sha256": "f77dd287f228f2027123805142288069a0c7f5d4ca96517b1cbe54b1af5bb74d",
+      "sha256": "c0986d20297f76faf36d774765481b7e416632222540ab8d35c6d65192bd57ec",
       "bytes": 407
     },
     {
@@ -11,14 +11,14 @@
       "bytes": 4894
     },
     {
+      "path": "assets/index-BIhkxIep.js",
+      "sha256": "3334bc5ae62673b75e72228151853465d5e59bf9aa12f5d3222512b4e9ca40ae",
+      "bytes": 235190
+    },
+    {
       "path": "assets/index-CcKcbUOP.css",
       "sha256": "3a9e81867266bcf6c1aaa4cdd49b67b6879edd30acfcb5b9ec85801ea38e9e3e",
       "bytes": 9749
-    },
-    {
-      "path": "assets/index-CD4tAapp.js",
-      "sha256": "7235e5bff7707e89148fab93ce0dd68737341b792a0057d35dc6836cd5d1622e",
-      "bytes": 230689
     },
     {
       "path": "assets/replicad_single-BXInhmaQ.wasm",
@@ -37,7 +37,7 @@
     },
     {
       "path": "manifest.json",
-      "sha256": "ebf722b0388798ab2c71681441f3afac3b5a9e54428e7da7659375fea2036ac2",
+      "sha256": "7437ab05a9bc9999ac1cead2c2a68c9a1d86edde81166ee25c9708278b5d32d5",
       "bytes": 670
     }
   ]
