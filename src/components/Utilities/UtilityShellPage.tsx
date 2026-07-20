@@ -18,6 +18,15 @@ import {
 } from '@site/src/shared/utility-usage';
 import type {UtilityPageConfig} from '@site/src/data/utilityShellPages';
 import UtilityErrorBoundary from './UtilityErrorBoundary';
+import {
+  SHARE_MESSAGE_RESTORE,
+  SHARE_MESSAGE_STATE_UPDATE,
+  SHARE_MESSAGE_SUPPORT,
+  SHARE_PARAM,
+  SHARE_SCHEMA_VERSION,
+  decodeUtilityState,
+  encodeUtilityState,
+} from '../../lib/utilityShare';
 import {logger} from '../../lib/logger';
 
 type UtilityShellPageProps = UtilityPageConfig & {tool?: React.ReactNode};
@@ -56,6 +65,62 @@ export default function UtilityShellPage({tool, ...config}: UtilityShellPageProp
 
   const [isFullscreen, setIsFullscreen] = React.useState(false);
   const [isInfoCollapsed, setIsInfoCollapsed] = React.useState(false);
+
+  // Share-link protocol (issue #113): utilities that speak the postMessage
+  // protocol announce support, stream their input state to the shell, and can
+  // restore state from a shared `?calc=` URL. See
+  // dev-plans/utility-share-protocol.md for the app-side contract.
+  const iframeRef = React.useRef<HTMLIFrameElement>(null);
+  const latestToolState = React.useRef<unknown>(null);
+  const [shareSupported, setShareSupported] = React.useState(false);
+  const [linkCopied, setLinkCopied] = React.useState(false);
+
+  React.useEffect(() => {
+    const onMessage = (event: MessageEvent) => {
+      // Utility apps are same-origin static bundles; ignore everything else,
+      // including messages from other frames on the page.
+      if (event.origin !== window.location.origin) return;
+      if (!iframeRef.current || event.source !== iframeRef.current.contentWindow) return;
+      const data: unknown = event.data;
+      if (!data || typeof data !== 'object') return;
+      const {type} = data as {type?: unknown};
+
+      if (type === SHARE_MESSAGE_SUPPORT) {
+        setShareSupported(true);
+        const encoded = new URLSearchParams(window.location.search).get(SHARE_PARAM);
+        const state = decodeUtilityState(encoded);
+        if (state !== null && iframeRef.current.contentWindow) {
+          iframeRef.current.contentWindow.postMessage(
+            {type: SHARE_MESSAGE_RESTORE, version: SHARE_SCHEMA_VERSION, state},
+            window.location.origin,
+          );
+        }
+      } else if (type === SHARE_MESSAGE_STATE_UPDATE) {
+        latestToolState.current = (data as {state?: unknown}).state ?? null;
+      }
+    };
+    window.addEventListener('message', onMessage);
+    return () => window.removeEventListener('message', onMessage);
+  }, []);
+
+  const copyShareLink = React.useCallback(() => {
+    const url = new URL(window.location.href);
+    const encoded = encodeUtilityState(latestToolState.current);
+    if (encoded) {
+      url.searchParams.set(SHARE_PARAM, encoded);
+    } else {
+      url.searchParams.delete(SHARE_PARAM);
+    }
+    navigator.clipboard
+      .writeText(url.toString())
+      .then(() => {
+        setLinkCopied(true);
+        window.setTimeout(() => setLinkCopied(false), 2000);
+      })
+      .catch((err) => {
+        logger.warn('[UtilityShare] Unable to copy share link', err);
+      });
+  }, []);
 
   React.useEffect(() => {
     document.body.classList.add('utility-shell-page');
@@ -147,7 +212,14 @@ export default function UtilityShellPage({tool, ...config}: UtilityShellPageProp
           <div className="h-full overflow-y-auto">{tool}</div>
         </div>
       ) : (
-        <iframe className="tool-frame" src={iframeSrc} title={title} loading="lazy" data-nobrokenlinkcheck></iframe>
+        <iframe
+          ref={iframeRef}
+          className="tool-frame"
+          src={iframeSrc}
+          title={title}
+          loading="lazy"
+          data-nobrokenlinkcheck
+        ></iframe>
       )}
     </UtilityErrorBoundary>
   );
@@ -198,6 +270,11 @@ export default function UtilityShellPage({tool, ...config}: UtilityShellPageProp
             </div>
           ) : null}
           <div className="utility-toolbar" role="toolbar">
+            {shareSupported ? (
+              <button className="utility-toggle" type="button" onClick={copyShareLink}>
+                {linkCopied ? t('utility.linkCopied') : t('utility.copyLink')}
+              </button>
+            ) : null}
             <button
               className="utility-toggle"
               type="button"

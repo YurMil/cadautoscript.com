@@ -51,6 +51,8 @@ export const en = {
     errorCopy:
       '{name} ran into an unexpected error. Your other tabs and tools are unaffected. Reloading the tool usually fixes it.',
     reloadTool: 'Reload tool',
+    copyLink: 'Copy link to this calculation',
+    linkCopied: 'Link copied',
     guestExportNotice:
       'You are using {name} as a guest — all calculations are free. Sign in to sync your preferences across devices; saved calculations are coming soon.',
     backToUtilities: 'Back to Web utilities',
