@@ -218,6 +218,7 @@ export default function UtilityShellPage({tool, ...config}: UtilityShellPageProp
           src={iframeSrc}
           title={title}
           loading="lazy"
+          allow="camera 'self'"
           data-nobrokenlinkcheck
         ></iframe>
       )}
