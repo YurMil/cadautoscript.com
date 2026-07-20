@@ -1,0 +1,42 @@
+name: Project Excel Report
+
+on:
+  workflow_dispatch:
+    inputs:
+      project_number:
+        description: "GitHub Project number"
+        default: "2"
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install openpyxl
+
+      - name: Generate Excel report
+        env:
+          # The default GITHUB_TOKEN cannot read user-level Projects.
+          # Create a classic PAT with `project` scope (or fine-grained with
+          # Projects read) and store it as the PROJECT_REPORT_TOKEN secret.
+          GITHUB_TOKEN: ${{ secrets.PROJECT_REPORT_TOKEN }}
+          PROJECT_OWNER: YurMil
+          PROJECT_NUMBER: ${{ inputs.project_number }}
+          OUTPUT_FILE: project-report.xlsx
+        run: python scripts/report/generate_project_report.py
+
+      - name: Upload report artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: project-report-${{ github.run_number }}
+          path: project-report.xlsx
+          retention-days: 90
