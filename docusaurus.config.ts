@@ -4,6 +4,7 @@ dotenv.config({path: './.env.local'});
 import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
+import {BundleAnalyzerPlugin} from 'webpack-bundle-analyzer';
 
 const config: Config = {
   title: 'CAD AutoScript',
@@ -60,7 +61,7 @@ const config: Config = {
           const analyzerPlugins =
             process.env.ANALYZE && !isServer
               ? [
-                  new (require('webpack-bundle-analyzer').BundleAnalyzerPlugin)({
+                  new BundleAnalyzerPlugin({
                     analyzerMode: 'static',
                     reportFilename: '../bundle-report.html',
                     openAnalyzer: false,
