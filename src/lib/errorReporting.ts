@@ -62,6 +62,23 @@ export function reportClientError({message, stack, context}: ClientErrorReport):
     });
 }
 
+/**
+ * Non-Error rejection reasons (plain objects, response payloads) stringify to
+ * "[object Object]", which is useless and makes every such rejection dedupe
+ * into one entry. Serialize them instead.
+ */
+function describeRejection(reason: unknown): string {
+  if (reason instanceof Error) return reason.message;
+  if (typeof reason === 'object' && reason !== null) {
+    try {
+      return JSON.stringify(reason).slice(0, 500);
+    } catch {
+      return String(reason);
+    }
+  }
+  return String(reason);
+}
+
 /** Attaches global uncaught-error and unhandled-rejection listeners (idempotent). */
 let installed = false;
 export function installGlobalErrorReporting(): void {
@@ -71,6 +88,9 @@ export function installGlobalErrorReporting(): void {
   window.addEventListener('error', (event) => {
     // Resource load errors (img/script) surface as plain Events without error info.
     if (!event.message && !event.error) return;
+    // Cross-origin scripts report an opaque "Script error." with no stack or
+    // location — pure noise, skip it.
+    if (event.message === 'Script error.' && !event.error) return;
     reportClientError({
       message: event.message || String(event.error),
       stack: event.error instanceof Error ? event.error.stack : null,
@@ -80,8 +100,7 @@ export function installGlobalErrorReporting(): void {
   window.addEventListener('unhandledrejection', (event) => {
     const reason: unknown = event.reason;
     reportClientError({
-      message:
-        reason instanceof Error ? `Unhandled rejection: ${reason.message}` : `Unhandled rejection: ${String(reason)}`,
+      message: `Unhandled rejection: ${describeRejection(reason)}`,
       stack: reason instanceof Error ? reason.stack : null,
     });
   });
