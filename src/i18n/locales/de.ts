@@ -48,6 +48,11 @@ export const de: TranslationDict = {
     checkingAccess: 'Zugang wird geprüft…',
     holdOn: 'Bitte warten',
     verifyingSession: 'Ihre Sitzung für {name} wird überprüft.',
+    errorEyebrow: 'Etwas ist schiefgelaufen',
+    errorTitle: 'Dieses Tool ist abgestürzt',
+    errorCopy:
+      'In {name} ist ein unerwarteter Fehler aufgetreten. Ihre anderen Tabs und Tools sind nicht betroffen. Ein Neuladen des Tools behebt das Problem meist.',
+    reloadTool: 'Tool neu laden',
     backToUtilities: 'Zurück zu den Web-Dienstprogrammen',
     macroCatalog: 'Makrokatalog',
     viewFreeUtilities: 'Kostenlose Tools anzeigen',

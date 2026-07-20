@@ -46,6 +46,11 @@ export const en = {
     checkingAccess: 'Checking access…',
     holdOn: 'Hold on',
     verifyingSession: 'Verifying your session for {name}.',
+    errorEyebrow: 'Something went wrong',
+    errorTitle: 'This tool crashed',
+    errorCopy:
+      '{name} ran into an unexpected error. Your other tabs and tools are unaffected. Reloading the tool usually fixes it.',
+    reloadTool: 'Reload tool',
     backToUtilities: 'Back to Web utilities',
     macroCatalog: 'Macro catalog',
     viewFreeUtilities: 'View free utilities',

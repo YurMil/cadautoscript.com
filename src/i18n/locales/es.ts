@@ -48,6 +48,11 @@ export const es: TranslationDict = {
     checkingAccess: 'Verificando acceso…',
     holdOn: 'Un momento',
     verifyingSession: 'Verificando tu sesión para {name}.',
+    errorEyebrow: 'Algo salió mal',
+    errorTitle: 'Esta herramienta ha fallado',
+    errorCopy:
+      '{name} encontró un error inesperado. Tus otras pestañas y herramientas no se ven afectadas. Recargar la herramienta suele solucionarlo.',
+    reloadTool: 'Recargar herramienta',
     backToUtilities: 'Volver a las utilidades web',
     macroCatalog: 'Catálogo de macros',
     viewFreeUtilities: 'Ver utilidades gratuitas',
