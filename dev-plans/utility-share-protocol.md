@@ -75,8 +75,8 @@ Rules for app authors:
 
 | App | Repo | Status |
 |---|---|---|
-| Blind Flange Calculator | (standalone Vite app) | pending |
-| Dished End Calculator | (standalone Vite app) | pending |
-| Cylindrical Shell Rolling | (standalone Vite app) | pending |
+| Blind Flange Calculator | YurMil/Blind-Flange-Calculator | PR #22 open |
+| Dished End Calculator | YurMil/pressure-vessel-dished-end-calc | PR #7 open |
+| Cylindrical Shell Rolling | YurMil/Shell-Rolling-Master | PR #3 open |
 
 Update this table as apps adopt the protocol.
