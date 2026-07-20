@@ -652,3 +652,24 @@ html[data-theme='light'] .utility-related__card:hover {
   border-color: rgba(15, 118, 110, 0.45);
   background: rgba(15, 118, 110, 0.05);
 }
+
+/* Guest notice (issue #112): shown under the tool frame for signed-out
+   visitors when the site setting gates exports behind sign-in. */
+.utility-guest-notice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 0.75rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(45, 212, 191, 0.35);
+  border-radius: 10px;
+  background: rgba(45, 212, 191, 0.08);
+  font-size: 0.85rem;
+}
+
+html[data-theme='light'] .utility-guest-notice {
+  border-color: rgba(15, 118, 110, 0.35);
+  background: rgba(15, 118, 110, 0.06);
+}

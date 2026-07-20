@@ -53,6 +53,8 @@ export const et: TranslationDict = {
     errorCopy:
       '{name} sattus ootamatule veale. Sinu teised vahekaardid ja tööriistad ei ole mõjutatud. Tööriista uuesti laadimine tavaliselt lahendab probleemi.',
     reloadTool: 'Laadi tööriist uuesti',
+    guestExportNotice:
+      'Kasutad rakendust {name} külalisena — kõik arvutused on tasuta. Logi sisse, et sünkroonida oma eelistused seadmete vahel; arvutuste salvestamine on peagi tulekul.',
     backToUtilities: 'Tagasi veebitööriistade juurde',
     macroCatalog: 'Makrode kataloog',
     viewFreeUtilities: 'Vaata tasuta utiliite',

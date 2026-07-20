@@ -183,6 +183,24 @@ export async function incrementUtilityUsage(utilityId: string): Promise<void> {
   }
 }
 
+/**
+ * Anonymous launch counter — aggregate only, no identity attached. The backing
+ * `increment_guest_utility_usage` RPC validates the id and upserts a single
+ * per-utility row (see issue #112).
+ */
+export async function incrementGuestUtilityUsage(utilityId: string): Promise<void> {
+  const trimmedUtilityId = utilityId.trim();
+  if (!trimmedUtilityId) return;
+
+  const {error} = await supabase.rpc('increment_guest_utility_usage', {
+    p_utility_id: trimmedUtilityId,
+  });
+
+  if (error) {
+    throw new Error(`incrementGuestUtilityUsage: ${error.message}`);
+  }
+}
+
 export function shouldReportUtilityUsage(utilityId: string, userId: string | null): boolean {
   if (!userId) return false;
 
