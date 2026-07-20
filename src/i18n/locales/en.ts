@@ -52,7 +52,7 @@ export const en = {
       '{name} ran into an unexpected error. Your other tabs and tools are unaffected. Reloading the tool usually fixes it.',
     reloadTool: 'Reload tool',
     guestExportNotice:
-      'You are using {name} as a guest — all calculations are free. Sign in to unlock file exports and saved work.',
+      'You are using {name} as a guest — all calculations are free. Sign in to sync your preferences across devices; saved calculations are coming soon.',
     backToUtilities: 'Back to Web utilities',
     macroCatalog: 'Macro catalog',
     viewFreeUtilities: 'View free utilities',

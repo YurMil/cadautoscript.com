@@ -198,23 +198,23 @@ export default function UtilityShellPage({tool, ...config}: UtilityShellPageProp
             </div>
           ) : null}
           <div className="utility-toolbar" role="toolbar">
-              <button 
-                className="utility-toggle" 
-                type="button" 
-                aria-expanded={!isInfoCollapsed}
-                onClick={toggleInfo}
-              >
-                {isInfoCollapsed ? t('utility.showInfo') : t('utility.hideInfo')}
-              </button>
-              <button 
-                className="utility-fullscreen" 
-                type="button" 
-                aria-pressed={isFullscreen}
-                onClick={toggleFullscreen}
-              >
-                {isFullscreen ? t('utility.exitFullScreen') : t('utility.fullScreen')}
-              </button>
-            </div>
+            <button
+              className="utility-toggle"
+              type="button"
+              aria-expanded={!isInfoCollapsed}
+              onClick={toggleInfo}
+            >
+              {isInfoCollapsed ? t('utility.showInfo') : t('utility.hideInfo')}
+            </button>
+            <button
+              className="utility-fullscreen"
+              type="button"
+              aria-pressed={isFullscreen}
+              onClick={toggleFullscreen}
+            >
+              {isFullscreen ? t('utility.exitFullScreen') : t('utility.fullScreen')}
+            </button>
+          </div>
           <div className="utility-reactions">
             <ReactionsBar slug={reactionsSlug} />
           </div>

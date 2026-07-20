@@ -54,7 +54,7 @@ export const de: TranslationDict = {
       'In {name} ist ein unerwarteter Fehler aufgetreten. Ihre anderen Tabs und Tools sind nicht betroffen. Ein Neuladen des Tools behebt das Problem meist.',
     reloadTool: 'Tool neu laden',
     guestExportNotice:
-      'Sie nutzen {name} als Gast — alle Berechnungen sind kostenlos. Melden Sie sich an, um Dateiexporte und gespeicherte Arbeit freizuschalten.',
+      'Sie nutzen {name} als Gast — alle Berechnungen sind kostenlos. Melden Sie sich an, um Ihre Einstellungen geräteübergreifend zu synchronisieren; gespeicherte Berechnungen folgen in Kürze.',
     backToUtilities: 'Zurück zu den Web-Dienstprogrammen',
     macroCatalog: 'Makrokatalog',
     viewFreeUtilities: 'Kostenlose Tools anzeigen',

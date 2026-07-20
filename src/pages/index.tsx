@@ -3,7 +3,6 @@ import Layout from '@theme/Layout';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import {utilities, UTILITY_CATEGORIES, type UtilityCategory} from '@site/src/data/utilities';
 import SupportSection from '@site/src/components/Support/SupportSection';
-import {useAuthModal} from '@site/src/contexts/AuthModalContext';
 import {useAuthStatus} from '@site/src/hooks/useAuthStatus';
 import {useUtilitiesAccess} from '@site/src/hooks/useUtilitiesAccess';
 import {usePauseWhenOffscreen} from '@site/src/hooks/usePauseWhenOffscreen';
@@ -39,7 +38,6 @@ export default function Home(): ReactNode {
   const {siteConfig} = useDocusaurusContext();
   const {user, isAuthenticated, authChecked} = useAuthStatus();
   const {utilitiesPublicAccess} = useUtilitiesAccess();
-  const {openLoginModal} = useAuthModal();
   const {settings, updateSettings} = useUserSettings();
   const {t} = useI18n();
 
@@ -338,20 +336,12 @@ export default function Home(): ReactNode {
           ) : isCompactMode ? (
             <div className={styles.iconGrid}>
               {filteredUtilities.map((utility) => {
-                const origIndex = utilities.indexOf(utility);
-                const locked = !utilitiesPublicAccess && authChecked && !isAuthenticated && origIndex >= 3;
                 return (
                   <a
                     key={utility.id}
                     href={utility.href}
                     data-nobrokenlinkcheck
-                    className={`${styles.iconTile} ${locked ? styles.iconTileLocked : ''}`}
-                    onClick={(e) => {
-                      if (locked) {
-                        e.preventDefault();
-                        openLoginModal();
-                      }
-                    }}
+                    className={styles.iconTile}
                   >
                     {utility.thumbnail ? (
                       <ThumbnailPicture
@@ -367,7 +357,6 @@ export default function Home(): ReactNode {
                       </span>
                     )}
                     <span className={styles.iconTileLabel}>{utility.name}</span>
-                    {locked && <span className={styles.iconTileLock}>🔒</span>}
                   </a>
                 );
               })}
