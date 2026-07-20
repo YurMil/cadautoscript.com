@@ -48,6 +48,11 @@ export const ru: TranslationDict = {
     checkingAccess: 'Проверка доступа…',
     holdOn: 'Подождите',
     verifyingSession: 'Проверяем вашу сессию для {name}.',
+    errorEyebrow: 'Что-то пошло не так',
+    errorTitle: 'Инструмент аварийно завершился',
+    errorCopy:
+      'В {name} произошла непредвиденная ошибка. Остальные вкладки и инструменты не затронуты. Перезапуск инструмента обычно решает проблему.',
+    reloadTool: 'Перезапустить инструмент',
     backToUtilities: 'Назад к утилитам',
     macroCatalog: 'Каталог макросов',
     viewFreeUtilities: 'Бесплатные утилиты',

@@ -13,6 +13,7 @@ import {useUserSettings} from '@site/src/contexts/UserSettingsContext';
 import {useI18n} from '@site/src/contexts/I18nContext';
 import {incrementUtilityUsage, shouldReportUtilityUsage} from '@site/src/shared/utility-usage';
 import type {UtilityPageConfig} from '@site/src/data/utilityShellPages';
+import UtilityErrorBoundary from './UtilityErrorBoundary';
 import {logger} from '../../lib/logger';
 
 type UtilityShellPageProps = UtilityPageConfig & {tool?: React.ReactNode};
@@ -124,12 +125,16 @@ export default function UtilityShellPage({tool, ...config}: UtilityShellPageProp
 
   const heroLinks = defaultHeroLinks;
   const reactionsSlug = config.reactionSlug ?? `tool-${slug}`;
-  const toolFrame = tool ? (
-    <div className="tool-frame">
-      <div className="h-full overflow-y-auto">{tool}</div>
-    </div>
-  ) : (
-    <iframe className="tool-frame" src={iframeSrc} title={title} loading="lazy" data-nobrokenlinkcheck></iframe>
+  const toolFrame = (
+    <UtilityErrorBoundary utilityName={title}>
+      {tool ? (
+        <div className="tool-frame">
+          <div className="h-full overflow-y-auto">{tool}</div>
+        </div>
+      ) : (
+        <iframe className="tool-frame" src={iframeSrc} title={title} loading="lazy" data-nobrokenlinkcheck></iframe>
+      )}
+    </UtilityErrorBoundary>
   );
 
   const canonicalUrl = `https://cadautoscript.com/utilities/${slug}/`;

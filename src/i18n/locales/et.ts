@@ -48,6 +48,11 @@ export const et: TranslationDict = {
     checkingAccess: 'Juurdepääsu kontrollimine…',
     holdOn: 'Oota hetk',
     verifyingSession: 'Kontrollime sinu seansi kehtivust rakendusele {name}.',
+    errorEyebrow: 'Midagi läks valesti',
+    errorTitle: 'Tööriist jooksis kokku',
+    errorCopy:
+      '{name} sattus ootamatule veale. Sinu teised vahekaardid ja tööriistad ei ole mõjutatud. Tööriista uuesti laadimine tavaliselt lahendab probleemi.',
+    reloadTool: 'Laadi tööriist uuesti',
     backToUtilities: 'Tagasi veebitööriistade juurde',
     macroCatalog: 'Makrode kataloog',
     viewFreeUtilities: 'Vaata tasuta utiliite',
