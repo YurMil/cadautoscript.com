@@ -51,6 +51,8 @@ export const en = {
     errorCopy:
       '{name} ran into an unexpected error. Your other tabs and tools are unaffected. Reloading the tool usually fixes it.',
     reloadTool: 'Reload tool',
+    guestExportNotice:
+      'You are using {name} as a guest — all calculations are free. Sign in to unlock file exports and saved work.',
     backToUtilities: 'Back to Web utilities',
     macroCatalog: 'Macro catalog',
     viewFreeUtilities: 'View free utilities',

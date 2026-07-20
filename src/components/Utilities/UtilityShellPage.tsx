@@ -11,7 +11,11 @@ import {useUtilitiesAccess} from '@site/src/hooks/useUtilitiesAccess';
 import {useAuthModal} from '@site/src/contexts/AuthModalContext';
 import {useUserSettings} from '@site/src/contexts/UserSettingsContext';
 import {useI18n} from '@site/src/contexts/I18nContext';
-import {incrementUtilityUsage, shouldReportUtilityUsage} from '@site/src/shared/utility-usage';
+import {
+  incrementGuestUtilityUsage,
+  incrementUtilityUsage,
+  shouldReportUtilityUsage,
+} from '@site/src/shared/utility-usage';
 import type {UtilityPageConfig} from '@site/src/data/utilityShellPages';
 import UtilityErrorBoundary from './UtilityErrorBoundary';
 import {logger} from '../../lib/logger';
@@ -70,31 +74,42 @@ export default function UtilityShellPage({tool, ...config}: UtilityShellPageProp
       .map((id) => byId.get(id))
       .filter((u): u is (typeof utilities)[number] => Boolean(u));
   }, [trackedUtility]);
-  const isFreeUtility = utilityIndex >= 0 && utilityIndex < 3;
-  const isAuthRequired = !utilitiesPublicAccess;
-  const isLocked = isAuthRequired && !isAuthenticated && !isFreeUtility;
-  const isCheckingAccess = isAuthRequired && !authChecked && !isFreeUtility;
+  // Every utility is open to guests; sign-in gates persistent/output features
+  // instead (issue #112). The utilities_public_access site setting now controls
+  // whether guests see the sign-in notice, not whether the tool renders.
+  const showGuestNotice = !utilitiesPublicAccess && authChecked && !isAuthenticated;
 
   React.useEffect(() => {
-    if (!authChecked || !isAuthenticated || isLocked || isCheckingAccess || !trackedUtility) {
+    if (!authChecked || !trackedUtility) {
       return;
     }
 
-    if (!shouldReportUtilityUsage(trackedUtility.id, user?.id ?? null)) {
+    if (isAuthenticated) {
+      if (!shouldReportUtilityUsage(trackedUtility.id, user?.id ?? null)) {
+        return;
+      }
+      void incrementUtilityUsage(trackedUtility.id).catch((err) => {
+        const message = err instanceof Error ? err.message : 'Unable to increment utility usage.';
+        logger.warn('[UtilityUsage] Unable to record utility launch', message);
+      });
       return;
     }
 
-    void incrementUtilityUsage(trackedUtility.id).catch((err) => {
-      const message = err instanceof Error ? err.message : 'Unable to increment utility usage.';
-      logger.warn('[UtilityUsage] Unable to record utility launch', message);
+    // Guest launches feed an aggregate per-utility counter — no identity stored.
+    if (!shouldReportUtilityUsage(trackedUtility.id, 'guest')) {
+      return;
+    }
+    void incrementGuestUtilityUsage(trackedUtility.id).catch((err) => {
+      const message = err instanceof Error ? err.message : 'Unable to increment guest utility usage.';
+      logger.warn('[UtilityUsage] Unable to record guest launch', message);
     });
-  }, [authChecked, isAuthenticated, isLocked, isCheckingAccess, trackedUtility, user?.id]);
+  }, [authChecked, isAuthenticated, trackedUtility, user?.id]);
 
   React.useEffect(() => {
-    if (settings.fullscreen_utilities && !isLocked && !isCheckingAccess) {
+    if (settings.fullscreen_utilities) {
       setIsFullscreen(true);
     }
-  }, [settings.fullscreen_utilities, isLocked, isCheckingAccess]);
+  }, [settings.fullscreen_utilities]);
 
   React.useEffect(() => {
     document.body.classList.toggle('utility-is-fullscreen', isFullscreen);
@@ -172,39 +187,17 @@ export default function UtilityShellPage({tool, ...config}: UtilityShellPageProp
         </header>
         <section className="utility-main">
           <div className={`utility-stage ${isFullscreen ? 'is-fullscreen' : ''}`}>
-            {isCheckingAccess ? (
-              <div className="utility-locked">
-                <p className="utility-locked__eyebrow">{t('utility.checkingAccess')}</p>
-                <h2>{t('utility.holdOn')}</h2>
-                <p className="utility-locked__copy">
-                  {t('utility.verifyingSession', {name: title})}
-                </p>
-              </div>
-            ) : isLocked ? (
-              <div className="utility-locked">
-                <p className="utility-locked__eyebrow">{t('utility.signInRequired')}</p>
-                <h2>{t('utility.unlockTitle')}</h2>
-                <p className="utility-locked__copy">
-                  {t('utility.unlockCopy', {name: title})}
-                </p>
-                <div className="utility-locked__actions">
-                  <button type="button" className="button primary" onClick={openLoginModal}>
-                    {t('auth.signIn')}
-                  </button>
-                  <Link className="button ghost" to="/utilities/pipe-cutter/">
-                    {t('utility.viewFreeUtilities')}
-                  </Link>
-                  <Link className="button ghost" to="/why-sign-in/">
-                    {t('badges.whySignIn')}
-                  </Link>
-                </div>
-              </div>
-            ) : (
-              toolFrame
-            )}
+            {toolFrame}
           </div>
-          {!isLocked ? (
-            <div className="utility-toolbar" role="toolbar">
+          {showGuestNotice ? (
+            <div className="utility-guest-notice" role="note">
+              <span>{t('utility.guestExportNotice', {name: title})}</span>
+              <button type="button" className="button primary" onClick={openLoginModal}>
+                {t('auth.signIn')}
+              </button>
+            </div>
+          ) : null}
+          <div className="utility-toolbar" role="toolbar">
               <button 
                 className="utility-toggle" 
                 type="button" 
@@ -222,7 +215,6 @@ export default function UtilityShellPage({tool, ...config}: UtilityShellPageProp
                 {isFullscreen ? t('utility.exitFullScreen') : t('utility.fullScreen')}
               </button>
             </div>
-          ) : null}
           <div className="utility-reactions">
             <ReactionsBar slug={reactionsSlug} />
           </div>

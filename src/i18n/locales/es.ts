@@ -53,6 +53,8 @@ export const es: TranslationDict = {
     errorCopy:
       '{name} encontró un error inesperado. Tus otras pestañas y herramientas no se ven afectadas. Recargar la herramienta suele solucionarlo.',
     reloadTool: 'Recargar herramienta',
+    guestExportNotice:
+      'Estás usando {name} como invitado — todos los cálculos son gratuitos. Inicia sesión para desbloquear la exportación de archivos y el trabajo guardado.',
     backToUtilities: 'Volver a las utilidades web',
     macroCatalog: 'Catálogo de macros',
     viewFreeUtilities: 'Ver utilidades gratuitas',
