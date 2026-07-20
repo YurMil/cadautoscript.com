@@ -4,6 +4,7 @@ dotenv.config({path: './.env.local'});
 import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
+import {BundleAnalyzerPlugin} from 'webpack-bundle-analyzer';
 
 const config: Config = {
   title: 'CAD AutoScript',
@@ -49,29 +50,26 @@ const config: Config = {
   },
   clientModules: ['./src/clientModules/errorReporting.ts'],
   plugins: [
-    async function myPlugin(_context, _options) {
+    async function siteWebpackPlugin(_context, _options) {
       return {
-        name: 'docusaurus-replicad-config',
-        configureWebpack(_config, _isServer) {
+        name: 'site-webpack-config',
+        configureWebpack(_config, isServer) {
+          // ANALYZE=1 npm run build → writes build/bundle-report.html (client bundle).
+          // The replicad/OpenCascade WASM webpack config that used to live here
+          // was removed with the last in-bundle CAD tool (issues #93/#94/#99):
+          // every WASM consumer now runs as a standalone utility app.
+          const analyzerPlugins =
+            process.env.ANALYZE && !isServer
+              ? [
+                  new BundleAnalyzerPlugin({
+                    analyzerMode: 'static',
+                    reportFilename: '../bundle-report.html',
+                    openAnalyzer: false,
+                  }),
+                ]
+              : [];
           return {
-            // replicad-opencascadejs requires async-WebAssembly streaming.
-            experiments: {
-              asyncWebAssembly: true,
-            },
-            // Vendor wasm bindings reference __filename / __dirname. webpack 5
-            // defaults to 'warn-mock', which mocks them AND emits a warning per
-            // locale build. 'mock' keeps the same runtime behaviour silently.
-            node: {
-              __filename: 'mock',
-              __dirname: 'mock',
-            },
-            resolve: {
-              fallback: {
-                crypto: false,
-                fs: false,
-                path: false,
-              },
-            },
+            plugins: analyzerPlugins,
           };
         },
       };
