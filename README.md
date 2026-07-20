@@ -168,12 +168,35 @@ cadautoscript.com/
 
 ## Localization
 
-UI strings live in `src/i18n/locales/*.ts` (6 locales, all typed against the
-`en` dictionary — a missing key in any locale fails `npm run typecheck`).
-**Rule: never hardcode user-facing strings in components** — add a key to all
-six dictionaries and render it with `t('section.key')` from `useI18n()`.
-Docusaurus-native surfaces (navbar, footer, docs sidebar) are translated via
-`i18n/<locale>/**.json` instead.
+UI strings live in `src/i18n/locales/*.ts` (6 locales: `en`, `ru`, `ua`, `de`,
+`es`, `et`). **Rule: never hardcode user-facing strings in components** — add a
+key to all six dictionaries and render it with `t('section.key')` from
+`useI18n()`.
+
+### How completeness is enforced
+
+`en.ts` exports the `TranslationDict` type, and every other locale is declared
+against it (`export const de: TranslationDict = {...}`). A key missing from any
+locale is therefore a **type error**: `npm run typecheck` fails locally, and CI
+(`.github/workflows/ci.yml`) runs the same check on every PR and push to
+`main`, so an incomplete translation cannot be merged.
+
+### Adding or changing a string
+
+1. Add the key and English text to `src/i18n/locales/en.ts` — this updates
+   `TranslationDict`, and typecheck now lists every locale still missing it.
+2. Add the translated value to the same path in `ru.ts`, `ua.ts`, `de.ts`,
+   `es.ts`, and `et.ts`.
+3. Render it with `t('section.key')`; placeholders use `{name}` syntax and are
+   passed as the second argument: `t('utility.unlockCopy', {name: title})`.
+4. Run `npm run typecheck` before pushing.
+
+### Docusaurus-native surfaces
+
+The navbar, footer, docs sidebar, and other theme-owned UI are translated via
+JSON in `i18n/<locale>/**.json` instead (regenerate stubs with
+`npm run write-translations`). Markdown/MDX content (docs, blog) is localized
+by mirroring files under `i18n/<locale>/docusaurus-plugin-content-*/`.
 
 ## Technology Stack
 
