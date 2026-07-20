@@ -22,8 +22,8 @@ ${s.x2.toFixed(4)}
 ${s.y2.toFixed(4)}
 31
 0.0
-`,Wy=(c,s,r)=>{const f=r/2,h=s.x-f,g=s.x+f,S=s.y-f,E=s.y+f;return[{x1:h,y1:S,x2:g,y2:S},{x1:g,y1:S,x2:g,y2:E},{x1:g,y1:E,x2:h,y2:E},{x1:h,y1:E,x2:h,y2:S}].map(m=>mh(c,m)).join("")},$y=c=>{const s=c.boardDiameter/2,r=c.partitionWidth/2,f=[];return Bf(c).forEach(h=>{const g=Math.sqrt(Math.abs(s*s-h*h));c.partitionOrientation==="horizontal"?(f.push({x1:-g,y1:h-r,x2:g,y2:h-r}),f.push({x1:-g,y1:h+r,x2:g,y2:h+r})):(f.push({x1:h-r,y1:-g,x2:h-r,y2:g}),f.push({x1:h+r,y1:-g,x2:h+r,y2:g}))}),f},Fy=()=>["0","SECTION","2","HEADER","9","$ACADVER","1","AC1015","9","$INSUNITS","70","4","0","ENDSEC"].join(`
-`),Iy=()=>["0","SECTION","2","TABLES","0","TABLE","2","LAYER","70","4","0","LAYER","2","SHEET","70","0","62","7","6","CONTINUOUS","0","LAYER","2","HOLES","70","0","62","7","6","CONTINUOUS","0","LAYER","2","PARTITIONS","70","0","62","1","6","CONTINUOUS","0","LAYER","2","TIE_RODS","70","0","62","3","6","CONTINUOUS","0","ENDTAB","0","ENDSEC"].join(`
+`,Wy=(c,s,r)=>{const f=r/2,h=s.x-f,g=s.x+f,S=s.y-f,E=s.y+f;return[{x1:h,y1:S,x2:g,y2:S},{x1:g,y1:S,x2:g,y2:E},{x1:g,y1:E,x2:h,y2:E},{x1:h,y1:E,x2:h,y2:S}].map(m=>mh(c,m)).join("")},$y=c=>{const s=c.boardDiameter/2,r=c.partitionWidth/2,f=[];return Bf(c).forEach(h=>{const g=Math.sqrt(Math.abs(s*s-h*h));c.partitionOrientation==="horizontal"?(f.push({x1:-g,y1:h-r,x2:g,y2:h-r}),f.push({x1:-g,y1:h+r,x2:g,y2:h+r})):(f.push({x1:h-r,y1:-g,x2:h-r,y2:g}),f.push({x1:h+r,y1:-g,x2:h+r,y2:g}))}),f},Fy=()=>["0","SECTION","2","HEADER","9","$ACADVER","1","AC1009","9","$MEASUREMENT","70","1","0","ENDSEC"].join(`
+`),Iy=()=>["0","SECTION","2","TABLES","0","TABLE","2","LTYPE","70","1","0","LTYPE","2","CONTINUOUS","70","0","3","Solid line","72","65","73","0","40","0.0","0","ENDTAB","0","TABLE","2","LAYER","70","4","0","LAYER","2","SHEET","70","0","62","7","6","CONTINUOUS","0","LAYER","2","HOLES","70","0","62","7","6","CONTINUOUS","0","LAYER","2","PARTITIONS","70","0","62","1","6","CONTINUOUS","0","LAYER","2","TIE_RODS","70","0","62","3","6","CONTINUOUS","0","ENDTAB","0","ENDSEC"].join(`
 `),Py=(c,s,r)=>{const f=c.boardDiameter/2;c.tubeDiameter/2;const h=$y(c);let g=`${Fy()}
 ${Iy()}
 0

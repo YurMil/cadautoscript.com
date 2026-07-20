@@ -2,7 +2,7 @@
   "files": [
     {
       "path": "app.html",
-      "sha256": "85dfc2a38f3b565dfcfbede4064d25a3454669dbfdccf72dcffc4750f85c03db",
+      "sha256": "16076152b0a8fe0a416b57e0a6f26bc55d67d0aa37f57421c1eb0b91b905dae6",
       "bytes": 407
     },
     {
@@ -11,9 +11,9 @@
       "bytes": 4894
     },
     {
-      "path": "assets/index-Bd76zVkK.js",
-      "sha256": "8ef1622fbd897d5c924f79b79290a12de3cfb270bb9a34ed7fa2b9926c4af503",
-      "bytes": 237255
+      "path": "assets/index-C0bsMXU3.js",
+      "sha256": "2bb367126245462c51a5de651253edabf96656de309ca8f8e6071b9ebd1a30b0",
+      "bytes": 237389
     },
     {
       "path": "assets/index-CCG5s6l4.css",
@@ -42,7 +42,7 @@
     },
     {
       "path": "manifest.json",
-      "sha256": "818d4963fccfd7a3ff1e8670ff102adfd5563a3fc205773cfaa15c0ad228454b",
+      "sha256": "110a2785739a26e8c7468375b1ea3ea74646a26b1be42d536bb642465b4276af",
       "bytes": 754
     }
   ]
