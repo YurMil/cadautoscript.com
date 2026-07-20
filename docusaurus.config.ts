@@ -47,6 +47,7 @@ const config: Config = {
       et: {label: 'Eesti', direction: 'ltr', htmlLang: 'et'},
     },
   },
+  clientModules: ['./src/clientModules/errorReporting.ts'],
   plugins: [
     async function myPlugin(_context, _options) {
       return {
