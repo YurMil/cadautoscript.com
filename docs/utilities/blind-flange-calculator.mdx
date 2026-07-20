@@ -167,6 +167,64 @@ Select a DN, set operating and test pressures, temperature, and material grade. 
   - The result is not a certified code calculation and carries no code stamp.
 - ⚠️ The Blind Flange Calculator provides preliminary sizing support. Results must be verified by a qualified engineer against the governing code edition and the project specification before manufacturing or purchase.
 
+## Validation cases
+
+The calculation engine is guarded by an automated test suite (59 unit tests);
+the cases below come directly from those tests, with reference values computed
+by hand from the closed-form equations. You can reproduce them in the
+calculator and compare digit for digit.
+
+### Case 1 — PN class selection (EN 1092-1 series)
+
+The design pressure is mapped to the next standard PN class:
+
+| Design pressure | Selected class |
+|---|---|
+| 10 bar | **PN 10** |
+| 12 bar | **PN 16** |
+| 40 bar | **PN 40** |
+| 41 bar | **PN 63** |
+| 321 bar | **PN 400** |
+
+### Case 2 — flat circular plate bending (simply supported, uniform pressure)
+
+Inputs: pressure `P = 1.6 MPa` (16 bar), effective radius `R = 125 mm`,
+thickness `t = 20 mm`, `E = 200 000 MPa`, `ν = 0.3`.
+
+Maximum bending stress (Roark / classical plate theory):
+
+```
+σ = 3·P·R²·(3 + ν) / (8·t²)
+  = 3 · 1.6 · 125² · 3.3 / (8 · 20²)  =  77.34 MPa
+```
+
+Center deflection with plate stiffness `D = E·t³ / (12·(1 − ν²))`:
+
+```
+w = (5 + ν)·P·R⁴ / (64·D·(1 + ν))  =  0.170 mm
+```
+
+The engine's thickness solver is verified as the exact inverse of these
+equations: solving for the thickness that produces σ = 77.34 MPa returns
+t = 20 mm to 8 decimal places.
+
+### Case 3 — gasket seating bolt load
+
+For an effective gasket diameter `G = 250 mm`, effective width `b = 12 mm`,
+and seating stress `y = 11 MPa` (graphite class), the required seating load
+follows the classical flange-bolting relation:
+
+```
+Wm1 = π·G·b·y = π · 250 · 12 · 11  ≈  103 673 N
+```
+
+The bolting check then compares the provided stud area (count × stress area)
+against the largest of the seating, operating, and hydrotest requirements and
+reports which case governs.
+
+These same numbers run as unit tests in the app's CI on every change — a
+release that breaks any of them cannot be deployed.
+
 ## Related tools
 - [Dished End (Vessel Head) Calculator](./pressure-vessel-dished-end-calc.mdx)
 - [Cylindrical Shell Rolling Calculator](./cylindrical-shell-rolling.mdx)

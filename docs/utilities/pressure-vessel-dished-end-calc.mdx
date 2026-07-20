@@ -172,6 +172,54 @@ Instant calculation of pressure vessel head geometry, weight, and volume. It gen
   - Fatigue, corrosion beyond the entered allowance, and thermal effects are not considered.
 - ⚠️ The Dished End (Vessel Head) Calculator provides preliminary sizing support. Results must be verified by a qualified engineer against the governing code edition and the project specification before manufacturing or purchase.
 
+## Validation cases
+
+The calculation engine is guarded by an automated test suite; the cases below
+are taken directly from those tests, with the reference values computed by hand
+from the standard form factors. You can reproduce any of them in the
+calculator and compare digit for digit.
+
+### Case 1 — DIN 28011 torispherical (Klöpper) head
+
+Inputs: outer diameter `Da = 1000 mm`, wall thickness `s = 10 mm`, straight
+flange `h1 = 40 mm`, material carbon steel (ρ = 7.85 kg/dm³).
+
+DIN 28011 form factors: crown radius `R = Da`, knuckle radius `r = 0.1·Da`,
+dish depth `h2 = 0.1935·Da − 0.455·s`.
+
+| Quantity | Hand calculation | Reference value | Tool output |
+|---|---|---|---|
+| Crown radius R | 1 × 1000 | **1000 mm** | 1000 mm |
+| Knuckle radius r | 0.1 × 1000 | **100 mm** | 100 mm |
+| Dish depth h2 | 0.1935·1000 − 0.455·10 | **188.95 mm** | 188.95 mm |
+| Total height | 40 + 188.95 + 10 | **238.95 mm** | 238.95 mm |
+| Blank diameter | 1.09·1000 + 2·40 | **1170 mm** | 1170 mm |
+| Blank weight | π·(585 mm)²·10 mm · 7.85 kg/dm³ | **≈ 84.4 kg** | 84.4 kg |
+
+### Case 2 — DIN 28013 semi-ellipsoidal (Korbbogen) head
+
+Same inputs, standard switched to DIN 28013 (`R = 0.8·Da`, `r = 0.154·Da`,
+`h2 = 0.255·Da − 0.635·s`, blank factor 1.14).
+
+| Quantity | Hand calculation | Reference value | Tool output |
+|---|---|---|---|
+| Crown radius R | 0.8 × 1000 | **800 mm** | 800 mm |
+| Knuckle radius r | 0.154 × 1000 | **154 mm** | 154 mm |
+| Dish depth h2 | 0.255·1000 − 0.635·10 | **248.65 mm** | 248.65 mm |
+| Blank diameter | 1.14·1000 + 2·40 | **1220 mm** | 1220 mm |
+
+### Case 3 — forming thinning estimate (blank module)
+
+For Case 1, the knuckle zone governs thinning at the engine's 12 % estimate
+for torispherical forming: estimated minimum thickness
+`10 × (1 − 0.12) = 8.8 mm`. Because the QC minimum is
+`10 − 0.3 = 9.7 mm`, the tool raises a thinning warning and suggests a
+starting plate of `10 / 0.88 = 11.36 → 11.5 mm` (rounded up to the 0.5 mm
+plate step) to end at nominal after forming.
+
+These same numbers run as unit tests on every change to the calculation
+engine — a release that breaks any of them cannot be deployed.
+
 ## Related tools
 - [Cylindrical Shell Rolling](./cylindrical-shell-rolling.mdx)
 - [Bourdon Gauge Configurator](./bourdon-gauge-configurator.mdx)
