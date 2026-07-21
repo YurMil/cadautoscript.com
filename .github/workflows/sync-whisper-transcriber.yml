@@ -1,0 +1,165 @@
+name: Sync Whisper Transcriber
+
+# Republishes static/utility-apps/whisper-transcriber/ from a release of
+# YurMil/ws-speech-text and opens a pull request with the result.
+#
+# Triggered by that repository's Release workflow (repository_dispatch), or
+# manually from the Actions tab when a release needs to be re-pulled.
+#
+# The artifact is only accepted if its SHA-256 matches the digest published
+# with the release, and the sync script re-audits every file before publishing.
+# This workflow never builds the transcriber and never downloads model weights.
+
+on:
+  repository_dispatch:
+    types: [whisper-transcriber-release]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag in YurMil/ws-speech-text (e.g. v0.1.0)
+        required: true
+      sha256:
+        description: Expected SHA-256 of the archive (blank = take it from the release)
+        required: false
+
+concurrency:
+  group: sync-whisper-transcriber
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    env:
+      SOURCE_REPOSITORY: YurMil/ws-speech-text
+      TAG: ${{ github.event.client_payload.tag || inputs.tag }}
+      EXPECTED_SHA256: ${{ github.event.client_payload.sha256 || inputs.sha256 }}
+      ARCHIVE: ${{ github.event.client_payload.archive }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Download release archive
+        env:
+          # Reading a public release needs no extra scope; a PAT is only
+          # required if the source repository is private.
+          GH_TOKEN: ${{ secrets.SOURCE_RELEASE_TOKEN || github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p .artifact
+          archive="${ARCHIVE:-whisper-transcriber-${TAG}.zip}"
+          gh release download "$TAG" --repo "$SOURCE_REPOSITORY" \
+            --pattern "$archive" --pattern "$archive.sha256" --dir .artifact
+          echo "ARCHIVE=$archive" >> "$GITHUB_ENV"
+
+      - name: Resolve expected checksum
+        run: |
+          set -euo pipefail
+          if [ -z "${EXPECTED_SHA256}" ]; then
+            # Fall back to the digest published alongside the archive. The
+            # dispatch payload is preferred: it is produced by the build itself.
+            EXPECTED_SHA256="$(cut -d' ' -f1 < ".artifact/${ARCHIVE}.sha256")"
+            echo "Using checksum from the release: ${EXPECTED_SHA256}"
+          fi
+          echo "EXPECTED_SHA256=${EXPECTED_SHA256}" >> "$GITHUB_ENV"
+
+      - name: Publish artifact
+        run: |
+          node scripts/sync-whisper-transcriber.mjs \
+            --archive ".artifact/${ARCHIVE}" \
+            --sha256 "${EXPECTED_SHA256}"
+
+      - name: Detect changes
+        id: diff
+        run: |
+          set -euo pipefail
+          rm -rf .artifact
+          # --porcelain rather than `git diff`, so a release that only adds a
+          # newly hashed asset still counts as a change.
+          if [ -z "$(git status --porcelain -- static/utility-apps/whisper-transcriber)" ]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "Published artifact is identical to the committed one; nothing to do."
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Install dependencies
+        if: steps.diff.outputs.changed == 'true'
+        run: pnpm install --frozen-lockfile
+
+      - name: Typecheck
+        if: steps.diff.outputs.changed == 'true'
+        run: pnpm typecheck
+
+      - name: Lint
+        if: steps.diff.outputs.changed == 'true'
+        run: pnpm lint
+
+      - name: Build
+        if: steps.diff.outputs.changed == 'true'
+        run: pnpm build
+        env:
+          DOCUSAURUS_ONBROKENLINKS: throw
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          AUTH_REDIRECT_URL: ${{ secrets.AUTH_REDIRECT_URL }}
+
+      - name: Open pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          branch="chore/whisper-transcriber-${TAG}"
+          build_id="$(node -p "require('./static/utility-apps/whisper-transcriber/manifest.json').buildId")"
+          version="$(node -p "require('./static/utility-apps/whisper-transcriber/manifest.json').version")"
+
+          {
+            printf 'Publish Whisper Transcriber %s\n\n' "$TAG"
+            printf 'Artifact from the %s release %s.\n\n' "$SOURCE_REPOSITORY" "$TAG"
+            printf -- '- version: %s\n' "$version"
+            printf -- '- build id: %s\n' "$build_id"
+            printf -- '- archive sha256: %s\n\n' "$EXPECTED_SHA256"
+            printf 'Verified against the published checksum and re-audited by\n'
+            printf 'scripts/sync-whisper-transcriber.mjs before publishing.\n'
+          } > commit-msg.md
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$branch"
+          git add static/utility-apps/whisper-transcriber
+          git commit -F commit-msg.md
+          rm -f commit-msg.md
+          git push --force-with-lease origin "$branch"
+
+          {
+            printf 'Republishes the embedded Whisper Transcriber from [%s@%s](https://github.com/%s/releases/tag/%s).\n\n' \
+              "$SOURCE_REPOSITORY" "$TAG" "$SOURCE_REPOSITORY" "$TAG"
+            printf '| | |\n|---|---|\n'
+            printf '| Version | `%s` |\n' "$version"
+            printf '| Build id | `%s` |\n' "$build_id"
+            printf '| Archive SHA-256 | `%s` |\n\n' "$EXPECTED_SHA256"
+            printf 'The archive checksum was verified before extraction, and every file was\n'
+            printf 're-audited (no symlinks, traversal, source maps or dev references; the entry\n'
+            printf 'document may only reference packaged relative assets). Typecheck, lint and a\n'
+            printf 'six-locale production build passed on this branch.\n'
+          } > pr-body.md
+
+          existing="$(gh pr list --head "$branch" --state open --json number --jq '.[0].number // empty')"
+          if [ -n "$existing" ]; then
+            gh pr edit "$existing" --body-file pr-body.md
+            echo "Updated existing pull request #${existing}"
+          else
+            gh pr create --base main --head "$branch" \
+              --title "Publish Whisper Transcriber ${TAG}" --body-file pr-body.md
+          fi
+          rm -f pr-body.md

@@ -3,17 +3,24 @@
 //
 // The transcriber lives in its own repository (YurMil/ws-speech-text) because
 // it carries Transformers.js and ONNX Runtime Web, which must never enter the
-// Docusaurus bundle. This script builds that source tree, audits the produced
-// bundle, and republishes it atomically.
+// Docusaurus bundle. This script takes a bundle produced there, audits it, and
+// republishes it atomically.
 //
 // Usage:
 //   npm run sync:whisper-transcriber
+//       build the sibling checkout and publish it
 //   WHISPER_TRANSCRIBER_DIR=/path/to/ws-speech-text npm run sync:whisper-transcriber
-//   npm run sync:whisper-transcriber -- --skip-build   (reuse an existing dist/)
+//       build a checkout somewhere else
+//   npm run sync:whisper-transcriber -- --skip-build
+//       reuse an existing dist/
+//   npm run sync:whisper-transcriber -- --archive dist.zip --sha256 <hex>
+//       publish a release archive, refusing it unless the checksum matches.
+//       This is the path CI uses; see .github/workflows/sync-whisper-transcriber.yml.
 
 import {createHash} from 'node:crypto';
 import {spawnSync} from 'node:child_process';
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 
@@ -25,7 +32,6 @@ const DEFAULT_SOURCE_DIR = path.resolve(
   'ws-speech-text',
 );
 const SOURCE_DIR = path.resolve(process.env.WHISPER_TRANSCRIBER_DIR || DEFAULT_SOURCE_DIR);
-const SOURCE_DIST_DIR = path.join(SOURCE_DIR, 'dist');
 const TARGET_DIR = path.join(SITE_ROOT, 'static', 'utility-apps', 'whisper-transcriber');
 const STAGING_DIR = `${TARGET_DIR}.staging`;
 
@@ -38,7 +44,16 @@ const FORBIDDEN_PATTERNS = [
   /sourceMappingURL/i,
 ];
 
+function readFlag(name) {
+  const index = process.argv.indexOf(name);
+  return index === -1 ? undefined : process.argv[index + 1];
+}
+
 const skipBuild = process.argv.includes('--skip-build');
+const archivePath = readFlag('--archive');
+const expectedSha256 = readFlag('--sha256');
+
+let scratchDir = null;
 
 function fail(message) {
   throw new Error(message);
@@ -134,8 +149,8 @@ function readBuildInfo(distDir) {
   const infoPath = path.join(distDir, 'build-info.json');
   assertExists(infoPath, 'ws-speech-text dist/build-info.json');
   const info = JSON.parse(fs.readFileSync(infoPath, 'utf8'));
-  if (!info.buildId || !info.version) {
-    fail('build-info.json is missing version or buildId.');
+  if (!info.buildId || !info.version || !info.buildTime) {
+    fail('build-info.json is missing version, buildId or buildTime.');
   }
   if (info.buildId === 'unversioned') {
     fail('Refusing to publish an artifact built outside a git checkout.');
@@ -143,7 +158,38 @@ function readBuildInfo(distDir) {
   return info;
 }
 
-function main() {
+/**
+ * Unpacks a release archive after verifying its checksum. The digest is checked
+ * before anything is extracted, so a tampered or truncated download never
+ * reaches the filesystem walk.
+ */
+function extractArchive(archive) {
+  assertExists(archive, 'release archive');
+
+  const actual = sha256(archive);
+  if (!expectedSha256) {
+    fail('--archive requires --sha256 <hex>; refusing to publish an unverified archive.');
+  }
+  if (actual !== expectedSha256.trim().toLowerCase()) {
+    fail(`Archive checksum mismatch.\n  expected ${expectedSha256}\n  actual   ${actual}`);
+  }
+  console.log(`[whisper-transcriber] Archive checksum verified: ${actual}`);
+
+  scratchDir = fs.mkdtempSync(path.join(os.tmpdir(), 'whisper-transcriber-'));
+  // bsdtar reads zip archives and is present on Windows, macOS and the runners.
+  run('tar', ['-xf', path.resolve(archive), '-C', scratchDir]);
+
+  // Accept both a flat archive and one that wraps the files in dist/.
+  const nested = path.join(scratchDir, 'dist');
+  return fs.existsSync(path.join(nested, 'index.html')) ? nested : scratchDir;
+}
+
+/** Produces the directory whose contents should be published. */
+function resolveDistDir() {
+  if (archivePath) {
+    return extractArchive(archivePath);
+  }
+
   assertExists(SOURCE_DIR, 'ws-speech-text source directory');
   assertExists(path.join(SOURCE_DIR, 'package.json'), 'ws-speech-text package.json');
 
@@ -155,15 +201,20 @@ function main() {
     run('pnpm', ['build'], SOURCE_DIR);
   }
 
-  assertExists(SOURCE_DIST_DIR, 'ws-speech-text dist directory');
-  assertExists(path.join(SOURCE_DIST_DIR, 'index.html'), 'ws-speech-text dist/index.html');
+  return path.join(SOURCE_DIR, 'dist');
+}
 
-  const files = collectFiles(SOURCE_DIST_DIR);
+function main() {
+  const distDir = resolveDistDir();
+  assertExists(distDir, 'transcriber dist directory');
+  assertExists(path.join(distDir, 'index.html'), 'transcriber dist/index.html');
+
+  const files = collectFiles(distDir);
   const assets = files.filter((file) => file !== 'index.html');
-  const entryHtml = fs.readFileSync(path.join(SOURCE_DIST_DIR, 'index.html'), 'utf8');
+  const entryHtml = fs.readFileSync(path.join(distDir, 'index.html'), 'utf8');
   auditEntryHtml(entryHtml, assets);
 
-  const {version, buildId} = readBuildInfo(SOURCE_DIST_DIR);
+  const {version, buildId, buildTime} = readBuildInfo(distDir);
 
   // Stage first, then swap, so a failed sync never leaves a half-published app.
   fs.rmSync(STAGING_DIR, {recursive: true, force: true});
@@ -172,7 +223,7 @@ function main() {
   const checksums = {};
   let totalBytes = 0;
   for (const relative of assets) {
-    const source = path.join(SOURCE_DIST_DIR, relative);
+    const source = path.join(distDir, relative);
     const destination = path.join(STAGING_DIR, relative);
     fs.mkdirSync(path.dirname(destination), {recursive: true});
     fs.copyFileSync(source, destination);
@@ -194,7 +245,9 @@ function main() {
     name: 'whisper-transcriber',
     version,
     buildId,
-    buildTime: new Date().toISOString(),
+    // Taken from the source build, not from now(), so republishing the same
+    // artifact is a no-op and CI can tell whether anything actually changed.
+    buildTime,
     entry: 'app.html',
     assets,
     checksums,
@@ -218,5 +271,9 @@ try {
 } catch (error) {
   fs.rmSync(STAGING_DIR, {recursive: true, force: true});
   console.error(`[whisper-transcriber] ${error.message}`);
-  process.exit(1);
+  process.exitCode = 1;
+} finally {
+  if (scratchDir) {
+    fs.rmSync(scratchDir, {recursive: true, force: true});
+  }
 }
