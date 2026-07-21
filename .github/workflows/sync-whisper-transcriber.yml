@@ -83,7 +83,9 @@ jobs:
         run: |
           set -euo pipefail
           rm -rf .artifact
-          if git diff --quiet -- static/utility-apps/whisper-transcriber; then
+          # --porcelain rather than `git diff`, so a release that only adds a
+          # newly hashed asset still counts as a change.
+          if [ -z "$(git status --porcelain -- static/utility-apps/whisper-transcriber)" ]; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "Published artifact is identical to the committed one; nothing to do."
           else
