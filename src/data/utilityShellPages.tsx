@@ -509,12 +509,13 @@ export const utilityPageConfigs: Record<UtilityPageSlug, UtilityPageConfig> = {
       'Turn meeting recordings, supplier calls, site walkthroughs, and dictated inspection notes into editable text. Audio is decoded, resampled, and transcribed by a Whisper model that runs inside a Web Worker on your own machine — nothing is uploaded to a transcription service.',
     tags: ['Speech-to-text', 'Whisper', 'Offline AI', 'Subtitles'],
     note:
-      'The first transcription downloads a ~77 MB model from the Hugging Face Hub and caches it in the browser. Later runs work from that cache, but clearing site data or browser storage pressure can evict it and trigger a fresh download.',
+      'The first transcription downloads the model from the Hugging Face Hub and caches it in the browser — about 41 MB on phones, 77 MB on the desktop GPU path, and the utility shows the figure for your device before you start. Later runs work from that cache, but clearing site data or browser storage pressure can evict it and trigger a fresh download.',
     features: [
       'Audio and video file upload, or record-then-transcribe from the microphone',
       'Windowed conveyor pipeline for long recordings — the model stays loaded',
       'Automatic language detection plus explicit English and Russian modes',
       'WebGPU acceleration with an automatic WASM fallback',
+      'Runs on phones: smaller model, tighter windows, screen kept awake',
       'Editable transcript with timestamped segments',
       'Copy, TXT, SRT, and WebVTT export',
     ],

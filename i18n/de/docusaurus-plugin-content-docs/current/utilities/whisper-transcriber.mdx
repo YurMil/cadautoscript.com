@@ -64,7 +64,14 @@ Die Anwendung ist als eigenständige Mikroanwendung unter `static/utility-apps/w
 
 ## Erster Start: der Modell-Download
 
-Beim ersten Klick auf **Transcribe** lädt der Browser die Gewichte des mehrsprachigen Whisper-Tiny-Modells (rund 77 MB) vom Hugging Face Hub und legt sie im Cache ab. Das ist der einzige Netzwerkverkehr dieses Werkzeugs, und er enthält kein Audio — nur die Modelldateien.
+Beim ersten Klick auf **Start Transcription** lädt der Browser die Gewichte des mehrsprachigen Whisper-Tiny-Modells vom Hugging Face Hub und legt sie im Cache ab. Das ist der einzige Netzwerkverkehr dieses Werkzeugs, und er enthält kein Audio — nur die Modelldateien.
+
+Wie viel, hängt davon ab, welche Engine läuft; das Abzeichen oben im Werkzeug nennt den Wert für Ihr Gerät im Voraus:
+
+| Engine | Gewichte | Typisches Gerät |
+| --- | --- | --- |
+| WASM | **~41 MB** | Smartphones und Tablets sowie Browser ohne WebGPU |
+| WebGPU | **~77 MB** | Desktop-Browser mit GPU-Unterstützung |
 
 - Spätere Läufe greifen auf den Cache zu und benötigen überhaupt kein Netz.
 - Das Löschen der Websitedaten, ein privates Fenster oder Speicherdruck im Browser können den Cache verdrängen und einen erneuten Download auslösen.
@@ -80,39 +87,46 @@ Beim ersten Klick auf **Transcribe** lädt der Browser die Gewichte des mehrspra
 
 ## Arbeitsablauf
 
-1. Ziehen Sie eine Audio- oder Videodatei in die Ablagefläche oder drücken Sie **Record microphone** und stoppen Sie, wenn Sie fertig sind.
+1. Ziehen Sie eine Audio- oder Videodatei in die Ablagefläche oder drücken Sie **Record Audio** und stoppen Sie, wenn Sie fertig sind.
 2. Warten Sie, bis die Statuszeile die Medien als bereit meldet — sie zeigt die Dauer und ob die Fensterpipeline verwendet wird.
-3. Passen Sie Sprache, Zeitstempel und Runtime an, falls die Voreinstellungen zur Aufnahme nicht passen.
-4. Drücken Sie **Transcribe**. Beim ersten Lauf zeigt der Fortschrittsbalken den Modell-Download, danach geht es direkt zur Inferenz.
-5. Korrigieren Sie das Transkript direkt — das Textfeld ist editierbar.
+3. Passen Sie Sprache, Zeitstempel und Engine an, falls die Voreinstellungen zur Aufnahme nicht passen.
+4. Drücken Sie **Start Transcription**. Beim ersten Lauf zeigt der Fortschrittsbalken den Modell-Download, danach geht es direkt zur Inferenz.
+5. Korrigieren Sie das Transkript direkt — das Textfeld ist editierbar, und alle Exporte lesen daraus.
 6. Kopieren Sie den Text oder exportieren Sie TXT, SRT oder WebVTT.
-7. Mit **Clear session** werden Medien, Transkript und geladenes Modell aus dem Speicher entfernt.
+7. Mit **Clear File** werden Medien, Transkript und geladenes Modell aus dem Speicher entfernt.
 
 ## Einstellungen
 
 | Einstellung | Optionen | Wirkung |
 | --- | --- | --- |
-| Model | Whisper Tiny (mehrsprachig, ~77 MB) | Die Gewichte für die Erkennung und der Umfang des ersten Downloads. |
-| Language | Automatic, English, Russian | Automatic lässt Whisper die Sprache erkennen; eine explizite Wahl ist bei kurzen oder verrauschten Clips zuverlässiger. |
-| Timestamps | Segment, Off | Segment erzeugt die Liste mit Zeitstempeln, die der SRT- und WebVTT-Export benötigt. Off liefert nur reinen Text. |
-| Runtime | Auto (WebGPU → WASM), WASM only, WebGPU preferred | Auto nutzt die GPU, wenn der Browser WebGPU bereitstellt, und fällt still auf WASM zurück. WASM only ist langsamer, aber am kompatibelsten. |
+| Model | Whisper Tiny (mehrsprachig) | Die Gewichte für die Erkennung. Die angezeigte Größe ist die, die Ihr Gerät tatsächlich lädt. |
+| Language | Automatic Detection, English Only, Russian Only | Automatic lässt Whisper die Sprache erkennen; eine explizite Wahl ist bei kurzen oder verrauschten Clips zuverlässiger. |
+| Timestamps | Show Timestamps, Text Only | Zeitstempel erzeugen die Segmentliste, die der SRT- und WebVTT-Export benötigt. |
+| Engine Runtime | Auto (GPU/WASM), WASM Only, WebGPU Preferred | Auto nutzt die GPU auf dem Desktop und WASM auf Smartphones. WASM ist langsamer, läuft aber überall, und das Werkzeug wechselt von selbst dorthin, sobald der GPU-Pfad nicht verfügbar ist. |
 
 ## Lange Aufnahmen
 
-Kurze Clips werden in einem Durchgang dekodiert. Längere Medien werden zunächst geprüft und dann durch ein Fließband aus etwa 30-Sekunden-Fenstern mit 5 Sekunden Überlappung geführt: Es liegt immer nur ein Fenster im Speicher, während das Modell zwischen den Fenstern geladen bleibt. Das Transkript füllt sich Fenster für Fenster, und **Cancel** stoppt den Lauf, ohne das bereits Erzeugte zu verlieren.
+Kurze Clips werden in einem Durchgang dekodiert. Längere Medien werden zunächst geprüft und dann durch ein Fließband aus Mono-Fenstern geführt: Es liegt immer nur ein Fenster im Speicher, während das Modell zwischen den Fenstern geladen bleibt. Auf dem Desktop sind das 30-Sekunden-Fenster mit 5 Sekunden Überlappung, auf Smartphones 15 und 3 — das halbiert den Speicherbedarf in der Spitze. Das Transkript füllt sich Fenster für Fenster, und **Cancel** stoppt den Lauf, ohne das bereits Erzeugte zu verlieren.
+
+## Auf dem Smartphone
+
+Das Werkzeug läuft in mobilen Browsern, und einiges wird dabei für Sie eingestellt: WASM ist die Standard-Engine, geladen wird das kleinere 41-MB-Modell, und das Audio wird enger gefenstert. Zwei Dinge sollten Sie wissen.
+
+- **Lassen Sie den Tab im Vordergrund.** Das Werkzeug bittet das System, den Bildschirm nicht abzuschalten, aber das hindert es nicht daran, die Seite auszulagern, wenn Sie in eine andere App wechseln. Eine lange Transkription braucht den sichtbaren Tab.
+- **Es ist langsamer als ein Laptop.** Hier läuft echte Inferenz auf Ihrem Gerät, und ein Telefon hat schlicht weniger zu bieten.
 
 ## Datenschutz
 
 - Audio, Video, Dateinamen, Transkripttext und Ihre Änderungen bleiben auf der Seite. Sie werden weder an CAD AutoScript noch an Analytics oder eine Transkriptions-API gesendet.
-- Die einzigen ausgehenden Anfragen sind die gepinnten Modelldateien vom Hugging Face Hub.
-- Auf das Mikrofon wird erst nach dem Klick auf **Record microphone** zugegriffen, und dies ist die einzige Utility der Website, der überhaupt eine Mikrofonberechtigung erteilt wird.
-- **Clear session** gibt den Mikrofon-Stream, die Audiopuffer und das geladene Modell frei. Das Schließen des Tabs bewirkt dasselbe.
+- Die einzigen ausgehenden Anfragen sind die gepinnten Modelldateien vom Hugging Face Hub. Es werden keine Schriften, Skripte oder Tracker von anderswo geladen, und der Build wird vor der Veröffentlichung automatisch darauf geprüft.
+- Auf das Mikrofon wird erst nach dem Klick auf **Record Audio** zugegriffen, und dies ist die einzige Utility der Website, der überhaupt eine Mikrofonberechtigung erteilt wird.
+- **Clear File** gibt den Mikrofon-Stream, die Audiopuffer und das geladene Modell frei. Das Schließen des Tabs bewirkt dasselbe.
 - Es wird nichts in Ihrem Konto gespeichert und keine Transkript-Historie geführt — sichern oder exportieren Sie alles Wichtige, bevor Sie die Seite verlassen.
 
 ## Voraussetzungen und Grenzen
 
-- Eine aktuelle Chromium-, Firefox- oder Safari-Version mit WebAssembly-Unterstützung. WebGPU ist optional und bringt nur Geschwindigkeit.
-- Rund 77 MB freier Browser-Cache für das Modell sowie Arbeitsspeicher proportional zur Aufnahmelänge.
+- Eine aktuelle Chromium-, Firefox- oder Safari-Version mit WebAssembly-Unterstützung, auf dem Desktop oder mobil. WebGPU ist optional und bringt nur Geschwindigkeit.
+- 41 MB freier Browser-Cache für das Modell (77 MB auf dem WebGPU-Pfad) sowie Arbeitsspeicher proportional zur Aufnahmelänge.
 - Whisper Tiny bevorzugt Geschwindigkeit vor Genauigkeit: Fachbegriffe, Teilenummern und Eigennamen sollten Sie nachlesen.
 - Starke Akzente, Durcheinanderreden und Baustellenlärm verschlechtern das Ergebnis — ein näheres Mikrofon hilft weit mehr als jede Einstellung hier.
 - Sprechertrennung, laufende Live-Transkription und größere Whisper-Modelle sind nicht Teil dieser Version.

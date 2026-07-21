@@ -64,7 +64,14 @@ La aplicación está construida como una microaplicación independiente en `stat
 
 ## Primera ejecución: la descarga del modelo
 
-La primera vez que pulsas **Transcribe**, el navegador descarga los pesos del modelo multilingüe Whisper Tiny (unos 77 MB) desde Hugging Face Hub y los guarda en caché. Ese es el único tráfico de red que genera la utilidad, y no contiene audio: solo los archivos del modelo.
+La primera vez que pulsas **Start Transcription**, el navegador descarga los pesos del modelo multilingüe Whisper Tiny desde Hugging Face Hub y los guarda en caché. Ese es el único tráfico de red que genera la utilidad, y no contiene audio: solo los archivos del modelo.
+
+Cuánto depende del motor que se ejecute; la etiqueta en la parte superior de la utilidad muestra siempre la cifra de tu dispositivo antes de empezar:
+
+| Motor | Pesos | Dispositivo habitual |
+| --- | --- | --- |
+| WASM | **~41 MB** | Móviles y tabletas, y cualquier navegador sin WebGPU |
+| WebGPU | **~77 MB** | Navegadores de escritorio con soporte de GPU |
 
 - Las ejecuciones posteriores parten de esa caché y no necesitan red en absoluto.
 - Borrar los datos del sitio, usar una ventana privada o la presión de almacenamiento del navegador pueden desalojar la caché y provocar una nueva descarga.
@@ -80,39 +87,46 @@ La primera vez que pulsas **Transcribe**, el navegador descarga los pesos del mo
 
 ## Flujo de trabajo
 
-1. Arrastra un archivo de audio o vídeo a la zona de carga, o pulsa **Record microphone** y detén la grabación al terminar.
+1. Arrastra un archivo de audio o vídeo a la zona de carga, o pulsa **Record Audio** y detén la grabación al terminar.
 2. Espera a que la línea de estado indique que el medio está listo: muestra la duración y si se usará la tubería por ventanas.
-3. Cambia el idioma, las marcas de tiempo y el runtime si los valores por defecto no encajan con la grabación.
-4. Pulsa **Transcribe**. En la primera ejecución la barra de progreso muestra la descarga del modelo; después pasa directamente a la inferencia.
-5. Corrige la transcripción sobre la marcha: el área de texto es editable.
+3. Cambia el idioma, las marcas de tiempo y el motor si los valores por defecto no encajan con la grabación.
+4. Pulsa **Start Transcription**. En la primera ejecución la barra de progreso muestra la descarga del modelo; después pasa directamente a la inferencia.
+5. Corrige la transcripción sobre la marcha: el área de texto es editable y las exportaciones leen de ella.
 6. Copia el texto o exporta TXT, SRT o WebVTT.
-7. Pulsa **Clear session** para liberar de la memoria el medio, la transcripción y el modelo cargado.
+7. Pulsa **Clear File** para liberar de la memoria el medio, la transcripción y el modelo cargado.
 
 ## Ajustes
 
 | Ajuste | Opciones | Qué cambia |
 | --- | --- | --- |
-| Model | Whisper Tiny (multilingüe, ~77 MB) | Los pesos usados para el reconocimiento y el tamaño de la primera descarga. |
-| Language | Automatic, English, Russian | Automatic deja que Whisper detecte el idioma; elegirlo explícitamente es más fiable en clips cortos o ruidosos. |
-| Timestamps | Segment, Off | Segment genera la lista con marcas de tiempo que necesita la exportación a SRT y WebVTT. Off devuelve solo texto plano. |
-| Runtime | Auto (WebGPU → WASM), WASM only, WebGPU preferred | Auto usa la GPU cuando el navegador expone WebGPU y recurre a WASM de forma transparente. WASM only es más lento pero el más compatible. |
+| Model | Whisper Tiny (multilingüe) | Los pesos usados para el reconocimiento. El tamaño mostrado es el que tu dispositivo descargará realmente. |
+| Language | Automatic Detection, English Only, Russian Only | Automatic deja que Whisper detecte el idioma; elegirlo explícitamente es más fiable en clips cortos o ruidosos. |
+| Timestamps | Show Timestamps, Text Only | Las marcas de tiempo generan la lista de segmentos que necesita la exportación a SRT y WebVTT. |
+| Engine Runtime | Auto (GPU/WASM), WASM Only, WebGPU Preferred | Auto usa la GPU en escritorio y WASM en móviles. WASM es más lento pero funciona en todas partes, y la utilidad recurre a él por su cuenta cuando la vía por GPU no está disponible. |
 
 ## Grabaciones largas
 
-Los clips cortos se decodifican de una sola pasada. Los medios más largos se analizan primero y luego se procesan mediante una cadena de ventanas de unos 30 segundos con 5 segundos de solapamiento, de modo que en memoria solo hay una ventana a la vez mientras el modelo permanece cargado entre ellas. La transcripción se va rellenando ventana a ventana, y **Cancel** detiene la ejecución sin perder lo ya producido.
+Los clips cortos se decodifican de una sola pasada. Los medios más largos se analizan primero y luego se procesan mediante una cadena de ventanas mono, de modo que en memoria solo hay una ventana a la vez mientras el modelo permanece cargado entre ellas. En escritorio son ventanas de 30 segundos con 5 de solapamiento; en móvil, 15 y 3, lo que reduce a la mitad el pico de memoria. La transcripción se va rellenando ventana a ventana, y **Cancel** detiene la ejecución sin perder lo ya producido.
+
+## En el móvil
+
+La utilidad funciona en navegadores móviles y ajusta varias cosas por ti: el motor por defecto es WASM, se descarga el modelo más pequeño de 41 MB y el audio se trocea en ventanas más cortas. Conviene tener presentes dos cosas.
+
+- **Mantén la pestaña en primer plano.** La utilidad pide al sistema que no apague la pantalla, pero eso no impide que suspenda la página si cambias a otra aplicación. Una transcripción larga necesita la pestaña visible.
+- **Será más lento que un portátil.** Aquí se ejecuta inferencia real en tu dispositivo, y un teléfono simplemente tiene menos que ofrecer.
 
 ## Privacidad
 
 - El audio, el vídeo, los nombres de archivo, el texto de la transcripción y tus ediciones se quedan en la página. Nunca se envían a CAD AutoScript, a analítica ni a ninguna API de transcripción.
-- Las únicas peticiones salientes son los archivos del modelo fijados en Hugging Face Hub.
-- Solo se accede al micrófono después de pulsar **Record microphone**, y esta es la única utilidad del sitio a la que se concede permiso de micrófono.
-- **Clear session** libera el flujo del micrófono, los búferes de audio y el modelo cargado. Cerrar la pestaña hace lo mismo.
+- Las únicas peticiones salientes son los archivos del modelo fijados en Hugging Face Hub. No se cargan fuentes, scripts ni rastreadores desde ningún otro sitio, y la compilación se verifica automáticamente antes de publicarse.
+- Solo se accede al micrófono después de pulsar **Record Audio**, y esta es la única utilidad del sitio a la que se concede permiso de micrófono.
+- **Clear File** libera el flujo del micrófono, los búferes de audio y el modelo cargado. Cerrar la pestaña hace lo mismo.
 - No se guarda nada en tu cuenta ni se conserva historial de transcripciones: guarda o exporta lo que quieras conservar antes de salir de la página.
 
 ## Requisitos y límites
 
-- Una versión actual de Chromium, Firefox o Safari con soporte de WebAssembly. WebGPU es opcional y solo aporta velocidad.
-- Unos 77 MB libres de caché del navegador para el modelo, además de memoria de trabajo proporcional a la duración de la grabación.
+- Una versión actual de Chromium, Firefox o Safari con soporte de WebAssembly, en escritorio o móvil. WebGPU es opcional y solo aporta velocidad.
+- 41 MB libres de caché del navegador para el modelo (77 MB en la vía WebGPU), además de memoria de trabajo proporcional a la duración de la grabación.
 - Whisper Tiny prioriza la velocidad sobre la precisión: revisa el vocabulario técnico, los números de pieza y los nombres propios.
 - Los acentos marcados, las voces superpuestas y el ruido de obra degradan el resultado; acercar el micrófono ayuda mucho más que cualquier ajuste de aquí.
 - La separación por hablantes, la transcripción continua en directo y los modelos Whisper mayores no forman parte de esta versión.

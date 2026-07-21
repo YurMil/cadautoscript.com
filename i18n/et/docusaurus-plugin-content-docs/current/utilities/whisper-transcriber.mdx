@@ -64,7 +64,14 @@ Rakendus on ehitatud iseseisva mikrorakendusena kaustas `static/utility-apps/whi
 
 ## Esimene käivitus: mudeli allalaadimine
 
-Esimesel korral, kui vajutad **Transcribe**, laadib brauser Hugging Face Hubist alla mitmekeelse Whisper Tiny mudeli kaalud (umbes 77 MB) ja puhverdab need. See on ainus võrguliiklus, mida tööriist tekitab, ja see ei sisalda sinu heli — ainult mudelifaile.
+Esimesel korral, kui vajutad **Start Transcription**, laadib brauser Hugging Face Hubist alla mitmekeelse Whisper Tiny mudeli kaalud ja puhverdab need. See on ainus võrguliiklus, mida tööriist tekitab, ja see ei sisalda sinu heli — ainult mudelifaile.
+
+Kui palju täpselt, sõltub käivituvast mootorist; tööriista ülaosas olev silt näitab sinu seadme numbrit juba enne alustamist:
+
+| Mootor | Kaalud | Tüüpiline seade |
+| --- | --- | --- |
+| WASM | **~41 MB** | Telefonid ja tahvlid ning kõik brauserid ilma WebGPU-ta |
+| WebGPU | **~77 MB** | Lauaarvuti brauserid GPU toega |
 
 - Hilisemad käivitused kasutavad puhvrit ega vaja üldse võrku.
 - Saidi andmete kustutamine, privaatne aken või brauseri salvestusruumi surve võivad puhvri välja tõrjuda ja põhjustada uue allalaadimise.
@@ -80,39 +87,46 @@ Esimesel korral, kui vajutad **Transcribe**, laadib brauser Hugging Face Hubist 
 
 ## Töövoog
 
-1. Lohista heli- või videofail alale või vajuta **Record microphone** ja peata salvestus, kui valmis.
+1. Lohista heli- või videofail alale või vajuta **Record Audio** ja peata salvestus, kui valmis.
 2. Oota, kuni olekurida teatab, et meedia on valmis — seal on näha kestus ja kas kasutatakse akendega konveierit.
-3. Muuda keelt, ajatempleid ja käituskeskkonda, kui vaikeväärtused salvestisele ei sobi.
-4. Vajuta **Transcribe**. Esimesel korral näitab edenemisriba mudeli allalaadimist, seejärel algab kohe tuvastus.
-5. Paranda transkriptsiooni kohapeal — tekstiväli on redigeeritav.
+3. Muuda keelt, ajatempleid ja mootorit, kui vaikeväärtused salvestisele ei sobi.
+4. Vajuta **Start Transcription**. Esimesel korral näitab edenemisriba mudeli allalaadimist, seejärel algab kohe tuvastus.
+5. Paranda transkriptsiooni kohapeal — tekstiväli on redigeeritav ja eksport loeb just sellest.
 6. Kopeeri tekst või ekspordi TXT, SRT või WebVTT.
-7. Vajuta **Clear session**, et vabastada mälust meedia, transkriptsioon ja laaditud mudel.
+7. Vajuta **Clear File**, et vabastada mälust meedia, transkriptsioon ja laaditud mudel.
 
 ## Seaded
 
 | Seade | Valikud | Mida muudab |
 | --- | --- | --- |
-| Model | Whisper Tiny (mitmekeelne, ~77 MB) | Tuvastuseks kasutatavad kaalud ja esimese allalaadimise maht. |
-| Language | Automatic, English, Russian | Automatic laseb Whisperil keele ise tuvastada; selge valik on lühikeste või mürarikaste klippide puhul usaldusväärsem. |
-| Timestamps | Segment, Off | Segment annab ajatemplitega loendi, mida SRT- ja WebVTT-eksport vajab. Off tagastab ainult teksti. |
-| Runtime | Auto (WebGPU → WASM), WASM only, WebGPU preferred | Auto kasutab GPU-d, kui brauser pakub WebGPU-d, ja langeb märkamatult WASM-ile. WASM only on aeglasem, kuid kõige ühilduvam. |
+| Model | Whisper Tiny (mitmekeelne) | Tuvastuseks kasutatavad kaalud. Näidatud maht on see, mille sinu seade tegelikult alla laadib. |
+| Language | Automatic Detection, English Only, Russian Only | Automatic laseb Whisperil keele ise tuvastada; selge valik on lühikeste või mürarikaste klippide puhul usaldusväärsem. |
+| Timestamps | Show Timestamps, Text Only | Ajatemplid annavad segmentide loendi, mida SRT- ja WebVTT-eksport vajab. |
+| Engine Runtime | Auto (GPU/WASM), WASM Only, WebGPU Preferred | Auto kasutab lauaarvutis GPU-d ja telefonis WASM-i. WASM on aeglasem, kuid töötab kõikjal, ja tööriist läheb sellele ise üle, kui GPU tee pole saadaval. |
 
 ## Pikad salvestised
 
-Lühikesed klipid dekodeeritakse ühe korraga. Pikem meedia uuritakse esmalt läbi ja seejärel aetakse umbes 30-sekundiliste akende konveierist läbi 5-sekundilise ülekattega: mälus on korraga ainult üks aken, samal ajal kui mudel jääb akende vahel laaditud olekusse. Transkriptsioon täitub aken akna haaval ja **Cancel** peatab töö, kaotamata juba saadud teksti.
+Lühikesed klipid dekodeeritakse ühe korraga. Pikem meedia uuritakse esmalt läbi ja seejärel aetakse mono-akende konveierist läbi: mälus on korraga ainult üks aken, samal ajal kui mudel jääb akende vahel laaditud olekusse. Lauaarvutis on aknad 30 sekundit 5-sekundilise ülekattega, telefonis 15 ja 3, mis poolitab mälu tipptarbimise. Transkriptsioon täitub aken akna haaval ja **Cancel** peatab töö, kaotamata juba saadud teksti.
+
+## Telefonis
+
+Tööriist töötab mobiilibrauserites ja seadistab mõndagi sinu eest: vaikimisi mootoriks on WASM, alla laaditakse väiksem 41 MB mudel ja heli tükeldatakse tihedamalt. Kahte asja tasub teada.
+
+- **Hoia sakk esiplaanil.** Tööriist palub süsteemil ekraani mitte kustutada, kuid see ei takista lehe peatamist, kui lülitud teise rakendusse. Pikk transkribeerimine vajab nähtavat sakki.
+- **See on aeglasem kui sülearvutis.** Siin käib päris järeldus sinu enda seadmes ja telefonil on lihtsalt vähem anda.
 
 ## Privaatsus
 
 - Heli, video, failinimed, transkriptsiooni tekst ja sinu muudatused jäävad lehele. Neid ei saadeta CAD AutoScripti, analüütikasse ega ühessegi transkribeerimise API-sse.
-- Ainsad väljuvad päringud on kinnitatud mudelifailid Hugging Face Hubist.
-- Mikrofoni kasutatakse alles pärast **Record microphone** vajutamist ja see on saidi ainus utiliit, millele mikrofoniluba üldse antakse.
-- **Clear session** vabastab mikrofonivoo, helipuhvrid ja laaditud mudeli. Sakiakna sulgemine teeb sama.
+- Ainsad väljuvad päringud on kinnitatud mudelifailid Hugging Face Hubist. Ühtegi fonti, skripti ega jälgijat mujalt ei laadita ja ehitust kontrollitakse selle suhtes automaatselt enne avaldamist.
+- Mikrofoni kasutatakse alles pärast **Record Audio** vajutamist ja see on saidi ainus utiliit, millele mikrofoniluba üldse antakse.
+- **Clear File** vabastab mikrofonivoo, helipuhvrid ja laaditud mudeli. Sakiakna sulgemine teeb sama.
 - Sinu kontosse ei salvestata midagi ja transkriptsioonide ajalugu ei peeta — salvesta või ekspordi vajalik enne lehelt lahkumist.
 
 ## Nõuded ja piirangud
 
-- Ajakohane Chromiumi, Firefoxi või Safari versioon WebAssembly toega. WebGPU on valikuline ja annab ainult kiirust.
-- Umbes 77 MB vaba brauseripuhvrit mudeli jaoks ning salvestise pikkusega võrdeline töömälu.
+- Ajakohane Chromiumi, Firefoxi või Safari versioon WebAssembly toega — lauaarvutis või telefonis. WebGPU on valikuline ja annab ainult kiirust.
+- 41 MB vaba brauseripuhvrit mudeli jaoks (77 MB WebGPU teel) ning salvestise pikkusega võrdeline töömälu.
 - Whisper Tiny eelistab kiirust täpsusele: tehnilised terminid, detailinumbrid ja pärisnimed tuleb üle lugeda.
 - Tugev aktsent, üksteisele rääkimine ja objektimüra halvendavad tulemust — lähemal olev mikrofon aitab palju rohkem kui ükski siinne seade.
 - Kõnelejate eristamine, pidev reaalajas transkribeerimine ja suuremad Whisperi mudelid ei kuulu sellesse versiooni.
