@@ -21,6 +21,7 @@
     "serve": "docusaurus serve",
     "sitemap:sections": "node scripts/sitemap-sections.js",
     "sync:webstep-viewer": "node scripts/sync-webstep-viewer-embed.js",
+    "sync:whisper-transcriber": "node scripts/sync-whisper-transcriber.mjs",
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
     "typecheck": "tsc",

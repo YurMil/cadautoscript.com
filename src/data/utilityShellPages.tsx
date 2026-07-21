@@ -27,7 +27,8 @@ export type UtilityPageSlug =
   | 'busbar-calculator'
   | 'pressure-vessel-dished-end-calc'
   | 'gear-pair-calculator'
-  | 'wikalog-analyzer';
+  | 'wikalog-analyzer'
+  | 'whisper-transcriber';
 
 export type UtilityPageConfig = {
   slug: UtilityPageSlug;
@@ -41,6 +42,12 @@ export type UtilityPageConfig = {
   scriptType?: 'module' | 'defer';
   reactionSlug?: string;
   appPath?: string;
+  /**
+   * Permissions delegated to the embedded iframe. Capabilities are granted per
+   * utility, never site-wide: only tools that actually need a device get it,
+   * and the matching Permissions-Policy path rule lives in vercel.json.
+   */
+  iframeAllow?: string;
 };
 
 export const utilityPageConfigs: Record<UtilityPageSlug, UtilityPageConfig> = {
@@ -491,5 +498,28 @@ export const utilityPageConfigs: Record<UtilityPageSlug, UtilityPageConfig> = {
       'Print-optimized QC report export',
     ],
     scriptType: 'module',
+  },
+  'whisper-transcriber': {
+    slug: 'whisper-transcriber',
+    title: 'Whisper Transcriber',
+    subtitle: 'Web utility — Private speech-to-text in your browser',
+    description:
+      'Transcribe audio and video files or microphone recordings with Whisper running entirely in your browser, then export TXT, SRT, or WebVTT.',
+    about:
+      'Turn meeting recordings, supplier calls, site walkthroughs, and dictated inspection notes into editable text. Audio is decoded, resampled, and transcribed by a Whisper model that runs inside a Web Worker on your own machine — nothing is uploaded to a transcription service.',
+    tags: ['Speech-to-text', 'Whisper', 'Offline AI', 'Subtitles'],
+    note:
+      'The first transcription downloads a ~77 MB model from the Hugging Face Hub and caches it in the browser. Later runs work from that cache, but clearing site data or browser storage pressure can evict it and trigger a fresh download.',
+    features: [
+      'Audio and video file upload, or record-then-transcribe from the microphone',
+      'Windowed conveyor pipeline for long recordings — the model stays loaded',
+      'Automatic language detection plus explicit English and Russian modes',
+      'WebGPU acceleration with an automatic WASM fallback',
+      'Editable transcript with timestamped segments',
+      'Copy, TXT, SRT, and WebVTT export',
+    ],
+    scriptType: 'module',
+    // The only utility granted microphone access; see vercel.json.
+    iframeAllow: "microphone 'self'",
   },
 };

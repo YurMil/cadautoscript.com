@@ -1,0 +1,23 @@
+{
+  "name": "whisper-transcriber",
+  "version": "0.1.0-prototype",
+  "buildId": "0d8c0a8b93e2",
+  "buildTime": "2026-07-21T11:21:08.856Z",
+  "entry": "app.html",
+  "assets": [
+    "assets/index-B5C8PNiW.js",
+    "assets/index-BWGSeFCx.css",
+    "assets/ort-wasm-simd-threaded.jsep-B0T3yYHD.wasm",
+    "assets/whisper.worker-CA5aZLsj.js",
+    "build-info.json"
+  ],
+  "checksums": {
+    "assets/index-B5C8PNiW.js": "09b2ad1591b54aa369e7b95594a885f8f613cb766d2466369d3c606c69db6e71",
+    "assets/index-BWGSeFCx.css": "ee3f659b1fd58be6a87f3cce8818dbaed8bbdc0a24d55ac26728081e77303450",
+    "assets/ort-wasm-simd-threaded.jsep-B0T3yYHD.wasm": "c46655e8a94afc45338d4cb2b840475f88e5012d524509916e505079c00bfa39",
+    "assets/whisper.worker-CA5aZLsj.js": "0cadb55011ceb1263a570aad4b6c588b17f17af9430466a0a4a69277e1a830dc",
+    "build-info.json": "16c1ad1b392cc798e8d073cc61dd07dc5791534391966a276fa9ce6976781edb",
+    "app.html": "2aabc82b640868b67b619de781e7a8616d24fbfab2666005ef9a490b578ddcdb",
+    "index.html": "2aabc82b640868b67b619de781e7a8616d24fbfab2666005ef9a490b578ddcdb"
+  }
+}

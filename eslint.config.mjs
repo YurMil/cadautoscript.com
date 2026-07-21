@@ -56,7 +56,7 @@ export default tseslint.config(
   },
   {
     // The logger wrapper and build scripts are allowed to use the console.
-    files: ['src/lib/logger.ts', 'scripts/**/*.js', 'api/**/*.ts'],
+    files: ['src/lib/logger.ts', 'scripts/**/*.{js,mjs}', 'api/**/*.ts'],
     rules: {
       'no-console': 'off',
     },

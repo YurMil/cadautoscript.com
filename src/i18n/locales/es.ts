@@ -261,6 +261,10 @@ export const es: TranslationDict = {
       name: 'WIKA Log Analyzer',
       description: 'Analiza registros del calibrador WIKA CPG1500, revisa datos e imprime informes QC localmente.',
     },
+    'whisper-transcriber': {
+      name: 'Whisper Transcriber',
+      description: 'Transcribe audio y vídeo a texto editable con Whisper ejecutándose en el navegador.',
+    },
   },
   miniGamesPage: {
     eyebrow: 'Minijuegos',

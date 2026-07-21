@@ -1,0 +1,130 @@
+---
+title: Whisper Transcriber
+description: Transkribeeri heli- ja videofaile või mikrofonisalvestisi redigeeritavaks tekstiks — Whisper töötab täielikult brauseris, eksport TXT, SRT ja WebVTT vormingusse.
+slug: /utilities/whisper-transcriber
+image: /img/og/utilities/whisper-transcriber.png
+keywords:
+  - whisper transkriptsioon
+  - kõne tekstiks brauseris
+  - võrguühenduseta transkribeerimine
+  - koosoleku protokoll
+  - subtiitrite generaator
+  - srt webvtt eksport
+  - webgpu wasm järeldus
+---
+
+import Head from '@docusaurus/Head';
+
+# Whisper Transcriber
+
+Muuda salvestised redigeeritavaks tekstiks, saatmata neid kuhugi. Heli dekodeeritakse, teisendatakse ja transkribeeritakse Whisperi mudeliga, mis töötab Web Workeris sinu enda brauseris — selle tööriista taga ei ole ühtegi transkribeerimisserverit.
+
+![Whisper Transcriberi ülevaatekaart](/img/og/utilities/whisper-transcriber.webp)
+
+<a className="button button--primary" href="/utilities/whisper-transcriber/" data-nobrokenlinkcheck>Ava utiliit</a>
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/whisper-transcriber/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Whisper Transcriber",
+  "applicationCategory": "MultimediaApplication",
+  "operatingSystem": "Web",
+  "description": "Transkribeeri heli- ja videofaile või mikrofonisalvestisi redigeeritavaks tekstiks — Whisper töötab täielikult brauseris, eksport TXT, SRT ja WebVTT vormingusse.",
+  "url": "https://cadautoscript.com/utilities/whisper-transcriber/",
+  "image": "https://cadautoscript.com/img/og/utilities/whisper-transcriber.png",
+  "featureList": [
+    "Heli- ja videofailide transkribeerimine",
+    "Salvesta-ja-transkribeeri töövoog mikrofoniga",
+    "Automaatne keeletuvastus ning inglise ja vene režiim",
+    "WebGPU kiirendus WASM-varulahendusega",
+    "Ajatemplitega segmendid",
+    "Eksport TXT, SRT ja WebVTT vormingusse"
+  ],
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "CAD AutoScript"
+  }
+}`}</script>
+</Head>
+
+## Mida tööriist teeb
+
+Whisper Transcriber muudab kõne tekstiks sinu enda masinas. Annad talle heli- või videofaili — või salvestad otse mikrofoniga — ja saad täieliku transkriptsiooni koos ajatemplitega segmentidega, mida saab redigeerida ja eksportida TXT, SRT või WebVTT vormingusse.
+
+Kõik toimub brauserisakil: meedia dekodeeritakse ja miksitakse mono 16 kHz kujule, OpenAI Whisperi mudel jookseb Transformers.js kaudu ONNX Runtime Webi peal ja tulemus ei lahku lehelt. Midagi ei laadita üles, ei panda järjekorda ega salvestata serverisse.
+
+Rakendus on ehitatud iseseisva mikrorakendusena kaustas `static/utility-apps/whisper-transcriber`. CAD AutoScripti kest põimib selle sama päritoluga iframe'i, nii et transkribeerija saab areneda omaenda repositooriumis, kasutades samal ajal selle saidi kataloogi, artiklit, reaktsioone, kommentaare ja ligipääsukihti.
+
+## Esimene käivitus: mudeli allalaadimine
+
+Esimesel korral, kui vajutad **Transcribe**, laadib brauser Hugging Face Hubist alla mitmekeelse Whisper Tiny mudeli kaalud (umbes 77 MB) ja puhverdab need. See on ainus võrguliiklus, mida tööriist tekitab, ja see ei sisalda sinu heli — ainult mudelifaile.
+
+- Hilisemad käivitused kasutavad puhvrit ega vaja üldse võrku.
+- Saidi andmete kustutamine, privaatne aken või brauseri salvestusruumi surve võivad puhvri välja tõrjuda ja põhjustada uue allalaadimise.
+- Mudeli revisjon on kinnitatud kindla commit'i külge, nii et iga kord laaditakse sama versioon.
+
+## Millal seda kasutada
+
+- Koosolekute, tarnijakõnede või projektiülevaatuste protokollide koostamine salvestise põhjal.
+- Objektiringkäikude ja ülevaatuste videote muutmine otsitavaks tekstiks.
+- Puudusteloendite ja kvaliteedimärkuste dikteerimine objektil tippimise asemel.
+- SRT- või WebVTT-subtiitrite tegemine sisekoolituste ja üleandmisvideote jaoks.
+- Sellise materjali transkribeerimine, mida ei tohi kolmanda osapoole teenusesse üles laadida.
+
+## Töövoog
+
+1. Lohista heli- või videofail alale või vajuta **Record microphone** ja peata salvestus, kui valmis.
+2. Oota, kuni olekurida teatab, et meedia on valmis — seal on näha kestus ja kas kasutatakse akendega konveierit.
+3. Muuda keelt, ajatempleid ja käituskeskkonda, kui vaikeväärtused salvestisele ei sobi.
+4. Vajuta **Transcribe**. Esimesel korral näitab edenemisriba mudeli allalaadimist, seejärel algab kohe tuvastus.
+5. Paranda transkriptsiooni kohapeal — tekstiväli on redigeeritav.
+6. Kopeeri tekst või ekspordi TXT, SRT või WebVTT.
+7. Vajuta **Clear session**, et vabastada mälust meedia, transkriptsioon ja laaditud mudel.
+
+## Seaded
+
+| Seade | Valikud | Mida muudab |
+| --- | --- | --- |
+| Model | Whisper Tiny (mitmekeelne, ~77 MB) | Tuvastuseks kasutatavad kaalud ja esimese allalaadimise maht. |
+| Language | Automatic, English, Russian | Automatic laseb Whisperil keele ise tuvastada; selge valik on lühikeste või mürarikaste klippide puhul usaldusväärsem. |
+| Timestamps | Segment, Off | Segment annab ajatemplitega loendi, mida SRT- ja WebVTT-eksport vajab. Off tagastab ainult teksti. |
+| Runtime | Auto (WebGPU → WASM), WASM only, WebGPU preferred | Auto kasutab GPU-d, kui brauser pakub WebGPU-d, ja langeb märkamatult WASM-ile. WASM only on aeglasem, kuid kõige ühilduvam. |
+
+## Pikad salvestised
+
+Lühikesed klipid dekodeeritakse ühe korraga. Pikem meedia uuritakse esmalt läbi ja seejärel aetakse umbes 30-sekundiliste akende konveierist läbi 5-sekundilise ülekattega: mälus on korraga ainult üks aken, samal ajal kui mudel jääb akende vahel laaditud olekusse. Transkriptsioon täitub aken akna haaval ja **Cancel** peatab töö, kaotamata juba saadud teksti.
+
+## Privaatsus
+
+- Heli, video, failinimed, transkriptsiooni tekst ja sinu muudatused jäävad lehele. Neid ei saadeta CAD AutoScripti, analüütikasse ega ühessegi transkribeerimise API-sse.
+- Ainsad väljuvad päringud on kinnitatud mudelifailid Hugging Face Hubist.
+- Mikrofoni kasutatakse alles pärast **Record microphone** vajutamist ja see on saidi ainus utiliit, millele mikrofoniluba üldse antakse.
+- **Clear session** vabastab mikrofonivoo, helipuhvrid ja laaditud mudeli. Sakiakna sulgemine teeb sama.
+- Sinu kontosse ei salvestata midagi ja transkriptsioonide ajalugu ei peeta — salvesta või ekspordi vajalik enne lehelt lahkumist.
+
+## Nõuded ja piirangud
+
+- Ajakohane Chromiumi, Firefoxi või Safari versioon WebAssembly toega. WebGPU on valikuline ja annab ainult kiirust.
+- Umbes 77 MB vaba brauseripuhvrit mudeli jaoks ning salvestise pikkusega võrdeline töömälu.
+- Whisper Tiny eelistab kiirust täpsusele: tehnilised terminid, detailinumbrid ja pärisnimed tuleb üle lugeda.
+- Tugev aktsent, üksteisele rääkimine ja objektimüra halvendavad tulemust — lähemal olev mikrofon aitab palju rohkem kui ükski siinne seade.
+- Kõnelejate eristamine, pidev reaalajas transkribeerimine ja suuremad Whisperi mudelid ei kuulu sellesse versiooni.
+- ⚠️ Transkriptsioon on mustandiabi. Kontrolli seda salvestise vastu, enne kui tsiteerid seda aruandes, protokollis või mis tahes lepingulises dokumendis.
+
+## Seotud tööriistad
+
+- [WIKA CPG1500 Log Analyzer](./wikalog-analyzer.mdx)
+- [PDF Number Extractor](./pdf-number-extractor.mdx)
+- [Focus Planner](./focus-planner.mdx)
+
+## Tagasiside / veateade
+
+- [Ava GitHubis probleem](https://github.com/YurMil/cadautoscript.com/issues)
+- Kirjuta meile slug'iga `whisper-transcriber`, et saaksime probleemi taasesitada.

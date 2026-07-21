@@ -259,6 +259,10 @@ export const en = {
       name: 'WIKA Log Analyzer',
       description: 'Parse WIKA CPG1500 calibrator logs, review measurement data, and print QC reports locally.',
     },
+    'whisper-transcriber': {
+      name: 'Whisper Transcriber',
+      description: 'Transcribe audio and video to editable text with Whisper running fully in your browser.',
+    },
   },
   miniGamesPage: {
     eyebrow: 'Mini Games',

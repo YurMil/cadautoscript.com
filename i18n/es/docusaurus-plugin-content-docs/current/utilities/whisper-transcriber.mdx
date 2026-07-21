@@ -1,0 +1,130 @@
+---
+title: Whisper Transcriber
+description: Transcribe archivos de audio y vídeo o grabaciones de micrófono a texto editable con Whisper ejecutándose por completo en el navegador, y exporta TXT, SRT o WebVTT.
+slug: /utilities/whisper-transcriber
+image: /img/og/utilities/whisper-transcriber.png
+keywords:
+  - transcripción whisper
+  - voz a texto en el navegador
+  - transcripción sin conexión
+  - acta de reunión
+  - generador de subtítulos
+  - exportar srt webvtt
+  - inferencia webgpu wasm
+---
+
+import Head from '@docusaurus/Head';
+
+# Whisper Transcriber
+
+Convierte grabaciones en texto editable sin enviarlas a ninguna parte. El audio se decodifica, se remuestrea y lo transcribe un modelo Whisper que se ejecuta en un Web Worker dentro de tu propio navegador: detrás de esta utilidad no hay ningún servidor de transcripción.
+
+![Tarjeta de presentación de Whisper Transcriber](/img/og/utilities/whisper-transcriber.webp)
+
+<a className="button button--primary" href="/utilities/whisper-transcriber/" data-nobrokenlinkcheck>Abrir utilidad</a>
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/whisper-transcriber/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Whisper Transcriber",
+  "applicationCategory": "MultimediaApplication",
+  "operatingSystem": "Web",
+  "description": "Transcribe archivos de audio y vídeo o grabaciones de micrófono a texto editable con Whisper ejecutándose por completo en el navegador, y exporta TXT, SRT o WebVTT.",
+  "url": "https://cadautoscript.com/utilities/whisper-transcriber/",
+  "image": "https://cadautoscript.com/img/og/utilities/whisper-transcriber.png",
+  "featureList": [
+    "Transcripción de archivos de audio y vídeo",
+    "Flujo de grabar y transcribir desde el micrófono",
+    "Detección automática de idioma con modos de inglés y ruso",
+    "Aceleración WebGPU con alternativa WASM",
+    "Segmentos con marcas de tiempo",
+    "Exportación a TXT, SRT y WebVTT"
+  ],
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "CAD AutoScript"
+  }
+}`}</script>
+</Head>
+
+## Qué hace
+
+Whisper Transcriber convierte el habla en texto en tu propio equipo. Le das un archivo de audio o vídeo —o grabas directamente desde el micrófono— y obtienes una transcripción completa junto con segmentos con marcas de tiempo que puedes editar y exportar como TXT, SRT o WebVTT.
+
+Todo ocurre en la pestaña del navegador: el medio se decodifica y se mezcla a mono 16 kHz, el modelo Whisper de OpenAI se ejecuta mediante Transformers.js sobre ONNX Runtime Web y el resultado no sale de la página. Nada se sube, se encola ni se almacena en un servidor.
+
+La aplicación está construida como una microaplicación independiente en `static/utility-apps/whisper-transcriber`. El shell de CAD AutoScript la incrusta en un iframe del mismo origen, de modo que el transcriptor puede evolucionar en su propio repositorio mientras comparte el catálogo, el artículo, las reacciones, los comentarios y la capa de acceso de este sitio.
+
+## Primera ejecución: la descarga del modelo
+
+La primera vez que pulsas **Transcribe**, el navegador descarga los pesos del modelo multilingüe Whisper Tiny (unos 77 MB) desde Hugging Face Hub y los guarda en caché. Ese es el único tráfico de red que genera la utilidad, y no contiene audio: solo los archivos del modelo.
+
+- Las ejecuciones posteriores parten de esa caché y no necesitan red en absoluto.
+- Borrar los datos del sitio, usar una ventana privada o la presión de almacenamiento del navegador pueden desalojar la caché y provocar una nueva descarga.
+- La revisión del modelo está fijada a un commit concreto, así que siempre se descarga la misma versión.
+
+## Cuándo usarla
+
+- Redactar actas de reuniones, llamadas con proveedores o revisiones de diseño a partir de una grabación.
+- Convertir vídeos de recorridos e inspecciones en texto que se puede buscar.
+- Dictar listas de pendientes y observaciones de calidad en obra en lugar de teclearlas.
+- Producir subtítulos SRT o WebVTT para vídeos internos de formación y traspaso.
+- Transcribir material que no puedes subir a un servicio de terceros.
+
+## Flujo de trabajo
+
+1. Arrastra un archivo de audio o vídeo a la zona de carga, o pulsa **Record microphone** y detén la grabación al terminar.
+2. Espera a que la línea de estado indique que el medio está listo: muestra la duración y si se usará la tubería por ventanas.
+3. Cambia el idioma, las marcas de tiempo y el runtime si los valores por defecto no encajan con la grabación.
+4. Pulsa **Transcribe**. En la primera ejecución la barra de progreso muestra la descarga del modelo; después pasa directamente a la inferencia.
+5. Corrige la transcripción sobre la marcha: el área de texto es editable.
+6. Copia el texto o exporta TXT, SRT o WebVTT.
+7. Pulsa **Clear session** para liberar de la memoria el medio, la transcripción y el modelo cargado.
+
+## Ajustes
+
+| Ajuste | Opciones | Qué cambia |
+| --- | --- | --- |
+| Model | Whisper Tiny (multilingüe, ~77 MB) | Los pesos usados para el reconocimiento y el tamaño de la primera descarga. |
+| Language | Automatic, English, Russian | Automatic deja que Whisper detecte el idioma; elegirlo explícitamente es más fiable en clips cortos o ruidosos. |
+| Timestamps | Segment, Off | Segment genera la lista con marcas de tiempo que necesita la exportación a SRT y WebVTT. Off devuelve solo texto plano. |
+| Runtime | Auto (WebGPU → WASM), WASM only, WebGPU preferred | Auto usa la GPU cuando el navegador expone WebGPU y recurre a WASM de forma transparente. WASM only es más lento pero el más compatible. |
+
+## Grabaciones largas
+
+Los clips cortos se decodifican de una sola pasada. Los medios más largos se analizan primero y luego se procesan mediante una cadena de ventanas de unos 30 segundos con 5 segundos de solapamiento, de modo que en memoria solo hay una ventana a la vez mientras el modelo permanece cargado entre ellas. La transcripción se va rellenando ventana a ventana, y **Cancel** detiene la ejecución sin perder lo ya producido.
+
+## Privacidad
+
+- El audio, el vídeo, los nombres de archivo, el texto de la transcripción y tus ediciones se quedan en la página. Nunca se envían a CAD AutoScript, a analítica ni a ninguna API de transcripción.
+- Las únicas peticiones salientes son los archivos del modelo fijados en Hugging Face Hub.
+- Solo se accede al micrófono después de pulsar **Record microphone**, y esta es la única utilidad del sitio a la que se concede permiso de micrófono.
+- **Clear session** libera el flujo del micrófono, los búferes de audio y el modelo cargado. Cerrar la pestaña hace lo mismo.
+- No se guarda nada en tu cuenta ni se conserva historial de transcripciones: guarda o exporta lo que quieras conservar antes de salir de la página.
+
+## Requisitos y límites
+
+- Una versión actual de Chromium, Firefox o Safari con soporte de WebAssembly. WebGPU es opcional y solo aporta velocidad.
+- Unos 77 MB libres de caché del navegador para el modelo, además de memoria de trabajo proporcional a la duración de la grabación.
+- Whisper Tiny prioriza la velocidad sobre la precisión: revisa el vocabulario técnico, los números de pieza y los nombres propios.
+- Los acentos marcados, las voces superpuestas y el ruido de obra degradan el resultado; acercar el micrófono ayuda mucho más que cualquier ajuste de aquí.
+- La separación por hablantes, la transcripción continua en directo y los modelos Whisper mayores no forman parte de esta versión.
+- ⚠️ Las transcripciones son una ayuda de redacción. Contrástalas con la grabación antes de citarlas en un informe, un acta o cualquier documento contractual.
+
+## Herramientas relacionadas
+
+- [WIKA CPG1500 Log Analyzer](./wikalog-analyzer.mdx)
+- [PDF Number Extractor](./pdf-number-extractor.mdx)
+- [Focus Planner](./focus-planner.mdx)
+
+## Comentarios / informe de errores
+
+- [Abrir una incidencia en GitHub](https://github.com/YurMil/cadautoscript.com/issues)
+- Escríbenos indicando el slug `whisper-transcriber` para que podamos reproducir el problema.
