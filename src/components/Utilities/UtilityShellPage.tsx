@@ -50,6 +50,7 @@ export default function UtilityShellPage({tool, ...config}: UtilityShellPageProp
     features,
     scriptType = 'module',
     appPath,
+    iframeAllow = "camera 'self'",
   } = config;
 
   const iframeSrc = useBaseUrl(appPath ?? `/utility-apps/${slug}/app.html`);
@@ -218,7 +219,7 @@ export default function UtilityShellPage({tool, ...config}: UtilityShellPageProp
           src={iframeSrc}
           title={title}
           loading="lazy"
-          allow="camera 'self'"
+          allow={iframeAllow}
           data-nobrokenlinkcheck
         ></iframe>
       )}

@@ -75,6 +75,7 @@ const sidebars: SidebarsConfig = {
             'utilities/react-table-editor',
             'utilities/focus-planner',
             'utilities/wikalog-analyzer',
+            'utilities/whisper-transcriber',
           ],
         },
       ],

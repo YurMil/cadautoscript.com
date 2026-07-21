@@ -2,3 +2,9 @@
 # Marked as generated/vendored so CodeQL and diff views skip them.
 static/utility-apps/**/*.js linguist-generated=true linguist-vendored=true
 static/utility-apps/**/*.mjs linguist-generated=true linguist-vendored=true
+# Compiled WebAssembly runtimes (e.g. ONNX Runtime Web) are binary artifacts.
+static/utility-apps/**/*.wasm binary linguist-generated=true linguist-vendored=true
+
+# The transcriber artifact ships a manifest of SHA-256 checksums, so its files
+# must round-trip byte-for-byte — no end-of-line normalization.
+static/utility-apps/whisper-transcriber/** -text

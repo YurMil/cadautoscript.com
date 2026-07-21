@@ -372,4 +372,17 @@ export const utilities: UtilityDescriptor[] = [
     href: '/utilities/wikalog-analyzer/',
     thumbnail: '/img/utilities/wikalog-analyzer.png',
   },
+  {
+    id: 'whisper-transcriber',
+    relatedIds: ['wikalog-analyzer', 'doc-parser', 'focus-planner'],
+    category: 'productivity',
+    name: 'Whisper Transcriber',
+    description:
+      'Transcribe audio and video to editable text with Whisper running fully in your browser.',
+    tech: 'Transformers.js + WASM / WebGPU',
+    standards: 'On-device inference',
+    features: ['File or microphone input', 'Timestamped segments', 'TXT / SRT / WebVTT export'],
+    href: '/utilities/whisper-transcriber/',
+    thumbnail: '/img/utilities/whisper-transcriber.svg',
+  },
 ];

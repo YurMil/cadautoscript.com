@@ -1,0 +1,130 @@
+---
+title: Whisper Transcriber
+description: Transcribe audio and video files or microphone recordings to editable text with Whisper running entirely in your browser, then export TXT, SRT, or WebVTT.
+slug: /utilities/whisper-transcriber
+image: /img/og/utilities/whisper-transcriber.png
+keywords:
+  - whisper transcriber
+  - browser speech to text
+  - offline transcription
+  - meeting notes
+  - subtitle generator
+  - srt webvtt export
+  - webgpu wasm inference
+---
+
+import Head from '@docusaurus/Head';
+
+# Whisper Transcriber
+
+Turn recordings into editable text without sending them anywhere. Audio is decoded, resampled, and transcribed by a Whisper model that runs inside a Web Worker in your own browser — there is no transcription server behind this utility.
+
+![Whisper Transcriber overview card](/img/og/utilities/whisper-transcriber.webp)
+
+<a className="button button--primary" href="/utilities/whisper-transcriber/" data-nobrokenlinkcheck>Open utility</a>
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/whisper-transcriber/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Whisper Transcriber",
+  "applicationCategory": "MultimediaApplication",
+  "operatingSystem": "Web",
+  "description": "Transcribe audio and video files or microphone recordings to editable text with Whisper running entirely in the browser, then export TXT, SRT, or WebVTT.",
+  "url": "https://cadautoscript.com/utilities/whisper-transcriber/",
+  "image": "https://cadautoscript.com/img/og/utilities/whisper-transcriber.png",
+  "featureList": [
+    "Audio and video file transcription",
+    "Record-then-transcribe microphone workflow",
+    "Automatic language detection with English and Russian modes",
+    "WebGPU acceleration with WASM fallback",
+    "Timestamped segments",
+    "TXT, SRT, and WebVTT export"
+  ],
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "CAD AutoScript"
+  }
+}`}</script>
+</Head>
+
+## What it does
+
+Whisper Transcriber converts speech into text on your own machine. You give it an audio or video file — or record straight from the microphone — and it produces a full transcript plus timestamped segments you can edit and export as TXT, SRT, or WebVTT subtitles.
+
+Everything happens in the browser tab: the media is decoded and downmixed to mono 16 kHz, the OpenAI Whisper model runs through Transformers.js on ONNX Runtime Web, and the result never leaves the page. Nothing is uploaded, queued, or stored on a server.
+
+The app is built as a standalone micro-application under `static/utility-apps/whisper-transcriber`. The CAD AutoScript shell embeds it in a same-origin iframe, so the transcriber can evolve in its own repository while sharing this site's catalog, article, reactions, comments, and access layer.
+
+## First run: the model download
+
+The first time you press **Transcribe**, the browser downloads the multilingual Whisper Tiny weights (about 77 MB) from the Hugging Face Hub and caches them. This is the only network traffic the utility generates, and it carries no audio — only the model files.
+
+- Later runs start from that cache and need no network at all.
+- Clearing site data, using a private window, or browser storage pressure can evict the cache and trigger a fresh download.
+- The model revision is pinned to a fixed commit, so the same version is fetched every time.
+
+## When to use it
+
+- Writing up meeting, supplier-call, or design-review notes from a recording.
+- Turning site walkthrough and inspection videos into searchable text.
+- Dictating punch lists or QA observations instead of typing them on site.
+- Producing SRT or WebVTT subtitles for internal training and handover videos.
+- Transcribing material you are not allowed to upload to a third-party service.
+
+## Workflow
+
+1. Drop an audio or video file into the drop zone, or press **Record microphone** and stop when you are done.
+2. Wait for the status line to report the media as ready — it shows duration, and whether the windowed pipeline will be used.
+3. Choose language, timestamps, and runtime if the defaults do not suit the recording.
+4. Press **Transcribe**. On the first run, the progress bar shows the model download; after that it goes straight to inference.
+5. Correct the transcript in place — the text area is editable.
+6. Copy the text, or export TXT, SRT, or WebVTT.
+7. Press **Clear session** to drop the media, transcript, and loaded model from memory.
+
+## Settings
+
+| Setting | Options | What it changes |
+| --- | --- | --- |
+| Model | Whisper Tiny (multilingual, ~77 MB) | The weights used for recognition and the size of the first download. |
+| Language | Automatic, English, Russian | Automatic lets Whisper detect the language; picking one explicitly is more reliable on short or noisy clips. |
+| Timestamps | Segment, Off | Segment produces the timestamped list that SRT and WebVTT export needs. Off returns plain text only. |
+| Runtime | Auto (WebGPU → WASM), WASM only, WebGPU preferred | Auto uses the GPU when the browser exposes WebGPU and silently falls back to WASM. WASM only is the slower but most compatible path. |
+
+## Long recordings
+
+Short clips are decoded in one pass. Longer media is probed first and then run through a conveyor of roughly 30-second mono windows with 5 seconds of overlap, so only one window of audio sits in memory at a time while the model stays loaded between windows. The transcript fills in window by window, and **Cancel** stops the run without losing what has already been produced.
+
+## Privacy
+
+- Audio, video, filenames, transcript text, and your edits stay in the page. They are never sent to CAD AutoScript, to analytics, or to any transcription API.
+- The only outbound requests are the pinned model files from the Hugging Face Hub.
+- The microphone is only accessed after you press **Record microphone**, and this is the only utility on the site that is granted microphone permission at all.
+- **Clear session** releases the microphone stream, the audio buffers, and the loaded model. Closing the tab does the same.
+- Nothing is written to your account, and no transcript history is kept — save or export anything you want to keep before you leave the page.
+
+## Requirements and limits
+
+- A current Chromium, Firefox, or Safari release with WebAssembly support. WebGPU is optional and only adds speed.
+- Roughly 77 MB of free browser cache for the model, plus working memory proportional to the recording length.
+- Whisper Tiny favours speed over accuracy: expect to proofread technical vocabulary, part numbers, and proper names.
+- Heavy accents, crosstalk, and noisy site audio degrade the result — a closer microphone helps far more than any setting here.
+- Speaker diarization ("who said what"), live rolling transcription, and larger Whisper models are not part of this version.
+- ⚠️ Transcripts are a drafting aid. Verify them against the recording before quoting them in a report, a minute of meeting, or any contractual document.
+
+## Related tools
+
+- [WIKA CPG1500 Log Analyzer](./wikalog-analyzer.mdx)
+- [PDF Number Extractor](./pdf-number-extractor.mdx)
+- [Focus Planner](./focus-planner.mdx)
+
+## Feedback / bug report
+
+- [Open a GitHub issue](https://github.com/YurMil/cadautoscript.com/issues)
+- Email or DM with the slug `whisper-transcriber` so we can reproduce the issue.

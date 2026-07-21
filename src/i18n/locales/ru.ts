@@ -260,6 +260,10 @@ export const ru: TranslationDict = {
       name: 'WIKA Log Analyzer',
       description: 'Разбор логов калибратора WIKA CPG1500, анализ данных измерений и локальная печать QC-отчётов.',
     },
+    'whisper-transcriber': {
+      name: 'Whisper Transcriber',
+      description: 'Расшифровка аудио и видео в редактируемый текст: Whisper работает прямо в браузере.',
+    },
   },
   miniGamesPage: {
     eyebrow: 'Мини-игры',

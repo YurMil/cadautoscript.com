@@ -101,6 +101,7 @@ npm run serve
 | **Batch File Renamer** | Bulk rename with find/replace, prefixes, numbering, ZIP export | React |
 | **Folder Structure Builder** | Design folder trees, export bash/PowerShell scripts | React + JSZip |
 | **Business Calendar Generator** | Generate yearly calendars with holidays, export PDF/PNG | React + PDF |
+| **Whisper Transcriber** | Transcribe audio/video or microphone input to text and subtitles, fully on-device | Transformers.js + WASM/WebGPU |
 
 ---
 
@@ -285,6 +286,7 @@ by mirroring files under `i18n/<locale>/docusaurus-plugin-content-*/`.
 | `npm run lint` | Run ESLint over src, api and scripts |
 | `npm run sitemap:sections` | Generate sectioned sitemaps |
 | `npm run sync:webstep-viewer` | Sync WebSTEP viewer embed |
+| `npm run sync:whisper-transcriber` | Build and republish the Whisper Transcriber artifact |
 
 ---
 
@@ -324,9 +326,17 @@ AUTH_REDIRECT_URL=http://localhost:3000/auth/callback
 ### Adding a New Utility
 
 1. Add utility metadata to `src/data/utilities.ts`
-2. Create page route in `src/pages/utilities/`
-3. Add documentation in `docs/utilities/`
-4. Place standalone build assets in `static/utility-apps/<slug>/` if needed
+2. Add the slug and shell config to `src/data/utilityShellPages.tsx`
+3. Create page route in `src/pages/utilities/`
+4. Add documentation in `docs/utilities/` plus the five `i18n/<locale>/…/utilities/` mirrors, and list it in `sidebars.ts` and `utilities/overview.mdx`
+5. Add the catalog name/description to all six `src/i18n/locales/*.ts` dictionaries
+6. Place standalone build assets in `static/utility-apps/<slug>/` if needed
+
+Device capabilities (camera, microphone) are delegated **per utility** through the
+`iframeAllow` field of `UtilityPageConfig`, paired with a path-scoped
+`Permissions-Policy` rule in `vercel.json`. Never widen the global policy: the
+site default stays `microphone=()`, and only the routes of the utility that
+needs a device relax it. See `whisper-transcriber` for the reference wiring.
 
 ---
 

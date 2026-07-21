@@ -261,6 +261,10 @@ export const et: TranslationDict = {
       name: 'WIKA Log Analyzer',
       description: 'Parseeri WIKA CPG1500 kalibreerimisloge, vaata mõõteandmeid ja prindi QC-raportid lokaalselt.',
     },
+    'whisper-transcriber': {
+      name: 'Whisper Transcriber',
+      description: 'Transkribeeri heli ja video redigeeritavaks tekstiks — Whisper töötab otse brauseris.',
+    },
   },
   miniGamesPage: {
     eyebrow: 'Minimängud',
