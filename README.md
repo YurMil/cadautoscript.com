@@ -332,6 +332,29 @@ AUTH_REDIRECT_URL=http://localhost:3000/auth/callback
 5. Add the catalog name/description to all six `src/i18n/locales/*.ts` dictionaries
 6. Place standalone build assets in `static/utility-apps/<slug>/` if needed
 
+### Embedded apps built in their own repository
+
+Utilities too heavy to live in the Docusaurus bundle are built elsewhere and
+published here as static artifacts. The Whisper Transcriber is the reference
+implementation of that pipeline:
+
+1. Tagging a release in [`YurMil/ws-speech-text`](https://github.com/YurMil/ws-speech-text)
+   builds the bundle, audits it, and attaches a checksummed archive to a GitHub
+   release.
+2. That workflow sends a `whisper-transcriber-release` `repository_dispatch` here
+   (secret `SITE_DISPATCH_TOKEN`, set in the source repository).
+3. `.github/workflows/sync-whisper-transcriber.yml` downloads the archive,
+   refuses it unless the SHA-256 matches, republishes
+   `static/utility-apps/whisper-transcriber/` via
+   `scripts/sync-whisper-transcriber.mjs`, runs typecheck/lint/build, and opens
+   a pull request.
+
+Nothing is deployed without review, and this repository never builds the app or
+downloads model weights. The same script publishes from a local checkout during
+development (`npm run sync:whisper-transcriber`).
+
+### Device capabilities
+
 Device capabilities (camera, microphone) are delegated **per utility** through the
 `iframeAllow` field of `UtilityPageConfig`, paired with a path-scoped
 `Permissions-Policy` rule in `vercel.json`. Never widen the global policy: the
