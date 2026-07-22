@@ -116,7 +116,13 @@ jobs:
       - name: Open pull request
         if: steps.diff.outputs.changed == 'true'
         env:
-          GH_TOKEN: ${{ github.token }}
+          # A PAT is preferred when present: pull requests opened by the default
+          # GITHUB_TOKEN do not trigger `on: pull_request` workflows, so the
+          # request arrives with no checks shown. The verification has already
+          # happened in this job either way — typecheck, lint and the build run
+          # above before the branch is pushed — but a request with no visible
+          # checks is easy to misread as unverified.
+          GH_TOKEN: ${{ secrets.SYNC_PR_TOKEN || github.token }}
         run: |
           set -euo pipefail
           # One rolling branch rather than one per release. The source
@@ -170,8 +176,30 @@ jobs:
             gh pr edit "$existing" \
               --title "Publish Whisper Transcriber ${TAG}" --body-file pr-body.md
             echo "Updated existing pull request #${existing}"
-          else
-            gh pr create --base main --head "$branch" \
-              --title "Publish Whisper Transcriber ${TAG}" --body-file pr-body.md
+          elif ! gh pr create --base main --head "$branch" \
+                 --title "Publish Whisper Transcriber ${TAG}" --body-file pr-body.md; then
+            # Opening a pull request from Actions is refused unless the
+            # repository allows it (Settings → Actions → General → Workflow
+            # permissions → "Allow GitHub Actions to create and approve pull
+            # requests"), or a PAT is supplied as SYNC_PR_TOKEN.
+            #
+            # The artifact is already verified, committed and pushed at this
+            # point, so the work is not lost — only the last click is missing.
+            # Fail anyway, but leave the one-click link in the run summary
+            # rather than making someone dig through the log for it.
+            {
+              echo "### Artifact published, pull request not opened"
+              echo
+              echo "Branch \`${branch}\` is pushed and ready:"
+              echo
+              echo "**[Open the pull request](https://github.com/${GITHUB_REPOSITORY}/compare/main...${branch}?expand=1)**"
+              echo
+              echo 'To let this happen automatically, either enable'
+              echo '_Settings → Actions → General → Workflow permissions →'
+              echo '"Allow GitHub Actions to create and approve pull requests"_,'
+              echo 'or add a `SYNC_PR_TOKEN` secret with a PAT that can open them.'
+            } >> "$GITHUB_STEP_SUMMARY"
+            echo "::error::Could not open the pull request — see the run summary for the link and the setting to change."
+            exit 1
           fi
           rm -f pr-body.md
