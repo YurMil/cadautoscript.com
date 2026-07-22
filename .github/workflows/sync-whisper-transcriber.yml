@@ -119,7 +119,12 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          branch="chore/whisper-transcriber-${TAG}"
+          # One rolling branch rather than one per release. The source
+          # repository now publishes on every merge, so a branch per tag would
+          # leave a queue of near-identical pull requests, each superseded by
+          # the next. This branch always carries the newest artifact that has
+          # not been merged yet, and its pull request is updated in place.
+          branch="chore/whisper-transcriber-sync"
           build_id="$(node -p "require('./static/utility-apps/whisper-transcriber/manifest.json').buildId")"
           version="$(node -p "require('./static/utility-apps/whisper-transcriber/manifest.json').version")"
 
@@ -139,7 +144,11 @@ jobs:
           git add static/utility-apps/whisper-transcriber
           git commit -F commit-msg.md
           rm -f commit-msg.md
-          git push --force-with-lease origin "$branch"
+          # Plain --force on purpose. The branch is rebuilt from main on every
+          # run and is owned by this workflow, so there is nothing to preserve;
+          # --force-with-lease would fail outright here, because a freshly
+          # created local branch has no remote-tracking ref to compare against.
+          git push --force origin "$branch"
 
           {
             printf 'Republishes the embedded Whisper Transcriber from [%s@%s](https://github.com/%s/releases/tag/%s).\n\n' \
@@ -156,7 +165,10 @@ jobs:
 
           existing="$(gh pr list --head "$branch" --state open --json number --jq '.[0].number // empty')"
           if [ -n "$existing" ]; then
-            gh pr edit "$existing" --body-file pr-body.md
+            # Title too, not just the body: the open pull request now stands for
+            # whichever release is newest, not the one that first opened it.
+            gh pr edit "$existing" \
+              --title "Publish Whisper Transcriber ${TAG}" --body-file pr-body.md
             echo "Updated existing pull request #${existing}"
           else
             gh pr create --base main --head "$branch" \
