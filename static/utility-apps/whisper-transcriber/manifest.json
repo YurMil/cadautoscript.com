@@ -1,23 +1,23 @@
 {
   "name": "whisper-transcriber",
-  "version": "0.1.0-prototype",
-  "buildId": "7881cdb3b709",
-  "buildTime": "2026-07-21T18:04:56.641Z",
+  "version": "0.2.0",
+  "buildId": "93bf828369d2",
+  "buildTime": "2026-07-22T16:51:16.632Z",
   "entry": "app.html",
   "assets": [
-    "assets/index-BNEmeybH.js",
-    "assets/index-Bz_YcdLD.css",
+    "assets/index-DJad07mx.js",
+    "assets/index-L_uzkYKm.css",
     "assets/ort-wasm-simd-threaded.jsep-B0T3yYHD.wasm",
-    "assets/whisper.worker-BizJaRRu.js",
+    "assets/whisper.worker-BMNYIe-G.js",
     "build-info.json"
   ],
   "checksums": {
-    "assets/index-BNEmeybH.js": "c439350213ffe2cf49e8fbe9cffd4673b3b02dd50152ca418c822c2de64db7ce",
-    "assets/index-Bz_YcdLD.css": "fd6a8bcee6ec77acd777dc483eefafd95fa5ff38c78ab8df1e70d113fe24af7f",
+    "assets/index-DJad07mx.js": "88effa763c6c12d0f4876b269580cc5ee0d060a41e10cd414ae5f05cfe301ed0",
+    "assets/index-L_uzkYKm.css": "20d046c0bef194ebcd56823a8097649195d525d84961b5e14ce19ace9fad0f87",
     "assets/ort-wasm-simd-threaded.jsep-B0T3yYHD.wasm": "c46655e8a94afc45338d4cb2b840475f88e5012d524509916e505079c00bfa39",
-    "assets/whisper.worker-BizJaRRu.js": "48be916bbf2f0c1b6156f2ade283095017cc2610b40cb599c66fd7ee884632a6",
-    "build-info.json": "d689bfb673f19c359c864e7032c923d62cd0d20c59c2fb2c668c6eac1e69f8b0",
-    "app.html": "eaf4823223faae3bc8e09df86667560242414649fff2339d77ae3e1533b587e1",
-    "index.html": "eaf4823223faae3bc8e09df86667560242414649fff2339d77ae3e1533b587e1"
+    "assets/whisper.worker-BMNYIe-G.js": "769df47b7fdb3b99060fe0e64c2b5020c8dc2d2b2ef5e515af4ffd910046bd8b",
+    "build-info.json": "aa29ab19fbea0cb2751dd6f047202de737e207e769def4250f45ba37241d9764",
+    "app.html": "9a470150c3af660ea8f4607d0d3c02159b3fa3fb927d24aa5ed517c3864ed1db",
+    "index.html": "9a470150c3af660ea8f4607d0d3c02159b3fa3fb927d24aa5ed517c3864ed1db"
   }
 }
