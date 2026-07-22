@@ -23,6 +23,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
+import zlib from 'node:zlib';
 
 const SITE_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DEFAULT_SOURCE_DIR = path.resolve(
@@ -176,12 +177,103 @@ function extractArchive(archive) {
   console.log(`[whisper-transcriber] Archive checksum verified: ${actual}`);
 
   scratchDir = fs.mkdtempSync(path.join(os.tmpdir(), 'whisper-transcriber-'));
-  // bsdtar reads zip archives and is present on Windows, macOS and the runners.
-  run('tar', ['-xf', path.resolve(archive), '-C', scratchDir]);
+  unzipTo(path.resolve(archive), scratchDir);
 
   // Accept both a flat archive and one that wraps the files in dist/.
   const nested = path.join(scratchDir, 'dist');
   return fs.existsSync(path.join(nested, 'index.html')) ? nested : scratchDir;
+}
+
+/**
+ * Extracts a zip using Node alone.
+ *
+ * This used to shell out to `tar -xf`, which works on Windows and macOS —
+ * where `tar` is bsdtar and reads zip — and fails on Linux, where it is GNU tar
+ * and does not. Nothing about "call the system tar" was ever portable; it just
+ * happened to match the machine it was written on. Doing it here removes the
+ * dependency on which archiver a host has installed, and lets entry paths be
+ * rejected before anything is written rather than after.
+ *
+ * Deliberately minimal: store and deflate, no zip64, no encryption. The
+ * archives come from our own release workflow, and anything else should be
+ * refused loudly rather than half-understood.
+ */
+function unzipTo(archivePath, targetDir) {
+  const buffer = fs.readFileSync(archivePath);
+
+  const EOCD_SIGNATURE = 0x06054b50;
+  const CENTRAL_SIGNATURE = 0x02014b50;
+
+  // The end-of-central-directory record sits at the tail, after an optional
+  // comment, so it has to be found by scanning backwards.
+  let eocd = -1;
+  for (let i = buffer.length - 22; i >= 0 && i >= buffer.length - 66_000; i -= 1) {
+    if (buffer.readUInt32LE(i) === EOCD_SIGNATURE) {
+      eocd = i;
+      break;
+    }
+  }
+  if (eocd === -1) fail('Archive is not a zip file (no end-of-central-directory record).');
+
+  const entryCount = buffer.readUInt16LE(eocd + 10);
+  const centralOffset = buffer.readUInt32LE(eocd + 16);
+  if (entryCount === 0xffff || centralOffset === 0xffffffff) {
+    fail('Zip64 archives are not supported.');
+  }
+
+  let cursor = centralOffset;
+  let written = 0;
+
+  for (let entry = 0; entry < entryCount; entry += 1) {
+    if (buffer.readUInt32LE(cursor) !== CENTRAL_SIGNATURE) {
+      fail(`Malformed zip: central directory entry ${entry} has a bad signature.`);
+    }
+
+    const method = buffer.readUInt16LE(cursor + 10);
+    const compressedSize = buffer.readUInt32LE(cursor + 20);
+    const nameLength = buffer.readUInt16LE(cursor + 28);
+    const extraLength = buffer.readUInt16LE(cursor + 30);
+    const commentLength = buffer.readUInt16LE(cursor + 32);
+    const localOffset = buffer.readUInt32LE(cursor + 42);
+    const name = buffer.toString('utf8', cursor + 46, cursor + 46 + nameLength);
+
+    cursor += 46 + nameLength + extraLength + commentLength;
+
+    // Directory entries carry no data.
+    if (name.endsWith('/')) continue;
+
+    // Reject before writing, not after: an entry that escapes the target must
+    // never touch the filesystem in the first place.
+    const normalized = name.replace(/\\/g, '/');
+    if (path.isAbsolute(normalized) || normalized.split('/').includes('..')) {
+      fail(`Refusing to extract unsafe path from archive: ${name}`);
+    }
+
+    // The local header repeats the name and extra fields, and its extra field
+    // length can differ from the central one — so the payload offset has to be
+    // read from the local header rather than assumed.
+    const localNameLength = buffer.readUInt16LE(localOffset + 26);
+    const localExtraLength = buffer.readUInt16LE(localOffset + 28);
+    const dataStart = localOffset + 30 + localNameLength + localExtraLength;
+    const raw = buffer.subarray(dataStart, dataStart + compressedSize);
+
+    let contents;
+    if (method === 0) {
+      contents = raw;
+    } else if (method === 8) {
+      contents = zlib.inflateRawSync(raw);
+    } else {
+      fail(`Unsupported zip compression method ${method} for ${name}.`);
+    }
+
+    const destination = path.join(targetDir, normalized);
+    fs.mkdirSync(path.dirname(destination), { recursive: true });
+    fs.writeFileSync(destination, contents);
+    written += 1;
+  }
+
+  if (written === 0) fail('Archive contained no files.');
+  console.log(`[whisper-transcriber] Extracted ${written} files from the archive`);
 }
 
 /** Produces the directory whose contents should be published. */
