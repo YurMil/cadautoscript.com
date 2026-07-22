@@ -356,6 +356,14 @@ Nothing is deployed without review, and this repository never builds the app or
 downloads model weights. The same script publishes from a local checkout during
 development (`npm run sync:whisper-transcriber`).
 
+**Repository setting this depends on:** _Settings → Actions → General → Workflow
+permissions_ must have **"Allow GitHub Actions to create and approve pull
+requests"** enabled, or the sync publishes the branch and then cannot open the
+request for it. Optionally add a `SYNC_PR_TOKEN` secret holding a PAT that can
+open pull requests — requests opened by the default token do not trigger
+`on: pull_request` workflows, so they arrive showing no checks even though the
+sync job ran typecheck, lint and the full build before pushing.
+
 ### Device capabilities
 
 Device capabilities (camera, microphone) are delegated **per utility** through the
