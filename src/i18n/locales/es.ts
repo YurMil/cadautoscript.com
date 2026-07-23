@@ -55,6 +55,9 @@ export const es: TranslationDict = {
     reloadTool: 'Recargar herramienta',
     copyLink: 'Copiar enlace a este cálculo',
     linkCopied: 'Enlace copiado',
+    saveCalculation: 'Guardar cálculo',
+    calculationSaved: 'Guardado en tu historial',
+    saveCalculationFailed: 'No se pudo guardar',
     guestExportNotice:
       'Estás usando {name} como invitado — todos los cálculos son gratuitos. Inicia sesión para sincronizar tus preferencias entre dispositivos; los cálculos guardados llegarán pronto.',
     backToUtilities: 'Volver a las utilidades web',
@@ -68,6 +71,17 @@ export const es: TranslationDict = {
     tableColumnLaunch: 'Lanzar',
     open: 'Abrir',
     locked: 'Bloqueado',
+  },
+  history: {
+    eyebrow: 'Trabajo guardado',
+    title: 'Historial de cálculos',
+    subtitle: 'Tus últimos {max} cálculos guardados. Al abrir uno se restauran sus datos de entrada.',
+    loading: 'Cargando tus cálculos guardados…',
+    empty: 'Aún no hay cálculos guardados. Abre una calculadora, configúrala y usa «Guardar cálculo».',
+    open: 'Abrir',
+    delete: 'Eliminar',
+    deleteConfirm: '¿Eliminar este cálculo guardado?',
+    error: 'No se pudieron cargar tus cálculos guardados. Inténtalo de nuevo.',
   },
   settings: {
     title: 'Configuración',

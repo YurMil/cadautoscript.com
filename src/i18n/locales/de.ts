@@ -55,6 +55,9 @@ export const de: TranslationDict = {
     reloadTool: 'Tool neu laden',
     copyLink: 'Link zu dieser Berechnung kopieren',
     linkCopied: 'Link kopiert',
+    saveCalculation: 'Berechnung speichern',
+    calculationSaved: 'Im Verlauf gespeichert',
+    saveCalculationFailed: 'Speichern fehlgeschlagen',
     guestExportNotice:
       'Sie nutzen {name} als Gast — alle Berechnungen sind kostenlos. Melden Sie sich an, um Ihre Einstellungen geräteübergreifend zu synchronisieren; gespeicherte Berechnungen folgen in Kürze.',
     backToUtilities: 'Zurück zu den Web-Dienstprogrammen',
@@ -68,6 +71,17 @@ export const de: TranslationDict = {
     tableColumnLaunch: 'Start',
     open: 'Öffnen',
     locked: 'Gesperrt',
+  },
+  history: {
+    eyebrow: 'Gespeichertes',
+    title: 'Berechnungsverlauf',
+    subtitle: 'Ihre letzten {max} gespeicherten Berechnungen. Beim Öffnen werden die Eingaben wiederhergestellt.',
+    loading: 'Gespeicherte Berechnungen werden geladen…',
+    empty: 'Noch keine gespeicherten Berechnungen. Öffnen Sie einen Rechner, richten Sie ihn ein und klicken Sie auf „Berechnung speichern“.',
+    open: 'Öffnen',
+    delete: 'Löschen',
+    deleteConfirm: 'Diese gespeicherte Berechnung löschen?',
+    error: 'Gespeicherte Berechnungen konnten nicht geladen werden. Bitte erneut versuchen.',
   },
   settings: {
     title: 'Einstellungen',

@@ -71,6 +71,14 @@ Rules for app authors:
 3. **Only inputs, never results** — recompute outputs after restore so a link
    can never show numbers the current engine wouldn't produce.
 
+## Reuse: saved calculation history
+
+Saved history (issue #115) stores exactly the `state` object described above,
+with its schema version, in `public.user_calculation_history`. Reopening a
+saved entry builds a `?calc=` link from it and navigates to the tool, so
+restore always goes through the validation path documented here — apps need no
+extra work to support history beyond speaking this protocol.
+
 ## Wiring status
 
 | App | Repo | Status |
