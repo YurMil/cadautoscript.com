@@ -334,6 +334,18 @@ export const utilities: UtilityDescriptor[] = [
     thumbnail: '/img/utilities/busbar-calculator.svg',
   },
   {
+    id: 'heat-input-master',
+    category: 'calculators',
+    name: 'Heat Input Master',
+    description:
+      'Calculate welding heat input, evaluate acceptance, and export verification records — all in your browser.',
+    tech: 'React + Calc',
+    standards: 'ISO 4063 · EN 1011 · ISO/TR 18491',
+    features: ['Heat-input calc', 'Verification log', 'XLSX/PDF export'],
+    href: '/utilities/heat-input-master/',
+    thumbnail: '/img/utilities/heat-input-master.svg',
+  },
+  {
     id: 'pressure-vessel-dished-end-calc',
     relatedIds: ['shell-rolling', 'blind-flange-calculator', 'tube-sheet-generator'],
     category: 'calculators',

@@ -1,0 +1,116 @@
+---
+title: Heat Input Master
+description: Arvuta keevituse soojussisend, hinda vastuvõetavust, pea kontrolliprotokolli ja ekspordi XLSX-, CSV-, JSON- ja PDF-aruanded otse brauseris.
+slug: /utilities/heat-input-master
+image: /img/og/utilities/heat-input-master.png
+keywords:
+  - soojussisendi kalkulaator
+  - keevituse soojussisend
+  - kaare energia
+  - ISO 4063
+  - keevituse kontrolliprotokoll
+  - WPS vastuvõetavus
+  - PDF aruanne
+---
+
+import Head from '@docusaurus/Head';
+
+# Heat Input Master
+
+Arvuta keevituskihi soojussisend (energia pikkusühiku kohta), hinda seda vastuvõetavusprofiili alusel, pea muutumatut kontrolliprotokolli ja ekspordi XLSX-, CSV-, JSON- ja PDF-aruandeid — ilma projektiandmeid üles laadimata.
+
+![Heat Input Master screenshot](/img/og/utilities/heat-input-master.webp)
+
+<a className="button button--primary" href="/utilities/heat-input-master/" data-nobrokenlinkcheck>Ava utiliit</a>
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/heat-input-master/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Heat Input Master",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Arvuta keevituse soojussisend (Q = U·I·60·k / v), hinda vastuvõetavust, pea muutumatut kontrolliprotokolli ja ekspordi XLSX-, CSV-, JSON- ja mitmeleheküljelised PDF-aruanded täielikult brauseris.",
+  "url": "https://cadautoscript.com/utilities/heat-input-master/",
+  "image": "https://cadautoscript.com/img/og/utilities/heat-input-master.png",
+  "featureList": [
+    "Kaare soojussisendi arvutus bruto- ja efektiivvõimsusega",
+    "Režiimid: üksik, min/max ja kolme proovi keskmistamine",
+    "Fail-closed vastuvõetavuse hindamine",
+    "Muutumatu kontrolliprotokoll reaalajas ümberarvutusega",
+    "Eksport XLSX, CSV, JSON ja PDF"
+  ],
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "CAD AutoScript"
+  }
+}`}</script>
+</Head>
+
+## Mida utiliit teeb
+
+Heat Input Master on kliendipoolne inseneritööriist keevituse soojussisendi arvutamiseks ja kontrolliandmete pidamiseks. Vali keevitusprotsess, sisesta vool, pinge ja keevituskiirus (või õmbluse pikkus ja aeg), määra kasutegur (k-tegur), ning utiliit arvutab kaare soojussisendi `Q = U·I·60·k / (v·1000)` kJ/mm, näidates bruto- ja efektiivvõimsust ning täielikku valemit. Iga kihti saab hinnata vastuvõetavusprofiili alusel ja salvestada muutumatu kontrolliprotokolli kandena.
+
+Rakendus on ühendatud eraldiseisva micro-app'ina kaustas `static/utility-apps/heat-input-master`. CAD AutoScripti kest kuvab seda samamoodi nagu teisi saidi utiliite: kataloogilehe, artikli, kommentaaride, reaktsioonide ja ühise juurdepääsukihi kaudu.
+
+## Millal kasutada
+
+- Soojussisendi arvutamiseks keevitusprotseduuri kvalifitseerimisel (WPS/WPQR tugi).
+- Mõõdetud voolu, pinge ja kiiruse salvestamiseks tootmiskontrolli käigus.
+- Üksikute, min/max ja kolme proovi (meetod A/B) mõõteseeriate võrdlemiseks.
+- Kontrollimaks, kas kiht jääb kinnitatud soojussisendi vastuvõetavusaknasse.
+- XLSX-protokolli või PDF-kontrolliaruande koostamiseks kvaliteedikontrolli jaoks.
+
+## Sisendid ja väljundid
+
+| Ala | Sisendid | Väljundid |
+| --- | --- | --- |
+| Protsess | ISO 4063 protsess, voolu tüüp/polaarsus | Päritolu iga kihi kohta; sobivad vaikeväärtused |
+| Elektri | Vool, pinge, kasutegur (k-tegur) | Kaare bruto- ja efektiivvõimsus |
+| Kiirus | Keevituskiirus või õmbluse pikkus + aeg | Keevituskiirus, soojussisend (kJ/mm) |
+| Mõõtmine | Üksik, min/max, kolm proovi | Keskmistatud tulemus koos aluse avalikustamisega |
+| Vastuvõetavus | Vastuvõetavusprofiil (kinnitatud või mustand) | Olek: läbitud / hoiatus / hindamata |
+| Kirjed | Projekt, kihi metaandmed, revisjon | Kontrolliprotokoll, eksport XLSX / CSV / JSON / PDF |
+
+## Olulised piirangud
+
+Kaasasolevad kasuteguri- ja vastuvõetavusprofiilid on märgitud kinnitamata näidisandmestikeks. Need muudavad töövoo testitavaks, kuid ei ole sertifitseeritud insenerialus. Impulss- ja AC-valikud salvestatakse päritoluna ega muuda teadlikult soojussisendi väärtust (kinnitamata koefitsienti ei rakendata); need annavad täpsushoiatuse, kuna keskmine U·I ei pruugi võrduda kaare tegeliku energiaga. Enne tulemuste kasutamist tegelikul õmblusel asenda profiilid kehtiva protseduuri või standardiga ja lase arvutus kvalifitseeritud keevitusinseneril üle kontrollida.
+
+## Töövoog
+
+1. Vali keevitusprotsess ning sisesta elektri- ja kiirusmõõtmised.
+2. Vali mõõterežiim (üksik, min/max või kolm proovi).
+3. Vaata reaalajas soojussisendi tulemust, bruto- vs efektiivvõimsust ja avalikustatud valemit.
+4. Määra vastuvõetavusprofiil kihi hindamiseks (või jäta „hindamata").
+5. Salvesta kiht kontrolliprotokolli; vajadusel muuda ja täpsusta ridu kohapeal.
+6. Ekspordi protokoll XLSX-, CSV- või JSON-vormingus või koosta mitmeleheküljeline PDF-kontrolliaruanne.
+
+## Eeldused ja standardid
+
+- **Standardite alus:** Protsessi tuvastamine järgib ISO 4063; kasuteguri (k-teguri) kasutamine ja impulss-/AC-režiimide täpsusmärkused tuginevad EN 1011 ja ISO/TR 18491 alusele, kasutades kaasasolevaid näidisandmestikke, mitte sertifitseeritud tabeleid.
+- **Peamised eeldused:**
+  - Soojussisend arvutatakse kui `Q = U·I·60·k / (v·1000)` kJ/mm sisestatud väärtustest.
+  - Kasuteguri tegurit rakendatakse sisestatud kujul; polaarsus ja impulssrežiim salvestatakse, kuid ei muuda Q-d.
+  - Mõõtmiste keskmistamine kasutab väärtusi täpselt nii, nagu need on valitud režiimi jaoks sisestatud.
+- **Piirangud:**
+  - Kaasasolevad kasuteguri- ja vastuvõetavusprofiilid on üksnes arenduse näidisandmestikud, mitte sertifitseeritud insenerialus.
+  - t8/5, CEV/CET/Pcm ja eelsoojenduse mudelid jäävad selle MVP-i ulatusest välja.
+  - Valikuline õmbluse geomeetria eelvaade on illustratiivne heuristika, mitte valideeritud mudel, ja jäetakse kõigist eksportidest välja.
+- ⚠️ Heat Input Master pakub otsustustoetuse arvutusi. See ei ole automaatne WPS/WPQR heakskiit ega sertifitseerimisasutus; tulemused peab kvalifitseeritud insener üle kontrollima vastavalt kehtivale normiväljaandele ja projekti spetsifikatsioonile.
+
+## Seotud tööriistad
+
+- [Busbar Calculator](./busbar-calculator.mdx)
+- [Gear Pair Calculator](./gear-pair-calculator.mdx)
+- [WIKA Log Analyzer](./wikalog-analyzer.mdx)
+
+## Tagasiside
+
+- [Ava GitHubi issue](https://github.com/YurMil/cadautoscript.com/issues)
+- Märgi kirjas või sõnumis slug `heat-input-master`, et saaksime probleemi taasesitada.

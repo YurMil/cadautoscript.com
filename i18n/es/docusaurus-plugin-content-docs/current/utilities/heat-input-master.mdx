@@ -1,0 +1,116 @@
+---
+title: Heat Input Master
+description: Calcula el aporte térmico de soldadura, evalúa la aceptación, lleva un registro de verificación y exporta informes XLSX, CSV, JSON y PDF en el navegador.
+slug: /utilities/heat-input-master
+image: /img/og/utilities/heat-input-master.png
+keywords:
+  - calculadora de aporte térmico
+  - aporte térmico soldadura
+  - energía de arco
+  - ISO 4063
+  - registro de verificación de soldadura
+  - aceptación WPS
+  - informe PDF
+---
+
+import Head from '@docusaurus/Head';
+
+# Heat Input Master
+
+Calcula el aporte térmico (energía por unidad de longitud) de una pasada de soldadura, evalúalo frente a un perfil de aceptación, lleva un registro de verificación inmutable y exporta informes XLSX, CSV, JSON y PDF, sin subir datos del proyecto.
+
+![Heat Input Master screenshot](/img/og/utilities/heat-input-master.webp)
+
+<a className="button button--primary" href="/utilities/heat-input-master/" data-nobrokenlinkcheck>Abrir utilidad</a>
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/heat-input-master/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Heat Input Master",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Calcula el aporte térmico de soldadura (Q = U·I·60·k / v), evalúa la aceptación, lleva un registro de verificación inmutable y exporta informes XLSX, CSV, JSON y PDF de varias páginas, todo en el navegador.",
+  "url": "https://cadautoscript.com/utilities/heat-input-master/",
+  "image": "https://cadautoscript.com/img/og/utilities/heat-input-master.png",
+  "featureList": [
+    "Cálculo del aporte térmico del arco con potencia bruta y efectiva",
+    "Modos: valor único, mín/máx y promedio de tres muestras",
+    "Evaluación de aceptación fail-closed",
+    "Registro de verificación inmutable con recálculo en vivo",
+    "Exportación a XLSX, CSV, JSON y PDF"
+  ],
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "CAD AutoScript"
+  }
+}`}</script>
+</Head>
+
+## Qué hace
+
+Heat Input Master es una herramienta de ingeniería del lado del cliente para calcular el aporte térmico de soldadura y llevar registros de verificación. Selecciona el proceso de soldadura, introduce corriente, tensión y velocidad de avance (o longitud del cordón y tiempo), define la eficiencia (factor k), y la utilidad calcula el aporte térmico del arco `Q = U·I·60·k / (v·1000)` en kJ/mm, mostrando la potencia bruta y efectiva y la fórmula completa. Cada pasada puede evaluarse frente a un perfil de aceptación y guardarse como una entrada inmutable del registro de verificación.
+
+La aplicación está integrada como una micro-app independiente en `static/utility-apps/heat-input-master`. El shell de CAD AutoScript la muestra igual que las demás utilidades del sitio: mediante la página de catálogo, el artículo, los comentarios, las reacciones y la capa de acceso común.
+
+## Cuándo usarlo
+
+- Para calcular el aporte térmico en la calificación de un procedimiento de soldadura (soporte WPS/WPQR).
+- Para registrar corriente, tensión y velocidad medidas en la verificación de producción.
+- Para comparar conjuntos de medición únicos, mín/máx y de tres muestras (método A/B).
+- Para comprobar si una pasada cae dentro de la ventana de aceptación aprobada del aporte térmico.
+- Para producir un registro XLSX o un informe PDF de verificación para revisión de calidad.
+
+## Entradas y salidas
+
+| Área | Entradas | Salidas |
+| --- | --- | --- |
+| Proceso | Proceso ISO 4063, tipo de corriente/polaridad | Procedencia por pasada; valores por defecto adecuados |
+| Eléctrica | Corriente, tensión, eficiencia (factor k) | Potencia de arco bruta y efectiva |
+| Velocidad | Velocidad de avance o longitud del cordón + tiempo | Velocidad de avance, aporte térmico (kJ/mm) |
+| Medición | Único, mín/máx, tres muestras | Resultado promediado con divulgación de la base |
+| Aceptación | Perfil de aceptación (aprobado o borrador) | Estado: aprobado / advertencia / no evaluado |
+| Registros | Proyecto, metadatos de pasada, revisión | Registro de verificación, exportación XLSX / CSV / JSON / PDF |
+
+## Límites importantes
+
+Los perfiles de eficiencia y aceptación incluidos están marcados como conjuntos de datos de ejemplo no aprobados. Hacen que el flujo sea comprobable, pero no son una base de ingeniería certificada. Las selecciones pulsadas y de CA se registran como procedencia y deliberadamente **no** alteran el valor del aporte térmico (sin coeficiente no aprobado); generan una advertencia de precisión porque el U·I medio puede no equivaler a la energía real del arco. Antes de usar los resultados en una soldadura real, sustituye los perfiles por el procedimiento o la norma aplicable y haz que un ingeniero de soldadura cualificado verifique el cálculo.
+
+## Flujo de trabajo
+
+1. Selecciona el proceso de soldadura e introduce las mediciones eléctricas y de velocidad.
+2. Elige el modo de medición (único, mín/máx o tres muestras).
+3. Revisa el resultado en vivo del aporte térmico, la potencia bruta frente a efectiva y la fórmula divulgada.
+4. Asigna un perfil de aceptación para evaluar la pasada (o déjala como «no evaluada»).
+5. Guarda la pasada en el registro de verificación; edita y ajusta las filas en el lugar según sea necesario.
+6. Exporta el registro como XLSX, CSV o JSON, o genera un informe PDF de verificación de varias páginas.
+
+## Supuestos y normas
+
+- **Base normativa:** La identificación del proceso sigue ISO 4063; el uso de la eficiencia (factor k) y las advertencias de precisión para los modos pulsado/CA se orientan a EN 1011 e ISO/TR 18491, utilizando conjuntos de datos de ejemplo incluidos en lugar de tablas certificadas.
+- **Supuestos clave:**
+  - El aporte térmico se calcula como `Q = U·I·60·k / (v·1000)` en kJ/mm a partir de los valores introducidos.
+  - El factor de eficiencia se aplica tal como se introduce; la polaridad y el pulsado se registran, pero no cambian Q.
+  - El promediado de mediciones usa los valores exactamente como se introducen para el modo seleccionado.
+- **Limitaciones:**
+  - Los perfiles de eficiencia y aceptación incluidos son solo conjuntos de datos de ejemplo para desarrollo, no una base de ingeniería certificada.
+  - Los modelos t8/5, CEV/CET/Pcm y de precalentamiento quedan fuera del alcance de este MVP.
+  - La vista previa opcional de la geometría del cordón es una heurística ilustrativa, no un modelo validado, y se excluye de todas las exportaciones.
+- ⚠️ Heat Input Master proporciona cálculos de apoyo a la decisión. No es una aprobación automática de WPS/WPQR ni una autoridad de certificación; los resultados deben ser verificados por un ingeniero cualificado según la edición de norma aplicable y la especificación del proyecto.
+
+## Herramientas relacionadas
+
+- [Busbar Calculator](./busbar-calculator.mdx)
+- [Gear Pair Calculator](./gear-pair-calculator.mdx)
+- [WIKA Log Analyzer](./wikalog-analyzer.mdx)
+
+## Comentarios / informe de errores
+
+- [Abrir un issue en GitHub](https://github.com/YurMil/cadautoscript.com/issues)
+- Indica el slug `heat-input-master` en el correo o mensaje para que podamos reproducir el problema.

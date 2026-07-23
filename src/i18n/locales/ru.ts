@@ -252,6 +252,10 @@ export const ru: TranslationDict = {
       name: 'Busbar Calculator',
       description: 'Расчёт медных и алюминиевых шин, прогноз нагрева и локальный экспорт PDF-отчётов.',
     },
+    'heat-input-master': {
+      name: 'Heat Input Master',
+      description: 'Расчёт погонной энергии сварки, оценка приёмки и экспорт протоколов проверки — полностью в браузере.',
+    },
     'pressure-vessel-dished-end-calc': {
       name: 'Dished End Calculator',
       description: 'Расчёт днищ по DIN 28011 / 28013, добавление выносок штуцеров и печать QC-листа.',

@@ -253,6 +253,10 @@ export const es: TranslationDict = {
       name: 'Busbar Calculator',
       description: 'Dimensiona barras colectoras de cobre y aluminio, predice el calentamiento y exporta informes PDF localmente.',
     },
+    'heat-input-master': {
+      name: 'Heat Input Master',
+      description: 'Calcula el aporte térmico de soldadura, evalúa la aceptación y exporta registros de verificación — todo en el navegador.',
+    },
     'pressure-vessel-dished-end-calc': {
       name: 'Dished End Calculator',
       description: 'Dimensiona fondos DIN 28011/28013, añade designaciones de boquillas e imprime una hoja QC.',
