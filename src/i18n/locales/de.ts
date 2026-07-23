@@ -253,6 +253,10 @@ export const de: TranslationDict = {
       name: 'Busbar Calculator',
       description: 'Kupfer- und Aluminiumsammelschienen auslegen, Erwärmung prognostizieren und PDF-Berichte lokal exportieren.',
     },
+    'heat-input-master': {
+      name: 'Heat Input Master',
+      description: 'Schweiß-Wärmeeinbringung berechnen, Akzeptanz bewerten und Prüfprotokolle lokal exportieren — vollständig im Browser.',
+    },
     'pressure-vessel-dished-end-calc': {
       name: 'Dished End Calculator',
       description: 'DIN 28011/28013-Böden dimensionieren, Stutzenbeschriftungen hinzufügen und QC-Arbeitsblatt drucken.',

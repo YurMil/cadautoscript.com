@@ -8,3 +8,4 @@ static/utility-apps/**/*.wasm binary linguist-generated=true linguist-vendored=t
 # The transcriber artifact ships a manifest of SHA-256 checksums, so its files
 # must round-trip byte-for-byte — no end-of-line normalization.
 static/utility-apps/whisper-transcriber/** -text
+static/utility-apps/heat-input-master/** -text

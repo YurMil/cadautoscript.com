@@ -1,0 +1,116 @@
+---
+title: Heat Input Master
+description: Calculate welding heat input, evaluate acceptance limits, keep a verification log, and export XLSX, CSV, JSON, and PDF reports in your browser.
+slug: /utilities/heat-input-master
+image: /img/og/utilities/heat-input-master.png
+keywords:
+  - heat input calculator
+  - welding heat input
+  - arc energy
+  - ISO 4063
+  - weld verification log
+  - WPS acceptance
+  - PDF report
+---
+
+import Head from '@docusaurus/Head';
+
+# Heat Input Master
+
+Calculate welding heat input for a pass, evaluate it against an acceptance profile, keep an immutable verification log, and export XLSX, CSV, JSON, and PDF reports — without uploading any project data.
+
+![Heat Input Master screenshot](/img/og/utilities/heat-input-master.webp)
+
+<a className="button button--primary" href="/utilities/heat-input-master/" data-nobrokenlinkcheck>Open utility</a>
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/heat-input-master/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Heat Input Master",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Calculate welding heat input (Q = U·I·60·k / v), evaluate acceptance limits, keep an immutable verification log, and export XLSX, CSV, JSON, and multi-page PDF reports entirely in the browser.",
+  "url": "https://cadautoscript.com/utilities/heat-input-master/",
+  "image": "https://cadautoscript.com/img/og/utilities/heat-input-master.png",
+  "featureList": [
+    "Arc heat-input calculation with gross and effective power",
+    "Single, min/max, and three-sample aggregation",
+    "Fail-closed acceptance evaluation",
+    "Immutable verification log with live recalculation",
+    "XLSX, CSV, JSON, and PDF export"
+  ],
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "CAD AutoScript"
+  }
+}`}</script>
+</Head>
+
+## What it does
+
+Heat Input Master is a client-side engineering aid for welding heat-input calculation and verification recording. Select the welding process, enter current, voltage, and travel speed (or weld length and time), choose an efficiency (k-factor), and the utility computes arc heat input `Q = U·I·60·k / (v·1000)` in kJ/mm, showing both gross and effective power and the full equation. Each pass can then be evaluated against an acceptance profile and stored as an immutable verification-log entry.
+
+The app is built as a standalone micro-application under `static/utility-apps/heat-input-master`. The CAD AutoScript shell embeds it in an iframe, so the calculator can evolve independently while sharing the same catalog, article, reactions, comments, and access layer as the other utilities.
+
+## When to use it
+
+- Calculating heat input for a welding procedure qualification (WPS/WPQR support).
+- Recording measured current, voltage, and travel speed for production weld verification.
+- Comparing single, min/max midpoint, and three-sample (Method A/B) measurement sets.
+- Checking whether a pass falls inside an approved heat-input acceptance window.
+- Producing an XLSX log or a PDF verification report for QA review.
+
+## Inputs and outputs
+
+| Area | Inputs | Outputs |
+| --- | --- | --- |
+| Process | ISO 4063 process, current type/polarity | Provenance on each pass; process-appropriate defaults |
+| Electrical | Current, voltage, efficiency (k-factor) | Gross and effective arc power |
+| Speed | Travel speed, or weld length + time | Travel speed, heat input (kJ/mm) |
+| Measurement | Single, min/max midpoint, three-sample | Aggregated result with basis disclosure |
+| Acceptance | Acceptance profile (approved or draft) | Pass / warn / not-evaluated status |
+| Records | Project, pass metadata, revision | Verification log, XLSX / CSV / JSON / PDF exports |
+
+## Important limits
+
+The bundled efficiency and acceptance profiles are marked as unapproved example datasets. They make the workflow testable, but they are not a certified engineering basis. Pulsed and AC selections are recorded as provenance and deliberately do **not** alter the heat-input value (no unapproved coefficient), and they raise an accuracy warning because average U·I may not equal true arc energy. Before using results for a real weld, replace the profiles with the governing procedure or standard and have the calculation verified by a qualified welding engineer.
+
+## Workflow
+
+1. Select the welding process and enter the electrical and speed measurements.
+2. Choose the measurement mode (single, min/max, or three-sample).
+3. Review the live heat-input result, gross vs. effective power, and the disclosed equation.
+4. Assign an acceptance profile to evaluate the pass (or leave it not-evaluated).
+5. Save the pass into the verification log; edit or fine-tune rows in place as needed.
+6. Export the log as XLSX, CSV, or JSON, or generate a multi-page PDF verification report.
+
+## Assumptions & standards
+
+- **Standards basis:** Process identification follows ISO 4063; efficiency (k-factor) usage and the pulsed/AC accuracy caveats are oriented on EN 1011 and ISO/TR 18491, using bundled example datasets rather than certified tables.
+- **Key assumptions:**
+  - Heat input is computed as `Q = U·I·60·k / (v·1000)` in kJ/mm from the entered values.
+  - The efficiency factor is applied as entered; polarity and pulsing are recorded but do not change Q.
+  - Measurement aggregation uses the values exactly as entered for the selected mode.
+- **Limitations:**
+  - The bundled efficiency and acceptance profiles are example-only development datasets, not a certified engineering basis.
+  - t8/5, CEV/CET/Pcm, and preheat models are out of scope in this MVP.
+  - The optional weld-geometry preview is an illustrative heuristic, not a validated model, and is excluded from every export.
+- ⚠️ Heat Input Master provides decision-support calculations. It is not an automatic WPS/WPQR approval or certification authority; results must be verified by a qualified engineer against the governing code edition and the project specification.
+
+## Related tools
+
+- [Busbar Calculator](./busbar-calculator.mdx)
+- [Gear Pair Calculator](./gear-pair-calculator.mdx)
+- [WIKA Log Analyzer](./wikalog-analyzer.mdx)
+
+## Feedback / bug report
+
+- [Open a GitHub issue](https://github.com/YurMil/cadautoscript.com/issues)
+- Email or DM with the slug `heat-input-master` so we can reproduce the issue.

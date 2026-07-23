@@ -285,6 +285,7 @@ by mirroring files under `i18n/<locale>/docusaurus-plugin-content-*/`.
 | `npm run typecheck` | Run TypeScript type checking |
 | `npm run lint` | Run ESLint over src, api and scripts |
 | `npm run sitemap:sections` | Generate sectioned sitemaps |
+| `npm run sync:heat-input-master` | Build and republish the Heat Input Master artifact |
 | `npm run sync:webstep-viewer` | Sync WebSTEP viewer embed |
 | `npm run sync:whisper-transcriber` | Build and republish the Whisper Transcriber artifact |
 

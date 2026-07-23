@@ -1,0 +1,116 @@
+---
+title: Heat Input Master
+description: Schweiß-Wärmeeinbringung berechnen, Akzeptanz bewerten, Prüfprotokoll führen und XLSX-, CSV-, JSON- und PDF-Berichte direkt im Browser exportieren.
+slug: /utilities/heat-input-master
+image: /img/og/utilities/heat-input-master.png
+keywords:
+  - Wärmeeinbringung berechnen
+  - Streckenenergie Schweißen
+  - Lichtbogenenergie
+  - ISO 4063
+  - Schweiß-Prüfprotokoll
+  - WPS Akzeptanz
+  - PDF Bericht
+---
+
+import Head from '@docusaurus/Head';
+
+# Heat Input Master
+
+Berechnen Sie die Wärmeeinbringung (Streckenenergie) einer Schweißraupe, bewerten Sie sie anhand eines Akzeptanzprofils, führen Sie ein unveränderliches Prüfprotokoll und exportieren Sie XLSX-, CSV-, JSON- und PDF-Berichte — ohne Projektdaten hochzuladen.
+
+![Heat Input Master screenshot](/img/og/utilities/heat-input-master.webp)
+
+<a className="button button--primary" href="/utilities/heat-input-master/" data-nobrokenlinkcheck>Utility öffnen</a>
+
+<Head>
+  <link rel="canonical" href="https://cadautoscript.com/utilities/heat-input-master/" />
+  <script type="application/ld+json">{`{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Heat Input Master",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Web",
+  "description": "Schweiß-Wärmeeinbringung berechnen (Q = U·I·60·k / v), Akzeptanz bewerten, unveränderliches Prüfprotokoll führen und XLSX-, CSV-, JSON- und mehrseitige PDF-Berichte vollständig im Browser exportieren.",
+  "url": "https://cadautoscript.com/utilities/heat-input-master/",
+  "image": "https://cadautoscript.com/img/og/utilities/heat-input-master.png",
+  "featureList": [
+    "Berechnung der Lichtbogen-Wärmeeinbringung mit Brutto- und effektiver Leistung",
+    "Modi: Einzelwert, Min/Max und Drei-Proben-Mittelung",
+    "Fail-closed-Akzeptanzbewertung",
+    "Unveränderliches Prüfprotokoll mit Live-Neuberechnung",
+    "Export als XLSX, CSV, JSON und PDF"
+  ],
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "CAD AutoScript"
+  }
+}`}</script>
+</Head>
+
+## Was die Utility leistet
+
+Heat Input Master ist ein clientseitiges Ingenieurwerkzeug zur Berechnung der Schweiß-Wärmeeinbringung und zur Führung von Prüfaufzeichnungen. Wählen Sie den Schweißprozess, geben Sie Stromstärke, Spannung und Schweißgeschwindigkeit (oder Nahtlänge und Zeit) ein, legen Sie den Wirkungsgrad (k-Faktor) fest, und die Utility berechnet die Lichtbogen-Wärmeeinbringung `Q = U·I·60·k / (v·1000)` in kJ/mm und zeigt Brutto- und effektive Leistung sowie die vollständige Formel. Jede Raupe kann anhand eines Akzeptanzprofils bewertet und als unveränderlicher Prüfprotokolleintrag gespeichert werden.
+
+Die Anwendung ist als eigenständige Micro-App unter `static/utility-apps/heat-input-master` eingebunden. Die CAD-AutoScript-Shell zeigt sie wie die übrigen Utilities der Website: über die Katalogseite, den Artikel, Kommentare, Reaktionen und die gemeinsame Zugriffsschicht.
+
+## Wann man es verwendet
+
+- Zur Berechnung der Wärmeeinbringung bei der Qualifizierung eines Schweißverfahrens (WPS/WPQR-Unterstützung).
+- Zur Erfassung gemessener Strom-, Spannungs- und Geschwindigkeitswerte bei der Fertigungsprüfung.
+- Zum Vergleich von Einzel-, Min/Max- und Drei-Proben-Messreihen (Methode A/B).
+- Zur Prüfung, ob eine Raupe im freigegebenen Akzeptanzfenster der Wärmeeinbringung liegt.
+- Zur Erstellung eines XLSX-Protokolls oder eines PDF-Prüfberichts für die QA.
+
+## Ein- und Ausgaben
+
+| Bereich | Eingaben | Ausgaben |
+| --- | --- | --- |
+| Prozess | ISO-4063-Prozess, Stromart/Polarität | Provenienz je Raupe; passende Vorgaben |
+| Elektrik | Stromstärke, Spannung, Wirkungsgrad (k-Faktor) | Brutto- und effektive Lichtbogenleistung |
+| Geschwindigkeit | Schweißgeschwindigkeit oder Nahtlänge + Zeit | Schweißgeschwindigkeit, Wärmeeinbringung (kJ/mm) |
+| Messung | Einzelwert, Min/Max, Drei-Proben | Gemittelter Wert mit Offenlegung der Basis |
+| Akzeptanz | Akzeptanzprofil (freigegeben oder Entwurf) | Status: bestanden / Warnung / nicht bewertet |
+| Aufzeichnungen | Projekt, Raupen-Metadaten, Revision | Prüfprotokoll, Export XLSX / CSV / JSON / PDF |
+
+## Wichtige Einschränkungen
+
+Die mitgelieferten Wirkungsgrad- und Akzeptanzprofile sind als nicht freigegebene Beispieldatensätze gekennzeichnet. Sie machen den Arbeitsablauf testbar, sind aber keine zertifizierte Ingenieurgrundlage. Impuls- und AC-Auswahlen werden als Provenienz erfasst und verändern den Wärmeeinbringungswert bewusst **nicht** (kein nicht freigegebener Koeffizient); sie lösen eine Genauigkeitswarnung aus, da das mittlere U·I nicht der wahren Lichtbogenenergie entsprechen muss. Ersetzen Sie die Profile vor der Verwendung an einer realen Naht durch das maßgebende Verfahren oder die Norm und lassen Sie die Berechnung von einem qualifizierten Schweißingenieur prüfen.
+
+## Arbeitsablauf
+
+1. Wählen Sie den Schweißprozess und geben Sie die elektrischen und Geschwindigkeitsmessungen ein.
+2. Wählen Sie den Messmodus (Einzelwert, Min/Max oder Drei-Proben).
+3. Prüfen Sie das Live-Ergebnis der Wärmeeinbringung, Brutto- vs. effektive Leistung und die offengelegte Formel.
+4. Weisen Sie ein Akzeptanzprofil zu, um die Raupe zu bewerten (oder lassen Sie sie „nicht bewertet").
+5. Speichern Sie die Raupe im Prüfprotokoll; bearbeiten und justieren Sie Zeilen bei Bedarf direkt.
+6. Exportieren Sie das Protokoll als XLSX, CSV oder JSON oder erzeugen Sie einen mehrseitigen PDF-Prüfbericht.
+
+## Annahmen & Normen
+
+- **Normengrundlage:** Die Prozessidentifikation folgt ISO 4063; die Verwendung des Wirkungsgrads (k-Faktor) und die Genauigkeitsvorbehalte für Impuls-/AC-Modi orientieren sich an EN 1011 und ISO/TR 18491, unter Verwendung mitgelieferter Beispieldatensätze statt zertifizierter Tabellen.
+- **Zentrale Annahmen:**
+  - Die Wärmeeinbringung wird als `Q = U·I·60·k / (v·1000)` in kJ/mm aus den eingegebenen Werten berechnet.
+  - Der Wirkungsgradfaktor wird wie eingegeben angewendet; Polarität und Impulsbetrieb werden erfasst, ändern Q aber nicht.
+  - Die Messmittelung verwendet die Werte genau so, wie sie für den gewählten Modus eingegeben wurden.
+- **Einschränkungen:**
+  - Die mitgelieferten Wirkungsgrad- und Akzeptanzprofile sind reine Entwicklungs-Beispieldatensätze, keine zertifizierte Ingenieurgrundlage.
+  - t8/5-, CEV/CET/Pcm- und Vorwärmmodelle liegen in diesem MVP außerhalb des Umfangs.
+  - Die optionale Nahtgeometrie-Vorschau ist eine illustrative Heuristik, kein validiertes Modell, und wird aus allen Exporten ausgeschlossen.
+- ⚠️ Heat Input Master liefert Berechnungen zur Entscheidungsunterstützung. Es ist keine automatische WPS/WPQR-Freigabe und keine Zertifizierungsstelle; die Ergebnisse müssen von einem qualifizierten Ingenieur gemäß der maßgebenden Normausgabe und der Projektspezifikation geprüft werden.
+
+## Verwandte Werkzeuge
+
+- [Busbar Calculator](./busbar-calculator.mdx)
+- [Gear Pair Calculator](./gear-pair-calculator.mdx)
+- [WIKA Log Analyzer](./wikalog-analyzer.mdx)
+
+## Feedback
+
+- [GitHub-Issue erstellen](https://github.com/YurMil/cadautoscript.com/issues)
+- Nennen Sie in E-Mail oder Nachricht den Slug `heat-input-master`, damit wir das Problem reproduzieren können.

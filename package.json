@@ -20,6 +20,7 @@
     "clear": "docusaurus clear",
     "serve": "docusaurus serve",
     "sitemap:sections": "node scripts/sitemap-sections.js",
+    "sync:heat-input-master": "node scripts/sync-heat-input-master.mjs",
     "sync:webstep-viewer": "node scripts/sync-webstep-viewer-embed.js",
     "sync:whisper-transcriber": "node scripts/sync-whisper-transcriber.mjs",
     "write-translations": "docusaurus write-translations",

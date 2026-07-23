@@ -253,6 +253,10 @@ export const ua: TranslationDict = {
       name: 'Busbar Calculator',
       description: 'Розрахунок мідних і алюмінієвих шин, прогноз нагрівання та локальний експорт PDF-звітів.',
     },
+    'heat-input-master': {
+      name: 'Heat Input Master',
+      description: 'Розрахунок погонної енергії зварювання, оцінка прийнятності та експорт протоколів перевірки — повністю у браузері.',
+    },
     'pressure-vessel-dished-end-calc': {
       name: 'Dished End Calculator',
       description: 'Розрахунок кришок DIN 28011 / 28013, додавання позначень патрубків, друк QC-листа.',

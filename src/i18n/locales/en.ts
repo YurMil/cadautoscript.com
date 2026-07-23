@@ -251,6 +251,10 @@ export const en = {
       name: 'Busbar Calculator',
       description: 'Size copper and aluminium busbars, forecast heating, and export PDF reports locally.',
     },
+    'heat-input-master': {
+      name: 'Heat Input Master',
+      description: 'Calculate welding heat input, evaluate acceptance, and export verification records — all in your browser.',
+    },
     'pressure-vessel-dished-end-calc': {
       name: 'Dished End Calculator',
       description: 'Size DIN 28011 / 28013 heads, add nozzle callouts, and print a QC worksheet.',

@@ -1,0 +1,29 @@
+{
+  "name": "heat-input-master",
+  "version": "0.1.0",
+  "buildId": "7ba076a1f54e",
+  "buildTime": "2026-07-23T12:47:54.872Z",
+  "entry": "app.html",
+  "assets": [
+    "assets/index-B7BsOpNd.js",
+    "assets/index-cYCKqkFN.css",
+    "assets/index.es-CZZd3MHT.js",
+    "assets/pdf-DY3z5Px9.js",
+    "assets/purify.es-BwoZCkIS.js",
+    "assets/xlsx-CWc3kuOC.js",
+    "assets/xlsx-ao65tj4r.js",
+    "build-info.json"
+  ],
+  "checksums": {
+    "assets/index-B7BsOpNd.js": "86bf4009dc0daf45c76756c632c8e87e843a9bec716c26364c048a9f9b995d0d",
+    "assets/index-cYCKqkFN.css": "1124f77a320956ce73d246a7cb4d50e9564ea6a98e80be9411a68e3eade9b004",
+    "assets/index.es-CZZd3MHT.js": "1f255896ab01e5cd6413cf144f6a22a777b15feb9837e35271a68e9cbaa7189a",
+    "assets/pdf-DY3z5Px9.js": "7957ec2a7cb150acdd49bcd12728c7c1ceb68445b223ce1a05001c8d10b7bb06",
+    "assets/purify.es-BwoZCkIS.js": "0917726fedf3b7ad791784f09f89d85a858d76a6ada18d24aefaeb3c5b94311a",
+    "assets/xlsx-CWc3kuOC.js": "42ee1b2a3c09672e301203b57b99f3430c323b5f92bcc3512d6adab335915690",
+    "assets/xlsx-ao65tj4r.js": "3cffcd02bf52cfd21e608bef3452b20e5f5b885f67ae38bf4fda2e2135c15494",
+    "build-info.json": "f45c755b58421cef88867309e168380533937ccc0b66ee4d09f7a08381ae9997",
+    "app.html": "49b4e72acfc7270a124ab96f332161ebe11df0d3a80c444c895529b81717b8dc",
+    "index.html": "49b4e72acfc7270a124ab96f332161ebe11df0d3a80c444c895529b81717b8dc"
+  }
+}

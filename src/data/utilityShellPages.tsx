@@ -28,7 +28,8 @@ export type UtilityPageSlug =
   | 'pressure-vessel-dished-end-calc'
   | 'gear-pair-calculator'
   | 'wikalog-analyzer'
-  | 'whisper-transcriber';
+  | 'whisper-transcriber'
+  | 'heat-input-master';
 
 export type UtilityPageConfig = {
   slug: UtilityPageSlug;
@@ -522,5 +523,28 @@ export const utilityPageConfigs: Record<UtilityPageSlug, UtilityPageConfig> = {
     scriptType: 'module',
     // The only utility granted microphone access; see vercel.json.
     iframeAllow: "microphone 'self'",
+  },
+  'heat-input-master': {
+    slug: 'heat-input-master',
+    title: 'Heat Input Master',
+    subtitle: 'Web utility — Welding heat-input calculation and verification records',
+    description:
+      'Calculate welding heat input, evaluate acceptance limits, keep a verification log, and export XLSX, CSV, JSON, and PDF reports — entirely in your browser.',
+    about:
+      'Compute arc heat input (Q = U·I·60·k / v) for a welding pass, capture single, min/max, and three-sample measurement modes, and evaluate the result against an acceptance profile with explicit boundary handling. Every pass is kept as an immutable verification-log snapshot with live recalculation through one versioned calculation core, and projects persist locally in the browser. Nothing is uploaded — all calculation, storage, and report generation happen on your own machine.',
+    tags: ['Welding', 'Heat input', 'Verification records', 'PDF reports'],
+    note:
+      'Bundled efficiency and acceptance profiles are unapproved example datasets. Replace them with the governing WPS/procedure or standard, and have results verified by a qualified engineer, before any production use.',
+    features: [
+      'ISO 4063 process selection with gross and effective (k-factor) power',
+      'Direct travel-speed or length + time entry with plausibility bounds',
+      'Single, min/max midpoint, and three-sample (Method A/B) aggregation',
+      'Fail-closed acceptance evaluation — no profile means no guessed pass',
+      'Immutable verification log with in-log row editor and live recalculation',
+      'Local-first persistence and multi-project history (IndexedDB)',
+      'XLSX, CSV, JSON, and multi-page A4 PDF report export',
+    ],
+    scriptType: 'module',
+    appPath: '/utility-apps/heat-input-master/app.html',
   },
 };

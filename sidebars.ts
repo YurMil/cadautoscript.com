@@ -27,6 +27,7 @@ const sidebars: SidebarsConfig = {
             'utilities/tube-sheet-generator',
             'utilities/gear-pair-calculator',
             'utilities/busbar-calculator',
+            'utilities/heat-input-master',
           ],
         },
         {
