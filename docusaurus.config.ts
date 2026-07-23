@@ -6,6 +6,19 @@ import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 import {BundleAnalyzerPlugin} from 'webpack-bundle-analyzer';
 
+// The site builds without Supabase credentials (Dependabot PRs run without
+// repository secrets, and a missing value must not break the build) — but a
+// real deploy without them ships with auth, comments and reactions disabled,
+// so say so loudly in the build log.
+if (!process.env.SUPABASE_URL || !process.env.SUPABASE_ANON_KEY) {
+  process.emitWarning(
+    'SUPABASE_URL / SUPABASE_ANON_KEY are not set. Building without Supabase: ' +
+      'authentication, comments, reactions and usage stats will be inactive ' +
+      'in this build.',
+    'SupabaseConfig',
+  );
+}
+
 const config: Config = {
   title: 'CAD AutoScript',
   tagline: 'SolidWorks macros, web calculators, and QA generators',

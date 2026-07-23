@@ -29,8 +29,21 @@ const {SUPABASE_URL, SUPABASE_ANON_KEY} = siteConfig.customFields as {
   SUPABASE_ANON_KEY?: string;
 };
 
-if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
-  throw new Error('Supabase environment variables are not configured.');
+/**
+ * Missing credentials must not throw at module scope: that turns a
+ * configuration gap into a hard SSR build failure (it broke every Dependabot
+ * PR, since those deliberately run without repository secrets) and, in the
+ * browser, into a blank page instead of a site that simply has no auth.
+ * Instead every client access rejects with a clear error, which the callers
+ * already treat as "signed out / feature unavailable" (issue #102).
+ */
+const isConfigured = Boolean(SUPABASE_URL && SUPABASE_ANON_KEY);
+
+if (!isConfigured && typeof window !== 'undefined') {
+  logger.error(
+    '[Supabase] SUPABASE_URL / SUPABASE_ANON_KEY are not configured — ' +
+      'authentication, comments, reactions and usage stats are disabled.',
+  );
 }
 
 let clientPromise: Promise<SupabaseClient> | null = null;
@@ -41,6 +54,9 @@ let clientPromise: Promise<SupabaseClient> | null = null;
  * existing synchronous usage.
  */
 export function getSupabase(): Promise<SupabaseClient> {
+  if (!isConfigured) {
+    return Promise.reject(new Error('Supabase environment variables are not configured.'));
+  }
   if (!clientPromise) {
     clientPromise = import('@supabase/supabase-js')
       .then(({createClient}) =>
