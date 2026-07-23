@@ -5,6 +5,7 @@ import {useAuthModal} from '@site/src/contexts/AuthModalContext';
 import {useI18n} from '@site/src/contexts/I18nContext';
 import {getAuthRedirectUrl, rememberReturnTo} from '@site/src/utils/authRedirect';
 import styles from './LoginModal.module.css';
+import {authErrorMessageKey, classifyAuthError} from '../../lib/authErrors';
 import {logger} from '../../lib/logger';
 
 const providers: Array<{provider: Provider; labelKey: string; className: string; Icon: () => React.JSX.Element}> = [
@@ -52,6 +53,7 @@ export default function LoginModal(): React.JSX.Element | null {
   const {isOpen, closeLoginModal} = useAuthModal();
   const {t} = useI18n();
   const [error, setError] = useState<string | null>(null);
+  const [pendingProvider, setPendingProvider] = useState<Provider | null>(null);
 
   if (!isOpen) {
     return null;
@@ -59,6 +61,7 @@ export default function LoginModal(): React.JSX.Element | null {
 
   const handleSignIn = async (provider: Provider) => {
     setError(null);
+    setPendingProvider(provider);
     try {
       rememberReturnTo();
       const redirectTo = getAuthRedirectUrl();
@@ -71,10 +74,13 @@ export default function LoginModal(): React.JSX.Element | null {
       }
       closeLoginModal();
     } catch (error_) {
-      const message =
-        error_ instanceof Error ? error_.message : t('authModal.error');
-      logger.error('[Supabase Auth] Unable to sign in', message);
-      setError(message);
+      // The raw message is for the logs; the user gets a localized, actionable
+      // one based on the failure class (issue #102).
+      const technical = error_ instanceof Error ? error_.message : String(error_);
+      logger.error('[Supabase Auth] Unable to sign in', technical);
+      setError(t(authErrorMessageKey(classifyAuthError(error_))));
+    } finally {
+      setPendingProvider(null);
     }
   };
 
@@ -96,9 +102,11 @@ export default function LoginModal(): React.JSX.Element | null {
               type="button"
               className={`${styles.providerButton} ${className}`}
               onClick={() => handleSignIn(provider)}
+              disabled={pendingProvider !== null}
+              aria-busy={pendingProvider === provider}
             >
               <Icon />
-              {t(labelKey)}
+              {pendingProvider === provider ? t('authModal.signingIn') : t(labelKey)}
             </button>
           ))}
           <button type="button" className={styles.closeButton} onClick={closeLoginModal}>

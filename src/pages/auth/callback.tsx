@@ -5,6 +5,8 @@ import Link from '@docusaurus/Link';
 import {supabase} from '@site/src/lib/supabaseClient';
 import {useI18n} from '@site/src/contexts/I18nContext';
 import {consumeReturnTo} from '@site/src/utils/authRedirect';
+import {authErrorMessageKey, classifyAuthError} from '@site/src/lib/authErrors';
+import {logger} from '@site/src/lib/logger';
 
 type Status = 'working' | 'error';
 
@@ -53,16 +55,23 @@ export default function AuthCallbackPage() {
         const returnTo = consumeReturnTo('/');
         window.location.replace(returnTo);
       } catch (err) {
-        const message = err instanceof Error ? err.message : 'authCallback.genericError';
+        // exchangeCodeForSession/setSession are the genuinely network-dependent
+        // steps of sign-in. Their raw failures ("Failed to fetch") are
+        // untranslated and unactionable, so show the failure class instead and
+        // keep the technical detail in the logs (issue #102).
+        const technical = err instanceof Error ? err.message : String(err);
+        logger.error('[Supabase Auth] Unable to complete sign in', technical);
         setStatus('error');
-        setMessage(message);
+        setMessage(authErrorMessageKey(classifyAuthError(err)));
       }
     };
 
     void finishSignIn();
   }, []);
 
-  const displayMessage = message.startsWith('authCallback.') ? t(message) : message;
+  // Every message is now a dictionary key — raw provider strings are never
+  // shown to the user.
+  const displayMessage = t(message);
 
   return (
     <Layout title={t('authCallback.pageTitle')}>

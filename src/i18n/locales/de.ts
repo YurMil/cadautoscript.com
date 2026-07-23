@@ -368,6 +368,12 @@ export const de: TranslationDict = {
     google: 'Weiter mit Google',
     cancel: 'Abbrechen',
     error: 'Anmeldung fehlgeschlagen. Bitte erneut versuchen.',
+    signingIn: 'Anmeldung läuft…',
+  },
+  authErrors: {
+    offline: 'Sie scheinen offline zu sein. Prüfen Sie Ihre Verbindung und versuchen Sie es erneut.',
+    unavailable: 'Die Anmeldung ist vorübergehend nicht verfügbar. Bitte versuchen Sie es in einigen Minuten erneut.',
+    generic: 'Die Anmeldung konnte nicht abgeschlossen werden. Bitte erneut versuchen.',
   },
   authCallback: {
     pageTitle: 'Anmeldung wird abgeschlossen',
