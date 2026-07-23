@@ -149,6 +149,15 @@ export const ru: TranslationDict = {
     continueWith: 'Продолжить с',
     orContinueWith: 'Или продолжить с',
   },
+  pdfErrors: {
+    empty: 'Файл пустой.',
+    notPdf: 'Это не PDF-файл.',
+    tooLarge: 'Файл слишком большой для обработки в браузере.',
+    encrypted: 'PDF защищён паролем. Снимите пароль и попробуйте снова.',
+    corrupt: 'PDF повреждён и не может быть прочитан.',
+    noPages: 'В PDF нет читаемых страниц.',
+    generic: 'Не удалось обработать PDF. Файл пропущен.',
+  },
   common: {
     loading: 'Загрузка...',
     learnMore: 'Подробнее',

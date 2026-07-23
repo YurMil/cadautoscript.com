@@ -150,6 +150,15 @@ export const ua: TranslationDict = {
     continueWith: 'Продовжити з',
     orContinueWith: 'Або продовжити з',
   },
+  pdfErrors: {
+    empty: 'Файл порожній.',
+    notPdf: 'Це не PDF-файл.',
+    tooLarge: 'Файл завеликий для обробки у браузері.',
+    encrypted: 'PDF захищений паролем. Зніміть пароль і спробуйте знову.',
+    corrupt: 'PDF пошкоджений і не може бути прочитаний.',
+    noPages: 'У PDF немає читабельних сторінок.',
+    generic: 'Не вдалося обробити PDF. Файл пропущено.',
+  },
   common: {
     loading: 'Завантаження...',
     learnMore: 'Докладніше',
