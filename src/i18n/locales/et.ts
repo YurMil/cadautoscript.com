@@ -150,6 +150,15 @@ export const et: TranslationDict = {
     continueWith: 'Jätka kasutajaga',
     orContinueWith: 'Või jätka kasutajaga',
   },
+  pdfErrors: {
+    empty: 'See fail on tühi.',
+    notPdf: 'See ei ole PDF-fail.',
+    tooLarge: 'See fail on brauseris töötlemiseks liiga suur.',
+    encrypted: 'See PDF on parooliga kaitstud. Eemalda parool ja proovi uuesti.',
+    corrupt: 'See PDF näib olevat kahjustatud ja seda ei saa lugeda.',
+    noPages: 'See PDF ei sisalda loetavaid lehekülgi.',
+    generic: 'Seda PDF-i ei õnnestunud töödelda. Fail jäetakse vahele.',
+  },
   common: {
     loading: 'Laadimine...',
     learnMore: 'Loe edasi',

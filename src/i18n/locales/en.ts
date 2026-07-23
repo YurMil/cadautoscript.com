@@ -148,6 +148,15 @@ export const en = {
     continueWith: 'Continue with',
     orContinueWith: 'Or continue with',
   },
+  pdfErrors: {
+    empty: 'This file is empty.',
+    notPdf: 'This is not a PDF file.',
+    tooLarge: 'This file is too large to process in the browser.',
+    encrypted: 'This PDF is password-protected. Remove the password and try again.',
+    corrupt: 'This PDF appears to be damaged and cannot be read.',
+    noPages: 'This PDF contains no readable pages.',
+    generic: 'This PDF could not be processed. Skipping it.',
+  },
   common: {
     loading: 'Loading...',
     learnMore: 'Learn more',

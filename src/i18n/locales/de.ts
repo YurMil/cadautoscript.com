@@ -150,6 +150,15 @@ export const de: TranslationDict = {
     continueWith: 'Weiter mit',
     orContinueWith: 'Oder weiter mit',
   },
+  pdfErrors: {
+    empty: 'Diese Datei ist leer.',
+    notPdf: 'Dies ist keine PDF-Datei.',
+    tooLarge: 'Diese Datei ist zu groß für die Verarbeitung im Browser.',
+    encrypted: 'Dieses PDF ist passwortgeschützt. Entfernen Sie das Passwort und versuchen Sie es erneut.',
+    corrupt: 'Dieses PDF scheint beschädigt zu sein und kann nicht gelesen werden.',
+    noPages: 'Dieses PDF enthält keine lesbaren Seiten.',
+    generic: 'Dieses PDF konnte nicht verarbeitet werden. Es wird übersprungen.',
+  },
   common: {
     loading: 'Laden...',
     learnMore: 'Mehr erfahren',

@@ -150,6 +150,15 @@ export const es: TranslationDict = {
     continueWith: 'Continuar con',
     orContinueWith: 'O continuar con',
   },
+  pdfErrors: {
+    empty: 'Este archivo está vacío.',
+    notPdf: 'Este no es un archivo PDF.',
+    tooLarge: 'Este archivo es demasiado grande para procesarlo en el navegador.',
+    encrypted: 'Este PDF está protegido con contraseña. Quita la contraseña e inténtalo de nuevo.',
+    corrupt: 'Este PDF parece estar dañado y no se puede leer.',
+    noPages: 'Este PDF no contiene páginas legibles.',
+    generic: 'No se pudo procesar este PDF. Se omitirá.',
+  },
   common: {
     loading: 'Cargando...',
     learnMore: 'Saber más',

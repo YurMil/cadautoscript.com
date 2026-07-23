@@ -10,6 +10,8 @@ import type {
   UploadedFileEntry,
   ViewerState,
 } from '../types';
+import {useI18n} from '../../../contexts/I18nContext';
+import {classifyPdfError, pdfErrorMessageKey, validatePdfFile} from '../../../lib/pdfValidation';
 import {getDefaultDrawingName} from '../utils/fileNaming';
 import {analyzePdfFile} from '../utils/pageAnalysis';
 import {buildBaseNumberRegex} from '../utils/regex';
@@ -185,6 +187,7 @@ function delay(milliseconds: number) {
 }
 
 export function usePdfNumberExtractor(runtimeConfig: PdfRuntimeConfig) {
+  const {t} = useI18n();
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
   const quickScanSessionRef = useRef(0);
   const analysisSessionRef = useRef(0);
@@ -334,9 +337,24 @@ export function usePdfNumberExtractor(runtimeConfig: PdfRuntimeConfig) {
 
     const collectedResults: CapturedResult[] = [];
 
+    const skipped: string[] = [];
+
     for (const file of filesToProcess) {
       if (analysisSessionRef.current !== sessionId) {
         return;
+      }
+
+      // Reject unusable input before it reaches the parser, so the user gets
+      // the actual reason instead of an opaque parser failure (issue #100).
+      const invalid = await validatePdfFile(file);
+      if (invalid) {
+        skipped.push(`${file.name} — ${t(pdfErrorMessageKey(invalid))}`);
+        dispatch({
+          type: 'SET_STATUS_TEXT',
+          statusText: `${file.name}: ${t(pdfErrorMessageKey(invalid))}`,
+        });
+        await delay(900);
+        continue;
       }
 
       try {
@@ -374,12 +392,20 @@ export function usePdfNumberExtractor(runtimeConfig: PdfRuntimeConfig) {
         if (analysisSessionRef.current !== sessionId) {
           return;
         }
+        // Name the cause (encrypted / corrupt / no pages) rather than a
+        // generic "Error with file X" so the user knows what to fix.
+        const reason = t(pdfErrorMessageKey(classifyPdfError(error)));
+        skipped.push(`${file.name} — ${reason}`);
         dispatch({
           type: 'SET_STATUS_TEXT',
-          statusText: `Error with file ${file.name}. Skipping.`,
+          statusText: `${file.name}: ${reason}`,
         });
         await delay(1200);
       }
+    }
+
+    if (skipped.length > 0) {
+      logger.warn('[PdfNumberExtractor] Skipped files:', skipped.join('; '));
     }
 
     if (analysisSessionRef.current !== sessionId) {
