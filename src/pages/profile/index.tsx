@@ -7,6 +7,8 @@ import {supabase} from '@site/src/lib/supabaseClient';
 import {useAuthModal} from '@site/src/contexts/AuthModalContext';
 import {listUtilityUsage, type UtilityUsageStat} from '@site/src/shared/utility-usage';
 import UsageRanking from '@site/src/components/UtilityUsage/UsageRanking';
+import CalculationHistory from '@site/src/components/CalculationHistory';
+import {useI18n} from '@site/src/contexts/I18nContext';
 import styles from './index.module.css';
 import {logger} from '../../lib/logger';
 
@@ -39,6 +41,7 @@ const formatRelative = (value?: string | null): string | undefined => {
 };
 
 export default function ProfilePage(): React.JSX.Element {
+  const {t} = useI18n();
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -596,6 +599,18 @@ export default function ProfilePage(): React.JSX.Element {
                 emptyLabel="Launch a utility and it will show up here, ranked by how often you use it."
               />
             )}
+          </section>
+        ) : null}
+
+        {user ? (
+          <section className={styles.panel}>
+            <header className={styles.usageHeader}>
+              <div>
+                <p className={styles.eyebrow}>{t('history.eyebrow')}</p>
+                <h2 className={styles.usageTitle}>{t('history.title')}</h2>
+              </div>
+            </header>
+            <CalculationHistory />
           </section>
         ) : null}
       </main>

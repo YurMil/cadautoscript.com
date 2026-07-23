@@ -18,6 +18,7 @@ import {
 } from '@site/src/shared/utility-usage';
 import type {UtilityPageConfig} from '@site/src/data/utilityShellPages';
 import UtilityErrorBoundary from './UtilityErrorBoundary';
+import {saveCalculation} from '@site/src/shared/calculation-history';
 import {
   SHARE_MESSAGE_RESTORE,
   SHARE_MESSAGE_STATE_UPDATE,
@@ -122,6 +123,35 @@ export default function UtilityShellPage({tool, ...config}: UtilityShellPageProp
         logger.warn('[UtilityShare] Unable to copy share link', err);
       });
   }, []);
+
+  // Saving a calculation stores the same input snapshot the share link carries
+  // (issue #115), so reopening an entry from the profile is just reopening a
+  // share link. Only offered to signed-in users — this is the personal-data
+  // side of the guest/account split from #112.
+  const [saveState, setSaveState] = React.useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
+
+  const userId = user?.id ?? null;
+
+  const saveCurrentCalculation = React.useCallback(() => {
+    if (!userId || latestToolState.current === null) return;
+    setSaveState('saving');
+    void saveCalculation({
+      userId,
+      utilityId: slug,
+      state: latestToolState.current,
+      label: title,
+    })
+      .then(() => {
+        setSaveState('saved');
+        window.setTimeout(() => setSaveState('idle'), 2000);
+      })
+      .catch((err) => {
+        setSaveState('error');
+        window.setTimeout(() => setSaveState('idle'), 3000);
+        const message = err instanceof Error ? err.message : 'Unable to save calculation.';
+        logger.error('[CalculationHistory] Unable to save calculation', message);
+      });
+  }, [slug, title, userId]);
 
   React.useEffect(() => {
     document.body.classList.add('utility-shell-page');
@@ -275,6 +305,20 @@ export default function UtilityShellPage({tool, ...config}: UtilityShellPageProp
             {shareSupported ? (
               <button className="utility-toggle" type="button" onClick={copyShareLink}>
                 {linkCopied ? t('utility.linkCopied') : t('utility.copyLink')}
+              </button>
+            ) : null}
+            {shareSupported && isAuthenticated ? (
+              <button
+                className="utility-toggle"
+                type="button"
+                onClick={saveCurrentCalculation}
+                disabled={saveState === 'saving'}
+              >
+                {saveState === 'saved'
+                  ? t('utility.calculationSaved')
+                  : saveState === 'error'
+                    ? t('utility.saveCalculationFailed')
+                    : t('utility.saveCalculation')}
               </button>
             ) : null}
             <button

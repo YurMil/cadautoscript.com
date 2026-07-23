@@ -55,6 +55,9 @@ export const et: TranslationDict = {
     reloadTool: 'Laadi tööriist uuesti',
     copyLink: 'Kopeeri selle arvutuse link',
     linkCopied: 'Link kopeeritud',
+    saveCalculation: 'Salvesta arvutus',
+    calculationSaved: 'Salvestatud ajalukku',
+    saveCalculationFailed: 'Salvestamine ebaõnnestus',
     guestExportNotice:
       'Kasutad rakendust {name} külalisena — kõik arvutused on tasuta. Logi sisse, et sünkroonida oma eelistused seadmete vahel; arvutuste salvestamine on peagi tulekul.',
     backToUtilities: 'Tagasi veebitööriistade juurde',
@@ -68,6 +71,17 @@ export const et: TranslationDict = {
     tableColumnLaunch: 'Käivita',
     open: 'Ava',
     locked: 'Lukustatud',
+  },
+  history: {
+    eyebrow: 'Salvestatud töö',
+    title: 'Arvutuste ajalugu',
+    subtitle: 'Sinu viimased {max} salvestatud arvutust. Avamisel taastatakse sisendid.',
+    loading: 'Laadime sinu salvestatud arvutusi…',
+    empty: 'Salvestatud arvutusi veel pole. Ava kalkulaator, seadista see ja vajuta „Salvesta arvutus“.',
+    open: 'Ava',
+    delete: 'Kustuta',
+    deleteConfirm: 'Kas kustutada see salvestatud arvutus?',
+    error: 'Salvestatud arvutusi ei õnnestunud laadida. Palun proovi uuesti.',
   },
   settings: {
     title: 'Seaded',

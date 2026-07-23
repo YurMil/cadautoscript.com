@@ -53,6 +53,9 @@ export const en = {
     reloadTool: 'Reload tool',
     copyLink: 'Copy link to this calculation',
     linkCopied: 'Link copied',
+    saveCalculation: 'Save calculation',
+    calculationSaved: 'Saved to your history',
+    saveCalculationFailed: 'Could not save',
     guestExportNotice:
       'You are using {name} as a guest — all calculations are free. Sign in to sync your preferences across devices; saved calculations are coming soon.',
     backToUtilities: 'Back to Web utilities',
@@ -66,6 +69,17 @@ export const en = {
     tableColumnLaunch: 'Launch',
     open: 'Open',
     locked: 'Locked',
+  },
+  history: {
+    eyebrow: 'Saved work',
+    title: 'Calculation history',
+    subtitle: 'Your last {max} saved calculations. Opening one restores its inputs.',
+    loading: 'Loading your saved calculations…',
+    empty: 'No saved calculations yet. Open a calculator, set it up, and use "Save calculation".',
+    open: 'Open',
+    delete: 'Delete',
+    deleteConfirm: 'Delete this saved calculation?',
+    error: 'Unable to load your saved calculations. Please try again.',
   },
   settings: {
     title: 'Settings',
