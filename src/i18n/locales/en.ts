@@ -366,6 +366,12 @@ export const en = {
     google: 'Continue with Google',
     cancel: 'Cancel',
     error: 'Unable to sign in. Please try again.',
+    signingIn: 'Signing in…',
+  },
+  authErrors: {
+    offline: 'You appear to be offline. Check your connection and try again.',
+    unavailable: 'Sign-in is temporarily unavailable. Please try again in a few minutes.',
+    generic: 'Sign-in could not be completed. Please try again.',
   },
   authCallback: {
     pageTitle: 'Completing sign in',

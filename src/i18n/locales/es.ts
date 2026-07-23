@@ -368,6 +368,12 @@ export const es: TranslationDict = {
     google: 'Continuar con Google',
     cancel: 'Cancelar',
     error: 'No se pudo iniciar sesión. Inténtalo de nuevo.',
+    signingIn: 'Iniciando sesión…',
+  },
+  authErrors: {
+    offline: 'Parece que no tienes conexión. Comprueba tu red e inténtalo de nuevo.',
+    unavailable: 'El inicio de sesión no está disponible temporalmente. Inténtalo en unos minutos.',
+    generic: 'No se pudo completar el inicio de sesión. Inténtalo de nuevo.',
   },
   authCallback: {
     pageTitle: 'Completando el inicio de sesión',

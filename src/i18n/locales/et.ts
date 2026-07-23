@@ -368,6 +368,12 @@ export const et: TranslationDict = {
     google: "Jätka Google'iga",
     cancel: 'Tühista',
     error: 'Sisselogimine ebaõnnestus. Proovi uuesti.',
+    signingIn: 'Sisselogimine…',
+  },
+  authErrors: {
+    offline: 'Tundub, et sa oled võrguühenduseta. Kontrolli ühendust ja proovi uuesti.',
+    unavailable: 'Sisselogimine on ajutiselt kättesaamatu. Proovi mõne minuti pärast uuesti.',
+    generic: 'Sisselogimist ei õnnestunud lõpetada. Palun proovi uuesti.',
   },
   authCallback: {
     pageTitle: 'Sisselogimise lõpetamine',
