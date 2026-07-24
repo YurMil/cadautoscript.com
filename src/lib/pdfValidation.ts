@@ -45,9 +45,16 @@ export async function validatePdfFile(
     return 'too-large';
   }
 
+  const head = file.slice(0, PDF_MAGIC.length);
+  if (typeof head.arrayBuffer !== 'function') {
+    // No Blob.arrayBuffer in this environment (older Safari). The signature
+    // check is defence in depth, not a security boundary, so skip it — failing
+    // closed here would reject every valid PDF.
+    return null;
+  }
+
   try {
-    const head = await file.slice(0, PDF_MAGIC.length).arrayBuffer();
-    const signature = new TextDecoder('latin1').decode(new Uint8Array(head));
+    const signature = new TextDecoder('latin1').decode(new Uint8Array(await head.arrayBuffer()));
     if (signature !== PDF_MAGIC) {
       return 'not-pdf';
     }

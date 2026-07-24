@@ -21,6 +21,52 @@
   <script src="../../vendor/react-dom.production.min.js"></script>
 
   <script>
+
+    // --- PDF input validation (cadautoscript.com#100) ---------------------
+    // Mirrors src/lib/pdfValidation.ts; this page is standalone HTML and
+    // cannot import from the site bundle.
+    const PDF_MAGIC = '%PDF-';
+    const MAX_PDF_BYTES = 200 * 1024 * 1024;
+    const PDF_MESSAGES = {
+      empty: 'is empty',
+      'not-pdf': 'is not a PDF file',
+      'too-large': 'is larger than the 200 MB limit',
+      encrypted: 'is password-protected',
+      corrupt: 'appears to be damaged',
+      'no-pages': 'has no readable pages',
+      generic: 'could not be processed',
+    };
+
+    // Cheap pre-parse checks. Returns a failure key, or null when usable.
+    async function validatePdfFile(file) {
+      if (!file || file.size === 0) return 'empty';
+      if (file.size > MAX_PDF_BYTES) return 'too-large';
+      const head = file.slice(0, PDF_MAGIC.length);
+      // Feature-detect: without arrayBuffer, skip rather than reject valid files.
+      if (typeof head.arrayBuffer !== 'function') return null;
+      try {
+        const bytes = new Uint8Array(await head.arrayBuffer());
+        if (new TextDecoder('latin1').decode(bytes) !== PDF_MAGIC) return 'not-pdf';
+      } catch (err) {
+        return 'corrupt';
+      }
+      return null;
+    }
+
+    // pdf.js and pdf-lib report their cases differently; check both.
+    function classifyPdfError(error) {
+      const name = error && error.name;
+      const message = (error && error.message) || String(error || '');
+      if (name === 'PasswordException' || /password|encrypted/i.test(message)) return 'encrypted';
+      if (name === 'InvalidPDFException' || /invalid pdf|malformed|corrupt/i.test(message)) return 'corrupt';
+      if (name === 'MissingPDFException' || /missing pdf|no pages/i.test(message)) return 'no-pages';
+      return 'generic';
+    }
+
+    function describePdfFailure(fileName, key) {
+      return fileName + ' ' + (PDF_MESSAGES[key] || PDF_MESSAGES.generic) + '.';
+    }
+
     if (window.pdfjsLib) {
       window.pdfjsLib.GlobalWorkerOptions.workerSrc = '../../vendor/pdf.worker.min.js';
     }
@@ -548,6 +594,7 @@
 
     // --- Optimised PdfStage Component (Multi-Page) ---
     const PdfStage = ({ file, signatures, selectedId, onUpdateSignatures, onSelect, zoom, onFit, onLoad, onOptimalScale }) => {
+      const [loadError, setLoadError] = useState(null);
       const [pdfDoc, setPdfDoc] = useState(null);
       const [pages, setPages] = useState([]);
       const containerRef = useRef(null);
@@ -557,6 +604,7 @@
         let active = true;
         setPdfDoc(null);
         setPages([]);
+        setLoadError(null);
 
         const loadDoc = async () => {
           if (!file || !file.file) return;
@@ -592,7 +640,12 @@
 
               onFit(1.0);
             }
-          } catch (e) { console.error("PDF Load Error", e); }
+          } catch (e) {
+            console.error("PDF Load Error", e);
+            if (active) {
+              setLoadError(describePdfFailure(file.name || 'This file', classifyPdfError(e)));
+            }
+          }
         };
         loadDoc();
         return () => { active = false; };
@@ -638,6 +691,10 @@
       };
 
       if (!file) return html`<div className="w-full flex flex-col items-center justify-center h-full text-md-sys-onSurfaceVariant"><img src="../../icons/file_document_outline.svg" className="w-16 h-16 mb-4 invert opacity-50" /><p>Select a file to preview</p></div>`;
+
+      // A failed preview used to leave a blank stage with the reason only in
+      // the console (cadautoscript.com#100).
+      if (loadError) return html`<div role="alert" className="w-full flex flex-col items-center justify-center h-full text-center px-6"><img src="../../icons/file_document_outline.svg" className="w-16 h-16 mb-4 invert opacity-40" /><p className="text-red-400 font-medium">${loadError}</p><p className="text-white/50 text-sm mt-2">Remove it from the list and try another file.</p></div>`;
 
       return html`
           <div ref=${containerRef} className="w-full h-full canvas-container custom-scroll">
@@ -695,8 +752,22 @@
         }
       };
 
-      const handleAddFiles = (e) => {
-        const newFiles = Array.from(e.target.files || []).filter(f => f.type === 'application/pdf');
+      const handleAddFiles = async (e) => {
+        const selected = Array.from(e.target.files || []);
+        if (!selected.length) return;
+
+        // Validate before accepting: a non-PDF used to be dropped silently,
+        // leaving the user with no idea why their file never appeared.
+        const newFiles = [];
+        const rejected = [];
+        for (const f of selected) {
+          const failure = await validatePdfFile(f);
+          if (failure) rejected.push(describePdfFailure(f.name, failure));
+          else newFiles.push(f);
+        }
+        if (rejected.length) {
+          setStatus({ text: rejected.join(' '), type: 'error' });
+        }
         if (!newFiles.length) return;
 
         const entries = newFiles.map(f => ({
@@ -784,11 +855,13 @@
         setIsProcessing(true);
         setStatus({ text: 'Processing...', type: 'loading' });
 
+        let currentFileName = '';
         try {
           const zip = new JSZip();
           const VIEW_SCALE_FACTOR = 1.0;
 
           for (const entry of files) {
+            currentFileName = entry.name;
             const arrayBuffer = await entry.file.arrayBuffer();
             const pdfDoc = await PDFDocument.load(arrayBuffer);
             const pages = pdfDoc.getPages();
@@ -857,7 +930,10 @@
           setStatus({ text: 'Done!', type: 'success' });
         } catch (e) {
           console.error(e);
-          setStatus({ text: 'Error', type: 'error' });
+          setStatus({
+            text: describePdfFailure(currentFileName || 'This document', classifyPdfError(e)),
+            type: 'error',
+          });
         } finally {
           setIsProcessing(false);
         }
