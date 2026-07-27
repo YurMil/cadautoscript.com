@@ -47,14 +47,29 @@ export default function MiniGameShellPage(config: MiniGamePageConfig) {
 
   useEffect(() => {
     document.body.classList.toggle('utility-is-fullscreen', isFullscreen);
+    return () => {
+      document.body.classList.remove('utility-is-fullscreen');
+    };
   }, [isFullscreen]);
 
+  const exitFullscreen = () => {
+    setIsFullscreen(false);
+    const stage = document.querySelector('.utility-stage');
+    if (stage) {
+      stage.scrollIntoView({behavior: 'smooth', block: 'start'});
+    }
+  };
+
   const toggleFullscreen = () => {
-    setIsFullscreen(!isFullscreen);
+    if (isFullscreen) {
+      exitFullscreen();
+    } else {
+      setIsFullscreen(true);
+    }
   };
 
   const toggleInfo = () => {
-    setIsInfoCollapsed(!isInfoCollapsed);
+    setIsInfoCollapsed((previous) => !previous);
   };
 
   const canonicalUrl = `https://cadautoscript.com/mini-games/${slug}/`;
@@ -158,12 +173,22 @@ export default function MiniGameShellPage(config: MiniGamePageConfig) {
           <div className="utility-comments">
             <Comments slug={reactionsSlug} />
           </div>
-          <div className={`utility-fullscreen-exit-zone ${isFullscreen ? 'is-active' : ''}`}>
+          <div className="utility-fullscreen-exit-zone top">
             <div className="utility-fullscreen-indicator" aria-hidden="true"></div>
-            <button 
-              type="button" 
+            <button
+              type="button"
               className="utility-fullscreen-exit-button"
-              onClick={() => setIsFullscreen(false)}
+              onClick={exitFullscreen}
+            >
+              {t('utility.exitFullScreen')}
+            </button>
+          </div>
+          <div className="utility-fullscreen-exit-zone bottom">
+            <div className="utility-fullscreen-indicator" aria-hidden="true"></div>
+            <button
+              type="button"
+              className="utility-fullscreen-exit-button"
+              onClick={exitFullscreen}
             >
               {t('utility.exitFullScreen')}
             </button>
