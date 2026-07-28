@@ -1,15 +1,15 @@
 {
   "name": "blind-flange-calculator",
   "version": "0.1.0",
-  "buildTime": "2026-07-20T12:09:59.585Z",
+  "buildTime": "2026-07-28T16:00:53.466Z",
   "entry": "app.html",
   "assets": [
     "assets/cad-worker-Ck0LtoBt.js",
-    "assets/html2canvas-B8x324pl.js",
-    "assets/index-BJcMC13r.js",
-    "assets/index-DDqWmX7f.css",
-    "assets/index.es-BSGUNONV.js",
-    "assets/jspdf.es.min-CNvd0mFr.js",
+    "assets/html2canvas-p69tvGSx.js",
+    "assets/index-BtowoX75.css",
+    "assets/index-DwUuSgzA.js",
+    "assets/index.es-HFMB3_Kz.js",
+    "assets/jspdf.es.min-D2l8iP2A.js",
     "assets/purify.es-BEO7sGA_.js",
     "assets/replicad_single-ko7rBbsE.wasm",
     "assets/typeof-mVVFPGHC.js"
