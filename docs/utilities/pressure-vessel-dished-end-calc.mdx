@@ -172,6 +172,40 @@ Instant calculation of pressure vessel head geometry, weight, and volume. It gen
   - Fatigue, corrosion beyond the entered allowance, and thermal effects are not considered.
 - ⚠️ The Dished End (Vessel Head) Calculator provides preliminary sizing support. Results must be verified by a qualified engineer against the governing code edition and the project specification before manufacturing or purchase.
 
+## Why the knuckle governs a dished head
+
+A torispherical head is three surfaces blended together: a spherical **crown**
+in the middle, a toroidal **knuckle** at the rim, and a short cylindrical
+**straight flange** that meets the shell. The standards define them as ratios of
+the diameter rather than free dimensions:
+
+| Standard | Crown radius R | Knuckle radius r |
+|---|---|---|
+| DIN 28011 (Klöpper) | 1.0 × Da | 0.1 × Da |
+| DIN 28013 (Korbbogen) | 0.8 × Da | 0.154 × Da |
+
+The crown is the easy part — a sphere carries pressure in pure membrane
+tension and needs only about half the thickness of the cylinder it caps. The
+**knuckle is where the trouble is**: the curvature reverses there, so the
+material sees compressive hoop stress on top of the pressure load. Two
+consequences follow, and both show up in the calculator:
+
+- **Buckling, not bursting, is the usual failure mode** of a thin knuckle. It
+  wrinkles inward rather than splitting.
+- **Forming thins the knuckle most.** The tool estimates about 12 % thinning
+  there for a torispherical head and 14 % for the deeper ellipsoidal one — the
+  largest reduction anywhere on the part, in exactly the region already carrying
+  the least favourable stress.
+
+That is why the blank module suggests a *starting* plate thicker than the
+nominal: you are ordering material so the knuckle still meets the specification
+after forming, not so the plate matches the drawing before it.
+
+The Korbbogen head trades depth for a gentler knuckle — its larger `r` relieves
+the stress concentration but costs a deeper draw and a larger blank
+(1.14 × Da against 1.09 × Da), which is the trade shown side by side in the
+validation cases below.
+
 ## Validation cases
 
 The calculation engine is guarded by an automated test suite; the cases below

@@ -139,6 +139,84 @@ Search ISO, UNC, and UNF threads, then copy callouts or drill diameters straight
 **Example dataset:** Thread: M12 x 1.75, Tolerance: 6H, Drill: tap drill.
 - Expected output: Returns a tap drill recommendation (10.2 mm) and a callout string formatted as M12x1.75-6H.
 
+## How a tapping drill size is derived
+
+The number most people come here for is the tapping drill diameter, and it is
+worth knowing where it comes from — because the "standard" value in a handbook
+is a choice, not a constant.
+
+A thread's depth is set by its pitch. For an ISO metric thread the theoretical
+triangle height is `H = 0.866 × P`, and the actual thread engages 5/8 of that.
+Working it through gives the classic form:
+
+```
+tapping drill ≈ D − P
+```
+
+where `D` is the nominal (major) diameter and `P` the pitch. **M10 × 1.5** →
+10 − 1.5 = **8.5 mm**. **M6 × 1.0** → **5.0 mm**. That simple subtraction is the
+formula behind most of the table.
+
+What it hides is that `D − P` targets roughly **100 % thread engagement**, and
+full engagement is rarely what you want. The relationship is not proportional:
+
+| Thread engagement | Holding strength | Tapping torque |
+|---|---|---|
+| 100 % | reference | reference |
+| **75 %** | ~95 % of full | **~50 % of full** |
+| 60 % | ~90 % | ~35 % |
+
+Dropping to **75 % engagement costs about 5 % of thread strength and halves the
+torque on the tap** — which is why 75 % is the shop-floor default and why taps
+break far more often in holes drilled "correctly" to `D − P`. In ductile
+materials the joint almost always fails by bolt tension long before the threads
+strip, so the last 25 % of engagement buys nothing.
+
+The engagement-adjusted drill is:
+
+```
+drill = D − (P × engagement × 1.0825)
+```
+
+For **M10 × 1.5 at 75 %**: 10 − (1.5 × 0.75 × 1.0825) = **8.78 mm** — in
+practice an 8.8 mm drill, noticeably larger than the 8.5 mm the simple formula
+gives.
+
+## Worked example — choosing a drill for M12 × 1.75 in steel
+
+**Simple formula:** 12 − 1.75 = **10.25 mm** (100 % engagement).
+
+**At 75 % engagement:** 12 − (1.75 × 0.75 × 1.0825) = **10.58 mm**, so a
+**10.5 mm** drill from the standard set.
+
+The 10.5 mm drill is the handbook value for M12, and now the reason is visible:
+it is not the geometric minor diameter, it is the 75 %-engagement compromise
+rounded to a stocked drill size.
+
+**When to prefer the tighter 10.25 mm:** thin sections where there are only one
+or two threads of engagement, or soft materials (aluminium, brass) where thread
+strength is the limiting factor rather than tap survival.
+
+**When to go larger still:** deep blind holes in tough alloys, where tap
+breakage is the real risk and the extra engagement is not needed.
+
+## Common pitfalls
+
+- **Assuming coarse pitch.** M10 is 1.5 mm coarse but 1.25 or 1.0 fine — and
+  the drill changes with it. Always state the pitch on the drawing for anything
+  that is not coarse.
+- **Reading a UNC/UNF table as metric.** Unified threads are specified in
+  threads per inch, so pitch is `1 / TPI`, and the drill sizes are letter or
+  number gauges rather than millimetres.
+- **Ignoring the material.** The same thread wants a slightly different hole in
+  cast iron than in stainless; the table is a starting point, not a spec.
+- **Forgetting clearance holes are a different table.** The tapping drill goes
+  in the tapped part; the part being clamped needs a *clearance* hole, which is
+  larger than the bolt's nominal diameter.
+- **Using the tapping drill for a through-hole in a nut plate.** Roll-formed and
+  cut threads have different starting diameters; follow the tap manufacturer's
+  figure when one is given.
+
 ## Accuracy and verification
 - Values follow common ISO and UNC/UNF reference tables; verify against your governing standard.
 - Does not cover tapered pipe threads or specialty forms.
