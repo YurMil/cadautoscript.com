@@ -3,6 +3,7 @@ import Layout from '@theme/Layout';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import {utilities, UTILITY_CATEGORIES, type UtilityCategory} from '@site/src/data/utilities';
 import SupportSection from '@site/src/components/Support/SupportSection';
+import SubscribeForm from '@site/src/components/Newsletter/SubscribeForm';
 import {useAuthStatus} from '@site/src/hooks/useAuthStatus';
 import {useUtilitiesAccess} from '@site/src/hooks/useUtilitiesAccess';
 import {usePauseWhenOffscreen} from '@site/src/hooks/usePauseWhenOffscreen';
@@ -382,6 +383,9 @@ export default function Home(): ReactNode {
 
         <DocsSection sectionRef={docsSection.ref} paused={docsSection.paused} />
 
+        <section style={{maxWidth: 720, margin: '0 auto', padding: '2.5rem 1rem 0'}}>
+          <SubscribeForm />
+        </section>
         <SupportSection />
       </main>
     </Layout>
