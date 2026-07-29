@@ -167,6 +167,33 @@ Select a DN, set operating and test pressures, temperature, and material grade. 
   - The result is not a certified code calculation and carries no code stamp.
 - ⚠️ The Blind Flange Calculator provides preliminary sizing support. Results must be verified by a qualified engineer against the governing code edition and the project specification before manufacturing or purchase.
 
+## Why blind flange thickness scales the way it does
+
+A blind flange is a flat circular plate with pressure on one face. Its
+governing equation, in every code, has the same shape:
+
+```
+t = C · D · √(P / f)
+```
+
+`D` is the effective diameter, `P` the design pressure, `f` the allowable
+stress, and `C` a coefficient covering how the edge is held and how the gasket
+loads it. The consequences of that square root are worth internalising:
+
+- **Doubling the pressure does not double the thickness** — it multiplies it by
+  √2 ≈ 1.41. Going from PN 10 to PN 40 (4×) multiplies thickness by 2, not 4.
+- **Diameter, by contrast, is linear.** Doubling DN doubles the plate. Diameter
+  is the expensive dimension, which is why large blinds get heavy so fast.
+- **Temperature enters through `f`.** A grade whose allowable stress halves at
+  400 °C needs √2 more thickness, even though nothing about the geometry
+  changed.
+
+There is a second requirement that often governs instead: the plate must also
+resist the **gasket seating load** from the bolts, applied before there is any
+pressure at all. For low-pressure, large-diameter flanges the seating case
+frequently sizes the plate, which is why a lightly loaded blind can still come
+out surprisingly thick.
+
 ## Validation cases
 
 The calculation engine is guarded by an automated test suite (59 unit tests);

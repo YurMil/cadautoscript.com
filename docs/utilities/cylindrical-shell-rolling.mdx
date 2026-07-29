@@ -141,6 +141,97 @@ Calculate roll spacing, bending allowance, and developed length for cylindrical 
 **Example dataset:** Shell OD: 1500 mm, Thickness: 12 mm, Length: 2500 mm, Seam gap: 3 mm, Preset: EN 13445, Overbend: small end bias to reduce flat tails.
 - Expected output: Outputs a developed length, roll spacing suggestions, and allowance values ready to share with the roll operator.
 
+## How the developed length is calculated
+
+When a plate is rolled, its outer surface stretches and its inner surface
+compresses. Somewhere between them is a layer whose length does not change —
+the **neutral axis**. Cut the plate to that length and the finished shell comes
+out the right diameter; cut it to the outer or inner circumference and it will
+be wrong by several millimetres per pass.
+
+The neutral axis does not sit exactly in the middle. Its position is expressed
+as the **K-factor**: the fraction of the wall thickness, measured from the inner
+surface, at which the material neither stretches nor compresses.
+
+```
+K = 0.5   neutral axis at mid-thickness (generous inner radius)
+K = 0.44  typical for steel rolled to normal shell radii  ← default
+K = 0.33  tight radii, where the inner fibre compresses more
+```
+
+The calculation is then two steps:
+
+**1. Convert the specified diameter to the neutral diameter.** Which way
+depends on whether you entered an inside or an outside diameter:
+
+```
+from ID:   Dn = ID + 2·K·t
+from OD:   Dn = OD − 2·t·(1 − K)
+```
+
+**2. Take the circumference of that neutral diameter, minus the weld gap:**
+
+```
+L = π·Dn − gap
+```
+
+The gap is the root opening you want left between the two plate edges before
+welding. Set it to zero for a closed butt.
+
+## Worked example — DN 2000 shell, 15 mm wall
+
+A shell specified by **outside diameter 2000 mm**, wall **15 mm**, height
+2500 mm, rolled from steel (K = 0.44), with a **2 mm** root gap.
+
+**Step 1 — neutral diameter.** The OD is specified, so subtract the portion of
+the wall outside the neutral axis, from both sides:
+
+```
+Dn = 2000 − 2 × 15 × (1 − 0.44)
+   = 2000 − 16.8
+   = 1983.2 mm
+```
+
+**Step 2 — developed length.**
+
+```
+L = π × 1983.2 − 2
+  = 6230.41 − 2
+  = 6228.41 mm
+```
+
+So the blank is **6228 × 2500 mm**. Cutting to the outer circumference
+instead (π × 2000 = 6283 mm) would have left the plate
+**55 mm too long** — visible immediately as an
+overlapping seam.
+
+### What changes the answer most
+
+| Change | Developed length | Difference |
+|---|---|---|
+| baseline (OD 2000, t 15, K 0.44, gap 2) | 6228.4 mm | — |
+| K-factor 0.44 → 0.33 | 6218.0 mm | -10.4 mm |
+| **2000 read as ID instead of OD** | 6322.7 mm | **+94.2 mm** |
+| wall 15 → 20 mm | 6210.8 mm | -17.6 mm |
+| weld gap 2 → 4 mm | 6226.4 mm | −2.0 mm, exactly |
+
+**Confusing ID with OD dwarfs everything else** — a +94 mm error,
+nearly ten times the effect of a wrong K-factor. It is the single most common
+reason a rolled shell will not close.
+
+## Common pitfalls
+
+- **Rolling to the outer circumference.** The most frequent error, and always
+  in the same direction: the plate comes out too long and the seam overlaps.
+- **Using one K-factor for every job.** It shifts with the radius-to-thickness
+  ratio and with the material. For a first job on an unfamiliar alloy, roll a
+  test coupon and back-calculate K from the result.
+- **Forgetting the gap is subtracted, not added.** The gap is the opening left
+  *between* the edges, so the blank is shorter, not longer.
+- **Springback is not in this number.** The developed length is geometry. How
+  much you overbend to land on the target diameter after release is a separate,
+  machine- and material-dependent allowance.
+
 ## Accuracy and verification
 - Assumes a cylindrical shell with uniform thickness and moderate springback handled by the preset.
 - Does not replace machine capacity checks or detailed stress calculations.
