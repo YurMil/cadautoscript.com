@@ -332,6 +332,12 @@ page. [`dev-plans/utility-development-workflow.md`](dev-plans/utility-developmen
 explains the three shapes, when each applies, and why scratch copies of shipped
 tools must be deleted rather than kept.
 
+For what a utility must satisfy before it ships — engine tests, published
+validation cases, manual checklists for DXF/STEP/PDF handling, and platform
+expectations — see the
+[Testing and QA strategy](https://cadautoscript.com/docs/guides/testing-and-qa)
+([source](docs/guides/testing-and-qa.md)).
+
 1. Add utility metadata to `src/data/utilities.ts`
 2. Add the slug and shell config to `src/data/utilityShellPages.tsx`
 3. Create page route in `src/pages/utilities/`
