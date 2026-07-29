@@ -326,6 +326,12 @@ AUTH_REDIRECT_URL=http://localhost:3000/auth/callback
 
 ### Adding a New Utility
 
+Before the steps below, decide *where the code should live* — a standalone
+micro-app, an in-repo React component, or (never for new tools) a legacy HTML
+page. [`dev-plans/utility-development-workflow.md`](dev-plans/utility-development-workflow.md)
+explains the three shapes, when each applies, and why scratch copies of shipped
+tools must be deleted rather than kept.
+
 1. Add utility metadata to `src/data/utilities.ts`
 2. Add the slug and shell config to `src/data/utilityShellPages.tsx`
 3. Create page route in `src/pages/utilities/`
