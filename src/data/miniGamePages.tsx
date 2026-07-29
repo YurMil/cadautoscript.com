@@ -65,14 +65,16 @@ export const miniGamePageConfigs: Record<MiniGameSlug, MiniGamePageConfig> = {
         <strong>Warning:</strong> Touching a hidden defect triggers immediate rejection and a Critical Failure Report.
       </>
     ),
-    tags: ['Mini game', 'Blueprints', 'QA'],
-    note: 'Runs locally in your browser. No sign-in or uploads required.',
+    tags: ['Mini game', 'Blueprints', 'QA', 'React'],
+    note:
+      'Published from the React + Node microarchitecture repo as a static iframe build. Runs locally in your browser — no sign-in required.',
     features: [
       'Blueprint grid with NCR hazards',
       'HOLD markers (flags) and proximity counts',
       'Instant fail on defect contact',
+      'Shared game engine + Vite client publish artifact',
     ],
-    scriptType: 'defer',
+    scriptType: 'module',
   },
   'flanges-memory-matrix': {
     slug: 'flanges-memory-matrix',
