@@ -9,6 +9,12 @@ const sidebars: SidebarsConfig = {
     'intro',
     {
       type: 'category',
+      label: 'Guides',
+      collapsed: true,
+      items: ['guides/testing-and-qa'],
+    },
+    {
+      type: 'category',
       label: 'Utilities',
       collapsed: false,
       items: [
