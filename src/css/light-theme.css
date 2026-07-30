@@ -9,6 +9,7 @@
   --page-bg:
     radial-gradient(circle at 20% 20%, rgba(73, 123, 255, 0.14), transparent 55%),
     linear-gradient(180deg, #f8faff 0%, #eef4ff 100%);
+  --page-bg-base: #eef4ff;
   --card-border: rgba(15, 23, 42, 0.16);
   --card-border-strong: rgba(15, 23, 42, 0.24);
   --light-surface-strong: rgba(255, 255, 255, 0.98);
