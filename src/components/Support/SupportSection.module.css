@@ -71,10 +71,13 @@
 
 .pulseRing { animation: pulseSupport 4s ease-out infinite; }
 .pulseRing2 { animation: pulseSupport2 4s ease-out 1s infinite; }
-.heartBeat { 
-  transform-origin: center; 
-  animation: beat 4s ease-in-out infinite; 
+.heartBeat {
+  transform-origin: center;
+  animation: beat 4s ease-in-out infinite;
   cursor: pointer;
+  /* .bgSvg is pointer-events: none so the decoration never eats taps; the heart
+     opts back in, otherwise its click handler and cursor are unreachable. */
+  pointer-events: auto;
   transition: filter 0.3s ease;
 }
 .heartBeat:hover {

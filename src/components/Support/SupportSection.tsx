@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {useI18n} from '@site/src/contexts/I18nContext';
 import SupportButton from './SupportButton';
 import styles from './SupportSection.module.css';
@@ -8,10 +8,35 @@ import styles from './SupportSection.module.css';
 export default function SupportSection(): React.JSX.Element {
   const {t} = useI18n();
   const [floatingBtnPos, setFloatingBtnPos] = useState<{x: number; y: number} | null>(null);
+  const floatingBtnRef = useRef<HTMLDivElement>(null);
 
   const handleHeartClick = (e: React.MouseEvent<SVGGElement>) => {
     setFloatingBtnPos({ x: e.clientX, y: e.clientY });
   };
+
+  // The button is dismissed by mouseleave on a desktop pointer, which never
+  // fires after a tap — so on touch it would stay pinned to the viewport for
+  // the rest of the visit. Scrolling or tapping elsewhere closes it too.
+  useEffect(() => {
+    if (!floatingBtnPos) {
+      return;
+    }
+
+    const dismiss = () => setFloatingBtnPos(null);
+    const onPointerDown = (event: PointerEvent) => {
+      if (!floatingBtnRef.current?.contains(event.target as Node)) {
+        dismiss();
+      }
+    };
+
+    window.addEventListener('scroll', dismiss, {passive: true});
+    window.addEventListener('pointerdown', onPointerDown);
+
+    return () => {
+      window.removeEventListener('scroll', dismiss);
+      window.removeEventListener('pointerdown', onPointerDown);
+    };
+  }, [floatingBtnPos]);
 
   return (
     <section className={styles.section} onMouseLeave={() => setFloatingBtnPos(null)}>
@@ -71,8 +96,9 @@ export default function SupportSection(): React.JSX.Element {
       </div>
 
       {floatingBtnPos && (
-        <div 
-          className={styles.floatingBtnWrap} 
+        <div
+          ref={floatingBtnRef}
+          className={styles.floatingBtnWrap}
           style={{ left: floatingBtnPos.x, top: floatingBtnPos.y + 15 }}
           onMouseLeave={() => setFloatingBtnPos(null)}
         >

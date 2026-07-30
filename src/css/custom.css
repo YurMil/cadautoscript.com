@@ -25,8 +25,24 @@
   --ifm-code-font-size: 95%;
   --ifm-font-family-base: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --page-bg: linear-gradient(180deg, #05070f 0%, #080c18 100%);
+  /* Solid stand-in for --page-bg, used wherever a gradient cannot reach. */
+  --page-bg-base: #080c18;
   --card-border: rgba(255, 255, 255, 0.1);
   --bg: #0f1117;
+}
+
+/*
+ * The page gradient lives on <body>, whose box stops with the content. Touch
+ * browsers let you rubber-band past that box, and WebKit paints the exposed
+ * strip with the default white canvas instead of extending the gradient — on a
+ * phone that reads as an endless white void under the footer. Painting <html>
+ * with a solid base colour keeps the overscroll area on-theme, and
+ * `overscroll-behavior-y: contain` stops the same gesture from arming
+ * pull-to-refresh.
+ */
+html {
+  background-color: var(--page-bg-base);
+  overscroll-behavior-y: contain;
 }
 
 html[data-theme='light'] {

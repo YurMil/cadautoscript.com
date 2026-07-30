@@ -445,17 +445,21 @@
   color: #64ffda;
 }
 
-.iconLink:hover {
-  transform: scale(2.5);
-  z-index: 10;
-}
+/* Pointer-gated: a tap leaves :hover latched on touch screens, which would
+   freeze the icon at 2.5x until the card is tapped again. */
+@media (hover: hover) {
+  .iconLink:hover {
+    transform: scale(2.5);
+    z-index: 10;
+  }
 
-.iconLink:hover .utilityIcon {
-  filter: drop-shadow(0 6px 20px rgba(100, 255, 218, 0.25));
-}
+  .iconLink:hover .utilityIcon {
+    filter: drop-shadow(0 6px 20px rgba(100, 255, 218, 0.25));
+  }
 
-.iconLink:hover .iconOverlay {
-  opacity: 1;
+  .iconLink:hover .iconOverlay {
+    opacity: 1;
+  }
 }
 
 :global(html[data-theme='light']) .container {
@@ -638,13 +642,15 @@
     width: 48px;
     height: 48px;
   }
+}
 
+@media (max-width: 600px) and (hover: hover) {
   .iconLink:hover {
     transform: scale(1.35);
   }
 }
 
-@media (min-width: 601px) and (max-width: 900px) {
+@media (min-width: 601px) and (max-width: 900px) and (hover: hover) {
   .iconLink:hover {
     transform: scale(1.8);
   }
