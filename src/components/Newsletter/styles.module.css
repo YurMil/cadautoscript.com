@@ -1,48 +1,62 @@
-.panel {
+/*
+ * A single slim strip, not a card: the home page already stacks two full-width
+ * panels (docs, support) and a third heavy block between them read as an
+ * interruption. Same border, radius family and surface as those panels so it
+ * sits in the rhythm instead of announcing itself.
+ */
+.bar {
   display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-  padding: 1.25rem 1.5rem;
-  border: 1px solid var(--ifm-color-emphasis-200);
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 1.5rem;
+  padding: 0.85rem 1.25rem;
+  border: 1px solid var(--card-border);
   border-radius: 14px;
-  background: var(--ifm-background-surface-color);
+  background: rgba(255, 255, 255, 0.02);
 }
 
-.eyebrow {
-  margin: 0;
-  font-size: 0.72rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  opacity: 0.6;
+.text {
+  flex: 1 1 17rem;
+  min-width: 0;
 }
 
 .title {
   margin: 0;
-  font-size: 1.15rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.3;
 }
 
 .note {
-  margin: 0;
-  font-size: 0.9rem;
-  opacity: 0.8;
+  margin: 0.15rem 0 0;
+  font-size: 0.78rem;
+  line-height: 1.4;
+  opacity: 0.65;
 }
 
 .row {
   display: flex;
-  gap: 0.6rem;
-  flex-wrap: wrap;
-  margin-top: 0.6rem;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: auto;
 }
 
 .input {
-  flex: 1 1 16rem;
+  flex: 1 1 13rem;
   min-width: 0;
-  padding: 0.55rem 0.8rem;
-  border: 1px solid var(--ifm-color-emphasis-300);
-  border-radius: 9px;
-  background: var(--ifm-background-color);
+  padding: 0.4rem 0.7rem;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  background: transparent;
   color: inherit;
-  font-size: 0.95rem;
+  /* iOS zooms the page in when a focused field is under 16px. */
+  font-size: 1rem;
+}
+
+@media (min-width: 601px) {
+  .input {
+    font-size: 0.875rem;
+  }
 }
 
 .input:focus {
@@ -54,22 +68,26 @@
   border-color: var(--ifm-color-danger);
 }
 
+.submit {
+  white-space: nowrap;
+}
+
+/* Full-width lines below the strip, so they never widen the row itself. */
+.error,
+.consent {
+  flex: 1 0 100%;
+  margin: 0;
+  line-height: 1.45;
+}
+
 .error {
-  margin: 0.4rem 0 0;
-  font-size: 0.85rem;
+  font-size: 0.78rem;
   color: var(--ifm-color-danger);
 }
 
-.successTitle {
-  margin: 0;
-  font-weight: 600;
-}
-
 .consent {
-  margin: 0.7rem 0 0;
-  font-size: 0.78rem;
-  opacity: 0.65;
-  line-height: 1.5;
+  font-size: 0.7rem;
+  opacity: 0.55;
 }
 
 .srOnly {
@@ -82,4 +100,20 @@
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+
+@media (max-width: 700px) {
+  .row {
+    width: 100%;
+    margin-left: 0;
+  }
+}
+
+:global(html[data-theme='light']) .bar {
+  background: var(--light-surface);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+}
+
+:global(html[data-theme='light']) .input {
+  background: var(--light-surface-strong, #fff);
 }

@@ -16,6 +16,7 @@ export default function SubscribeForm(): React.JSX.Element {
   const {t, locale} = useI18n();
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<Status>('idle');
+  const [consentVisible, setConsentVisible] = useState(false);
 
   const handleSubmit = useCallback(
     (event: React.FormEvent) => {
@@ -44,18 +45,21 @@ export default function SubscribeForm(): React.JSX.Element {
   // list — the form must not answer "is this person subscribed?".
   if (status === 'sent') {
     return (
-      <div className={styles.panel} role="status">
-        <p className={styles.successTitle}>{t('newsletter.checkInbox')}</p>
-        <p className={styles.note}>{t('newsletter.confirmHint')}</p>
+      <div className={styles.bar} role="status">
+        <div className={styles.text}>
+          <p className={styles.title}>{t('newsletter.checkInbox')}</p>
+          <p className={styles.note}>{t('newsletter.confirmHint')}</p>
+        </div>
       </div>
     );
   }
 
   return (
-    <form className={styles.panel} onSubmit={handleSubmit}>
-      <p className={styles.eyebrow}>{t('newsletter.eyebrow')}</p>
-      <h2 className={styles.title}>{t('newsletter.title')}</h2>
-      <p className={styles.note}>{t('newsletter.description')}</p>
+    <form className={styles.bar} onSubmit={handleSubmit}>
+      <div className={styles.text}>
+        <p className={styles.title}>{t('newsletter.title')}</p>
+        <p className={styles.note}>{t('newsletter.description')}</p>
+      </div>
 
       <div className={styles.row}>
         <label className={styles.srOnly} htmlFor="newsletter-email">
@@ -73,10 +77,16 @@ export default function SubscribeForm(): React.JSX.Element {
             setEmail(event.target.value);
             if (status === 'invalid' || status === 'failed') setStatus('idle');
           }}
+          onFocus={() => setConsentVisible(true)}
           aria-invalid={status === 'invalid'}
+          aria-describedby="newsletter-consent"
           required
         />
-        <button type="submit" className="button primary" disabled={status === 'sending'}>
+        <button
+          type="submit"
+          className={`button button--primary button--sm ${styles.submit}`}
+          disabled={status === 'sending'}
+        >
           {status === 'sending' ? t('newsletter.sending') : t('newsletter.subscribe')}
         </button>
       </div>
@@ -92,7 +102,18 @@ export default function SubscribeForm(): React.JSX.Element {
         </p>
       ) : null}
 
-      <p className={styles.consent}>{t('newsletter.consent')}</p>
+      {/*
+        The strip stays one line until the visitor engages with it, but the
+        consent text must be readable before they can submit — so it unfolds on
+        the first focus of the field, and screen readers reach it either way
+        through aria-describedby.
+      */}
+      <p
+        id="newsletter-consent"
+        className={consentVisible ? styles.consent : styles.srOnly}
+      >
+        {t('newsletter.consent')}
+      </p>
     </form>
   );
 }

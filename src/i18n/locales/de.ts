@@ -84,7 +84,6 @@ export const de: TranslationDict = {
     error: 'Gespeicherte Berechnungen konnten nicht geladen werden. Bitte erneut versuchen.',
   },
   newsletter: {
-    eyebrow: 'Auf dem Laufenden bleiben',
     title: 'Neue Tools, direkt per E-Mail',
     description:
       'Eine gelegentliche Nachricht, wenn ein neues Ingenieur-Tool erscheint oder ein bestehendes erweitert wird. Höchstens einmal im Monat.',

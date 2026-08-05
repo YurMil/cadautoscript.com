@@ -84,7 +84,6 @@ export const es: TranslationDict = {
     error: 'No se pudieron cargar tus cálculos guardados. Inténtalo de nuevo.',
   },
   newsletter: {
-    eyebrow: 'Mantente al día',
     title: 'Nuevas herramientas, en tu correo',
     description:
       'Un aviso ocasional cuando se publica una nueva utilidad de ingeniería o una existente gana una función. No más de una vez al mes.',

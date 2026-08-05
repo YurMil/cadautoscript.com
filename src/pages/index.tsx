@@ -383,9 +383,7 @@ export default function Home(): ReactNode {
 
         <DocsSection sectionRef={docsSection.ref} paused={docsSection.paused} />
 
-        <section style={{maxWidth: 720, margin: '0 auto', padding: '2.5rem 1rem 0'}}>
-          <SubscribeForm />
-        </section>
+        <SubscribeForm />
         <SupportSection />
       </main>
     </Layout>

@@ -84,7 +84,6 @@ export const et: TranslationDict = {
     error: 'Salvestatud arvutusi ei õnnestunud laadida. Palun proovi uuesti.',
   },
   newsletter: {
-    eyebrow: 'Ole kursis',
     title: 'Uued tööriistad sinu postkasti',
     description:
       'Harv kiri, kui ilmub uus inseneritööriist või olemasolev saab uue võimaluse. Mitte sagedamini kui kord kuus.',
