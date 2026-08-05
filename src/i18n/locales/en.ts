@@ -82,7 +82,6 @@ export const en = {
     error: 'Unable to load your saved calculations. Please try again.',
   },
   newsletter: {
-    eyebrow: 'Stay updated',
     title: 'New tools, in your inbox',
     description:
       'An occasional note when a new engineering utility ships or an existing one gains a feature. No more than once a month.',
