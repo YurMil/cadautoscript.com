@@ -47,6 +47,13 @@ export type UtilityPageConfig = {
    * Permissions delegated to the embedded iframe. Capabilities are granted per
    * utility, never site-wide: only tools that actually need a device get it,
    * and the matching Permissions-Policy path rule lives in vercel.json.
+   *
+   * That rule comes in pairs, and both halves are required: one for the shell
+   * page, because a same-origin iframe can never hold a capability its parent
+   * document lacks, and one for /utility-apps/<slug>/. The shell-page rule also
+   * has to carry an optional locale segment — the page exists at
+   * /utilities/<slug>/ and at /ru/utilities/<slug>/ and four more besides, and
+   * a rule written without it silently covers English only.
    */
   iframeAllow?: string;
 };
@@ -197,6 +204,8 @@ export const utilityPageConfigs: Record<UtilityPageSlug, UtilityPageConfig> = {
       'Local history with import/export',
     ],
     scriptType: 'module',
+    // Live scanning: the only utility on the site that needs a camera.
+    iframeAllow: "camera 'self'",
   },
   'pdf-bom-extractor': {
     slug: 'pdf-bom-extractor',
