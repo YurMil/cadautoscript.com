@@ -6,10 +6,10 @@
 -- identity — only the error itself and non-identifying context (route, tool,
 -- user agent, locale). Only admins may read; nobody may update or delete.
 -- public.is_admin() predates the migration history (defined directly in the
--- production database), so fresh preview branches don't have it and every
--- policy referencing it fails. Create a deny-all stub only when the function
--- is missing: production keeps its real definition, preview branches get a
--- safe default (nobody is admin).
+-- production database), so a database built from these files alone does not
+-- have it. The stub now goes up in 20260613000001, the first migration that
+-- mentions the function at all; this block stays because it is already part of
+-- applied history, and it no-ops once the earlier one has run.
 do $$
 begin
   if not exists (
