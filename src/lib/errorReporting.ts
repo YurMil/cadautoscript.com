@@ -7,7 +7,15 @@ import {logger} from './logger';
  * production failures become visible. Privacy: no user id, no email — only the
  * error, the route, an optional tool context, user agent, and locale.
  *
- * Guards against noise and abuse:
+ * Reports go through the `report-client-error` Edge Function rather than
+ * inserting directly. The table used to grant INSERT to anon, which made the
+ * caps below the only thing standing between the public anon key and unbounded
+ * writes — and they stand on the wrong side of the network. The real limit is
+ * now a per-address and per-hour quota enforced in the database.
+ *
+ * The caps here stay because they are still worth having on this side: they
+ * keep a render loop from firing a hundred requests that the server would only
+ * throw away.
  *  - production only (dev errors stay in the console);
  *  - per-page-load cap of MAX_REPORTS;
  *  - dedupe by message so a render loop reports once;
@@ -45,13 +53,16 @@ export function reportClientError({message, stack, context}: ClientErrorReport):
 
   void import('./supabaseClient')
     .then(({supabase}) =>
-      supabase.from('client_error_log').insert({
-        message: truncate(message, 1000) ?? 'Unknown error',
-        stack: truncate(stack, 6000),
-        source: truncate(window.location.pathname, 300) ?? '/',
-        context: truncate(context, 200),
-        user_agent: truncate(navigator.userAgent, 400),
-        locale: truncate(document.documentElement.lang, 10),
+      // The user agent is not sent: the Edge Function reads it from the request
+      // headers, where it cannot be dressed up by the caller.
+      supabase.functions.invoke('report-client-error', {
+        body: {
+          message: truncate(message, 1000) ?? 'Unknown error',
+          stack: truncate(stack, 6000),
+          source: truncate(window.location.pathname, 300) ?? '/',
+          context: truncate(context, 200),
+          locale: truncate(document.documentElement.lang, 10),
+        },
       }),
     )
     .then(({error}) => {
