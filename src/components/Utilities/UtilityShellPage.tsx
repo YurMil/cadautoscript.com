@@ -51,7 +51,10 @@ export default function UtilityShellPage({tool, ...config}: UtilityShellPageProp
     features,
     scriptType = 'module',
     appPath,
-    iframeAllow = "camera 'self'",
+    // Delegate nothing unless a tool asks for it. The default used to be
+    // "camera 'self'", which handed the camera to every embedded utility and
+    // forced the Permissions-Policy header to allow it site-wide.
+    iframeAllow = '',
   } = config;
 
   const iframeSrc = useBaseUrl(appPath ?? `/utility-apps/${slug}/app.html`);
