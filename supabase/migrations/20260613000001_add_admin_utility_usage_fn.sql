@@ -1,3 +1,32 @@
+-- public.is_admin() predates this migration history — it was defined straight
+-- in the production database — so a database built from these files alone does
+-- not have it. This is the first migration that mentions it, and the guard sits
+-- here rather than at the first migration that *breaks* because the two are not
+-- the same place: a reference inside a function body resolves when the function
+-- runs, while a policy's USING expression resolves as the policy is created. So
+-- this file applied cleanly on a fresh database and 20260702000000 was the one
+-- that failed, which is why preview branches have been erroring on
+-- "function public.is_admin() does not exist" since July.
+--
+-- Create a deny-all stub only when the function is missing: production keeps
+-- its real definition, anything built from scratch gets a safe default where
+-- nobody is an admin.
+do $$
+begin
+  if not exists (
+    select 1
+    from pg_proc p
+    join pg_namespace n on n.oid = p.pronamespace
+    where n.nspname = 'public' and p.proname = 'is_admin'
+  ) then
+    create function public.is_admin()
+      returns boolean
+      language sql
+      stable
+      as 'select false';
+  end if;
+end $$;
+
 -- Admin-only per-user utility usage breakdown. Joins usage rows with profile
 -- identity so an admin can see who launched what. Guarded by is_admin();
 -- SECURITY DEFINER is required to read across all users past RLS.
