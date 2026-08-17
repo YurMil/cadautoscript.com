@@ -1,10 +1,19 @@
 # Supabase: work that must be finished from a machine with project access
 
-Written 2026-08-16. Everything below needs the Supabase CLI logged in against the
-production project; none of it can be done from CI or from a checkout alone.
+Written 2026-08-16, updated 2026-08-17. Everything below needs the Supabase CLI
+logged in against the production project; none of it can be done from CI or from
+a checkout alone.
 
 Read task 1 first — it is the only item where production is currently in a
 half-applied state, and it is losing data every hour it stays that way.
+
+The underlying theme, worth holding in mind throughout: **`supabase/migrations/`
+and the production database have drifted apart in both directions.** Objects
+exist in production that the repository never defines (`is_admin()`,
+`public.profiles`), and migration versions are recorded in production that the
+repository does not contain. Every failure below is a symptom of that one
+problem, and the work is as much about reconciling the two as about any
+individual fix.
 
 ---
 
@@ -70,13 +79,61 @@ later only resets the current hour's quota buckets.
 
 ### 1c. Apply the migration
 
+Read the next section before running this — `db push` will probably refuse.
+
 ```bash
 supabase db push
 ```
 
-This applies `20260816000000_harden_client_error_log.sql` and nothing else —
-earlier versions are already recorded as applied and are not re-run, including
-the historical files edited in PR #166.
+The intent is to apply `20260816000000_harden_client_error_log.sql` and nothing
+else: earlier versions are already recorded as applied and are not re-run,
+including the historical files edited in PR #166.
+
+#### Expect a version mismatch first
+
+The `Supabase Preview` check has been failing on every push to `main` since at
+least 7 August — before any of the recent work — with:
+
+```
+Remote migration versions not found in local migrations directory.
+```
+
+The production database has migration versions recorded in
+`supabase_migrations.schema_migrations` that do not exist as files in
+`supabase/migrations/`. Someone applied migrations directly against the project
+and they were never committed. This is the same problem as `is_admin()` and
+`profiles`, seen from the other side: the repository is not a faithful record of
+production.
+
+Two consequences worth being clear about:
+
+- **Nothing has been applied automatically.** The GitHub integration has not
+  successfully synced `main` to production for weeks, so `20260816000000` is
+  certainly not applied — and possibly neither are others.
+- **`db push` will hit the same wall** until the histories agree.
+
+Start by seeing exactly where they diverge:
+
+```bash
+supabase migration list --project-ref <production-ref>
+```
+
+That prints local and remote versions side by side. For each version that is
+remote-only, decide deliberately:
+
+- **Capture it** — the right default. The migration represents real schema that
+  exists in production and is missing from the repo. `supabase db pull` writes
+  the current remote schema into a new migration file; use it to recover the
+  definitions (this is also where `profiles` and `is_admin()` will come from, so
+  it doubles up with task 2).
+- **Discard the record** — `supabase migration repair --status reverted <version>`
+  tells the CLI to forget a remote entry. Only do this for versions you have
+  confirmed are obsolete or were superseded. It changes bookkeeping only; it
+  does not undo any schema change that migration made.
+
+Do not reach for `migration repair` to make the error go away quickly. Marking
+real, applied migrations as reverted is how the repo drifts further from
+production, and the drift is what caused every problem in this document.
 
 Verify the outcome. All four should hold:
 
@@ -223,18 +280,29 @@ preview check will pass too.
 
 ## Task 3 — make the check mean something
 
-Once preview goes green, make it required on `main` in the branch protection
-settings. It is the only thing that would have caught either of these gaps, and
-while it fails for an unrelated reason it silently protects nothing.
+Once it goes green, make `Supabase Preview` required on `main` in the branch
+protection settings. It is the only thing that would have caught any of these
+gaps, and while it fails it silently protects nothing.
+
+Note that the check reports two different failures depending on where it runs,
+and both must be fixed:
+
+- **on a pull request** it builds a database from `supabase/migrations/` alone —
+  this is the one that fails on `profiles` (task 2);
+- **on `main`** it syncs to production — this is the one that fails on the
+  version mismatch (task 1c).
 
 ---
 
-## Status at the time of writing
+## Status as of 2026-08-17
 
 | Item | State |
 |---|---|
 | PR #164 — client_error_log via Edge Function | merged; **function not deployed, migration not applied** |
-| PR #165 — camera scoped to QR Master | open, CI green, needs a preview smoke test (see the PR body) |
-| PR #166 — `is_admin()` bootstrap order | open, verified locally; preview still red on `profiles` |
-| PR #163 — dompurify 3.4.12 → 3.4.13 | open, CI green, closes the last dependabot alert |
+| PR #165 — camera scoped to QR Master | merged; smoke-test QR Master scanning on `/utilities/qr-master/` and `/ru/utilities/qr-master/`, plus the whisper microphone on a non-English page |
+| PR #166 — `is_admin()` bootstrap order | merged; PR-side preview now gets past it and fails on `profiles` (task 2) |
+| PR #167 — this document | open |
+| PR #163 — dompurify 3.4.12 → 3.4.13 | open, CI green |
+| dependabot `nanoid` (high, new 2026-08-17) | open; `nanoid@3.3.16` via `postcss`, patched in 3.3.18, fits the existing `pnpm.overrides` pattern in `package.json` |
 | dependabot `image-size` ×2 | dismissed as not-used (build-time only, no patch exists) |
+| `Supabase Preview` on `main` | failing since ≥ 7 August on the version mismatch — nothing is syncing to production automatically |
