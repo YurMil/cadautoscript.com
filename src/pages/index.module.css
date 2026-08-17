@@ -732,6 +732,13 @@
   line-height: 1.25;
   position: relative;
   z-index: 3;
+  /* Pinned to the card rather than inherited. Every other line in the card
+     already sets its own colour; the title used to be the one that took
+     whatever the surrounding page happened to be using, which is fine on the
+     home page (its <main> sets a colour per theme) and wrong anywhere else.
+     The utility shell is dark-first and hands down a near-white regardless of
+     theme, so a reused card lost its title on a white background. */
+  color: #f3f6ff;
 }
 
 .titleLink {
@@ -987,6 +994,10 @@
 :global(html[data-theme='light']) .featureList,
 :global(html[data-theme='light']) .utilityDesc {
   color: var(--light-text-muted);
+}
+
+:global(html[data-theme='light']) .utilityCard h3 {
+  color: #0f172a;
 }
 
 :global(html[data-theme='light']) .utilityCard {
