@@ -32,41 +32,67 @@ That function does not exist yet, and the migration has not been applied.
 - **Client error reports are being dropped.** The invoke fails, the failure is
   caught in `src/lib/errorReporting.ts` and logged to the console, and nothing
   is stored. Nothing crashes — reporting is deliberately incapable of throwing —
-  but production errors are invisible until the function is deployed.
+  but production errors are invisible.
 - **The hole PR #164 exists to close is still open.** `anon` keeps its `INSERT`
   grant on `client_error_log` until `20260816000000` is applied, so the public
   anon key can still write unbounded rows straight to PostgREST.
 
-Neither is an emergency, but the window should be short. Deploy the function
-first (restores reporting), then apply the migration (closes the hole).
+**Reporting needs both halves — neither one alone restores it.** The function is
+only a front door: it stores nothing by itself, it calls
+`record_client_error()`, and that function is created by the migration. Deploy
+the function without the migration and the RPC fails, the function swallows the
+error and still answers `{"ok":true}`, and no row is written.
 
-### 1a. Deploy the Edge Function
+Do the function first anyway. It is a one-liner and nothing depends on it,
+whereas the migration is entangled with the version mismatch described in 1d and
+may take real work. Just do not read a successful deploy as reporting being
+fixed — that is only true after 1d.
+
+Neither problem is an emergency, but the window should be short.
+
+### 1a. Link the project
+
+Every `supabase db …` and `supabase migration …` command below acts on the
+*linked* project. They select their target with `--linked` / `--db-url` /
+`--local` and do **not** accept `--project-ref`, so link once up front:
 
 ```bash
-supabase functions deploy report-client-error --project-ref <production-ref>
+supabase link --project-ref <production-ref>
 ```
 
 The project ref is in the Supabase dashboard URL, or in `supabase projects list`.
 Do not use a ref taken from a PR check link — those are ephemeral preview
 branches and differ on every PR.
 
-Verify it answers before moving on:
+(`functions deploy` and `secrets set` do take `--project-ref`, and it is spelled
+out below so those two steps work whether or not the link succeeded.)
+
+### 1b. Deploy the Edge Function
+
+```bash
+supabase functions deploy report-client-error --project-ref <production-ref>
+```
+
+Verify it is reachable:
 
 ```bash
 curl -s -X POST "https://<production-ref>.supabase.co/functions/v1/report-client-error" -H "Authorization: Bearer <anon-key>" -H "Content-Type: application/json" -d '{"message":"deploy smoke test","source":"/manual-check"}'
 ```
 
-Expect `{"ok":true}`. The function answers `{"ok":true}` for every outcome by
-design, including throttled and malformed input, so this proves it is reachable,
-not that the row landed. Confirm the row separately:
+Expect `{"ok":true}`. That is all this proves. The function answers `{"ok":true}`
+for every outcome by design — stored, throttled, malformed, or RPC-missing — so
+it cannot tell you the row landed, and at this point the row will *not* have
+landed, because `record_client_error()` does not exist until 1d. The end-to-end
+check that does confirm storage is at the end of 1d.
 
-```sql
-select message, source, created_at from public.client_error_log order by created_at desc limit 5;
-```
+If you want to see why nothing was stored, the function says so in its logs —
+Edge Function logs live in the dashboard, under Edge Functions →
+`report-client-error` → Logs. Expect a `[report-client-error] record failed`
+line naming the missing function. (There is no `supabase functions logs`
+subcommand; the CLI has `list`, `deploy`, `download`, `delete`, `new` and
+`serve`.)
 
-Delete the smoke-test row afterwards if you care about a clean table.
-
-### 1b. Set the IP salt (optional)
+### 1c. Set the IP salt (optional)
 
 ```bash
 supabase secrets set ERROR_LOG_IP_SALT="$(openssl rand -hex 32)" --project-ref <production-ref>
@@ -77,12 +103,12 @@ salt, which is unguessable and never leaves the server. Set it if you would
 rather the rate-limit hashes not be derived from the service key. Changing it
 later only resets the current hour's quota buckets.
 
-### 1c. Apply the migration
+### 1d. Apply the migration
 
 Read the next section before running this — `db push` will probably refuse.
 
 ```bash
-supabase db push
+supabase db push --linked
 ```
 
 The intent is to apply `20260816000000_harden_client_error_log.sql` and nothing
@@ -115,18 +141,18 @@ Two consequences worth being clear about:
 Start by seeing exactly where they diverge:
 
 ```bash
-supabase migration list --project-ref <production-ref>
+supabase migration list --linked
 ```
 
 That prints local and remote versions side by side. For each version that is
 remote-only, decide deliberately:
 
 - **Capture it** — the right default. The migration represents real schema that
-  exists in production and is missing from the repo. `supabase db pull` writes
-  the current remote schema into a new migration file; use it to recover the
-  definitions (this is also where `profiles` and `is_admin()` will come from, so
-  it doubles up with task 2).
-- **Discard the record** — `supabase migration repair --status reverted <version>`
+  exists in production and is missing from the repo. `supabase db pull --linked`
+  writes the current remote schema into a new migration file; use it to recover
+  the definitions (this is also where `profiles` and `is_admin()` will come from,
+  so it doubles up with task 2).
+- **Discard the record** — `supabase migration repair --linked --status reverted <version>`
   tells the CLI to forget a remote entry. Only do this for versions you have
   confirmed are obsolete or were superseded. It changes bookkeeping only; it
   does not undo any schema change that migration made.
@@ -152,14 +178,18 @@ select * from pg_policies where tablename = 'client_error_log' and cmd = 'INSERT
 select proname from pg_proc where proname = 'record_client_error';
 select tablename from pg_tables where tablename = 'client_error_report_quota';
 
--- 4. reporting still works end to end — re-run the curl above, then:
-select count(*) from public.client_error_log where created_at > now() - interval '5 minutes';
+-- 4. reporting now works end to end — re-run the 1b curl, then:
+select message, source, created_at from public.client_error_log
+order by created_at desc limit 5;
 ```
 
 Expected: `authenticated: SELECT` only; `0` column grants; no INSERT policy;
-both objects present; the count increases after the curl.
+both objects present; and the smoke-test row appearing for the first time — this
+is the check that proves reporting is restored, which the deploy in 1b could not.
 
-### 1d. Confirm the direct path is actually closed
+Delete the smoke-test row afterwards if you care about a clean table.
+
+### 1e. Confirm the direct path is actually closed
 
 The point of the change. This must now fail:
 
@@ -168,7 +198,7 @@ curl -s -X POST "https://<production-ref>.supabase.co/rest/v1/client_error_log" 
 ```
 
 Expect a permission-denied error, not `201`. If it succeeds, the migration did
-not apply — recheck 1c before assuming otherwise.
+not apply — recheck 1d before assuming otherwise.
 
 ---
 
@@ -217,7 +247,7 @@ exist. A green check that lies is worse than the red one.
 ### Dump the real definition
 
 ```bash
-supabase db dump --project-ref <production-ref> --schema public > /tmp/public-schema.sql
+supabase db dump --linked --schema public > /tmp/public-schema.sql
 ```
 
 From that file, extract everything about `profiles`, not just the table:
@@ -235,7 +265,7 @@ deny-all stub PR #166 adds — the stub is only a fallback for fresh databases,
 but knowing the real definition is worth having written down:
 
 ```bash
-supabase db dump --project-ref <production-ref> --schema public | grep -A 20 "FUNCTION public.is_admin"
+supabase db dump --linked --schema public | grep -A 20 "FUNCTION public.is_admin"
 ```
 
 ### Where to put it
@@ -290,7 +320,7 @@ and both must be fixed:
 - **on a pull request** it builds a database from `supabase/migrations/` alone —
   this is the one that fails on `profiles` (task 2);
 - **on `main`** it syncs to production — this is the one that fails on the
-  version mismatch (task 1c).
+  version mismatch (task 1d).
 
 ---
 
