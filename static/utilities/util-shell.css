@@ -603,55 +603,12 @@ html[data-theme='light'] body.utility-shell-page {
   margin-bottom: 0.9rem;
 }
 
-.utility-related__grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-  gap: 0.75rem;
-}
-
-.utility-related__card {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  padding: 0.85rem 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.04);
-  text-decoration: none;
-  transition: border-color 0.2s ease, background 0.2s ease;
-}
-
-.utility-related__card:hover {
-  border-color: rgba(100, 255, 218, 0.45);
-  background: rgba(100, 255, 218, 0.06);
-  text-decoration: none;
-}
-
-.utility-related__name {
-  font-weight: 600;
-  color: var(--ifm-heading-color, #f5f7ff);
-}
-
-.utility-related__desc {
-  font-size: 0.8rem;
-  opacity: 0.75;
-}
-
-.utility-related__meta {
-  font-size: 0.72rem;
-  font-family: var(--ifm-font-family-monospace);
-  opacity: 0.55;
-}
-
-html[data-theme='light'] .utility-related__card {
-  border-color: rgba(15, 23, 42, 0.12);
-  background: rgba(15, 23, 42, 0.03);
-}
-
-html[data-theme='light'] .utility-related__card:hover {
-  border-color: rgba(15, 118, 110, 0.45);
-  background: rgba(15, 118, 110, 0.05);
-}
+/* The cards themselves are the home-page catalog card (UtilityCard), so the
+   grid and card styling live in src/pages/index.module.css. The bespoke
+   .utility-related__card set that used to live here is gone: its title rule
+   read `color: var(--ifm-heading-color, #f5f7ff)` and the light-theme override
+   only restyled the card, so in light mode the names fell back to near-white
+   on white and were effectively invisible. */
 
 /* Guest notice (issue #112): shown under the tool frame for signed-out
    visitors when the site setting gates exports behind sign-in. */

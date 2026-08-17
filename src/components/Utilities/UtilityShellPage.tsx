@@ -17,6 +17,11 @@ import {
   shouldReportUtilityUsage,
 } from '@site/src/shared/utility-usage';
 import type {UtilityPageConfig} from '@site/src/data/utilityShellPages';
+// Related tools reuse the catalog card from the home page rather than a
+// look-alike of their own, so a utility is presented the same way wherever it
+// appears — same thumbnail, same tech badge, same localized copy.
+import UtilityCard from '@site/src/components/Home/UtilityCard';
+import homeStyles from '@site/src/pages/index.module.css';
 import UtilityErrorBoundary from './UtilityErrorBoundary';
 import {saveCalculation} from '@site/src/shared/calculation-history';
 import {
@@ -371,13 +376,9 @@ export default function UtilityShellPage({tool, ...config}: UtilityShellPageProp
           {relatedUtilities.length > 0 ? (
             <div className="utility-related">
               <h2 className="utility-related__title">{t('relatedTools.title')}</h2>
-              <div className="utility-related__grid">
+              <div className={homeStyles.utilityGrid}>
                 {relatedUtilities.map((related) => (
-                  <Link key={related.id} to={related.href} className="utility-related__card">
-                    <span className="utility-related__name">{related.name}</span>
-                    <span className="utility-related__desc">{related.description}</span>
-                    <span className="utility-related__meta">{related.standards}</span>
-                  </Link>
+                  <UtilityCard key={related.id} utility={related} />
                 ))}
               </div>
             </div>
