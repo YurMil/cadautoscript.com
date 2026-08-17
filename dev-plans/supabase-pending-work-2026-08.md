@@ -331,8 +331,13 @@ and both must be fixed:
 | PR #164 — client_error_log via Edge Function | merged; **function not deployed, migration not applied** |
 | PR #165 — camera scoped to QR Master | merged; smoke-test QR Master scanning on `/utilities/qr-master/` and `/ru/utilities/qr-master/`, plus the whisper microphone on a non-English page |
 | PR #166 — `is_admin()` bootstrap order | merged; PR-side preview now gets past it and fails on `profiles` (task 2) |
+| PR #169 — related tools use the catalog card | merged |
+| PR #168 — nanoid pinned to a patched 3.x | merged |
 | PR #167 — this document | open |
-| PR #163 — dompurify 3.4.12 → 3.4.13 | open, CI green |
-| dependabot `nanoid` (high, new 2026-08-17) | open; `nanoid@3.3.16` via `postcss`, patched in 3.3.18, fits the existing `pnpm.overrides` pattern in `package.json` |
-| dependabot `image-size` ×2 | dismissed as not-used (build-time only, no patch exists) |
+| PR #163 — dompurify 3.4.12 → 3.4.13 | merged |
+| dependabot alerts | **none open.** dompurify closed by #163, nanoid by #168, and the two `image-size` highs dismissed as not-used (build-time only, no patch exists) |
 | `Supabase Preview` on `main` | failing since ≥ 7 August on the version mismatch — nothing is syncing to production automatically |
+
+Everything that could be finished from a checkout is finished. What is left in
+this document is exactly the part that needs project access, and task 1 is the
+one carrying a cost while it waits.
