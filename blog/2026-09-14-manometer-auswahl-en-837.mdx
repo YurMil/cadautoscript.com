@@ -1,0 +1,136 @@
+---
+slug: manometer-auswahl-en-837
+title: "Selecting a Pressure Gauge per EN 837: Range, Accuracy Class, Nominal Size and Accessories"
+authors: [yurii]
+tags: [instrumentation, standards]
+description: A practical guide to selecting Bourdon tube pressure gauges per EN 837-1 and EN 837-2 – with a worked range example and a checklist for datasheets and orders.
+---
+
+The Bourdon tube gauge is the most common pressure instrument in plant
+engineering and maintenance. Selection mistakes rarely show immediately – they
+appear as trembling pointers, permanent zero shifts or a burst measuring element.
+This post summarises the selection rules of the EN 837 series and works through
+an example.
+
+*A German version of this article is available — switch the language to Deutsch.*
+
+{/* truncate */}
+
+:::info Tool
+With the [Bourdon Gauge Configurator](/utilities/bourdon-gauge-configurator/) you
+combine nominal size, range, connection, filling and accessories and export a PDF
+datasheet.
+:::
+
+## The EN 837 series
+
+| Part | Scope |
+|---|---|
+| **EN 837-1** | Bourdon tube pressure gauges – dimensions, metrology, requirements and testing |
+| **EN 837-2** | Selection and installation recommendations for pressure gauges |
+| **EN 837-3** | Diaphragm and capsule pressure gauges – dimensions, metrology, requirements and testing |
+
+**EN 837-2** is the working document for selection; EN 837-1 provides the
+characteristics of the instruments you choose between.
+
+## 1. Scale range
+
+The single most important step. A gauge working permanently at full scale
+fatigues; one that only moves through the first tenth cannot be read accurately.
+The common recommendation:
+
+| Loading | Operating pressure at most |
+|---|---|
+| steady | **3/4** of full scale |
+| fluctuating | **2/3** of full scale |
+
+Full-scale values follow a standard series, for example
+0–1 / 1.6 / 2.5 / 4 / 6 / 10 / 16 / 25 / 40 / 60 / 100 bar.
+
+### Worked example
+
+**Steady operating pressure 6 bar**
+
+```
+required full scale ≥ 6 bar / 0.75 = 8 bar   →   range 0–10 bar
+```
+
+**Fluctuating operating pressure 6 bar**
+
+```
+required full scale ≥ 6 bar / (2/3) = 9 bar  →   range 0–10 bar
+```
+
+**Fluctuating operating pressure 7 bar**
+
+```
+required full scale ≥ 7 bar / (2/3) = 10.5 bar  →   range 0–16 bar
+```
+
+Half a bar more operating pressure – and the next range up is needed.
+
+## 2. Accuracy class
+
+The class states the permissible error as a **percentage of the span**. EN 837-1
+defines classes **0.1 – 0.25 – 0.6 – 1 – 1.6 – 2.5 – 4**.
+
+```
+Class 1.0   on 0–10 bar  →  ± 0.1 bar
+Class 1.6   on 0–16 bar  →  ± 0.256 bar
+```
+
+Because the error refers to the **span**, an oversized range worsens accuracy at
+the operating point – another reason not to double the range "to be safe".
+
+The fine classes 0.1 to 0.6 are for test and reference gauges; in plant operation
+1.0 and 1.6 are typical.
+
+## 3. Nominal size and connection
+
+The **nominal size** is the case diameter in millimetres. Standard sizes include
+40, 50, 63, 80, 100, 150, 160 and 250. Rule of thumb: the longer the reading
+distance and the finer the class, the larger the size.
+
+The process connection is typically **G ¼ B** for small sizes and **G ½ B** from
+size 100 upwards, lower mount or back mount. Check the thread type at the
+installation point – an NPT thread seals differently from a parallel G thread
+with a sealing ring.
+
+## 4. Operating conditions and accessories
+
+| Situation | Measure |
+|---|---|
+| Vibration, pressure surges, pulsation | **Liquid filling** (e.g. glycerine) damps pointer and movement; with strong pulsation add a **throttle screw** |
+| Steam, hot media | **Siphon**: condensate protects the Bourdon tube from the medium temperature |
+| Aggressive, viscous or crystallising media | **Diaphragm seal** instead of direct media contact |
+| Replacement during operation | Fit a **gauge isolating valve** |
+| Gases and vapours at high pressure | Choose a **safety pattern** per EN 837-1 |
+| Oxygen | Instrument **free of oil and grease**, marked accordingly |
+
+The highest safety pattern, **S3**, has a solid baffle wall between measuring
+element and dial and a blow-out back: if the Bourdon tube fails, the medium
+escapes to the rear instead of through the window towards the operator.
+
+## Checklist for datasheet and order
+
+- [ ] Medium, operating pressure, loading (steady / fluctuating)
+- [ ] Range per the 3/4 or 2/3 rule
+- [ ] Accuracy class
+- [ ] Nominal size and reading distance
+- [ ] Connection thread and position
+- [ ] Wetted materials of measuring element and connection
+- [ ] Filling, safety pattern
+- [ ] Accessories: isolating valve, siphon, throttle screw, diaphragm seal
+- [ ] Measuring point tag
+
+The [Bourdon Gauge Configurator](/utilities/bourdon-gauge-configurator/) captures
+exactly these items and summarises them in a PDF datasheet.
+
+:::caution Note
+This post summarises common selection rules and does not replace the current
+editions of EN 837-1 to -3 or manufacturer data. Safety-related measuring points
+are additionally subject to the plant design requirements.
+:::
+
+**Open the tool:** [Bourdon Gauge Configurator](/utilities/bourdon-gauge-configurator/) ·
+[Documentation](/docs/utilities/bourdon-gauge-configurator/)

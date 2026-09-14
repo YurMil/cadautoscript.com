@@ -1,0 +1,150 @@
+---
+slug: kloepperboden-korbbogenboden-din-28011-28013
+title: "Klöpperboden oder Korbbogenboden? Geometrie gewölbter Böden nach DIN 28011 und DIN 28013"
+authors: [yurii]
+tags: [pressure-vessels, standards, cad]
+description: Wölbungsradius, Krempenradius, Bordhöhe und Zuschnitt von Klöpper- und Korbbogenböden nach DIN 28011 und DIN 28013 – mit durchgerechnetem Beispiel und den Grenzen einer reinen Geometrieberechnung.
+---
+
+Gewölbte Böden schließen fast jeden zylindrischen Druckbehälter ab. Im
+deutschsprachigen Raum sind zwei Formen Standard: der **Klöpperboden** nach
+DIN 28011 und der **Korbbogenboden** nach DIN 28013. Beide sehen auf den ersten
+Blick ähnlich aus, unterscheiden sich aber in Bauhöhe, Materialbedarf und
+Tragverhalten deutlich. Dieser Beitrag erklärt die Geometrie, rechnet ein
+Beispiel vollständig durch und zeigt, wo die Geometrie aufhört und die
+Festigkeitsberechnung beginnt.
+
+{/* truncate */}
+
+:::info Werkzeug
+Alle Werte in diesem Beitrag lassen sich mit dem
+[Klöpper- und Korbbogenboden-Rechner](/utilities/pressure-vessel-dished-end-calc/)
+nachvollziehen. Er läuft vollständig im Browser.
+:::
+
+## Aufbau eines gewölbten Bodens
+
+Ein Boden nach DIN 28011 oder DIN 28013 besteht aus drei Bereichen:
+
+1. **Kalotte** – der mittlere Kugelabschnitt mit dem **Wölbungsradius R**.
+2. **Krempe** – der torusförmige Übergang mit dem **Krempenradius r**.
+3. **Zylindrischer Bord** – das gerade Stück mit der **Bordhöhe h₁**, an das
+   der Mantel angeschweißt wird.
+
+Alle Maße beziehen sich auf den **Außendurchmesser Dₐ**. Wer versehentlich mit
+dem Innendurchmesser rechnet, erhält einen Boden, der nicht auf den Mantel passt.
+
+## Die Formeln
+
+| Größe | Klöpperboden (DIN 28011) | Korbbogenboden (DIN 28013) |
+|---|---|---|
+| Wölbungsradius R | `R = Dₐ` | `R = 0,8 · Dₐ` |
+| Krempenradius r | `r = 0,1 · Dₐ` | `r = 0,154 · Dₐ` |
+| Innere Wölbungshöhe h₂ | `h₂ = 0,1935 · Dₐ − 0,455 · s` | `h₂ = 0,255 · Dₐ − 0,635 · s` |
+| Übliche Bordhöhe h₁ | `h₁ ≥ 3,5 · s` | `h₁ ≥ 3 · s` |
+
+Die **Gesamthöhe** ergibt sich aus Bord, innerer Wölbungshöhe und Wanddicke:
+
+```
+H = h₁ + h₂ + s
+```
+
+Der Korbbogenboden hat einen kleineren Wölbungsradius und eine deutlich größere
+Krempe. Er ist dadurch **höher**, braucht **mehr Blech** – verteilt die
+Spannungen im Krempenbereich aber günstiger. Deshalb wird er bevorzugt, wenn
+Druck oder Wanddicke höher sind. Der flachere Klöpperboden ist die wirtschaftliche
+Wahl für niedrigere Drücke und dort, wo Bauhöhe knapp ist.
+
+## Durchgerechnetes Beispiel: Dₐ = 1000 mm, s = 10 mm
+
+**Klöpperboden nach DIN 28011**
+
+```
+R  = 1000 mm
+r  = 0,1 · 1000                 = 100 mm
+h₂ = 0,1935 · 1000 − 0,455 · 10 = 188,95 mm
+h₁ = 3,5 · 10                   = 35 mm
+H  = 35 + 188,95 + 10           = 233,95 mm
+```
+
+**Korbbogenboden nach DIN 28013**
+
+```
+R  = 0,8 · 1000                 = 800 mm
+r  = 0,154 · 1000               = 154 mm
+h₂ = 0,255 · 1000 − 0,635 · 10  = 248,65 mm
+h₁ = 3 · 10                     = 30 mm
+H  = 30 + 248,65 + 10           = 288,65 mm
+```
+
+Bei gleichem Durchmesser und gleicher Wanddicke baut der Korbbogenboden also
+rund **55 mm höher**.
+
+## Zuschnitt (Ronde) und Gewicht
+
+Der Boden wird aus einer runden Blechscheibe gedrückt oder gepresst. Für eine
+erste Abschätzung des Rondendurchmessers verwendet der Rechner die in der Praxis
+verbreiteten Näherungen:
+
+```
+Klöpperboden:     D_Ronde ≈ 1,09 · Dₐ + 2 · h₁
+Korbbogenboden:   D_Ronde ≈ 1,14 · Dₐ + 2 · h₁
+```
+
+Für das Beispiel mit Stahl (7,85 kg/dm³):
+
+| | Klöpperboden | Korbbogenboden |
+|---|---|---|
+| Rondendurchmesser | 1,09 · 1000 + 70 = **1160 mm** | 1,14 · 1000 + 60 = **1200 mm** |
+| Rondengewicht | ≈ **83,0 kg** | ≈ **88,8 kg** |
+
+Das ist eine **Abschätzung für Angebot und Materialdisposition**, nicht der
+endgültige Zuschnitt. Umformverfahren, Beschnittzugabe und Blechdickenabnahme in
+der Krempe legt der Bodenhersteller fest. Der Rechner weist deshalb zusätzlich
+eine geschätzte Mindestwanddicke nach dem Umformen aus – sie ist ein Hinweis,
+kein Nachweis.
+
+## Wo die Geometrie endet
+
+DIN 28011 und DIN 28013 beschreiben die **Form**. Ob ein Boden dem Druck
+standhält, ist eine eigene Frage:
+
+- In Europa erfolgt der Festigkeitsnachweis gewölbter Böden unter innerem
+  Überdruck nach **EN 13445-3, Abschnitt 7**.
+- In Deutschland ist daneben das **AD 2000-Merkblatt B3** („Gewölbte Böden unter
+  innerem und äußerem Überdruck“) verbreitet.
+
+Beide Regelwerke berücksichtigen, dass die höchsten Spannungen in der **Krempe**
+auftreten – genau dort, wo beim Umformen auch das meiste Material fließt. Die
+Nennwanddicke aus der Geometrie ist daher immer mit der **Mindestwanddicke nach
+dem Umformen** und dem **Korrosionszuschlag** gegenzuprüfen.
+
+## Häufige Fehler
+
+- **Innen- statt Außendurchmesser eingesetzt.** Alle Formeln beziehen sich auf Dₐ.
+- **Bordhöhe vergessen.** Ohne ausreichenden zylindrischen Bord liegt die
+  Schweißnaht im Bereich der Krempe – dort, wo sie am wenigsten hingehört.
+- **Rondengewicht als Fertiggewicht übernommen.** Der Beschnitt geht verloren;
+  das Fertiggewicht ist kleiner.
+- **Klöpperboden „aufgedickt“ statt Korbbogenboden gewählt.** Eine dickere Wand
+  hilft in der Krempe weniger als eine günstigere Form.
+
+## Begriffe Deutsch – Englisch
+
+| Deutsch | Englisch |
+|---|---|
+| Klöpperboden | torispherical head (10 % knuckle) |
+| Korbbogenboden | semi-ellipsoidal (korbbogen) head |
+| Kalotte / Wölbungsradius | crown / crown radius |
+| Krempe / Krempenradius | knuckle / knuckle radius |
+| Zylindrischer Bord | straight flange |
+| Ronde | blank |
+
+:::caution Hinweis
+Die Ergebnisse dienen der Vorauslegung. Maßgebend sind die aktuellen Ausgaben
+von DIN 28011, DIN 28013, EN 13445 bzw. AD 2000 sowie die Angaben des
+Bodenherstellers. Die Freigabe erfolgt durch eine qualifizierte Fachkraft.
+:::
+
+**Zum Werkzeug:** [Klöpper- und Korbbogenboden berechnen](/utilities/pressure-vessel-dished-end-calc/) ·
+[Dokumentation](/docs/utilities/pressure-vessel-dished-end-calc/)

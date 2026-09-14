@@ -67,3 +67,18 @@ solidworks:
   label: SolidWorks
   permalink: /solidworks
   description: SolidWorks-Makros, API-Nutzung und Automatisierung
+
+pressure-vessels:
+  label: Druckbehälter
+  permalink: /pressure-vessels
+  description: Auslegung und Fertigung von Druckbehältern und ihren Bauteilen
+
+standards:
+  label: Normen
+  permalink: /standards
+  description: Praxis mit DIN-, EN- und ISO-Normen
+
+instrumentation:
+  label: Messtechnik
+  permalink: /instrumentation
+  description: Auswahl und Einsatz von Druck-, Temperatur- und Füllstandsmessgeräten

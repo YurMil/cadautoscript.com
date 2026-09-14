@@ -67,3 +67,18 @@ solidworks:
   label: SolidWorks
   permalink: /solidworks
   description: SolidWorks macros, API usage, and automation
+
+pressure-vessels:
+  label: Pressure vessels
+  permalink: /pressure-vessels
+  description: Design and fabrication of pressure vessels and their components
+
+standards:
+  label: Standards
+  permalink: /standards
+  description: Working with DIN, EN and ISO standards
+
+instrumentation:
+  label: Instrumentation
+  permalink: /instrumentation
+  description: Selecting and using pressure, temperature and level instruments

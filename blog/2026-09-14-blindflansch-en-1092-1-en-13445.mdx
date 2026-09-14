@@ -1,0 +1,153 @@
+---
+slug: blindflansch-en-1092-1-en-13445
+title: "Sizing a Blind Flange: PN Class per EN 1092-1 and Thickness Checks Around EN 13445"
+authors: [yurii]
+tags: [pressure-vessels, standards, cad]
+description: How operating pressure, temperature and material turn into a PN class, a blind flange thickness and a bolting check – and which assumptions are made along the way.
+---
+
+A blind flange looks simple: a round plate with a bolt circle. Yet several checks
+compete to set its thickness – and not always the one you expect. This post walks
+from operating pressure to recommended plate thickness step by step.
+
+*A German version of this article is available — switch the language to Deutsch.*
+
+{/* truncate */}
+
+:::info Tool
+The [Blind Flange Calculator](/utilities/blind-flange-calculator/) performs every
+step described here and runs entirely in the browser.
+:::
+
+## 1. The PN class per EN 1092-1
+
+EN 1092-1 specifies the connecting dimensions of steel flanges; the blind flange
+is **flange type 05**. For each combination of nominal size (**DN**) and pressure
+class (**PN**) it defines, among others:
+
+- flange outside diameter **D**
+- bolt circle diameter **K**
+- number and size of bolts
+
+The standard classes are PN 2.5 – 6 – 10 – 16 – 25 – 40 – 63 – 100 – 160 – 250 –
+320 – 400. The calculator starts at PN 10 and selects the **next class up** that
+covers the operating pressure and is standardised for the chosen DN:
+
+| Operating pressure | Selected class |
+|---|---|
+| 10 bar | PN 10 |
+| 12 bar | PN 16 |
+| 40 bar | PN 40 |
+| 41 bar | PN 63 |
+
+:::caution PN is not an allowable pressure
+The PN class designates connecting dimensions. The pressure actually allowed at a
+given temperature depends on the material and is governed by the
+pressure/temperature ratings in EN 1092-1. At elevated temperature a PN 16 flange
+may carry considerably less than 16 bar.
+:::
+
+## 2. Allowable stresses
+
+For non-austenitic steels, EN 13445-3 takes the **nominal design stress** as the
+lower of the yield- and tensile-based values, each with its safety factor:
+
+```
+f      = min( R_p0.2/T / 1.5 ;  R_m/20 / 2.4 )
+f_test = R_p0.2/T_test / 1.05
+```
+
+The calculator simplifies to the **yield-based** term (`R_p0.2/T / 1.5` in
+operation, `R_p0.2 / 1.05` for the test). For materials with a low tensile
+strength relative to yield, check the tensile criterion by hand.
+
+## 3. Which check sets the thickness?
+
+The required thickness is the **maximum** of four criteria:
+
+| Criterion | Idea | Load case |
+|---|---|---|
+| Strength (operation) | Bending moment from pressure force × lever arm to the bolt circle | operating pressure, `f` |
+| Strength (test) | Same moment under test pressure | test pressure, `f_test` |
+| Plasticity | Plate bending stress stays below yield | test pressure |
+| Stiffness | Centre deflection ≤ 1 mm | operating pressure |
+
+The **corrosion allowance** is added to the minimum thickness, which is then
+rounded up to the next **commercially available plate thickness**.
+
+The stiffness criterion is easily underestimated: a plate can be strong enough
+and still deflect so much that the gasket unloads at its inner edge and leaks.
+
+## Worked example: circular plate under pressure
+
+The plate formulas come from classical plate theory (simply supported circular
+plate under uniform load). Inputs: pressure `p = 1.6 MPa` (16 bar), effective
+radius `R = 125 mm`, thickness `t = 20 mm`, `E = 200 000 MPa`, `ν = 0.3`.
+
+**Maximum bending stress** at the centre:
+
+```
+σ = 3 · p · R² · (3 + ν) / (8 · t²)
+  = 3 · 1.6 · 125² · 3.3 / (8 · 20²)  =  77.34 MPa
+```
+
+**Centre deflection**, with plate stiffness `D = E · t³ / (12 · (1 − ν²))`:
+
+```
+w = (5 + ν) · p · R⁴ / (64 · D · (1 + ν))  =  0.170 mm
+```
+
+Both values are part of the calculator's automated tests and are published as a
+validation case on the [documentation page](/docs/utilities/blind-flange-calculator/).
+
+## 4. Bolts and gasket
+
+At low pressure and large DN, the bolt load is often governed not by the
+operating pressure but by **gasket seating** – the load needed before any
+pressure is applied. With the classical gasket model and factors `m` and `y`:
+
+```
+W_m1 = π · G · b · y
+```
+
+with effective gasket diameter `G`, effective gasket width `b` and seating stress
+`y`. For `G = 250 mm`, `b = 12 mm` and `y = 11 MPa` (graphite):
+
+```
+W_m1 = π · 250 · 12 · 11  ≈  103 673 N
+```
+
+The calculator compares the provided bolt area (count × stress area) with the
+largest requirement from seating, operation and test, and names the governing
+case.
+
+## Test pressure
+
+For the pressure test per **EN 13445-5** the minimum is
+
+```
+P_t = max( 1.25 · P_d · f_a / f_T ;  1.43 · PS )
+```
+
+with the nominal design stress at test temperature `f_a` and at design
+temperature `f_T`. Enter the test pressure from your vessel specification in the
+calculator when you have it – it takes precedence over the automatically derived
+value.
+
+## Common mistakes
+
+- **Treating the PN class as the allowable pressure** – a real safety risk at
+  high temperature.
+- **Forgetting the corrosion allowance**, or applying it to one side only.
+- **Checking only the operating case.** Test pressure and gasket seating often
+  govern.
+- **Rounding the standard thickness down** instead of up.
+
+:::caution Note
+The calculator supports preliminary design and does not implement EN 13445-3 in
+full. The current editions of EN 1092-1 and EN 13445 and the project
+specification govern. Release requires a qualified engineer.
+:::
+
+**Open the tool:** [Blind Flange Calculator](/utilities/blind-flange-calculator/) ·
+[Documentation](/docs/utilities/blind-flange-calculator/)
