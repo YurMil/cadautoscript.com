@@ -13,6 +13,8 @@ export const SHARE_PARAM = 'calc';
 export const SHARE_MESSAGE_SUPPORT = 'cas:share-support';
 export const SHARE_MESSAGE_STATE_UPDATE = 'cas:state-update';
 export const SHARE_MESSAGE_RESTORE = 'cas:restore-state';
+/** Shell → app: workspace report defaults (issue #122); `defaults` may be null. */
+export const SHARE_MESSAGE_REPORT_DEFAULTS = 'cas:report-defaults';
 export const SHARE_SCHEMA_VERSION = 1;
 
 /** Keep links comfortably under browser/proxy URL limits. */

@@ -113,7 +113,7 @@ const config: Config = {
           filename: 'sitemap.xml',
           // Search result pages are noindex-style utility pages, keep them
           // out of the sitemap (locale variants included).
-          ignorePatterns: ['/admin/**', '/search/**', '/*/search/**'],
+          ignorePatterns: ['/admin/**', '/search/**', '/*/search/**', '/workspaces/**', '/*/workspaces/**'],
         },
         theme: {
           customCss: ['./src/css/custom.css', './src/css/light-theme.css'],
