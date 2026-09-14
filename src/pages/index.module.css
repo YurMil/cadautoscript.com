@@ -916,6 +916,20 @@
   align-items: flex-start;
 }
 
+.extrasSection h2 {
+  margin-bottom: 0.4rem;
+}
+
+.extrasLead {
+  margin: 0;
+  max-width: 60ch;
+  color: #8ca3c9;
+}
+
+.extrasSection .heroActions {
+  margin-top: 0;
+}
+
 .docsLinks {
   display: flex;
   flex-wrap: wrap;

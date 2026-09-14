@@ -22,5 +22,13 @@
   "item.label.Utilities": {
     "message": "Utilidades",
     "description": "Navbar item with label Utilities"
+  },
+  "item.label.Extras": {
+    "message": "Extras",
+    "description": "Navbar item with label Extras"
+  },
+  "item.label.General utilities": {
+    "message": "Utilidades generales",
+    "description": "Navbar item with label General utilities"
   }
 }

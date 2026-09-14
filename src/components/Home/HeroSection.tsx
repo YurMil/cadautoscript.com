@@ -1,12 +1,12 @@
 import type {RefObject} from 'react';
 import Link from '@docusaurus/Link';
-import {utilities} from '@site/src/data/utilities';
+import {engineeringUtilities} from '@site/src/data/utilities';
 import {useI18n} from '@site/src/contexts/I18nContext';
 import AnimatedLogo from '@site/src/components/AnimatedLogo/AnimatedLogo';
 import styles from '@site/src/pages/index.module.css';
 
 const heroStats = [
-  {label: 'Live utilities', value: utilities.length.toString()},
+  {label: 'Engineering tools', value: engineeringUtilities.length.toString()},
   {label: 'Runtime', value: 'Chromium + WASM'},
   {label: 'Formats', value: 'DXF / SVG / CSV / PDF / JSON'},
 ];
@@ -246,7 +246,7 @@ export default function HeroSection({sectionRef, paused, heroReady, heroCollapse
         <div className={styles.heroCompact}>
           <h1 className={styles.heroCompactTitle}>CAD AutoScript</h1>
           <div className={styles.heroCompactStats}>
-            <span>{utilities.length} utilities</span>
+            <span>{engineeringUtilities.length} engineering tools</span>
             <span>·</span>
             <span>WASM</span>
             <span>·</span>
