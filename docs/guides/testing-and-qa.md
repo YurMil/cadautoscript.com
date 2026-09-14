@@ -25,9 +25,10 @@ hand calculation spelled out. One set of numbers, two jobs — so the public cla
 can never drift from what the code actually does.
 
 See the validation cases on the
-[Blind Flange Calculator](/docs/utilities/blind-flange-calculator) and
-[Dished End Calculator](/docs/utilities/pressure-vessel-dished-end-calc) pages
-for what this looks like in practice.
+[Blind Flange Calculator](/docs/utilities/blind-flange-calculator),
+[Dished End Calculator](/docs/utilities/pressure-vessel-dished-end-calc) and
+[Cylindrical Shell Rolling Calculator](/docs/utilities/cylindrical-shell-rolling)
+pages for what this looks like in practice.
 
 ## Layers of verification
 
@@ -155,14 +156,13 @@ much use:
 | Blind Flange Calculator | 71 | ✅ |
 | Tube Sheet Generator | 63 | ✅ |
 | Dished End Calculator | 32 | ✅ |
-| Pipe Notch Generator | 31 | ❌ tests exist, deploy does not run them |
-| PDF Master | 22 | ❌ tests exist, deploy does not run them |
-| Cylindrical Shell Rolling | — | — |
+| Cylindrical Shell Rolling | 87 | ✅ |
+| Pipe Notch Generator | 31 | ✅ |
+| PDF Master | 25 | ✅ |
 | WebSTEP Viewer | — | — |
 | PDF BOM Extractor | — | — |
 | 3D QR Nameplate | — | — |
 
-The gaps that matter most: **Shell Rolling has a normative calculation engine
-and no tests at all**, and **53 existing tests do not block a bad deploy**
-because their publish workflows skip them. Both are cheap to close and worth
-doing before adding coverage anywhere else.
+Every tool with a normative calculation engine now has tests that block a bad
+deploy. The remaining gaps are the file-based viewers and generators, where the
+manual checklists above are the current line of defence.
