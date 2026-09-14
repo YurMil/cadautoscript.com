@@ -25,6 +25,16 @@ import homeStyles from '@site/src/pages/index.module.css';
 import UtilityErrorBoundary from './UtilityErrorBoundary';
 import {saveCalculation} from '@site/src/shared/calculation-history';
 import {
+  listMyWorkspaces,
+  PERSONAL_TARGET,
+  readSaveTarget,
+  reportDefaultsOf,
+  saveWorkspaceCalculation,
+  writeSaveTarget,
+  type Workspace,
+} from '@site/src/shared/workspaces';
+import {
+  SHARE_MESSAGE_REPORT_DEFAULTS,
   SHARE_MESSAGE_RESTORE,
   SHARE_MESSAGE_STATE_UPDATE,
   SHARE_MESSAGE_SUPPORT,
@@ -140,15 +150,58 @@ export default function UtilityShellPage({tool, ...config}: UtilityShellPageProp
 
   const userId = user?.id ?? null;
 
+  // Team workspaces (issue #122): a signed-in member can save to a workspace's
+  // shared history instead of their personal one. The selected workspace also
+  // supplies report defaults to apps that accept them.
+  const [workspaces, setWorkspaces] = React.useState<Workspace[]>([]);
+  const [saveTarget, setSaveTarget] = React.useState<string>(PERSONAL_TARGET);
+
+  React.useEffect(() => {
+    if (!shareSupported || !userId) {
+      setWorkspaces([]);
+      return undefined;
+    }
+    let isMounted = true;
+    void listMyWorkspaces()
+      .then((rows) => {
+        if (!isMounted) return;
+        setWorkspaces(rows);
+        const remembered = readSaveTarget();
+        setSaveTarget(rows.some((w) => w.id === remembered) ? remembered : PERSONAL_TARGET);
+      })
+      .catch((err) => {
+        const message = err instanceof Error ? err.message : 'Unable to load workspaces.';
+        logger.warn('[Workspaces] Unable to load workspaces for save target', message);
+      });
+    return () => {
+      isMounted = false;
+    };
+  }, [shareSupported, userId]);
+
+  const targetWorkspace = workspaces.find((w) => w.id === saveTarget) ?? null;
+
+  React.useEffect(() => {
+    const frame = iframeRef.current?.contentWindow;
+    if (!shareSupported || !frame || workspaces.length === 0) return;
+    frame.postMessage(
+      {type: SHARE_MESSAGE_REPORT_DEFAULTS, version: 1, defaults: reportDefaultsOf(targetWorkspace)},
+      window.location.origin,
+    );
+  }, [shareSupported, workspaces.length, targetWorkspace]);
+
+  const changeSaveTarget = (target: string) => {
+    setSaveTarget(target);
+    writeSaveTarget(target);
+  };
+
   const saveCurrentCalculation = React.useCallback(() => {
     if (!userId || latestToolState.current === null) return;
     setSaveState('saving');
-    void saveCalculation({
-      userId,
-      utilityId: slug,
-      state: latestToolState.current,
-      label: title,
-    })
+    const snapshot = {utilityId: slug, state: latestToolState.current, label: title};
+    const request = targetWorkspace
+      ? saveWorkspaceCalculation({...snapshot, userId, workspaceId: targetWorkspace.id})
+      : saveCalculation({...snapshot, userId});
+    void request
       .then(() => {
         setSaveState('saved');
         window.setTimeout(() => setSaveState('idle'), 2000);
@@ -159,7 +212,7 @@ export default function UtilityShellPage({tool, ...config}: UtilityShellPageProp
         const message = err instanceof Error ? err.message : 'Unable to save calculation.';
         logger.error('[CalculationHistory] Unable to save calculation', message);
       });
-  }, [slug, title, userId]);
+  }, [slug, title, userId, targetWorkspace]);
 
   React.useEffect(() => {
     document.body.classList.add('utility-shell-page');
@@ -314,6 +367,17 @@ export default function UtilityShellPage({tool, ...config}: UtilityShellPageProp
               <button className="utility-toggle" type="button" onClick={copyShareLink}>
                 {linkCopied ? t('utility.linkCopied') : t('utility.copyLink')}
               </button>
+            ) : null}
+            {shareSupported && isAuthenticated && workspaces.length > 0 ? (
+              <label className="utility-save-target">
+                <span>{t('workspaces.saveTo')}</span>
+                <select value={targetWorkspace ? targetWorkspace.id : PERSONAL_TARGET} onChange={(e) => changeSaveTarget(e.target.value)}>
+                  <option value={PERSONAL_TARGET}>{t('workspaces.personalHistory')}</option>
+                  {workspaces.map((w) => (
+                    <option key={w.id} value={w.id}>{w.name}</option>
+                  ))}
+                </select>
+              </label>
             ) : null}
             {shareSupported && isAuthenticated ? (
               <button

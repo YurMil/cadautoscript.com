@@ -32,6 +32,9 @@ jobs:
       - name: Lint
         run: pnpm lint
 
+      - name: Database behaviour tests
+        run: pnpm test:db
+
       - name: Build
         run: pnpm build
         env:

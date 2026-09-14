@@ -36,6 +36,15 @@ utility iframe; apps should verify `event.origin` the same way.
 | Message | When | Payload |
 |---|---|---|
 | `{type: 'cas:restore-state', version, state}` | In response to `cas:share-support`, if the URL carries a valid `?calc=` token | `version`: schema version of the decoded envelope; `state`: the decoded state |
+| `{type: 'cas:report-defaults', version: 1, defaults}` | After `cas:share-support` for signed-in users in a workspace, and again whenever the user changes the "Save to" target (issue #122) | `defaults`: `{companyName, preferredStandards}` (each a string or `null`) from the selected workspace, or `null` when saving to personal history |
+
+`cas:report-defaults` is optional for apps. An app that prints title blocks or
+reports should use `companyName` as the default for its company field and may
+preselect `preferredStandards` where it offers a standard choice. **User
+input always wins**: never overwrite a value the user has typed, and treat
+`defaults: null` as "no workspace defaults", not as "clear the fields". Like
+restored state, treat both values as untrusted text: render them as text,
+never as HTML.
 
 ## App-side reference implementation
 
@@ -78,6 +87,9 @@ with its schema version, in `public.user_calculation_history`. Reopening a
 saved entry builds a `?calc=` link from it and navigates to the tool, so
 restore always goes through the validation path documented here — apps need no
 extra work to support history beyond speaking this protocol.
+
+Workspace history (issue #122) stores the same object in
+`public.workspace_calculations`, so shared entries reopen the same way.
 
 ## Wiring status
 
