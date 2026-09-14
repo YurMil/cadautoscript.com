@@ -1,0 +1,172 @@
+---
+slug: blindflansch-en-1092-1-en-13445
+title: "Blindflansch richtig dimensionieren: PN-Stufe nach EN 1092-1 und Dickennachweis im Umfeld der EN 13445"
+authors: [yurii]
+tags: [pressure-vessels, standards, cad]
+description: Wie aus Betriebsdruck, Temperatur und Werkstoff eine PN-Stufe, eine Blindflanschdicke und ein Schraubennachweis werden – und welche Annahmen dabei getroffen werden.
+---
+
+Ein Blindflansch sieht einfach aus: eine runde Platte mit Lochkreis. Trotzdem
+entscheiden bei seiner Auslegung gleich mehrere Nachweise über die Dicke – und
+nicht immer der, den man erwartet. Dieser Beitrag geht den Weg vom Betriebsdruck
+bis zur empfohlenen Plattendicke Schritt für Schritt durch.
+
+{/* truncate */}
+
+:::info Werkzeug
+Der [Blindflansch-Rechner](/utilities/blind-flange-calculator/) führt alle
+Schritte dieses Beitrags aus und läuft vollständig im Browser.
+:::
+
+## 1. Die PN-Stufe nach EN 1092-1
+
+EN 1092-1 legt die Anschlussmaße von Stahlflanschen fest. Der Blindflansch ist
+dort der **Flanschtyp 05**. Für jede Kombination aus Nennweite (**DN**) und
+Druckstufe (**PN**) sind unter anderem festgelegt:
+
+- Flanschaußendurchmesser **D**
+- Lochkreisdurchmesser **K**
+- Anzahl und Größe der Schrauben
+
+Die genormten Druckstufen sind PN 2,5 – 6 – 10 – 16 – 25 – 40 – 63 – 100 – 160 –
+250 – 320 – 400. Der Rechner beginnt bei PN 10 und wählt die **nächsthöhere
+Stufe**, die den Betriebsdruck abdeckt – sofern sie für die gewählte Nennweite
+genormt ist:
+
+| Betriebsdruck | Gewählte Stufe |
+|---|---|
+| 10 bar | PN 10 |
+| 12 bar | PN 16 |
+| 40 bar | PN 40 |
+| 41 bar | PN 63 |
+
+:::caution PN ist kein zulässiger Druck
+Die PN-Stufe ist eine Kennzahl für die Anschlussmaße. Welcher Druck bei welcher
+Temperatur tatsächlich zulässig ist, hängt vom Werkstoff ab und ist in
+EN 1092-1 über Druck-Temperatur-Zuordnungen geregelt. Bei erhöhter Temperatur
+kann ein PN-16-Flansch deutlich weniger als 16 bar aufnehmen.
+:::
+
+## 2. Zulässige Spannungen
+
+Für nichtaustenitische Stähle ergibt sich die **Nennberechnungsspannung** nach
+EN 13445-3 aus dem kleineren Wert von Streckgrenze und Zugfestigkeit, jeweils
+mit Sicherheitsbeiwert:
+
+```
+f      = min( R_p0,2/T / 1,5 ;  R_m/20 / 2,4 )
+f_test = R_p0,2/T_test / 1,05
+```
+
+Der Rechner verwendet vereinfachend den **streckgrenzenbasierten** Anteil
+(`R_p0,2/T / 1,5` im Betrieb, `R_p0,2 / 1,05` bei der Prüfung). Bei Werkstoffen,
+deren Zugfestigkeit im Verhältnis zur Streckgrenze niedrig ist, sollte das
+Zugfestigkeitskriterium von Hand gegengeprüft werden.
+
+## 3. Welcher Nachweis bestimmt die Dicke?
+
+Die erforderliche Dicke ist das **Maximum** aus vier Kriterien:
+
+| Kriterium | Idee | Lastfall |
+|---|---|---|
+| Festigkeit (Betrieb) | Biegemoment aus Druckkraft × Hebelarm zum Lochkreis | Betriebsdruck, `f` |
+| Festigkeit (Prüfung) | dasselbe Moment unter Prüfdruck | Prüfdruck, `f_test` |
+| Plastizität | Biegespannung der Kreisplatte bleibt unter der Streckgrenze | Prüfdruck |
+| Steifigkeit | Durchbiegung in Plattenmitte ≤ 1 mm | Betriebsdruck |
+
+Zur ermittelten Mindestdicke wird der **Korrosionszuschlag** addiert und auf die
+nächste **handelsübliche Blechdicke** aufgerundet.
+
+Das Steifigkeitskriterium wird oft unterschätzt: Eine Platte kann fest genug sein
+und sich trotzdem so stark durchbiegen, dass die Dichtung am Innenrand entlastet
+wird und undicht wird.
+
+## Rechenbeispiel: Kreisplatte unter Innendruck
+
+Die Plattenformeln stammen aus der klassischen Plattentheorie (frei aufliegende
+Kreisplatte unter Flächenlast). Eingaben: Druck `p = 1,6 MPa` (16 bar),
+wirksamer Radius `R = 125 mm`, Dicke `t = 20 mm`, `E = 200 000 MPa`, `ν = 0,3`.
+
+**Maximale Biegespannung** in Plattenmitte:
+
+```
+σ = 3 · p · R² · (3 + ν) / (8 · t²)
+  = 3 · 1,6 · 125² · 3,3 / (8 · 20²)  =  77,34 MPa
+```
+
+**Durchbiegung** in Plattenmitte, mit der Plattensteifigkeit
+`D = E · t³ / (12 · (1 − ν²))`:
+
+```
+w = (5 + ν) · p · R⁴ / (64 · D · (1 + ν))  =  0,170 mm
+```
+
+Beide Werte sind Teil der automatisierten Tests des Rechners und auf der
+[Dokumentationsseite](/docs/utilities/blind-flange-calculator/) als
+Validierungsfall veröffentlicht.
+
+## 4. Schrauben und Dichtung
+
+Bei niedrigem Druck und großer Nennweite bestimmt oft nicht der Betriebsdruck die
+Schraubenkräfte, sondern das **Vorverformen der Dichtung** – also die Last, die
+schon vor jedem Druckaufbau aufgebracht werden muss. Nach dem klassischen
+Dichtungsmodell mit den Kennwerten `m` und `y`:
+
+```
+W_m1 = π · G · b · y
+```
+
+mit dem wirksamen Dichtungsdurchmesser `G`, der wirksamen Dichtungsbreite `b` und
+dem Dichtungskennwert `y`. Für `G = 250 mm`, `b = 12 mm` und `y = 11 MPa`
+(Graphit):
+
+```
+W_m1 = π · 250 · 12 · 11  ≈  103 673 N
+```
+
+Der Rechner vergleicht den vorhandenen Schraubenquerschnitt
+(Anzahl × Spannungsquerschnitt) mit dem größten Bedarf aus Vorverformung, Betrieb
+und Prüfung und nennt den maßgebenden Lastfall.
+
+## Prüfdruck
+
+Für die Druckprüfung nach **EN 13445-5** gilt als Mindestwert
+
+```
+P_t = max( 1,25 · P_d · f_a / f_T ;  1,43 · PS )
+```
+
+mit der Nennberechnungsspannung bei Prüftemperatur `f_a` und bei
+Berechnungstemperatur `f_T`. Tragen Sie den Prüfdruck aus Ihrer
+Behälterspezifikation im Rechner ein, wenn er vorliegt – er hat Vorrang vor dem
+automatisch ermittelten Wert.
+
+## Häufige Fehler
+
+- **PN-Stufe mit zulässigem Druck gleichgesetzt** – bei hoher Temperatur ein
+  echtes Sicherheitsrisiko.
+- **Korrosionszuschlag vergessen**, oder nur auf einer Seite berücksichtigt.
+- **Nur den Betriebsfall geprüft.** Prüfdruck und Dichtungsvorverformung
+  bestimmen häufig die Auslegung.
+- **Standarddicke abgerundet** statt aufgerundet.
+
+## Begriffe Deutsch – Englisch
+
+| Deutsch | Englisch |
+|---|---|
+| Blindflansch | blind flange |
+| Nennweite / Druckstufe | nominal size (DN) / pressure class (PN) |
+| Lochkreisdurchmesser | bolt circle diameter |
+| Nennberechnungsspannung | nominal design stress |
+| Dichtungsvorverformung | gasket seating |
+| Korrosionszuschlag | corrosion allowance |
+| Prüfdruck | test pressure |
+
+:::caution Hinweis
+Der Rechner dient der Vorauslegung und bildet EN 13445-3 nicht vollständig ab.
+Maßgebend sind die aktuellen Ausgaben von EN 1092-1 und EN 13445 sowie die
+Projektspezifikation. Die Freigabe erfolgt durch eine qualifizierte Fachkraft.
+:::
+
+**Zum Werkzeug:** [Blindflansch berechnen](/utilities/blind-flange-calculator/) ·
+[Dokumentation](/docs/utilities/blind-flange-calculator/)

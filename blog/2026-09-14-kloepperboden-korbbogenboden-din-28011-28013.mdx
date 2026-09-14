@@ -1,0 +1,139 @@
+---
+slug: kloepperboden-korbbogenboden-din-28011-28013
+title: "Torispherical or Korbbogen Head? Dished End Geometry per DIN 28011 and DIN 28013"
+authors: [yurii]
+tags: [pressure-vessels, standards, cad]
+description: Crown radius, knuckle radius, straight flange and blank size of torispherical (Klöpper) and korbbogen heads per DIN 28011 and DIN 28013 – with a worked example and the limits of a geometry-only calculation.
+---
+
+Dished ends close almost every cylindrical pressure vessel. In German-speaking
+markets two shapes are standard: the **torispherical (Klöpper) head** per
+DIN 28011 and the **korbbogen head** per DIN 28013. They look alike at first
+glance but differ clearly in height, material and load-carrying behaviour. This
+post explains the geometry, works through an example, and shows where geometry
+ends and the strength calculation begins.
+
+*A German version of this article is available — switch the language to Deutsch.*
+
+{/* truncate */}
+
+:::info Tool
+Every value in this post can be reproduced with the
+[Dished End Calculator](/utilities/pressure-vessel-dished-end-calc/), which runs
+entirely in the browser.
+:::
+
+## Anatomy of a dished end
+
+A head per DIN 28011 or DIN 28013 has three regions:
+
+1. **Crown** – the central spherical cap with the **crown radius R**.
+2. **Knuckle** – the toroidal transition with the **knuckle radius r**.
+3. **Straight flange** – the cylindrical portion of **height h₁** that is welded
+   to the shell.
+
+All dimensions refer to the **outside diameter Dₐ**. Calculating from the inside
+diameter by mistake produces a head that does not fit the shell.
+
+## The formulas
+
+| Quantity | Torispherical (DIN 28011) | Korbbogen (DIN 28013) |
+|---|---|---|
+| Crown radius R | `R = Dₐ` | `R = 0.8 · Dₐ` |
+| Knuckle radius r | `r = 0.1 · Dₐ` | `r = 0.154 · Dₐ` |
+| Inside dish depth h₂ | `h₂ = 0.1935 · Dₐ − 0.455 · s` | `h₂ = 0.255 · Dₐ − 0.635 · s` |
+| Usual straight flange h₁ | `h₁ ≥ 3.5 · s` | `h₁ ≥ 3 · s` |
+
+The **overall height** is straight flange plus inside dish depth plus wall
+thickness:
+
+```
+H = h₁ + h₂ + s
+```
+
+The korbbogen head has a smaller crown radius and a much larger knuckle. It is
+therefore **taller** and needs **more plate** – but it distributes the stresses
+in the knuckle more favourably. That is why it is preferred for higher pressures
+or wall thicknesses. The flatter torispherical head is the economical choice for
+lower pressures and where headroom is limited.
+
+## Worked example: Dₐ = 1000 mm, s = 10 mm
+
+**Torispherical head per DIN 28011**
+
+```
+R  = 1000 mm
+r  = 0.1 · 1000                 = 100 mm
+h₂ = 0.1935 · 1000 − 0.455 · 10 = 188.95 mm
+h₁ = 3.5 · 10                   = 35 mm
+H  = 35 + 188.95 + 10           = 233.95 mm
+```
+
+**Korbbogen head per DIN 28013**
+
+```
+R  = 0.8 · 1000                 = 800 mm
+r  = 0.154 · 1000               = 154 mm
+h₂ = 0.255 · 1000 − 0.635 · 10  = 248.65 mm
+h₁ = 3 · 10                     = 30 mm
+H  = 30 + 248.65 + 10           = 288.65 mm
+```
+
+At the same diameter and wall thickness the korbbogen head is about
+**55 mm taller**.
+
+## Blank size and weight
+
+The head is spun or pressed from a circular blank. For a first estimate of the
+blank diameter the calculator uses the approximations common in practice:
+
+```
+Torispherical:  D_blank ≈ 1.09 · Dₐ + 2 · h₁
+Korbbogen:      D_blank ≈ 1.14 · Dₐ + 2 · h₁
+```
+
+For the example in steel (7.85 kg/dm³):
+
+| | Torispherical | Korbbogen |
+|---|---|---|
+| Blank diameter | 1.09 · 1000 + 70 = **1160 mm** | 1.14 · 1000 + 60 = **1200 mm** |
+| Blank weight | ≈ **83.0 kg** | ≈ **88.8 kg** |
+
+This is an **estimate for quoting and material planning**, not the final cutting
+size. Forming method, trim allowance and thinning in the knuckle are set by the
+head manufacturer. The calculator therefore also reports an estimated minimum
+wall thickness after forming – an indication, not proof.
+
+## Where geometry ends
+
+DIN 28011 and DIN 28013 define the **shape**. Whether a head withstands the
+pressure is a separate question:
+
+- In Europe, dished ends under internal pressure are verified per
+  **EN 13445-3, Clause 7**.
+- In Germany, **AD 2000-Merkblatt B3** (dished ends under internal and external
+  pressure) is also widely used.
+
+Both account for the highest stresses occurring in the **knuckle** – exactly
+where the material flows most during forming. The nominal thickness from the
+geometry must therefore always be checked against the **minimum thickness after
+forming** and the **corrosion allowance**.
+
+## Common mistakes
+
+- **Inside instead of outside diameter.** All formulas use Dₐ.
+- **Forgetting the straight flange.** Without enough straight flange the weld
+  ends up in the knuckle – exactly where it does not belong.
+- **Taking the blank weight as the finished weight.** Trim is lost; the finished
+  head is lighter.
+- **Thickening a torispherical head instead of choosing a korbbogen head.** More
+  wall helps less in the knuckle than a more favourable shape.
+
+:::caution Note
+Results support preliminary design. The current editions of DIN 28011,
+DIN 28013, EN 13445 or AD 2000 and the head manufacturer's data govern. Release
+requires a qualified engineer.
+:::
+
+**Open the tool:** [Dished End Calculator](/utilities/pressure-vessel-dished-end-calc/) ·
+[Documentation](/docs/utilities/pressure-vessel-dished-end-calc/)

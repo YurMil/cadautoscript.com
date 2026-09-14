@@ -1,0 +1,152 @@
+---
+slug: manometer-auswahl-en-837
+title: "Manometer auswählen nach EN 837: Messbereich, Genauigkeitsklasse, Nenngröße und Zubehör"
+authors: [yurii]
+tags: [instrumentation, standards]
+description: Ein praxisnaher Leitfaden zur Auswahl von Rohrfedermanometern nach EN 837-1 und EN 837-2 – mit Rechenbeispiel für den Messbereich und einer Checkliste für Datenblatt und Bestellung.
+---
+
+Das Rohrfedermanometer ist das am häufigsten verbaute Druckmessgerät in
+Anlagenbau und Instandhaltung. Fehler bei der Auswahl zeigen sich selten sofort –
+sondern als zitternde Zeiger, bleibende Nullpunktverschiebungen oder ein
+geplatztes Messglied. Dieser Beitrag fasst die Auswahlregeln der Normenreihe
+EN 837 zusammen und rechnet ein Beispiel durch.
+
+{/* truncate */}
+
+:::info Werkzeug
+Mit dem [Manometer-Konfigurator](/utilities/bourdon-gauge-configurator/) stellen
+Sie Nenngröße, Messbereich, Anschluss, Füllung und Zubehör zusammen und
+exportieren ein PDF-Datenblatt.
+:::
+
+## Die Normenreihe EN 837
+
+| Teil | Inhalt |
+|---|---|
+| **EN 837-1** | Rohrfedermanometer – Maße, Messtechnik, Anforderungen und Prüfung |
+| **EN 837-2** | Auswahl- und Einbauempfehlungen für Druckmessgeräte |
+| **EN 837-3** | Plattenfeder- und Kapselfedermanometer – Maße, Messtechnik, Anforderungen und Prüfung |
+
+Für die Auswahl ist **EN 837-2** das eigentliche Arbeitsdokument; EN 837-1
+liefert die Kennwerte der Geräte, zwischen denen man wählt.
+
+## 1. Messbereich
+
+Der wichtigste Einzelschritt. Ein Manometer, das dauerhaft am Skalenende arbeitet,
+ermüdet; eines, das nur im ersten Zehntel ausschlägt, lässt sich nicht genau
+ablesen. Die gängige Empfehlung:
+
+| Belastung | Betriebsdruck höchstens |
+|---|---|
+| ruhend (gleichmäßiger Druck) | **3/4** des Skalenendwerts |
+| wechselnd (schwankender Druck) | **2/3** des Skalenendwerts |
+
+Die Skalenendwerte folgen einer genormten Reihe, zum Beispiel
+0–1 / 1,6 / 2,5 / 4 / 6 / 10 / 16 / 25 / 40 / 60 / 100 bar.
+
+### Rechenbeispiel
+
+**Ruhender Betriebsdruck 6 bar**
+
+```
+erforderlicher Skalenendwert ≥ 6 bar / 0,75 = 8 bar   →   Messbereich 0–10 bar
+```
+
+**Wechselnder Betriebsdruck 6 bar**
+
+```
+erforderlicher Skalenendwert ≥ 6 bar / (2/3) = 9 bar  →   Messbereich 0–10 bar
+```
+
+**Wechselnder Betriebsdruck 7 bar**
+
+```
+erforderlicher Skalenendwert ≥ 7 bar / (2/3) = 10,5 bar  →   Messbereich 0–16 bar
+```
+
+Ein halbes bar mehr Betriebsdruck – und das nächstgrößere Gerät ist nötig.
+
+## 2. Genauigkeitsklasse
+
+Die Klasse gibt die zulässige Messabweichung in **Prozent der Messspanne** an.
+EN 837-1 kennt die Klassen **0,1 – 0,25 – 0,6 – 1 – 1,6 – 2,5 – 4**.
+
+```
+Klasse 1,0   auf 0–10 bar  →  ± 0,1 bar
+Klasse 1,6   auf 0–16 bar  →  ± 0,256 bar
+```
+
+Weil sich die Abweichung auf die **Spanne** bezieht, verschlechtert ein zu groß
+gewählter Messbereich die Genauigkeit im Betriebspunkt – ein weiterer Grund,
+den Messbereich nicht „sicherheitshalber“ zu verdoppeln.
+
+Die feinen Klassen 0,1 bis 0,6 sind Prüf- und Referenzgeräten vorbehalten; im
+Anlagenbetrieb sind 1,0 und 1,6 üblich.
+
+## 3. Nenngröße und Anschluss
+
+Die **Nenngröße (NG)** ist der Gehäusedurchmesser in Millimetern. Genormt sind
+unter anderem NG 40, 50, 63, 80, 100, 150, 160 und 250. Faustregel: Je weiter der
+Ableseabstand und je feiner die Klasse, desto größer die Nenngröße.
+
+Der Prozessanschluss ist bei kleinen Nenngrößen typischerweise **G ¼ B**, bei
+NG 100 und größer **G ½ B**, jeweils radial unten oder rückseitig. Prüfen Sie
+die Gewindeart am Einbauort – ein NPT-Gewinde dichtet anders als ein
+zylindrisches G-Gewinde mit Dichtring.
+
+## 4. Betriebsbedingungen und Zubehör
+
+| Situation | Maßnahme |
+|---|---|
+| Vibrationen, Druckstöße, Pulsation | **Flüssigkeitsfüllung** (z. B. Glyzerin) dämpft Zeiger und Messwerk; bei starker Pulsation zusätzlich eine **Drosselschraube** |
+| Dampf, heiße Medien | **Wassersackrohr** (Siphon): Kondensat schützt die Rohrfeder vor der Medientemperatur |
+| Aggressive, viskose oder kristallisierende Medien | **Druckmittler** statt direktem Medienkontakt |
+| Austausch im Betrieb | **Manometerabsperrventil** vorsehen |
+| Gase und Dämpfe unter hohem Druck | **Sicherheitsausführung** nach EN 837-1 wählen |
+| Sauerstoff | Gerät **öl- und fettfrei**, entsprechend gekennzeichnet |
+
+Bei der Sicherheitsausführung ist die höchste Stufe **S3** mit einer
+bruchsicheren Trennwand zwischen Messglied und Zifferblatt sowie einer
+ausblasbaren Rückwand ausgeführt: Versagt die Rohrfeder, entweicht das Medium
+nach hinten statt durch die Scheibe in Richtung Bediener.
+
+## Checkliste für Datenblatt und Bestellung
+
+- [ ] Messstoff, Betriebsdruck, Belastungsart (ruhend / wechselnd)
+- [ ] Messbereich nach 3/4- bzw. 2/3-Regel
+- [ ] Genauigkeitsklasse
+- [ ] Nenngröße und Ableseabstand
+- [ ] Anschlussgewinde und -lage
+- [ ] Werkstoff von Messglied und Anschluss (medienberührt)
+- [ ] Füllung, Sicherheitsausführung
+- [ ] Zubehör: Absperrventil, Wassersackrohr, Drosselschraube, Druckmittler
+- [ ] Messstellenbezeichnung (TAG)
+
+Genau diese Angaben erfasst der
+[Manometer-Konfigurator](/utilities/bourdon-gauge-configurator/) und fasst sie
+in einem PDF-Datenblatt zusammen.
+
+## Begriffe Deutsch – Englisch
+
+| Deutsch | Englisch |
+|---|---|
+| Rohrfedermanometer | Bourdon tube pressure gauge |
+| Messbereich / Skalenendwert | scale range / full-scale value |
+| Genauigkeitsklasse | accuracy class |
+| Nenngröße (NG) | nominal size |
+| Flüssigkeitsfüllung | liquid filling |
+| Wassersackrohr | siphon |
+| Drosselschraube | throttle screw / snubber |
+| Druckmittler | diaphragm seal |
+| Sicherheitsausführung | safety pattern |
+
+:::caution Hinweis
+Dieser Beitrag fasst gängige Auswahlregeln zusammen und ersetzt nicht die
+aktuellen Ausgaben von EN 837-1 bis -3 sowie die Herstellerangaben. Für
+sicherheitsrelevante Messstellen gelten zusätzlich die Anforderungen der
+Anlagenplanung.
+:::
+
+**Zum Werkzeug:** [Manometer konfigurieren](/utilities/bourdon-gauge-configurator/) ·
+[Dokumentation](/docs/utilities/bourdon-gauge-configurator/)
