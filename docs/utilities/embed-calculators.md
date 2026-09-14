@@ -3,61 +3,94 @@ sidebar_position: 3
 title: Embedding calculators
 ---
 
-MDX pages can host interactive utilities in several ways:
+Manufacturers, suppliers and engineering blogs can put a calculator directly on
+their own pages. Each embed route renders the tool with minimal chrome — no
+navbar, no footer, just the calculator and a small "Powered by CAD AutoScript"
+bar — and resizes itself to its content.
 
-## 1. Inline iframe
+Currently available embeds:
 
-```mdx
+| Calculator | Embed URL |
+|---|---|
+| Blind Flange Calculator | `https://cadautoscript.com/embed/blind-flange-calculator/` |
+| Dished End (Vessel Head) Calculator | `https://cadautoscript.com/embed/pressure-vessel-dished-end-calc/` |
+
+## Copy-paste snippet
+
+```html
 <iframe
-  src="/utilities/pipe-cutter/"
-  title="Pipe Cutter"
-  height="640"
-  style={{width: '100%', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '18px'}}
-/>
+  src="https://cadautoscript.com/embed/blind-flange-calculator/"
+  title="Blind Flange Calculator"
+  data-cadautoscript-embed
+  style="width: 100%; height: 640px; border: 1px solid #e8ebf0; border-radius: 12px;"
+  loading="lazy"
+></iframe>
+
+<script>
+  // Each embed reports its height via postMessage, so the iframe grows and
+  // shrinks with the calculator's content. One listener serves every embed on
+  // the page: messages are matched to the iframe that sent them.
+  window.addEventListener('message', (event) => {
+    if (event.origin !== 'https://cadautoscript.com') return;
+    const data = event.data;
+    if (!data || data.source !== 'cadautoscript-embed' || data.type !== 'resize') return;
+
+    for (const frame of document.querySelectorAll('iframe[data-cadautoscript-embed]')) {
+      if (frame.contentWindow === event.source) {
+        frame.style.height = Math.max(320, Number(data.height) || 0) + 'px';
+      }
+    }
+  });
+</script>
 ```
 
-Use this when a calculator ships as a standalone bundle under `static/utility-apps/<slug>/app.html`.
+To embed the dished end calculator, use the same snippet with its URL — or add
+a second iframe; the listener handles both:
 
-## 2. Wrap as a React component
-
-If the tool exposes a React build (for example, a DXF generator exported with Vite), create a component under `src/components`:
-
-```tsx
-type Props = {height?: number};
-
-export default function PipeCutterEmbed({height = 620}: Props) {
-  return (
-    <iframe
-      src="/utilities/pipe-cutter/"
-      title="Pipe Cutter"
-      height={height}
-      style={{width: '100%', border: 'none'}}
-      loading="lazy"
-    />
-  );
-}
+```html
+<iframe
+  src="https://cadautoscript.com/embed/pressure-vessel-dished-end-calc/"
+  title="Dished End (Vessel Head) Calculator"
+  data-cadautoscript-embed
+  style="width: 100%; height: 640px; border: 1px solid #e8ebf0; border-radius: 12px;"
+  loading="lazy"
+></iframe>
 ```
 
-Then import it directly inside MDX:
+Without the script the widget still works; it just keeps the fixed height from
+the `style` attribute and scrolls inside it.
 
-```mdx
-import PipeCutterEmbed from '@site/src/components/PipeCutterEmbed';
+## How the embed works
 
-<PipeCutterEmbed height={720} />
-```
+- **Auto-height via postMessage** — the embed page follows the calculator's
+  content size for as long as it is open and posts
+  `{source: 'cadautoscript-embed', type: 'resize', height, slug}` to the parent
+  page whenever the height changes. The message carries nothing but the height.
+- **No cookies** — the embed route sets none, and the calculation runs entirely
+  in the visitor's browser; no input is sent to a server.
+- **Framing policy** — only `/embed/*` and the embedded calculator bundles may be
+  framed by other sites (`frame-ancestors *`). Every other page keeps
+  `X-Frame-Options: SAMEORIGIN`.
+- **Powered-by backlink** — every embed shows a slim footer linking to the full
+  calculator page.
+- **Not indexed** — embed pages carry `robots: noindex` and are excluded from the
+  sitemap, so search traffic goes to the full calculator pages.
 
-## 3. Render JSX utilities
+## Adding another calculator
 
-For calculators written purely in React, export them from `src/components` and import into MDX without iframes. This keeps styling consistent with the rest of the site.
+1. Create `src/pages/embed/<slug>.tsx`:
 
-```mdx
-import KFactorPlayground from '@site/src/components/KFactorPlayground';
+   ```tsx
+   import {EmbedUtilityPage} from '@site/src/components/Utilities/EmbedUtilityPage';
 
-<KFactorPlayground defaultMaterial="S235" />
-```
+   export default EmbedUtilityPage('<slug>');
+   ```
 
-## Styling tips
+   The wrapper reuses the `appPath`, `title` and `iframeAllow` values from the
+   slug's entry in `src/data/utilityShellPages.tsx`.
 
-- Keep containers fluid so the utilities work on kiosks, tablets, and laptops.
-- Prefer dark UI to match the surrounding documentation theme.
-- Store screenshots under `static/img` and reference them in MDX for quick visual context.
+2. Add the slug to the `utility-apps` framing rule **and** to the exclusion in
+   the global header rule in `vercel.json`. Without this, browsers refuse to
+   render the calculator inside a third-party page.
+
+3. Add a row to the table above.
