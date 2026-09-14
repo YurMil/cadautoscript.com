@@ -31,6 +31,13 @@ export const en = {
     allTools: 'All Tools',
     compactView: 'Compact',
     detailedView: 'Detailed',
+    engineeringEyebrow: 'Engineering tools',
+    engineeringTitle: 'Calculators, configurators and CAD tools',
+    extrasEyebrow: 'Extras',
+    extrasTitle: 'General utilities and mini games',
+    extrasLead: 'Productivity tools and browser games that are not tied to a design standard — kept one click away.',
+    browseGeneralUtilities: 'Browse general utilities',
+    playMiniGames: 'Play mini games',
   },
   utility: {
     fullScreen: 'Full screen',
@@ -372,6 +379,14 @@ export const en = {
       name: 'Whisper Transcriber',
       description: 'Transcribe audio and video to editable text with Whisper running fully in your browser.',
     },
+  },
+  generalUtilitiesPage: {
+    eyebrow: 'Extras',
+    title: 'General utilities',
+    lead: 'File, planning and data tools that support engineering work without being tied to a design standard. Everything runs locally in your browser.',
+    sectionEyebrow: 'General utilities',
+    sectionTitle: 'Productivity tools',
+    backToEngineering: 'Back to engineering tools',
   },
   miniGamesPage: {
     eyebrow: 'Mini Games',

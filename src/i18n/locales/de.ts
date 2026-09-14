@@ -33,6 +33,13 @@ export const de: TranslationDict = {
     allTools: 'Alle Tools',
     compactView: 'Kompakt',
     detailedView: 'Detailliert',
+    engineeringEyebrow: 'Ingenieurwerkzeuge',
+    engineeringTitle: 'Rechner, Konfiguratoren und CAD-Werkzeuge',
+    extrasEyebrow: 'Extras',
+    extrasTitle: 'Allgemeine Werkzeuge und Minispiele',
+    extrasLead: 'Produktivitätswerkzeuge und Browserspiele ohne Bezug zu einer Auslegungsnorm – nur einen Klick entfernt.',
+    browseGeneralUtilities: 'Allgemeine Werkzeuge ansehen',
+    playMiniGames: 'Minispiele spielen',
   },
   utility: {
     fullScreen: 'Vollbild',
@@ -374,6 +381,14 @@ export const de: TranslationDict = {
       name: 'Whisper Transcriber',
       description: 'Audio und Video mit Whisper direkt im Browser in bearbeitbaren Text transkribieren.',
     },
+  },
+  generalUtilitiesPage: {
+    eyebrow: 'Extras',
+    title: 'Allgemeine Werkzeuge',
+    lead: 'Datei-, Planungs- und Datenwerkzeuge, die die Ingenieurarbeit unterstützen, ohne an eine Auslegungsnorm gebunden zu sein. Alles läuft lokal in Ihrem Browser.',
+    sectionEyebrow: 'Allgemeine Werkzeuge',
+    sectionTitle: 'Produktivitätswerkzeuge',
+    backToEngineering: 'Zurück zu den Ingenieurwerkzeugen',
   },
   miniGamesPage: {
     eyebrow: 'Minispiele',

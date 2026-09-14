@@ -76,7 +76,7 @@ Estimate roll spacing, bending allowance, and developed length for cylindrical s
   "name": "Does it calculate cones or elbows?",
   "acceptedAnswer": {
     "@type": "Answer",
-    "text": "No. The current model assumes a constant cylinder."
+    "text": "It develops cylinders, concentric cones and eccentric cones. Elbows and other transitions are not supported."
   }
 },
 {
@@ -109,7 +109,7 @@ Calculate roll spacing, bending allowance, and developed length for cylindrical 
 - You want a printable setup card for operators without opening spreadsheets.
 
 **Avoid it when:**
-- You are rolling cones, transitions, or non-cylindrical shapes.
+- You are rolling elbows, square-to-round transitions, or other shapes that are neither cylinders nor cones.
 - You require finite element checks or machine capacity calculations beyond simple bending allowances.
 
 ## Inputs and outputs
@@ -219,6 +219,74 @@ overlapping seam.
 nearly ten times the effect of a wrong K-factor. It is the single most common
 reason a rolled shell will not close.
 
+## Validation cases
+
+The calculation engine is guarded by an automated test suite (87 unit tests)
+that runs on every change and before every release. The cases below come
+directly from those tests, with reference values computed by hand from the
+closed-form relations above — not copied from the engine's output. You can
+reproduce them in the calculator and compare.
+
+### Case 1 — cylinder from OD and from ID
+
+Inputs: diameter 2000 mm, wall `t = 15 mm`, `K = 0.44`, gap 2 mm, height 2500 mm.
+
+| Specified as | Neutral diameter | Developed length |
+|---|---|---|
+| OD | `2000 − 2·15·0.56 = 1983.2 mm` | `π·1983.2 − 2 = 6228.41 mm` |
+| ID | `2000 + 2·0.44·15 = 2013.2 mm` | `π·2013.2 − 2 = 6322.65 mm` |
+
+The difference is `2πt = 94.25 mm` **for every K-factor**: the two neutral
+diameters differ by exactly one wall on each side, `2Kt + 2t(1 − K) = 2t`. The
+test checks this for K = 0.33, 0.44, 0.5 and 1.
+
+### Case 2 — K-factor and weld gap sensitivity
+
+Same shell, specified by OD:
+
+| Change | Expected | Why |
+|---|---|---|
+| K 0.44 → 0.33 | `π·1979.9 − 2 = 6218.04 mm` | ΔL = `π·3.3 = 10.37 mm` |
+| K 0.3 → 0.5 | ΔL = `2π·15·0.2 = 18.85 mm` | L grows linearly with K at `2πt` per unit of K |
+| K = 1 | neutral diameter = OD = 2000 mm | neutral axis on the outer surface |
+| gap 2 → 4 mm | exactly 2.00 mm shorter | gap is subtracted one-for-one |
+| gap 0 | `π·1983.2 = 6230.41 mm` | closed butt |
+
+### Case 3 — concentric cone
+
+Inputs: OD 2000 → 1500 mm, height 2500 mm, `t = 15 mm`, `K = 0.44`, closed seam.
+Neutral radii `R_L = 991.6 mm`, `R_S = 741.6 mm`.
+
+```
+slant height      s  = √(250² + 2500²)          = 2512.47 mm
+outer radius      ρo = s·R_L / (R_L − R_S)       = 9965.46 mm
+inner radius      ρi = ρo − s                    = 7452.99 mm
+sector angle      θ  = 360·(R_L − R_S) / s       = 35.8213°
+```
+
+Checks: the outer arc `ρo·θ` equals the neutral circumference `2π·991.6`, the
+inner arc equals `2π·741.6`, and swapping the wide and narrow ends gives the
+same development. With a 6 mm gap the angle drops to 35.7819°: the gap is
+removed as arc length on the neutral fibre, at the mean radius `(ρo + ρi) / 2`,
+exactly as it is for a cylinder.
+
+### Case 4 — rejected input
+
+The engine refuses rather than returning a misleading number:
+
+| Input | Result |
+|---|---|
+| diameter, height or wall ≤ 0, NaN or infinite | rejected |
+| K > 1, K ≤ 0 | rejected (K = 1 is accepted) |
+| negative gap, or gap ≥ neutral circumference (6230.41 mm here) | rejected |
+| wall ≥ neutral radius (e.g. OD 100, t 40, K 0.5) | rejected |
+| cone with diameters less than 1 mm apart | rejected — use cylinder mode |
+
+The eccentric-cone development is verified separately against independently
+known values: at zero offset it must reproduce the concentric sector above, its
+edges must keep the true circle lengths, and every ruling must lay out at its
+true 3D length.
+
 ## Common pitfalls
 
 - **Rolling to the outer circumference.** The most frequent error, and always
@@ -241,7 +309,7 @@ reason a rolled shell will not close.
 ## FAQ
 - **Does it support inch as well as metric?** Yes. Enter numbers in the unit system you use; calculations are unit-agnostic.
 - **Can I export the results?** Use your browser print dialog or copy values into your own template; nothing is stored server-side.
-- **Does it calculate cones or elbows?** No. The current model assumes a constant cylinder.
+- **Does it calculate cones or elbows?** It develops cylinders, concentric cones and eccentric cones. Elbows and other transitions are not supported.
 - **How is springback handled?** Presets include typical tolerances. Adjust overbend or allowances for your material batch.
 - **Are my entries saved?** No. Close the page to clear everything; it stays in your browser memory only.
 
@@ -249,12 +317,12 @@ reason a rolled shell will not close.
 
 - **Standards basis:** Developed length and allowance values are based on standard plate-bending geometry relations, with tolerance presets styled after EN 13445 and ASME VIII fabrication guidance.
 - **Key assumptions:**
-  - The shell is a constant-diameter cylinder with uniform plate thickness.
+  - The shell is a cylinder, a concentric cone or an eccentric cone with uniform plate thickness.
   - Springback is handled only through the preset tolerances and any overbend allowance you enter.
   - Nominal input dimensions are used; plate thickness and diameter tolerances are not modeled.
   - Material behavior is assumed typical for the preset; alloy-specific springback must be refined from mill test data.
 - **Limitations:**
-  - Cones, transitions, elbows, and other non-cylindrical shapes are not supported.
+  - Elbows, square-to-round transitions, and other non-conical shapes are not supported.
   - No machine capacity, roll deflection, or finite element checks are performed.
   - Weld shrinkage, ovality correction, and post-rolling heat treatment effects are not covered.
 - ⚠️ The Cylindrical Shell Rolling Calculator provides preliminary sizing support. Results must be verified by a qualified engineer against the governing code edition and the project specification before manufacturing or purchase.
@@ -265,6 +333,7 @@ reason a rolled shell will not close.
 - [Interactive Thread Cheat Sheet](./interactive-thread.mdx)
 
 ## Changelog
+- Validation cases published; the engine is now covered by 87 unit tests that gate every release.
 - Initial documentation.
 
 ## Feedback / bug report

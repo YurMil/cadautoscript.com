@@ -47,8 +47,16 @@
     "message": "CAD і 3D",
     "description": "The label of footer link with label=CAD & 3D"
   },
-  "link.item.label.Productivity": {
-    "message": "Продуктивність",
-    "description": "The label of footer link with label=Productivity"
+  "link.item.label.Reference & QC": {
+    "message": "Довідники та контроль якості",
+    "description": "The label of footer link with label=Reference & QC"
+  },
+  "link.item.label.General utilities": {
+    "message": "Загальні утиліти",
+    "description": "The label of footer link with label=General utilities linking to /general-utilities/"
+  },
+  "link.item.label.Mini Games": {
+    "message": "Міні-ігри",
+    "description": "The label of footer link with label=Mini Games linking to /mini-games/"
   }
 }

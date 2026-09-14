@@ -3,15 +3,27 @@ export type UtilityCategory =
   | 'configurators'
   | 'pdf-tools'
   | 'cad-tools'
+  | 'reference'
   | 'productivity';
 
-export const UTILITY_CATEGORIES: {id: UtilityCategory; label: string}[] = [
-  {id: 'calculators', label: 'Calculators'},
-  {id: 'configurators', label: 'Configurators'},
-  {id: 'pdf-tools', label: 'PDF Tools'},
-  {id: 'cad-tools', label: 'CAD & 3D'},
-  {id: 'productivity', label: 'Productivity'},
+/**
+ * The catalog is split in two: engineering tools lead the landing page, general
+ * utilities live one click away on their own page. A utility's section follows
+ * from its category, so moving a tool between sections means changing its
+ * category — never maintaining a separate list.
+ */
+export type UtilitySection = 'engineering' | 'general';
+
+export const UTILITY_CATEGORIES: {id: UtilityCategory; label: string; section: UtilitySection}[] = [
+  {id: 'calculators', label: 'Calculators', section: 'engineering'},
+  {id: 'configurators', label: 'Configurators', section: 'engineering'},
+  {id: 'pdf-tools', label: 'PDF Tools', section: 'engineering'},
+  {id: 'cad-tools', label: 'CAD & 3D', section: 'engineering'},
+  {id: 'reference', label: 'Reference & QC', section: 'engineering'},
+  {id: 'productivity', label: 'Productivity', section: 'general'},
 ];
+
+export const GENERAL_UTILITIES_PATH = '/general-utilities/';
 
 export type UtilityDescriptor = {
   id: string;
@@ -70,7 +82,7 @@ export const utilities: UtilityDescriptor[] = [
   {
     id: 'thread-atlas',
     relatedIds: ['gear-pair-calculator', 'blind-flange-calculator'],
-    category: 'productivity',
+    category: 'reference',
     name: 'Interactive Thread Atlas',
     description:
       'Filter ISO / UNC / UNF series, look up drill diameters, and copy callouts.',
@@ -374,7 +386,7 @@ export const utilities: UtilityDescriptor[] = [
   {
     id: 'wikalog-analyzer',
     relatedIds: ['doc-parser', 'pdf-bom-extractor'],
-    category: 'productivity',
+    category: 'reference',
     name: 'WIKA Log Analyzer',
     description:
       'Parse WIKA CPG1500 calibrator logs, review measurement data, and print QC reports locally.',
@@ -398,3 +410,16 @@ export const utilities: UtilityDescriptor[] = [
     thumbnail: '/img/utilities/whisper-transcriber.svg',
   },
 ];
+
+const sectionByCategory = new Map(UTILITY_CATEGORIES.map((cat) => [cat.id, cat.section]));
+
+export function getUtilitySection(utility: UtilityDescriptor): UtilitySection {
+  return sectionByCategory.get(utility.category) ?? 'general';
+}
+
+export function getSectionCategories(section: UtilitySection) {
+  return UTILITY_CATEGORIES.filter((cat) => cat.section === section);
+}
+
+export const engineeringUtilities = utilities.filter((u) => getUtilitySection(u) === 'engineering');
+export const generalUtilities = utilities.filter((u) => getUtilitySection(u) === 'general');
