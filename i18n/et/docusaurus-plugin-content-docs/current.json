@@ -30,5 +30,9 @@
   "sidebar.tutorialSidebar.category.Productivity": {
     "message": "Produktiivsus",
     "description": "The label for category 'Productivity' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Reference & QC": {
+    "message": "Viited ja kvaliteedikontroll",
+    "description": "The label for category 'Reference & QC' in sidebar 'tutorialSidebar'"
   }
 }

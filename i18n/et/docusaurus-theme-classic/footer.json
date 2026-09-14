@@ -47,8 +47,16 @@
     "message": "CAD ja 3D",
     "description": "The label of footer link with label=CAD & 3D"
   },
-  "link.item.label.Productivity": {
-    "message": "Produktiivsus",
-    "description": "The label of footer link with label=Productivity"
+  "link.item.label.Reference & QC": {
+    "message": "Viited ja kvaliteedikontroll",
+    "description": "The label of footer link with label=Reference & QC"
+  },
+  "link.item.label.General utilities": {
+    "message": "Üldised tööriistad",
+    "description": "The label of footer link with label=General utilities linking to /general-utilities/"
+  },
+  "link.item.label.Mini Games": {
+    "message": "Minimängud",
+    "description": "The label of footer link with label=Mini Games linking to /mini-games/"
   }
 }

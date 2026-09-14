@@ -33,6 +33,13 @@ export const ru: TranslationDict = {
     allTools: 'Все инструменты',
     compactView: 'Компакт',
     detailedView: 'Подробно',
+    engineeringEyebrow: 'Инженерные инструменты',
+    engineeringTitle: 'Калькуляторы, конфигураторы и CAD-инструменты',
+    extrasEyebrow: 'Дополнительно',
+    extrasTitle: 'Общие утилиты и мини-игры',
+    extrasLead: 'Инструменты продуктивности и браузерные игры, не привязанные к нормам проектирования, — в одном клике.',
+    browseGeneralUtilities: 'Открыть общие утилиты',
+    playMiniGames: 'Играть в мини-игры',
   },
   utility: {
     fullScreen: 'На весь экран',
@@ -319,6 +326,14 @@ export const ru: TranslationDict = {
       name: 'Whisper Transcriber',
       description: 'Расшифровка аудио и видео в редактируемый текст: Whisper работает прямо в браузере.',
     },
+  },
+  generalUtilitiesPage: {
+    eyebrow: 'Дополнительно',
+    title: 'Общие утилиты',
+    lead: 'Инструменты для файлов, планирования и данных, которые помогают в инженерной работе, но не привязаны к нормам проектирования. Всё работает локально в браузере.',
+    sectionEyebrow: 'Общие утилиты',
+    sectionTitle: 'Инструменты продуктивности',
+    backToEngineering: 'Назад к инженерным инструментам',
   },
   miniGamesPage: {
     eyebrow: 'Мини-игры',

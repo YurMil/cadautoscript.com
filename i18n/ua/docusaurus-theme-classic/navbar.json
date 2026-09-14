@@ -22,5 +22,13 @@
   "item.label.Utilities": {
     "message": "Утиліти",
     "description": "Navbar item with label Utilities"
+  },
+  "item.label.Extras": {
+    "message": "Додатково",
+    "description": "Navbar item with label Extras"
+  },
+  "item.label.General utilities": {
+    "message": "Загальні утиліти",
+    "description": "Navbar item with label General utilities"
   }
 }

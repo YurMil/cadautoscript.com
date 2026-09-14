@@ -70,10 +70,18 @@ const sidebars: SidebarsConfig = {
         },
         {
           type: 'category',
-          label: 'Productivity',
+          label: 'Reference & QC',
           collapsed: true,
           items: [
             'utilities/interactive-thread',
+            'utilities/wikalog-analyzer',
+          ],
+        },
+        {
+          type: 'category',
+          label: 'Productivity',
+          collapsed: true,
+          items: [
             'utilities/qr-master',
             'utilities/file-renamer',
             'utilities/folder-structure-builder',
@@ -81,7 +89,6 @@ const sidebars: SidebarsConfig = {
             'utilities/business-calendar-generator',
             'utilities/react-table-editor',
             'utilities/focus-planner',
-            'utilities/wikalog-analyzer',
             'utilities/whisper-transcriber',
           ],
         },

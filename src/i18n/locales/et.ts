@@ -33,6 +33,13 @@ export const et: TranslationDict = {
     allTools: 'Kõik tööriistad',
     compactView: 'Kompaktne',
     detailedView: 'Üksikasjalik',
+    engineeringEyebrow: 'Inseneritööriistad',
+    engineeringTitle: 'Kalkulaatorid, konfiguraatorid ja CAD-tööriistad',
+    extrasEyebrow: 'Lisad',
+    extrasTitle: 'Üldised tööriistad ja minimängud',
+    extrasLead: 'Tootlikkuse tööriistad ja brauserimängud, mis ei ole seotud projekteerimisstandardiga – vaid ühe kliki kaugusel.',
+    browseGeneralUtilities: 'Sirvi üldisi tööriistu',
+    playMiniGames: 'Mängi minimänge',
   },
   utility: {
     fullScreen: 'Täisekraan',
@@ -320,6 +327,14 @@ export const et: TranslationDict = {
       name: 'Whisper Transcriber',
       description: 'Transkribeeri heli ja video redigeeritavaks tekstiks — Whisper töötab otse brauseris.',
     },
+  },
+  generalUtilitiesPage: {
+    eyebrow: 'Lisad',
+    title: 'Üldised tööriistad',
+    lead: 'Faili-, planeerimis- ja andmetööriistad, mis toetavad inseneritööd ilma projekteerimisstandardiga seotud olemata. Kõik töötab kohapeal teie brauseris.',
+    sectionEyebrow: 'Üldised tööriistad',
+    sectionTitle: 'Tootlikkuse tööriistad',
+    backToEngineering: 'Tagasi inseneritööriistade juurde',
   },
   miniGamesPage: {
     eyebrow: 'Minimängud',

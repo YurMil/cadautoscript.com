@@ -163,7 +163,16 @@ const config: Config = {
           label: 'Docs',
         },
         {to: '/blog/', label: 'Blog', position: 'left'},
-        {to: '/mini-games/', label: 'Mini Games', position: 'left'},
+        {
+          // Secondary sections, kept out of the engineering catalog (issue #114).
+          type: 'dropdown',
+          label: 'Extras',
+          position: 'left',
+          items: [
+            {to: '/general-utilities/', label: 'General utilities'},
+            {to: '/mini-games/', label: 'Mini Games'},
+          ],
+        },
         {type: 'search', position: 'right'},
         {type: 'custom-support-button', position: 'right'},
         {type: 'custom-language-switcher', position: 'right'},
@@ -188,12 +197,14 @@ const config: Config = {
             {label: 'Configurators', to: '/?category=configurators'},
             {label: 'PDF Tools', to: '/?category=pdf-tools'},
             {label: 'CAD & 3D', to: '/?category=cad-tools'},
-            {label: 'Productivity', to: '/?category=productivity'},
+            {label: 'Reference & QC', to: '/?category=reference'},
           ],
         },
         {
           title: 'More',
           items: [
+            {label: 'General utilities', to: '/general-utilities/'},
+            {label: 'Mini Games', to: '/mini-games/'},
             {label: 'Blog', to: '/blog/'},
             {label: 'GitHub', href: 'https://github.com/YurMil/cadautoscript.com'},
           ],
