@@ -3,11 +3,10 @@ sidebar_position: 3
 title: Embedding calculators
 ---
 
-Some calculators ship as standalone, same-origin bundles under
-`static/utility-apps/<slug>/app.html`. For external sites (manufacturer pages,
-supplier portals, engineering blogs) we provide **embed routes** with minimal
-chrome: no navbar, no footer, just the tool plus a small "Powered by CAD
-AutoScript" bar.
+Manufacturers, suppliers and engineering blogs can put a calculator directly on
+their own pages. Each embed route renders the tool with minimal chrome — no
+navbar, no footer, just the calculator and a small "Powered by CAD AutoScript"
+bar — and resizes itself to its content.
 
 Currently available embeds:
 
@@ -20,71 +19,78 @@ Currently available embeds:
 
 ```html
 <iframe
-  id="cad-blind-flange"
   src="https://cadautoscript.com/embed/blind-flange-calculator/"
   title="Blind Flange Calculator"
+  data-cadautoscript-embed
   style="width: 100%; height: 640px; border: 1px solid #e8ebf0; border-radius: 12px;"
   loading="lazy"
 ></iframe>
 
 <script>
-  // The embed reports its height via postMessage so the iframe can grow
-  // and shrink with the calculator's content — no manual height tuning.
+  // Each embed reports its height via postMessage, so the iframe grows and
+  // shrinks with the calculator's content. One listener serves every embed on
+  // the page: messages are matched to the iframe that sent them.
   window.addEventListener('message', (event) => {
+    if (event.origin !== 'https://cadautoscript.com') return;
     const data = event.data;
-    if (
-      data &&
-      data.source === 'cadautoscript-embed' &&
-      data.type === 'resize' &&
-      document.getElementById('cad-blind-flange')
-    ) {
-      document.getElementById('cad-blind-flange').style.height = data.height + 'px';
+    if (!data || data.source !== 'cadautoscript-embed' || data.type !== 'resize') return;
+
+    for (const frame of document.querySelectorAll('iframe[data-cadautoscript-embed]')) {
+      if (frame.contentWindow === event.source) {
+        frame.style.height = Math.max(320, Number(data.height) || 0) + 'px';
+      }
     }
   });
 </script>
 ```
 
-Swap the `src` and the element id to embed the dished end calculator instead:
+To embed the dished end calculator, use the same snippet with its URL — or add
+a second iframe; the listener handles both:
 
 ```html
 <iframe
-  id="cad-dished-end"
   src="https://cadautoscript.com/embed/pressure-vessel-dished-end-calc/"
   title="Dished End (Vessel Head) Calculator"
+  data-cadautoscript-embed
   style="width: 100%; height: 640px; border: 1px solid #e8ebf0; border-radius: 12px;"
   loading="lazy"
 ></iframe>
 ```
 
+Without the script the widget still works; it just keeps the fixed height from
+the `style` attribute and scrolls inside it.
+
 ## How the embed works
 
-- **postMessage-based resize handling** — the embed page measures the tool's
-  real content height and posts
+- **Auto-height via postMessage** — the embed page follows the calculator's
+  content size for as long as it is open and posts
   `{source: 'cadautoscript-embed', type: 'resize', height, slug}` to the parent
-  page. The parent snippet above just listens and updates the iframe height.
-- **No third-party cookies** — the embed route sets none; the calculator itself
-  runs entirely in the browser.
-- **Powered-by backlink** — every embed renders a slim footer linking back to
-  the full calculator page, which keeps the widget compliant with the
-  integration guidelines and brings qualified visitors back to the site.
-- **Noindex** — embed pages carry `meta name="robots" content="noindex"` so the
-  main calculator pages keep their search visibility.
+  page whenever the height changes. The message carries nothing but the height.
+- **No cookies** — the embed route sets none, and the calculation runs entirely
+  in the visitor's browser; no input is sent to a server.
+- **Framing policy** — only `/embed/*` and the embedded calculator bundles may be
+  framed by other sites (`frame-ancestors *`). Every other page keeps
+  `X-Frame-Options: SAMEORIGIN`.
+- **Powered-by backlink** — every embed shows a slim footer linking to the full
+  calculator page.
+- **Not indexed** — embed pages carry `robots: noindex` and are excluded from the
+  sitemap, so search traffic goes to the full calculator pages.
 
-## Extending to more calculators
+## Adding another calculator
 
-Embed routes live in `src/pages/embed/<slug>.tsx` and are three lines each:
+1. Create `src/pages/embed/<slug>.tsx`:
 
-```tsx
-import {EmbedUtilityPage} from '@site/src/components/Utilities/EmbedUtilityPage';
+   ```tsx
+   import {EmbedUtilityPage} from '@site/src/components/Utilities/EmbedUtilityPage';
 
-export default EmbedUtilityPage('<slug>');
-```
+   export default EmbedUtilityPage('<slug>');
+   ```
 
-Add the slug to `UtilityPageSlug` configs as usual — the embed wrapper reuses
-the same `appPath`, `title`, and `iframeAllow` values as the full shell page.
+   The wrapper reuses the `appPath`, `title` and `iframeAllow` values from the
+   slug's entry in `src/data/utilityShellPages.tsx`.
 
-## Styling tips
+2. Add the slug to the `utility-apps` framing rule **and** to the exclusion in
+   the global header rule in `vercel.json`. Without this, browsers refuse to
+   render the calculator inside a third-party page.
 
-- Keep containers fluid so the utilities work on kiosks, tablets, and laptops.
-- Prefer dark UI to match the surrounding documentation theme.
-- Store screenshots under `static/img` and reference them in MDX for quick visual context.
+3. Add a row to the table above.
