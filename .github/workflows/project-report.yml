@@ -35,7 +35,7 @@ jobs:
         run: python scripts/report/generate_project_report.py
 
       - name: Upload report artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: project-report-${{ github.run_number }}
           path: project-report.xlsx
