@@ -204,6 +204,13 @@ not apply — recheck 1d before assuming otherwise.
 
 ## Task 2 — close the `public.profiles` gap in the migration history
 
+**Done 2026-09-16.** The definition was read from production and bootstrapped,
+guarded, in `20260613000001`; every migration now applies to a bare scaffold.
+Reading it also showed that any signed-in user could set their own `role` to
+`admin`, and that anon could read every e-mail address —
+`20260916000000_harden_profiles.sql` closes both and must be applied to
+production. The notes below are kept for the record.
+
 ### Background
 
 The `Supabase Preview` check builds a database from `supabase/migrations/`
