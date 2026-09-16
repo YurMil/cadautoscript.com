@@ -113,8 +113,17 @@ const config: Config = {
           filename: 'sitemap.xml',
           // Search result pages are noindex-style utility pages, keep them
           // out of the sitemap (locale variants included).
-          // Embed routes are noindex widgets for third-party sites (issue #121).
-          ignorePatterns: ['/admin/**', '/search/**', '/*/search/**', '/embed/**', '/*/embed/**'],
+          // Embed routes are noindex widgets for third-party sites (issue #121);
+          // workspace invite pages carry one-time codes (issue #122).
+          ignorePatterns: [
+            '/admin/**',
+            '/search/**',
+            '/*/search/**',
+            '/embed/**',
+            '/*/embed/**',
+            '/workspaces/**',
+            '/*/workspaces/**',
+          ],
         },
         theme: {
           customCss: ['./src/css/custom.css', './src/css/light-theme.css'],

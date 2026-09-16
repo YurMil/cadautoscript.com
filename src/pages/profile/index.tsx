@@ -8,6 +8,7 @@ import {useAuthModal} from '@site/src/contexts/AuthModalContext';
 import {listUtilityUsage, type UtilityUsageStat} from '@site/src/shared/utility-usage';
 import UsageRanking from '@site/src/components/UtilityUsage/UsageRanking';
 import CalculationHistory from '@site/src/components/CalculationHistory';
+import Workspaces from '@site/src/components/Workspaces';
 import {useI18n} from '@site/src/contexts/I18nContext';
 import styles from './index.module.css';
 import {logger} from '../../lib/logger';
@@ -611,6 +612,18 @@ export default function ProfilePage(): React.JSX.Element {
               </div>
             </header>
             <CalculationHistory />
+          </section>
+        ) : null}
+
+        {user ? (
+          <section className={styles.panel}>
+            <header className={styles.usageHeader}>
+              <div>
+                <p className={styles.eyebrow}>{t('workspaces.eyebrow')}</p>
+                <h2 className={styles.usageTitle}>{t('workspaces.title')}</h2>
+              </div>
+            </header>
+            <Workspaces />
           </section>
         ) : null}
       </main>

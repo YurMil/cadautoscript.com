@@ -229,6 +229,31 @@ body.utility-shell-page .navbar__link:hover {
   background: #111935;
 }
 
+/* "Save to" target for workspace members (issue #122). */
+.utility-save-target {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: inherit;
+}
+
+.utility-save-target select {
+  border-radius: 999px;
+  border: 1px solid rgba(15, 23, 42, 0.8);
+  background: #0b1224;
+  color: #f5f7ff;
+  padding: 7px 14px;
+  font: inherit;
+  cursor: pointer;
+}
+
+:root[data-theme='light'] .utility-shell .utility-save-target select {
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.15);
+  color: #0f172a;
+}
+
 .utility-info {
   width: min(1440px, calc(100vw - 64px));
   max-width: 1440px;
