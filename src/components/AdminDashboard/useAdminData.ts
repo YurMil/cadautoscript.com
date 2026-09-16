@@ -146,7 +146,7 @@ export function useAdminData(activeTab: TabKey, history: Redirector) {
     // Fallback: fetch profiles directly to catch records that may not join with auth.users
     const {data: rawProfiles, error: profilesFallbackError} = await supabase
       .from('profiles')
-      .select('id, username, full_name, avatar_url, role, created_at, last_seen_at, email')
+      .select('id, username, full_name, avatar_url, role, created_at, last_seen_at')
       .order('created_at', {ascending: false});
 
     if (profilesFallbackError) {
