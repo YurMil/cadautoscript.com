@@ -67,3 +67,18 @@ solidworks:
   label: SolidWorks
   permalink: /solidworks
   description: Macros de SolidWorks, uso de la API y automatización
+
+pressure-vessels:
+  label: Recipientes a presión
+  permalink: /pressure-vessels
+  description: Diseño y fabricación de recipientes a presión y sus componentes
+
+standards:
+  label: Normas
+  permalink: /standards
+  description: Trabajo con normas DIN, EN e ISO
+
+instrumentation:
+  label: Instrumentación
+  permalink: /instrumentation
+  description: Selección y uso de instrumentos de presión, temperatura y nivel

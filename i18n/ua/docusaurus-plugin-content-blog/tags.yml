@@ -67,3 +67,18 @@ solidworks:
   label: SolidWorks
   permalink: /solidworks
   description: Макроси SolidWorks, робота з API та автоматизація
+
+pressure-vessels:
+  label: Посудини під тиском
+  permalink: /pressure-vessels
+  description: Проєктування та виготовлення посудин під тиском і їхніх елементів
+
+standards:
+  label: Стандарти
+  permalink: /standards
+  description: Робота зі стандартами DIN, EN та ISO
+
+instrumentation:
+  label: КВП
+  permalink: /instrumentation
+  description: Вибір і застосування приладів тиску, температури та рівня

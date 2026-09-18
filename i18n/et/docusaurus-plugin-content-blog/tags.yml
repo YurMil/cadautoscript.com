@@ -67,3 +67,18 @@ solidworks:
   label: SolidWorks
   permalink: /solidworks
   description: SolidWorksi makrod, API kasutamine ja automatiseerimine
+
+pressure-vessels:
+  label: Survenõud
+  permalink: /pressure-vessels
+  description: Survenõude ja nende osade projekteerimine ning valmistamine
+
+standards:
+  label: Standardid
+  permalink: /standards
+  description: Töö DIN-, EN- ja ISO-standarditega
+
+instrumentation:
+  label: Mõõteriistad
+  permalink: /instrumentation
+  description: Rõhu-, temperatuuri- ja nivooandurite valik ja kasutamine
