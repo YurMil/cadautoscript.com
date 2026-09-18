@@ -9,6 +9,10 @@ concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
+# The job only reads the repository; keep the token at the minimum.
+permissions:
+  contents: read
+
 jobs:
   checks:
     runs-on: ubuntu-latest
