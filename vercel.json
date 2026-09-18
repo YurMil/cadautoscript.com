@@ -135,6 +135,17 @@
       ]
     }
   ],
+  "git": {
+    "deploymentEnabled": {
+      "dependabot/**": false
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/:locale(ru|ua|de|es|et)/:asset((?:fonts|icons|img|mini-games|styles\\.css|textures|utility-apps|vendor)(?:/.*)?)",
+      "destination": "/:asset"
+    }
+  ],
   "redirects": [
     {
       "source": "/:path*",
