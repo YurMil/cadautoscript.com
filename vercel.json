@@ -142,6 +142,30 @@
   },
   "rewrites": [
     {
+      "source": "/:locale(ru|ua|de|es|et)?/utility-apps/webstep-viewer/assets/opencascade.full-BROZOezB.wasm",
+      "destination": "/utility-apps/metal-bending/assets/opencascade.full-BROZOezB.wasm"
+    },
+    {
+      "source": "/:locale(ru|ua|de|es|et)?/utility-apps/gear-pair-calculator/assets/replicad_single-BXInhmaQ.wasm",
+      "destination": "/utility-apps/cylindrical-shell-rolling/assets/replicad_single-BXInhmaQ.wasm"
+    },
+    {
+      "source": "/:locale(ru|ua|de|es|et)?/utility-apps/pressure-vessel-dished-end-calc/assets/replicad_single-BXInhmaQ.wasm",
+      "destination": "/utility-apps/cylindrical-shell-rolling/assets/replicad_single-BXInhmaQ.wasm"
+    },
+    {
+      "source": "/:locale(ru|ua|de|es|et)?/utility-apps/tube-sheet-generator/assets/replicad_single-BXInhmaQ.wasm",
+      "destination": "/utility-apps/cylindrical-shell-rolling/assets/replicad_single-BXInhmaQ.wasm"
+    },
+    {
+      "source": "/:locale(ru|ua|de|es|et)?/utility-apps/pipe-cutter/assets/replicad_single-ko7rBbsE.wasm",
+      "destination": "/utility-apps/blind-flange-calculator/assets/replicad_single-ko7rBbsE.wasm"
+    },
+    {
+      "source": "/:locale(ru|ua|de|es|et)?/utility-apps/qr-nameplate/assets/replicad_single-ko7rBbsE.wasm",
+      "destination": "/utility-apps/blind-flange-calculator/assets/replicad_single-ko7rBbsE.wasm"
+    },
+    {
       "source": "/:locale(ru|ua|de|es|et)/:asset((?:fonts|icons|img|mini-games|styles\\.css|textures|utility-apps|vendor)(?:/.*)?)",
       "destination": "/:asset"
     }
