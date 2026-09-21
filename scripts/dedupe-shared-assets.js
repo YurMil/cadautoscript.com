@@ -5,14 +5,18 @@
 // copy that stays. Rewrites only apply when no file matches, so nothing else
 // under these prefixes changes.
 //
-// Runs after dedupe-locale-static.js, i.e. on a build/ whose locale trees no
-// longer hold static files. As with that script, the deleted URLs resolve
-// through vercel.json and therefore 404 under `docusaurus serve`.
+// The rules are derived from static/, which Docusaurus copies verbatim and
+// which this script never touches, so validating the config stays a pure
+// function of the committed tree however often the script runs. Only the
+// deletions look at build/, and they run after dedupe-locale-static.js. As
+// with that script, the deleted URLs resolve through vercel.json and therefore
+// 404 under `docusaurus serve`.
 const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
+const STATIC_DIR = path.join(ROOT, 'static');
 const BUILD_DIR = path.join(ROOT, 'build');
 // The pre-built app bundles; generated pages live elsewhere and must never be
 // collapsed, since identical HTML at two URLs is two real pages.
@@ -31,13 +35,9 @@ function walk(dir, rel = '') {
   return out;
 }
 
-// The URL a build/ file is served at, with forward slashes on every platform.
+// The URL a static/ file is served at, with forward slashes on every platform.
 function urlFor(relPath) {
   return `/${relPath.split(path.sep).join('/')}`;
-}
-
-function buildPath(url) {
-  return path.join(BUILD_DIR, ...url.replace(/^\//, '').split('/'));
 }
 
 function key(rule) {
@@ -47,13 +47,12 @@ function key(rule) {
 function duplicateGroups() {
   const byHash = new Map();
   for (const scanDir of SCAN_DIRS) {
-    const base = path.join(BUILD_DIR, scanDir);
+    const base = path.join(STATIC_DIR, scanDir);
     if (!fs.existsSync(base)) continue;
     for (const file of walk(base)) {
       if (file.endsWith('.html')) continue;
       const abs = path.join(base, file);
-      const {size} = fs.statSync(abs);
-      if (size < MIN_BYTES) continue;
+      if (fs.statSync(abs).size < MIN_BYTES) continue;
       const hash = crypto.createHash('sha256').update(fs.readFileSync(abs)).digest('hex');
       const group = byHash.get(hash) || [];
       group.push(path.join(scanDir, file));
@@ -80,27 +79,29 @@ for (const [canonical, ...duplicates] of groups) {
   for (const duplicate of duplicates) expected.push(expectedRule(duplicate, canonical));
 }
 
+// Report every problem at once: a renamed asset makes one rule missing and
+// another stale, and this build takes minutes to reach here.
+const problems = [];
+
 const missing = expected.filter((rule) => !ruleIndex.has(key(rule)));
 if (missing.length) {
-  throw new Error(
+  problems.push(
     `vercel.json is missing a rewrite for ${missing.length} duplicated asset(s). Add, before the locale ` +
       `static rewrite:\n${JSON.stringify(missing, null, 2)}`,
   );
 }
 
-// A rule left behind after an app is rebuilt would silently stop matching, so
-// treat leftovers as an error rather than letting the config drift. A rule this
-// script already applied is not one of them: its copy is gone precisely because
-// the rule exists, which is also what makes a second run a no-op.
+// A rule left behind after an app is rebuilt points at nothing and would
+// silently stop matching, whether its copy stopped being identical or the
+// rebuild renamed it away. Treat leftovers as an error rather than letting the
+// config drift.
 const expectedKeys = new Set(expected.map(key));
-const stale = rewrites.filter((rule) => {
-  if (expectedKeys.has(key(rule))) return false;
-  if (!SCAN_DIRS.some((dir) => rule.source.startsWith(`${LOCALE_PREFIX}/${dir}/`))) return false;
-  const duplicate = rule.source.slice(LOCALE_PREFIX.length);
-  return fs.existsSync(buildPath(duplicate)) || !fs.existsSync(buildPath(rule.destination));
-});
+const stale = rewrites.filter(
+  (rule) =>
+    SCAN_DIRS.some((dir) => rule.source.startsWith(`${LOCALE_PREFIX}/${dir}/`)) && !expectedKeys.has(key(rule)),
+);
 if (stale.length) {
-  throw new Error(
+  problems.push(
     `vercel.json has ${stale.length} shared-asset rewrite(s) that no longer point at a duplicate. ` +
       `Remove them:\n${JSON.stringify(stale, null, 2)}`,
   );
@@ -110,20 +111,28 @@ if (stale.length) {
 // reached for a localized URL.
 const misordered = expected.filter((rule) => localeRuleIndex !== -1 && ruleIndex.get(key(rule)) > localeRuleIndex);
 if (misordered.length) {
-  throw new Error(
+  problems.push(
     `vercel.json lists ${misordered.length} shared-asset rewrite(s) after the locale static rewrite, which ` +
       `matches first. Move them above it:\n${JSON.stringify(misordered, null, 2)}`,
   );
 }
 
+if (problems.length) throw new Error(problems.join('\n\n'));
+
 let removed = 0;
 let bytes = 0;
 for (const [, ...duplicates] of groups) {
   for (const duplicate of duplicates) {
-    const abs = path.join(BUILD_DIR, duplicate);
-    bytes += fs.statSync(abs).size;
-    fs.unlinkSync(abs);
+    const copy = path.join(BUILD_DIR, duplicate);
+    // Absent on a second run over the same build; a different size means the
+    // build carries something other than the static file, so leave it alone and
+    // let the filesystem keep winning over the rewrite.
+    if (!fs.existsSync(copy)) continue;
+    const {size} = fs.statSync(copy);
+    if (size !== fs.statSync(path.join(STATIC_DIR, duplicate)).size) continue;
+    fs.unlinkSync(copy);
     removed += 1;
+    bytes += size;
   }
 }
 
