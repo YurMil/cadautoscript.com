@@ -3,6 +3,12 @@ import type {VercelRequest, VercelResponse} from '@vercel/node';
 const RATE_LIMIT_WINDOW_SECONDS = 60;
 const RATE_LIMIT_MAX_REQUESTS = 3;
 
+// Upper bound for every outbound call. Without it a hung Upstash, Turnstile or
+// Stripe request keeps the function alive until the platform kills it, and the
+// visitor sees a spinner followed by a generic 504 instead of a clear error.
+const UPSTREAM_TIMEOUT_MS = 8000;
+const MEMORY_RATE_LIMIT_MAX_KEYS = 10_000;
+
 // Lightweight bot filter. This value is sent by the support page and is visible
 // in the browser, so it is NOT a secret — it only weeds out unsophisticated
 // bots before the real Turnstile + rate-limit checks. Keep it in sync with the
@@ -20,11 +26,32 @@ type CheckoutRequestBody = {
 // (and keeps some friction against bursts) instead of blocking every visitor.
 const memoryRateLimitStore = new Map<string, {count: number; expiresAt: number}>();
 
+function pruneInMemoryRateLimit(now: number) {
+  for (const [key, entry] of memoryRateLimitStore) {
+    if (entry.expiresAt <= now) {
+      memoryRateLimitStore.delete(key);
+    }
+  }
+
+  // Hard cap so a flood of unique IPs cannot grow a warm instance's memory
+  // without bound. Map iteration is insertion order, so drop the oldest keys.
+  while (memoryRateLimitStore.size >= MEMORY_RATE_LIMIT_MAX_KEYS) {
+    const oldestKey = memoryRateLimitStore.keys().next().value;
+    if (oldestKey === undefined) {
+      break;
+    }
+    memoryRateLimitStore.delete(oldestKey);
+  }
+}
+
 function incrementInMemoryRateLimit(key: string): number {
   const now = Date.now();
   const existing = memoryRateLimitStore.get(key);
 
   if (!existing || existing.expiresAt <= now) {
+    if (!existing) {
+      pruneInMemoryRateLimit(now);
+    }
     memoryRateLimitStore.set(key, {
       count: 1,
       expiresAt: now + RATE_LIMIT_WINDOW_SECONDS * 1000,
@@ -34,6 +61,10 @@ function incrementInMemoryRateLimit(key: string): number {
 
   existing.count += 1;
   return existing.count;
+}
+
+function fetchWithTimeout(input: string, init: RequestInit): Promise<Response> {
+  return fetch(input, {...init, signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS)});
 }
 
 function getHeader(req: VercelRequest, name: string): string | undefined {
@@ -65,7 +96,7 @@ async function incrementUpstashRateLimit(key: string): Promise<number> {
 
   const request = async (command: string, ...args: string[]) => {
     const path = [command, ...args].map(encodeURIComponent).join('/');
-    const response = await fetch(`${url.replace(/\/$/, '')}/${path}`, {
+    const response = await fetchWithTimeout(`${url.replace(/\/$/, '')}/${path}`, {
       method: 'POST',
       headers: {
         authorization: `Bearer ${token}`,
@@ -150,7 +181,7 @@ async function verifyTurnstileToken(token: string | undefined, ip: string): Prom
     return false;
   }
 
-  const response = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+  const response = await fetchWithTimeout('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
     method: 'POST',
     headers: {
       'content-type': 'application/x-www-form-urlencoded',
@@ -166,7 +197,13 @@ async function verifyTurnstileToken(token: string | undefined, ip: string): Prom
     return false;
   }
 
-  const result = await response.json() as {success?: boolean; hostname?: string};
+  let result: {success?: boolean; hostname?: string};
+  try {
+    result = await response.json() as {success?: boolean; hostname?: string};
+  } catch {
+    console.error('Turnstile siteverify returned a non-JSON response');
+    return false;
+  }
   if (result.success !== true) {
     return false;
   }
@@ -203,7 +240,7 @@ async function createStripeCheckoutSession(origin: string): Promise<string | nul
     cancel_url: `${origin}/support/?stripe=cancelled`,
   });
 
-  const response = await fetch('https://api.stripe.com/v1/checkout/sessions', {
+  const response = await fetchWithTimeout('https://api.stripe.com/v1/checkout/sessions', {
     method: 'POST',
     headers: {
       authorization: `Bearer ${secretKey}`,
@@ -218,8 +255,13 @@ async function createStripeCheckoutSession(origin: string): Promise<string | nul
     return null;
   }
 
-  const session = await response.json() as {url?: string};
-  return session.url ?? null;
+  try {
+    const session = await response.json() as {url?: string};
+    return typeof session.url === 'string' ? session.url : null;
+  } catch {
+    console.error('Stripe Checkout Session response was not valid JSON');
+    return null;
+  }
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {

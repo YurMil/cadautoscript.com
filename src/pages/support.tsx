@@ -197,6 +197,9 @@ export default function SupportPage(): React.JSX.Element {
           'x-cadautoscript-payment': 'support-page',
         },
         body: JSON.stringify({turnstileToken}),
+        // The API bounds its own upstream calls; this keeps the button from
+        // spinning forever if the request itself never completes.
+        signal: AbortSignal.timeout(30000),
       });
 
       if (response.status === 429) {
