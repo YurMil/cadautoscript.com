@@ -2,6 +2,7 @@ import React, {createContext, useContext, useEffect, useState} from 'react';
 import {supabase} from '@site/src/lib/supabaseClient';
 import {useAuthStatus} from '@site/src/hooks/useAuthStatus';
 import {logger} from '../lib/logger';
+import {safeSetItem} from '../utils/safeStorage';
 
 export type UserSettings = {
   smart_sorting: boolean;
@@ -67,6 +68,9 @@ export function UserSettingsProvider({children}: {children: React.ReactNode}) {
   const [settings, setSettings] = useState<UserSettings>(defaultSettings);
   const [loading, setLoading] = useState(true);
   const {user} = useAuthStatus();
+  // Keyed on the id, not the object: every token refresh hands out a new User
+  // object, which used to refetch (and briefly reset `loading`) once an hour.
+  const userId = user?.id ?? null;
 
   // Apply guest preferences from localStorage only after hydration.
   useEffect(() => {
@@ -74,7 +78,7 @@ export function UserSettingsProvider({children}: {children: React.ReactNode}) {
   }, []);
 
   useEffect(() => {
-    if (!user) {
+    if (!userId) {
       setLoading(false);
       return;
     }
@@ -86,7 +90,7 @@ export function UserSettingsProvider({children}: {children: React.ReactNode}) {
       const {data, error} = await supabase
         .from('user_settings')
         .select('*')
-        .eq('user_id', user.id)
+        .eq('user_id', userId)
         .maybeSingle();
 
       if (!isMounted) return;
@@ -128,23 +132,29 @@ export function UserSettingsProvider({children}: {children: React.ReactNode}) {
         // Persist migrated settings (fire-and-forget, log on error)
         void (async () => {
           const {error: insertErr} = await supabase.from('user_settings').insert({
-            user_id: user.id,
+            user_id: userId,
             ...migratedSettings,
             updated_at: new Date().toISOString(),
           });
           if (insertErr) logger.error('Failed to save migrated settings:', insertErr.message);
         })();
       }
-      
-      setLoading(false);
     };
 
-    fetchSettings();
+    // `loading` gates applying the theme and locale below, so it has to clear
+    // even when the fetch throws — otherwise those effects never run.
+    fetchSettings()
+      .catch((err) => {
+        logger.error('Error fetching user settings:', err);
+      })
+      .finally(() => {
+        if (isMounted) setLoading(false);
+      });
 
     return () => {
       isMounted = false;
     };
-  }, [user]);
+  }, [userId]);
 
   // Sync settings across tabs (for both guests and logged in users, until Realtime is implemented)
   useEffect(() => {
@@ -188,12 +198,17 @@ export function UserSettingsProvider({children}: {children: React.ReactNode}) {
       } catch { /* ignore */ }
     }
 
-    if (user) {
-      await supabase.from('user_settings').upsert({
-        user_id: user.id,
-        ...updated,
-        updated_at: new Date().toISOString(),
-      });
+    if (userId) {
+      try {
+        const {error} = await supabase.from('user_settings').upsert({
+          user_id: userId,
+          ...updated,
+          updated_at: new Date().toISOString(),
+        });
+        if (error) logger.error('Failed to save user settings:', error.message);
+      } catch (err) {
+        logger.error('Failed to save user settings:', err);
+      }
     }
   };
 
@@ -204,16 +219,16 @@ export function UserSettingsProvider({children}: {children: React.ReactNode}) {
     // Apply theme
     if (settings.default_theme !== 'auto') {
       document.documentElement.setAttribute('data-theme', settings.default_theme);
-      localStorage.setItem('theme', settings.default_theme);
+      // Unguarded, this threw when site data is blocked and — being an effect
+      // in the root provider — took the entire site down with it.
+      safeSetItem('theme', settings.default_theme);
     }
 
     // Persist locale choice to localStorage so I18nContext can pick it up
     // (I18nProvider reads 'site-locale' on mount)
     const lang = settings.auto_translation_language;
     if (lang) {
-      try {
-        localStorage.setItem('site-locale', lang);
-      } catch { /* ignore */ }
+      safeSetItem('site-locale', lang);
     }
   }, [settings, loading]);
 

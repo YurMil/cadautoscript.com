@@ -34,8 +34,9 @@ const {SUPABASE_URL, SUPABASE_ANON_KEY} = siteConfig.customFields as {
  * configuration gap into a hard SSR build failure (it broke every Dependabot
  * PR, since those deliberately run without repository secrets) and, in the
  * browser, into a blank page instead of a site that simply has no auth.
- * Instead every client access rejects with a clear error, which the callers
- * already treat as "signed out / feature unavailable" (issue #102).
+ * Instead every facade call resolves with a clear `{error}` (see
+ * unavailableResult below), which the callers already treat as "signed out /
+ * feature unavailable" (issue #102). `getSupabase()` itself still rejects.
  */
 const isConfigured = Boolean(SUPABASE_URL && SUPABASE_ANON_KEY);
 
@@ -73,6 +74,28 @@ export function getSupabase(): Promise<SupabaseClient> {
 }
 
 /**
+ * supabase-js never rejects for an operational failure: queries, RPCs, edge
+ * function calls and auth methods all resolve to `{data, error}`, and every
+ * call site in the app is written for that shape. The facade adds one failure
+ * the real client does not have — the library chunk itself failing to load
+ * (flaky network, a deploy that replaced the chunk, missing configuration).
+ * Rejecting there turned that into stuck spinners ("loading" never cleared)
+ * and unhandled rejections, so it is reported through the same `{error}`
+ * channel instead.
+ */
+function unavailableError(err: unknown) {
+  const message = err instanceof Error ? err.message : 'Supabase is unavailable.';
+  return {message, code: 'SUPABASE_UNAVAILABLE', details: '', hint: '', name: 'SupabaseUnavailableError'};
+}
+
+function unavailableResult(err: unknown, data: unknown = null) {
+  return {data, error: unavailableError(err), count: null, status: 0, statusText: ''};
+}
+
+/** Auth methods return `data` objects that callers read without a null check. */
+const EMPTY_AUTH_DATA = {session: null, user: null};
+
+/**
  * Records a method chain (`.select().eq().maybeSingle()`, `.update().eq()`, …)
  * and replays it against the real PostgrestBuilder once awaited. PostgrestBuilder
  * is itself thenable, so chains can terminate at any point with `await`.
@@ -93,13 +116,16 @@ function lazyBuilder(getRoot: () => Promise<any>): any {
         if (prop === 'then') {
           return (onFulfilled?: any, onRejected?: any) =>
             getRoot()
-              .then((root: any) => {
-                let builder = root;
-                for (const [method, args] of calls) {
-                  builder = builder[method](...args);
-                }
-                return builder; // thenable — auto-awaited by the outer chain
-              })
+              .then(
+                (root: any) => {
+                  let builder = root;
+                  for (const [method, args] of calls) {
+                    builder = builder[method](...args);
+                  }
+                  return builder; // thenable — auto-awaited by the outer chain
+                },
+                (err: unknown) => unavailableResult(err),
+              )
               .then(onFulfilled, onRejected);
         }
         if (prop === 'catch') {
@@ -180,17 +206,35 @@ function lazyChannel(name: string, opts?: unknown): any {
 const facade = {
   auth: {
     getSession: (...args: unknown[]) =>
-      getSupabase().then((c) => (c.auth.getSession as any)(...args)),
+      getSupabase().then(
+        (c) => (c.auth.getSession as any)(...args),
+        (err) => unavailableResult(err, EMPTY_AUTH_DATA),
+      ),
     getUser: (...args: unknown[]) =>
-      getSupabase().then((c) => (c.auth.getUser as any)(...args)),
+      getSupabase().then(
+        (c) => (c.auth.getUser as any)(...args),
+        (err) => unavailableResult(err, EMPTY_AUTH_DATA),
+      ),
     signOut: (...args: unknown[]) =>
-      getSupabase().then((c) => (c.auth.signOut as any)(...args)),
+      getSupabase().then(
+        (c) => (c.auth.signOut as any)(...args),
+        (err) => unavailableResult(err, EMPTY_AUTH_DATA),
+      ),
     signInWithOAuth: (...args: unknown[]) =>
-      getSupabase().then((c) => (c.auth.signInWithOAuth as any)(...args)),
+      getSupabase().then(
+        (c) => (c.auth.signInWithOAuth as any)(...args),
+        (err) => unavailableResult(err, EMPTY_AUTH_DATA),
+      ),
     setSession: (...args: unknown[]) =>
-      getSupabase().then((c) => (c.auth.setSession as any)(...args)),
+      getSupabase().then(
+        (c) => (c.auth.setSession as any)(...args),
+        (err) => unavailableResult(err, EMPTY_AUTH_DATA),
+      ),
     exchangeCodeForSession: (...args: unknown[]) =>
-      getSupabase().then((c) => (c.auth.exchangeCodeForSession as any)(...args)),
+      getSupabase().then(
+        (c) => (c.auth.exchangeCodeForSession as any)(...args),
+        (err) => unavailableResult(err, EMPTY_AUTH_DATA),
+      ),
     /**
      * Mirrors the synchronous `{ data: { subscription } }` shape. The real
      * listener is attached once the library loads; unsubscribing before then is
@@ -232,14 +276,20 @@ const facade = {
     lazyBuilder(() => getSupabase().then((c) => (c.rpc as any)(fn, args))),
   functions: {
     invoke: (...args: unknown[]) =>
-      getSupabase().then((c) => (c.functions.invoke as any)(...args)),
+      getSupabase().then(
+        (c) => (c.functions.invoke as any)(...args),
+        (err) => unavailableResult(err),
+      ),
   },
   channel: (name: string, opts?: unknown) => lazyChannel(name, opts),
   removeChannel: (channel: any) => {
     channel?.__cancel?.();
     const realChannel = channel?.__getRealChannel?.();
-    return getSupabase().then((c) =>
-      realChannel ? (c as any).removeChannel(realChannel) : 'ok',
+    // Teardown runs from effect cleanups that never await it; it must not
+    // surface as an unhandled rejection when the library never loaded.
+    return getSupabase().then(
+      (c) => (realChannel ? (c as any).removeChannel(realChannel) : 'ok'),
+      () => 'error',
     );
   },
 };
