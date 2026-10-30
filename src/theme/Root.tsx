@@ -9,18 +9,26 @@ import {AuthModalProvider} from '@site/src/contexts/AuthModalContext';
 import {UserSettingsProvider, useUserSettings} from '@site/src/contexts/UserSettingsContext';
 import {I18nProvider} from '@site/src/contexts/I18nContext';
 
+// A lazy component whose chunk fails to load throws to the nearest error
+// boundary — and Root sits inside Docusaurus' top-level one, so a blocked or
+// stale analytics chunk used to replace the whole site with "This page
+// crashed". Analytics is optional; render nothing instead.
+const renderNothing = (_props: object) => null;
+
 // Lazy load SpeedInsights component (client-side only)
 const SpeedInsights = lazy(() =>
-  import('@vercel/speed-insights/react').then((module) => ({
-    default: module.SpeedInsights,
-  }))
+  import('@vercel/speed-insights/react').then(
+    (module) => ({default: module.SpeedInsights}),
+    () => ({default: renderNothing}),
+  )
 );
 
 // Lazy load Analytics component (client-side only)
 const Analytics = lazy(() =>
-  import('@vercel/analytics/react').then((module) => ({
-    default: module.Analytics,
-  }))
+  import('@vercel/analytics/react').then(
+    (module) => ({default: module.Analytics}),
+    () => ({default: renderNothing}),
+  )
 );
 
 /**
