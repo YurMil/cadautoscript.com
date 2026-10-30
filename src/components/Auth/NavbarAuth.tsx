@@ -7,6 +7,7 @@ import {useAuthModal} from '@site/src/contexts/AuthModalContext';
 import {useAuthStatus} from '@site/src/hooks/useAuthStatus';
 import styles from './NavbarAuth.module.css';
 import {logger} from '../../lib/logger';
+import {safeGetItem, safeRemoveItem, safeSetItem} from '@site/src/utils/safeStorage';
 
 const shouldSilence = (message?: string | null) =>
   !message || message.toLowerCase().includes('auth session missing');
@@ -47,11 +48,11 @@ export default function NavbarAuth(): React.JSX.Element {
     const updatePresence = async () => {
       try {
         const now = new Date().toISOString();
-        const lastSeen = window.localStorage.getItem('lastSeenAt');
+        const lastSeen = safeGetItem('lastSeenAt');
         if (lastSeen && Date.now() - new Date(lastSeen).getTime() < 5 * 60 * 1000) {
           return;
         }
-        window.localStorage.setItem('lastSeenAt', now);
+        safeSetItem('lastSeenAt', now);
         didUpdate = true;
         await supabase.from('profiles').update({last_seen_at: now}).eq('id', user.id);
       } catch (err) {
@@ -61,7 +62,7 @@ export default function NavbarAuth(): React.JSX.Element {
     void updatePresence();
     return () => {
       if (didUpdate) {
-        window.localStorage.removeItem('lastSeenAt');
+        safeRemoveItem('lastSeenAt');
       }
     };
   }, [user]);

@@ -27,7 +27,12 @@ function loadScript(src: string) {
     script.async = true;
     script.dataset.pdfjsSrc = src;
     script.onload = () => resolve();
-    script.onerror = () => reject(new Error(`Failed to load ${src}`));
+    script.onerror = () => {
+      // Drop the failed tag: left in place, the next attempt would find it
+      // above and wait for a `load` event that can never fire.
+      script.remove();
+      reject(new Error(`Failed to load ${src}`));
+    };
     document.head.appendChild(script);
   });
 }
@@ -49,6 +54,15 @@ export async function getPdfRuntime(config: PdfRuntimeConfig) {
       runtime.GlobalWorkerOptions.workerSrc = config.workerSrc;
       return runtime;
     })();
+    // A transient network failure must not disable the tool until reload:
+    // forget the rejected promise so the next call retries.
+    const attempt = runtimePromise;
+    attempt.catch(() => {
+      if (runtimePromise === attempt) {
+        runtimePromise = null;
+        activeConfigKey = null;
+      }
+    });
   }
 
   return runtimePromise;

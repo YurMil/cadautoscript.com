@@ -1,3 +1,4 @@
+import {safeGetItem} from '../utils/safeStorage';
 import type {TranslationDict} from './locales/en';
 
 export type {TranslationDict};
@@ -30,7 +31,7 @@ export const DEFAULT_LOCALE: Locale = 'en';
 export function detectLocale(stored?: string | null): Locale {
   const candidates: (string | null | undefined)[] = [
     stored,
-    typeof localStorage !== 'undefined' ? localStorage.getItem('site-locale') : null,
+    safeGetItem('site-locale'),
     typeof navigator !== 'undefined' ? navigator.language : null,
   ];
 
