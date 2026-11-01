@@ -29,6 +29,7 @@ import {
   Sparkles,
   Wand2,
 } from 'lucide-react';
+import {safeGetItem, safeSetItem} from '@site/src/utils/safeStorage';
 import styles from './MdxPostEditor.module.css';
 import MDXErrorBoundary from './MDXErrorBoundary';
 import SnippetsSidebar from './SnippetsSidebar';
@@ -72,17 +73,10 @@ export default function MdxPostEditor() {
   const isBrowser = useIsBrowser();
 
   const [mdx, setMdx] = useState<string>(() => {
-    if (typeof window !== 'undefined') {
-      const saved = window.localStorage.getItem('mdx_editor_draft_v1');
-      return saved ?? STARTER_MDX;
-    }
-    return STARTER_MDX;
+    return safeGetItem('mdx_editor_draft_v1') ?? STARTER_MDX;
   });
   const [title, setTitle] = useState<string>(() => {
-    if (typeof window !== 'undefined') {
-      return window.localStorage.getItem('mdx_editor_title_v1') ?? 'post.mdx';
-    }
-    return 'post.mdx';
+    return safeGetItem('mdx_editor_title_v1') ?? 'post.mdx';
   });
   const [showLeft, setShowLeft] = useState(true);
   const [showRight, setShowRight] = useState(true);
@@ -168,9 +162,9 @@ export default function MdxPostEditor() {
   }, []);
 
   const saveDraft = useCallback(() => {
-    if (typeof window === 'undefined') return;
-    window.localStorage.setItem('mdx_editor_draft_v1', mdx);
-    window.localStorage.setItem('mdx_editor_title_v1', title);
+    // A large draft can exceed the storage quota; export must still proceed.
+    safeSetItem('mdx_editor_draft_v1', mdx);
+    safeSetItem('mdx_editor_title_v1', title);
   }, [mdx, title]);
 
   const exportMdx = useCallback(() => {

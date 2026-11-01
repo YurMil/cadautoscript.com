@@ -20,6 +20,8 @@ const EMAIL_PATTERN = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 /** One confirmation email per address per hour, so signup cannot be used to mailbomb. */
 const RESEND_COOLDOWN_MINUTES = 60;
 const SUPPORTED_LOCALES = ['en', 'ru', 'ua', 'de', 'es', 'et'];
+/** A hung mail provider must not hold the function until the platform kills it. */
+const MAIL_TIMEOUT_MS = 10_000;
 
 const SUBJECTS: Record<string, string> = {
   en: 'Confirm your CAD AutoScript subscription',
@@ -112,11 +114,18 @@ Deno.serve(async (req: Request) => {
       auth: {persistSession: false, autoRefreshToken: false},
     });
 
-    const {data: existing} = await admin
+    const {data: existing, error: lookupError} = await admin
       .from('newsletter_subscribers')
       .select('id, status, token, last_email_sent_at')
       .eq('email', normalizedEmail)
       .maybeSingle();
+
+    if (lookupError) {
+      // Carrying on as if the address were new would end in a unique-key
+      // failure at best, and a second pending row's email at worst.
+      console.error('[newsletter-subscribe] lookup failed', lookupError.message);
+      return json({ok: false, error: 'storage-failed'}, 500);
+    }
 
     // Already confirmed: do nothing at all. Re-sending would let anyone spam a
     // known subscriber, and there is nothing to confirm.
@@ -137,10 +146,16 @@ Deno.serve(async (req: Request) => {
       // Re-subscribing after unsubscribing, or a repeat request past the
       // cooldown: issue a fresh token so an older link cannot be replayed.
       token = crypto.randomUUID();
-      await admin
+      const {error: updateError} = await admin
         .from('newsletter_subscribers')
         .update({status: 'pending', token, locale: lang, last_email_sent_at: new Date().toISOString()})
         .eq('id', existing.id);
+      if (updateError) {
+        // The new token was not stored, so a link built from it could never
+        // confirm. Do not send it.
+        console.error('[newsletter-subscribe] update failed', updateError.message);
+        return json({ok: false, error: 'storage-failed'}, 500);
+      }
     } else {
       token = crypto.randomUUID();
       const {error: insertError} = await admin.from('newsletter_subscribers').insert({
@@ -149,6 +164,11 @@ Deno.serve(async (req: Request) => {
         locale: lang,
         last_email_sent_at: new Date().toISOString(),
       });
+      if (insertError?.code === '23505') {
+        // A concurrent request for the same address won the insert and owns
+        // the confirmation email. Answer exactly as for any existing address.
+        return genericOk();
+      }
       if (insertError) {
         console.error('[newsletter-subscribe] insert failed', insertError.message);
         return json({ok: false, error: 'storage-failed'}, 500);
@@ -169,9 +189,14 @@ Deno.serve(async (req: Request) => {
       method: 'POST',
       headers: {Authorization: `Bearer ${resendKey}`, 'Content-Type': 'application/json'},
       body: JSON.stringify({from: fromAddress, to: [normalizedEmail], subject, text, html}),
+      signal: AbortSignal.timeout(MAIL_TIMEOUT_MS),
+    }).catch((err) => {
+      // The row stays pending either way; the visitor can retry after the cooldown.
+      console.error('[newsletter-subscribe] send request failed', err);
+      return null;
     });
 
-    if (!mailResponse.ok) {
+    if (mailResponse && !mailResponse.ok) {
       console.error('[newsletter-subscribe] send failed', mailResponse.status, await mailResponse.text());
       // The row stays pending; the visitor can retry after the cooldown.
     }

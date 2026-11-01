@@ -1,6 +1,7 @@
 import React from 'react';
 import {useI18n} from '@site/src/contexts/I18nContext';
 import {logger} from '../../lib/logger';
+import {handleBoundaryError} from '../../lib/boundaryErrors';
 
 type FallbackProps = {utilityName: string; onReset: () => void};
 
@@ -41,6 +42,8 @@ export default class UtilityErrorBoundary extends React.Component<BoundaryProps,
       error,
       info.componentStack,
     );
+    // Boundary-caught errors never reach window.onerror; report explicitly.
+    handleBoundaryError(error, `utility:${this.props.utilityName}`.slice(0, 200));
   }
 
   handleReset = () => {
