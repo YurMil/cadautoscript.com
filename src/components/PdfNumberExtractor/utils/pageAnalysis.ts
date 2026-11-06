@@ -9,7 +9,7 @@ import type {
 import {isCanvasBlank} from './canvas';
 import {cropCanvasRegion, getCaptureOrigin} from './capture';
 import {extractRevision, getFilePrefix} from './fileNaming';
-import {getPdfRuntime} from './pdfRuntime';
+import {getPdfRuntime, openPdfDocument} from './pdfRuntime';
 import {buildSearchRegex} from './regex';
 
 function waitForPaint() {
@@ -27,7 +27,7 @@ export async function analyzePdfFile(params: {
   const {file, settings, runtimeConfig, onStatus} = params;
   const runtime = await getPdfRuntime(runtimeConfig);
   const data = new Uint8Array(await file.arrayBuffer());
-  const pdf = await runtime.getDocument({data}).promise;
+  const pdf = await openPdfDocument(runtime, data);
   const results: CapturedResultDraft[] = [];
   const filePrefix = getFilePrefix(file.name);
   const revision = extractRevision(file.name);

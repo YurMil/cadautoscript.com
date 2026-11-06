@@ -610,7 +610,10 @@
           if (!file || !file.file) return;
           try {
             const arrayBuffer = await file.file.arrayBuffer();
-            const loadingTask = window.pdfjsLib.getDocument({ data: arrayBuffer });
+            // Vendored PDF.js 3.4.120 compiles font glyphs with eval; a crafted
+            // PDF could run script on this origin (CVE-2024-4367). Upstream
+            // mitigation for versions before 4.2.67: turn eval off.
+            const loadingTask = window.pdfjsLib.getDocument({ data: arrayBuffer, isEvalSupported: false });
             const pdf = await loadingTask.promise;
 
             if (active) {

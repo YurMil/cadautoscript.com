@@ -1,6 +1,6 @@
 import type {PdfRuntimeConfig, ScanResult} from '../types';
 import {getFilePrefix} from './fileNaming';
-import {getPdfRuntime} from './pdfRuntime';
+import {getPdfRuntime, openPdfDocument} from './pdfRuntime';
 import {buildBaseNumberRegex, buildSearchRegex} from './regex';
 import {logger} from '../../../lib/logger';
 
@@ -18,7 +18,7 @@ export async function quickScanFile(params: {
   try {
     const runtime = await getPdfRuntime(runtimeConfig);
     const data = new Uint8Array(await file.arrayBuffer());
-    const pdf = await runtime.getDocument({data}).promise;
+    const pdf = await openPdfDocument(runtime, data);
 
     try {
       for (let pageIndex = 1; pageIndex <= pdf.numPages; pageIndex += 1) {
