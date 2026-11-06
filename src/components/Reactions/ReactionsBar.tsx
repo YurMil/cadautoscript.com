@@ -42,6 +42,8 @@ export default function ReactionsBar({slug}: Props) {
   const [pendingEmoji, setPendingEmoji] = useState<ReactionEmoji | null>(null);
   const {user} = useAuthStatus();
   const userId = user?.id ?? null;
+  // Bumped to reload the stored reactions after a failed update.
+  const [reloadKey, setReloadKey] = useState(0);
 
   useEffect(() => {
     let isMounted = true;
@@ -80,7 +82,7 @@ export default function ReactionsBar({slug}: Props) {
     return () => {
       isMounted = false;
     };
-  }, [slug, userId]);
+  }, [slug, userId, reloadKey]);
 
   const totalReactions = useMemo(
     () => Object.values(counts).reduce((total, value) => total + value, 0),
@@ -132,8 +134,13 @@ export default function ReactionsBar({slug}: Props) {
       }
     } catch (error) {
       logger.error('Unable to update reaction', error);
+      // Changing a reaction is a delete followed by an insert. If the insert
+      // failed the old reaction is already gone, so the snapshot alone would
+      // show a reaction the database no longer has: restore it for now, then
+      // reload what is actually stored.
       setCounts(previousCounts);
       setUserReaction(previousReaction);
+      setReloadKey((key) => key + 1);
     } finally {
       setPendingEmoji(null);
     }
