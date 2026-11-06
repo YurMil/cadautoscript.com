@@ -146,6 +146,10 @@
       "destination": "/utility-apps/metal-bending/assets/opencascade.full-BROZOezB.wasm"
     },
     {
+      "source": "/:locale(ru|ua|de|es|et)?/utility-apps/webstep-viewer/opencascade.full-BROZOezB.wasm",
+      "destination": "/utility-apps/metal-bending/assets/opencascade.full-BROZOezB.wasm"
+    },
+    {
       "source": "/:locale(ru|ua|de|es|et)?/utility-apps/gear-pair-calculator/assets/replicad_single-BXInhmaQ.wasm",
       "destination": "/utility-apps/cylindrical-shell-rolling/assets/replicad_single-BXInhmaQ.wasm"
     },
