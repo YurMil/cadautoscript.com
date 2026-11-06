@@ -30,6 +30,15 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      # Seconds, not minutes: catch a vercel.json that no longer matches the
+      # pre-built app bundles before the build. Sync bots push those bundles
+      # straight to main, so this is where drift first shows up.
+      - name: Shared asset rewrites
+        run: pnpm check:assets
+
+      - name: Script tests
+        run: pnpm test:scripts
+
       - name: Typecheck
         run: pnpm typecheck
 
