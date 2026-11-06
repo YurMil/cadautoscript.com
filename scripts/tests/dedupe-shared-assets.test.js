@@ -90,3 +90,24 @@ test('removeDuplicates keeps a copy whose rewrite is missing', () => {
   assert.equal(fs.existsSync(path.join(buildDir, 'utility-apps/a/assets/rt.wasm')), true);
   assert.equal(fs.existsSync(path.join(buildDir, 'utility-apps/c/assets/other.wasm')), true);
 });
+
+test('a rule shadowed by an earlier stale rule for the same source keeps its copy', () => {
+  // The canonical copy moved from b/assets to a/assets; the old rule for b/rt.wasm
+  // still comes first and would send it to a copy that is about to be deleted.
+  const staticDir = tree(STATIC);
+  const buildDir = tree(STATIC);
+  const oldRule = rule('utility-apps/b/rt.wasm', 'utility-apps/b/assets/rt.wasm');
+  const rewrites = [oldRule, RULE_B_ROOT, RULE_B, LOCALE_RULE];
+  const analysis = analyze(staticDir, rewrites);
+
+  assert.deepEqual(analysis.stale, [oldRule]);
+  assert.ok(analysis.unsafe.has(path.join('utility-apps', 'b', 'rt.wasm')));
+
+  removeDuplicates(buildDir, staticDir, analysis);
+  assert.equal(fs.existsSync(path.join(buildDir, 'utility-apps/b/rt.wasm')), true);
+
+  // --fix drops the shadowing rule, after which the copy is safe to delete.
+  const fixed = fixRewrites(rewrites, analysis);
+  assert.deepEqual(fixed, [RULE_B_ROOT, RULE_B, LOCALE_RULE]);
+  assert.equal(analyze(staticDir, fixed).unsafe.size, 0);
+});

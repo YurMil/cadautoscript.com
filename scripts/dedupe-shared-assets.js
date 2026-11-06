@@ -118,7 +118,18 @@ function analyze(staticDir, rewrites) {
   const expectedKeys = new Set(expected.map(key));
   const stale = rewrites.filter((rule) => isSharedAssetRule(rule) && !expectedKeys.has(key(rule)));
 
-  const unsafe = new Set([...missing, ...misordered].map((rule) => rule.duplicate));
+  // An earlier rule for the same source wins over the expected one — typically
+  // the stale rule left when the canonical copy changes. Its destination may be
+  // a copy that is about to be deleted, so the duplicate has to stay.
+  const firstBySource = new Map();
+  rewrites.forEach((rule, i) => {
+    if (!firstBySource.has(rule.source)) firstBySource.set(rule.source, i);
+  });
+  const shadowed = expected.filter(
+    (rule) => ruleIndex.has(key(rule)) && firstBySource.get(rule.source) !== ruleIndex.get(key(rule)),
+  );
+
+  const unsafe = new Set([...missing, ...misordered, ...shadowed].map((rule) => rule.duplicate));
   return {groups, expected, missing, misordered, stale, unsafe};
 }
 
