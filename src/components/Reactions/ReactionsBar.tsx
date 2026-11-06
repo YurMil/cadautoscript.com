@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import clsx from 'clsx';
 import {supabase} from '@site/src/lib/supabaseClient';
 import {useAuthModal} from '@site/src/contexts/AuthModalContext';
@@ -42,16 +42,23 @@ export default function ReactionsBar({slug}: Props) {
   const [pendingEmoji, setPendingEmoji] = useState<ReactionEmoji | null>(null);
   const {user} = useAuthStatus();
   const userId = user?.id ?? null;
+  // Bumped after every update so the bar settles on what is actually stored.
+  const [reloadKey, setReloadKey] = useState(0);
+  // Counts reaction updates started on this page. A load that began before the
+  // latest update would overwrite its optimistic state with older data, so its
+  // result is dropped; that update reloads again when it settles.
+  const mutationSeq = useRef(0);
 
   useEffect(() => {
     let isMounted = true;
     async function loadReactions() {
+      const startedAt = mutationSeq.current;
       const {data, error} = await supabase
         .from('reactions')
         .select('emoji,user_id')
         .eq('slug', slug);
 
-      if (!isMounted) {
+      if (!isMounted || mutationSeq.current !== startedAt) {
         return;
       }
 
@@ -80,7 +87,7 @@ export default function ReactionsBar({slug}: Props) {
     return () => {
       isMounted = false;
     };
-  }, [slug, userId]);
+  }, [slug, userId, reloadKey]);
 
   const totalReactions = useMemo(
     () => Object.values(counts).reduce((total, value) => total + value, 0),
@@ -101,6 +108,7 @@ export default function ReactionsBar({slug}: Props) {
     const previousReaction = userReaction;
     const removing = previousReaction === emoji;
 
+    mutationSeq.current += 1;
     setPendingEmoji(emoji);
     setCounts((current) => {
       const next = {...current};
@@ -132,10 +140,14 @@ export default function ReactionsBar({slug}: Props) {
       }
     } catch (error) {
       logger.error('Unable to update reaction', error);
+      // Changing a reaction is a delete followed by an insert. If the insert
+      // failed the old reaction is already gone, so the snapshot alone may show
+      // a reaction the database no longer has; the reload below corrects it.
       setCounts(previousCounts);
       setUserReaction(previousReaction);
     } finally {
       setPendingEmoji(null);
+      setReloadKey((key) => key + 1);
     }
   };
 

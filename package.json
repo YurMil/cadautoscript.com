@@ -28,7 +28,7 @@
     "typecheck": "tsc",
     "lint": "eslint src api scripts *.ts *.js *.mjs",
     "test:db": "node supabase/tests/workspaces.test.mjs",
-    "test:scripts": "node --test scripts/tests/*.test.js",
+    "test:scripts": "node --test scripts/tests/*.test.js scripts/tests/*.test.mjs",
     "check:assets": "node scripts/dedupe-shared-assets.js --check",
     "fix:assets": "node scripts/dedupe-shared-assets.js --fix"
   },
@@ -160,9 +160,6 @@
       "browserslist@<=4.28.6": "^4.28.7",
       "toml@<4.2.0": "^4.2.0",
       "@swc/html@<1.15.47": "^1.15.47"
-    },
-    "patchedDependencies": {
-      "gray-matter@4.0.3": "patches/gray-matter@4.0.3.patch"
     }
   }
 }

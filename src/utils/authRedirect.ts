@@ -1,4 +1,5 @@
 import siteConfig from '@generated/docusaurus.config';
+import {sanitizeReturnTo} from './returnTo';
 
 type AuthRedirectConfig = {
   AUTH_REDIRECT_URL?: string;
@@ -31,7 +32,7 @@ export const consumeReturnTo = (fallback = '/') => {
   try {
     const value = window.sessionStorage.getItem(STORAGE_KEY);
     window.sessionStorage.removeItem(STORAGE_KEY);
-    return value || fallback;
+    return sanitizeReturnTo(value, window.location.origin, fallback);
   } catch {
     return fallback;
   }
