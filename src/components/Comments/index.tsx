@@ -203,11 +203,12 @@ export default function Comments({slug}: Props): React.JSX.Element {
     return null;
   }, [hasProfileName, user]);
 
-  const extractText = (html: string) => {
-    const temp = document.createElement('div');
-    temp.innerHTML = html;
-    return temp.textContent || temp.innerText || '';
-  };
+  // Comment HTML comes from the database and is only sanitized on the way in
+  // by this client, so anything posted straight to the API reaches here raw.
+  // A detached <div> still belongs to the live document — `<img onerror>`
+  // fires there — while a DOMParser document is inert: no scripts, no loads.
+  const extractText = (html: string) =>
+    new DOMParser().parseFromString(html, 'text/html').body.textContent ?? '';
 
   const handleReply = (comment: CommentRow) => {
     const author = authorDisplay(comment.profiles);

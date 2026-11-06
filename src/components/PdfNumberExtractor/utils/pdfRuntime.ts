@@ -67,3 +67,14 @@ export async function getPdfRuntime(config: PdfRuntimeConfig) {
 
   return runtimePromise;
 }
+
+/**
+ * Opens a PDF with the vendored PDF.js (3.4.120). Versions before 4.2.67 build
+ * font glyph renderers with `new Function`, so a crafted PDF could run script
+ * on this origin, where the Supabase session lives (CVE-2024-4367). Disabling
+ * eval is the upstream mitigation for those versions; every caller must go
+ * through here rather than calling getDocument directly.
+ */
+export function openPdfDocument(runtime: PdfRuntime, data: Uint8Array) {
+  return runtime.getDocument({data, isEvalSupported: false}).promise;
+}

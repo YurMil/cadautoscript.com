@@ -107,7 +107,7 @@ export type PdfRuntime = {
   Util: {
     transform: (first: number[], second: number[]) => number[];
   };
-  getDocument: (source: {data: Uint8Array}) => {
+  getDocument: (source: {data: Uint8Array; isEvalSupported?: boolean}) => {
     promise: Promise<PdfDocumentLike>;
   };
 };
