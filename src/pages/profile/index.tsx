@@ -1,10 +1,10 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import clsx from 'clsx';
-import type {User} from '@supabase/supabase-js';
 import Layout from '@theme/Layout';
 import Head from '@docusaurus/Head';
 import {supabase} from '@site/src/lib/supabaseClient';
 import {useAuthModal} from '@site/src/contexts/AuthModalContext';
+import {useAuthStatus} from '@site/src/hooks/useAuthStatus';
 import {listUtilityUsage, type UtilityUsageStat} from '@site/src/shared/utility-usage';
 import UsageRanking from '@site/src/components/UtilityUsage/UsageRanking';
 import CalculationHistory from '@site/src/components/CalculationHistory';
@@ -43,7 +43,7 @@ const formatRelative = (value?: string | null): string | undefined => {
 
 export default function ProfilePage(): React.JSX.Element {
   const {t} = useI18n();
-  const [user, setUser] = useState<User | null>(null);
+  const {user, authChecked} = useAuthStatus();
   const [profile, setProfile] = useState<Profile | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [formState, setFormState] = useState({
@@ -52,7 +52,6 @@ export default function ProfilePage(): React.JSX.Element {
     bio: '',
     avatarUrl: '',
   });
-  const [authChecked, setAuthChecked] = useState(false);
   const [loadingProfile, setLoadingProfile] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -70,50 +69,6 @@ export default function ProfilePage(): React.JSX.Element {
       '',
     [user],
   );
-
-  useEffect(() => {
-    let isMounted = true;
-
-    const resolveSession = async () => {
-      try {
-        const {data, error} = await supabase.auth.getSession();
-        if (!isMounted) {
-          return;
-        }
-        if (error && !shouldSilence(error.message)) {
-          logger.error('[Supabase Auth] Unable to fetch session', error.message);
-        }
-        setUser(data?.session?.user ?? null);
-      } catch (err) {
-        if (!isMounted) {
-          return;
-        }
-        const message =
-          err instanceof Error ? err.message : 'Unable to fetch auth session.';
-        logger.error('[Supabase Auth] Unable to fetch session', message);
-      } finally {
-        if (isMounted) {
-          setAuthChecked(true);
-        }
-      }
-    };
-
-    resolveSession();
-
-    const {
-      data: {subscription},
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (!isMounted) {
-        return;
-      }
-      setUser(session?.user ?? null);
-    });
-
-    return () => {
-      isMounted = false;
-      subscription.unsubscribe();
-    };
-  }, []);
 
   useEffect(() => {
     if (authChecked && !user && !promptedLogin) {
