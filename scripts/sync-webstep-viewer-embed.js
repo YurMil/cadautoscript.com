@@ -61,6 +61,10 @@ function main() {
     }
   }
 
+  // A rebuilt bundle can add, rename or drop a copy of a shared WebAssembly
+  // runtime; keep the vercel.json rewrites for those in step.
+  run(process.execPath, [path.join(__dirname, 'dedupe-shared-assets.js'), '--fix'], SITE_ROOT);
+
   console.log('[webstep-viewer] Embed bundle synced successfully.');
 }
 

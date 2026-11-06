@@ -27,7 +27,10 @@
     "write-heading-ids": "docusaurus write-heading-ids",
     "typecheck": "tsc",
     "lint": "eslint src api scripts *.ts *.js *.mjs",
-    "test:db": "node supabase/tests/workspaces.test.mjs"
+    "test:db": "node supabase/tests/workspaces.test.mjs",
+    "test:scripts": "node --test scripts/tests/*.test.js",
+    "check:assets": "node scripts/dedupe-shared-assets.js --check",
+    "fix:assets": "node scripts/dedupe-shared-assets.js --fix"
   },
   "dependencies": {
     "@dimforge/rapier3d-compat": "^0.14.0",
