@@ -3,6 +3,7 @@ import type {User} from '@supabase/supabase-js';
 import {supabase} from '@site/src/lib/supabaseClient';
 import {logger} from '@site/src/lib/logger';
 import {normalizeProfile} from '@site/src/utils/normalizeProfile';
+import {invalidateUtilitiesAccess} from '@site/src/hooks/useUtilitiesAccess';
 import {
   DEFAULT_UTILITIES_PUBLIC_ACCESS,
   UTILITIES_PUBLIC_ACCESS_KEY,
@@ -437,6 +438,7 @@ export function useAdminData(activeTab: TabKey, history: Redirector) {
       return;
     }
 
+    invalidateUtilitiesAccess();
     dispatch({
       type: 'patch',
       payload: {utilitiesPublicAccess: nextValue, settingsSaving: false, toast: 'Utilities access updated'},

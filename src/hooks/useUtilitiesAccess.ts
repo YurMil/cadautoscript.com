@@ -12,6 +12,37 @@ type UtilitiesAccessState = {
   settingsChecked: boolean;
 };
 
+/**
+ * The setting changes rarely (an admin toggle), but every utility page used to
+ * query it again on client-side navigation. One answer per page load is
+ * enough; a failed load is not cached, so the next page retries.
+ */
+let cached: Promise<boolean | null> | null = null;
+
+function loadUtilitiesAccess(): Promise<boolean | null> {
+  if (!cached) {
+    const attempt = (async () => {
+      const {data, error} = await supabase
+        .from('site_settings')
+        .select('value')
+        .eq('key', UTILITIES_PUBLIC_ACCESS_KEY)
+        .maybeSingle();
+      if (error) throw new Error(error.message);
+      return parseBooleanSetting(data?.value);
+    })();
+    cached = attempt;
+    attempt.catch(() => {
+      if (cached === attempt) cached = null;
+    });
+  }
+  return cached;
+}
+
+/** Called after an admin changes the setting, so this tab picks the new value up. */
+export function invalidateUtilitiesAccess(): void {
+  cached = null;
+}
+
 export function useUtilitiesAccess(): UtilitiesAccessState {
   const [utilitiesPublicAccess, setUtilitiesPublicAccess] = useState(DEFAULT_UTILITIES_PUBLIC_ACCESS);
   const [settingsChecked, setSettingsChecked] = useState(false);
@@ -19,34 +50,21 @@ export function useUtilitiesAccess(): UtilitiesAccessState {
   useEffect(() => {
     let isMounted = true;
 
-    const loadSetting = async () => {
-      try {
-        const {data, error} = await supabase
-          .from('site_settings')
-          .select('value')
-          .eq('key', UTILITIES_PUBLIC_ACCESS_KEY)
-          .maybeSingle();
-
-        if (error) {
-          logger.error('[Settings] Unable to load utilities access setting', error.message);
-          return;
-        }
-
-        const parsed = parseBooleanSetting(data?.value);
+    loadUtilitiesAccess()
+      .then((parsed) => {
         if (parsed !== null && isMounted) {
           setUtilitiesPublicAccess(parsed);
         }
-      } catch (err) {
+      })
+      .catch((err: unknown) => {
         const message = err instanceof Error ? err.message : 'Unable to load utilities access setting.';
         logger.error('[Settings] Unable to load utilities access setting', message);
-      } finally {
+      })
+      .finally(() => {
         if (isMounted) {
           setSettingsChecked(true);
         }
-      }
-    };
-
-    void loadSetting();
+      });
 
     return () => {
       isMounted = false;
